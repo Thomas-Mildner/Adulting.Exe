@@ -52,13 +52,13 @@ const statusConfig: Record<
 }
 
 const categories = [
-  "Kueche",
+  "Küche",
   "Waschraum",
   "Wohnzimmer",
   "Badezimmer",
   "Garten",
   "Werkstatt",
-  "Buero",
+  "Büro",
   "Sonstiges",
 ]
 
@@ -344,9 +344,9 @@ export function VaultGrid({ appliances }: { appliances: Appliance[] }) {
           <DialogContent className="sm:max-w-[520px]">
             <form onSubmit={handleCreate}>
               <DialogHeader>
-                <DialogTitle>Neues Geraet erfassen</DialogTitle>
+                <DialogTitle>Neues Gerät erfassen</DialogTitle>
                 <DialogDescription>
-                  Quittung raus, Daten rein &mdash; dein Tresor wird staerker.
+                  Quittung raus, Daten rein &mdash; dein Tresor wird stärker.
                 </DialogDescription>
               </DialogHeader>
               <ApplianceFormFields form={createForm} setForm={setCreateForm} />
@@ -416,7 +416,7 @@ export function VaultGrid({ appliances }: { appliances: Appliance[] }) {
                     <div className="flex items-center justify-between text-[11px]">
                       <span className="text-muted-foreground">Garantie</span>
                       <span className="font-mono text-muted-foreground tabular-nums">
-                        {days > 0 ? `${days} Tage uebrig` : "Abgelaufen"}
+                        {days > 0 ? `${days} Tage übrig` : "Abgelaufen"}
                       </span>
                     </div>
                     <Progress
@@ -482,9 +482,9 @@ export function VaultGrid({ appliances }: { appliances: Appliance[] }) {
         <DialogContent className="sm:max-w-[520px]">
           <form onSubmit={handleEdit}>
             <DialogHeader>
-              <DialogTitle>Geraet bearbeiten</DialogTitle>
+              <DialogTitle>Gerät bearbeiten</DialogTitle>
               <DialogDescription>
-                Aenderungen werden sofort gespeichert.
+                Änderungen werden sofort gespeichert.
               </DialogDescription>
             </DialogHeader>
             <ApplianceFormFields form={editForm} setForm={setEditForm} />
@@ -500,7 +500,7 @@ export function VaultGrid({ appliances }: { appliances: Appliance[] }) {
                 Abbrechen
               </Button>
               <Button type="submit" disabled={isPending}>
-                {isPending ? "Speichert..." : "Aenderungen speichern"}
+                {isPending ? "Speichert..." : "Änderungen speichern"}
               </Button>
             </DialogFooter>
           </form>
@@ -516,9 +516,9 @@ export function VaultGrid({ appliances }: { appliances: Appliance[] }) {
       >
         <DialogContent className="sm:max-w-[400px]">
           <DialogHeader>
-            <DialogTitle>Eintrag loeschen?</DialogTitle>
+            <DialogTitle>Eintrag löschen?</DialogTitle>
             <DialogDescription>
-              Diese Aktion kann nicht rueckgaengig gemacht werden. Der Eintrag
+              Diese Aktion kann nicht rückgängig gemacht werden. Der Eintrag
               wird dauerhaft aus dem Tresor entfernt.
             </DialogDescription>
           </DialogHeader>
@@ -531,7 +531,7 @@ export function VaultGrid({ appliances }: { appliances: Appliance[] }) {
               disabled={isPending}
               onClick={() => deleteId && handleDelete(deleteId)}
             >
-              {isPending ? "Loescht..." : "Endgueltig loeschen"}
+              {isPending ? "Löscht..." : "Endgültig löschen"}
             </Button>
           </DialogFooter>
         </DialogContent>

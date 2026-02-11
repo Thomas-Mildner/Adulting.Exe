@@ -26,7 +26,7 @@ export default async function DashboardPage() {
     ])
 
   return (
-    <DashboardLayout title="Dashboard" subtitle="Willkommen zurueck. Dein Haus hat dich vermisst.">
+    <DashboardLayout title="Dashboard" subtitle="Willkommen zurück. Dein Haus hat dich vermisst.">
       <div className="space-y-6">
         <HouseHealth appliances={appliances} maintenanceTasks={maintenanceTasks} lentItems={lentItems} />
         <StatsCards appliances={appliances} maintenanceTasks={maintenanceTasks} taxDeductible={taxDeductible} />

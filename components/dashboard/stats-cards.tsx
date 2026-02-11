@@ -22,7 +22,7 @@ export function StatsCards({ appliances, maintenanceTasks, taxDeductible }: Stat
     {
       title: "Offene Wartungen",
       value: maintenanceTasks.filter((t) => !t.completed).length.toString(),
-      subtitle: `${maintenanceTasks.filter((t) => t.priority === "high" && !t.completed).length} hohe Prioritaet`,
+      subtitle: `${maintenanceTasks.filter((t) => t.priority === "high" && !t.completed).length} hohe Priorität`,
       icon: Wrench,
       accent: "bg-chart-3/10 text-chart-3",
     },

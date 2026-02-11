@@ -72,11 +72,11 @@ const priorityConfig: Record<
 
 const recurringOptions = [
   "Einmalig",
-  "Woechentlich",
+  "Wöchentlich",
   "Monatlich",
-  "Vierteljaehrlich",
-  "Halbjaehrlich",
-  "Jaehrlich",
+  "Vierteljährlich",
+  "Halbjährlich",
+  "Jährlich",
 ]
 
 type FormData = {
@@ -108,7 +108,7 @@ function TaskFormFields({
         <Label htmlFor="title">Aufgabe</Label>
         <Input
           id="title"
-          placeholder="z.B. Heizung entlueften, Rauchmelder pruefen..."
+          placeholder="z.B. Heizung entlüften, Rauchmelder prüfen..."
           value={form.title}
           onChange={(e) => setForm((prev) => ({ ...prev, title: e.target.value }))}
           required
@@ -116,7 +116,7 @@ function TaskFormFields({
       </div>
       <div className="grid grid-cols-2 gap-4">
         <div className="grid gap-2">
-          <Label htmlFor="dueDate">Faellig am</Label>
+          <Label htmlFor="dueDate">Fällig am</Label>
           <Input
             id="dueDate"
             type="date"
@@ -149,7 +149,7 @@ function TaskFormFields({
         </div>
       </div>
       <div className="grid gap-2">
-        <Label>Prioritaet</Label>
+        <Label>Priorität</Label>
         <div className="flex gap-2">
           {(["high", "medium", "low"] as const).map((p) => {
             const cfg = priorityConfig[p]
@@ -293,7 +293,7 @@ export function MaintenanceManager({
             </p>
             <p className="text-xs text-muted-foreground">
               {highPrio.length > 0
-                ? `${highPrio.length} mit hoher Prioritaet`
+                ? `${highPrio.length} mit hoher Priorität`
                 : "Alles im Griff"}
             </p>
           </CardContent>
@@ -301,7 +301,7 @@ export function MaintenanceManager({
         <Card>
           <CardContent className="p-5">
             <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
-              Ueberfaellig
+              Überfällig
             </p>
             <p className="text-2xl font-semibold tabular-nums text-destructive mt-1">
               {overdue.length}
@@ -309,7 +309,7 @@ export function MaintenanceManager({
             <p className="text-xs text-muted-foreground">
               {overdue.length > 0
                 ? "Besser heute als morgen"
-                : "Alles puenktlich"}
+                : "Alles pünktlich"}
             </p>
           </CardContent>
         </Card>
@@ -335,7 +335,7 @@ export function MaintenanceManager({
                 Alle Wartungsaufgaben
               </CardTitle>
               <p className="text-xs text-muted-foreground mt-1">
-                Planen, pruefen, abhaken &mdash; das Haus dankt es dir.
+                Planen, prüfen, abhaken &mdash; das Haus dankt es dir.
               </p>
             </div>
 
@@ -389,11 +389,11 @@ export function MaintenanceManager({
               <TableRow>
                 <TableHead className="text-xs w-10">Status</TableHead>
                 <TableHead className="text-xs">Aufgabe</TableHead>
-                <TableHead className="text-xs">Faellig</TableHead>
+                <TableHead className="text-xs">Fällig</TableHead>
                 <TableHead className="text-xs hidden sm:table-cell">
                   Wiederholung
                 </TableHead>
-                <TableHead className="text-xs">Prioritaet</TableHead>
+                <TableHead className="text-xs">Priorität</TableHead>
                 <TableHead className="text-xs text-right">Aktionen</TableHead>
               </TableRow>
             </TableHeader>
@@ -456,7 +456,7 @@ export function MaintenanceManager({
                             variant="outline"
                             className="ml-2 text-[10px] bg-destructive/10 text-destructive border-destructive/20"
                           >
-                            ueberfaellig
+                            überfällig
                           </Badge>
                         )}
                       </TableCell>
@@ -513,7 +513,7 @@ export function MaintenanceManager({
             <DialogHeader>
               <DialogTitle>Wartung bearbeiten</DialogTitle>
               <DialogDescription>
-                Aenderungen werden sofort gespeichert.
+                Änderungen werden sofort gespeichert.
               </DialogDescription>
             </DialogHeader>
             <TaskFormFields form={editForm} setForm={setEditForm} />
@@ -529,7 +529,7 @@ export function MaintenanceManager({
                 Abbrechen
               </Button>
               <Button type="submit" disabled={isPending}>
-                {isPending ? "Speichert..." : "Aenderungen speichern"}
+                {isPending ? "Speichert..." : "Änderungen speichern"}
               </Button>
             </DialogFooter>
           </form>
@@ -545,9 +545,9 @@ export function MaintenanceManager({
       >
         <DialogContent className="sm:max-w-[400px]">
           <DialogHeader>
-            <DialogTitle>Wartung loeschen?</DialogTitle>
+            <DialogTitle>Wartung löschen?</DialogTitle>
             <DialogDescription>
-              Diese Aktion kann nicht rueckgaengig gemacht werden. Die Wartung
+              Diese Aktion kann nicht rückgängig gemacht werden. Die Wartung
               wird dauerhaft entfernt.
             </DialogDescription>
           </DialogHeader>
@@ -560,7 +560,7 @@ export function MaintenanceManager({
               disabled={isPending}
               onClick={() => deleteId && handleDelete(deleteId)}
             >
-              {isPending ? "Loescht..." : "Endgueltig loeschen"}
+              {isPending ? "Löscht..." : "Endgültig löschen"}
             </Button>
           </DialogFooter>
         </DialogContent>

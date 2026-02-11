@@ -10,7 +10,7 @@ export default async function MaintenancePage() {
   return (
     <DashboardLayout
       title="Wartungen"
-      subtitle="Planen. Pruefen. Abhaken. Dein Haus dankt es dir."
+      subtitle="Planen. Prüfen. Abhaken. Dein Haus dankt es dir."
     >
       <MaintenanceManager initialTasks={tasks} />
     </DashboardLayout>

@@ -99,7 +99,7 @@ export function AppSidebar() {
       </SidebarHeader>
       <SidebarSeparator />
       <SidebarContent>
-        {renderNavGroup(mainNav, "Hauptmenue")}
+        {renderNavGroup(mainNav, "Hauptmenü")}
         {renderNavGroup(toolsNav, "Werkzeuge")}
         {renderNavGroup(systemNav, "System")}
       </SidebarContent>

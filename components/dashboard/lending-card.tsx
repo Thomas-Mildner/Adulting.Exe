@@ -23,8 +23,8 @@ export function LendingCard({ lentItems }: { lentItems: LentItem[] }) {
         </div>
         <p className="text-xs text-muted-foreground">
           {overdue.length > 0
-            ? `${overdue.length} Gegenstand${overdue.length > 1 ? "e" : ""} ueberfaellig. Vertrauensprobleme im Anmarsch.`
-            : "Alles zurueckgegeben. Glaube an die Menschheit: intakt."}
+            ? `${overdue.length} Gegenstand${overdue.length > 1 ? "e" : ""} überfällig. Vertrauensprobleme im Anmarsch.`
+            : "Alles zurückgegeben. Glaube an die Menschheit: intakt."}
         </p>
       </CardHeader>
       <CardContent className="space-y-1.5">
@@ -54,7 +54,7 @@ export function LendingCard({ lentItems }: { lentItems: LentItem[] }) {
                     : "text-muted-foreground"
                 }`}
               >
-                {isOverdue ? `${Math.abs(days)}T ueberfaellig` : `${days}T uebrig`}
+                {isOverdue ? `${Math.abs(days)}T überfällig` : `${days}T übrig`}
               </Badge>
             </div>
           )

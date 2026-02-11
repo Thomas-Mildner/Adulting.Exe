@@ -31,7 +31,7 @@ export function WarrantyOverview({ appliances }: { appliances: Appliance[] }) {
             href="/vault"
             className="text-xs text-primary hover:underline flex items-center gap-1"
           >
-            Tresor oeffnen <ArrowRight className="h-3 w-3" />
+            Tresor öffnen <ArrowRight className="h-3 w-3" />
           </Link>
         </div>
         <p className="text-xs text-muted-foreground">
@@ -60,7 +60,7 @@ export function WarrantyOverview({ appliances }: { appliances: Appliance[] }) {
               <div className="flex items-center gap-3">
                 <Progress value={pct} className="h-1.5 flex-1" />
                 <span className="text-[11px] font-mono text-muted-foreground tabular-nums w-14 text-right">
-                  {days > 0 ? `${days}T uebrig` : "Abgelaufen"}
+                  {days > 0 ? `${days}T übrig` : "Abgelaufen"}
                 </span>
               </div>
             </div>

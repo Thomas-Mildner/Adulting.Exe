@@ -10,7 +10,7 @@ const urgencyConfig: Record<
   { label: string; style: string }
 > = {
   "nice-to-have": {
-    label: "Waere schoen",
+    label: "Wäre schön",
     style: "bg-muted text-muted-foreground",
   },
   "should-do": {
@@ -18,11 +18,11 @@ const urgencyConfig: Record<
     style: "bg-primary/10 text-primary border-primary/20",
   },
   "need-soon": {
-    label: "Bald noetig",
+    label: "Bald nötig",
     style: "bg-chart-3/10 text-chart-3 border-chart-3/20",
   },
   "falling-apart": {
-    label: "Haus faellt auseinander",
+    label: "Haus fällt auseinander",
     style: "bg-destructive/10 text-destructive border-destructive/20",
   },
 }
@@ -58,7 +58,7 @@ export function WishlistBoard({ wishlistProjects }: { wishlistProjects: Wishlist
         <Card>
           <CardContent className="p-5">
             <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
-              Geschaetzte Kosten
+              Geschätzte Kosten
             </p>
             <p className="text-2xl font-semibold tabular-nums text-foreground mt-1">
               {formatCurrency(totalEstimated)}
@@ -146,7 +146,7 @@ export function WishlistBoard({ wishlistProjects }: { wishlistProjects: Wishlist
                       ? `${pct}% geschafft! Fast Zeit zum Loslegen.`
                       : pct >= 50
                         ? `Halbzeit. Weiter sparen!`
-                        : `Noch ${formatCurrency(remaining)} zu gehen. Limonadenstand eroeffnen?`}
+                        : `Noch ${formatCurrency(remaining)} zu gehen. Limonadenstand eröffnen?`}
                   </p>
                 </CardContent>
               </Card>
