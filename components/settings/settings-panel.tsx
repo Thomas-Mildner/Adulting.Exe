@@ -36,7 +36,7 @@ export function SettingsPanel() {
               </Label>
               <Input
                 id="address"
-                defaultValue="Musterstrasse 12"
+                defaultValue="Musterstraße 12"
                 className="h-9 text-sm"
               />
             </div>
@@ -85,7 +85,7 @@ export function SettingsPanel() {
             <CardTitle className="text-sm font-medium">Benachrichtigungen</CardTitle>
           </div>
           <CardDescription className="text-xs">
-            {"Waehle, welche Erinnerungen du ignorieren moechtest."}
+            {"Wähle, welche Erinnerungen du ignorieren möchtest."}
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -102,11 +102,11 @@ export function SettingsPanel() {
             },
             {
               title: "Verleih-O-Meter Warnungen",
-              desc: "Wenn Nachbarn ihr Werkzeug-Willkommen ueberstrapazieren.",
+              desc: "Wenn Nachbarn ihr Werkzeug-Willkommen überstrapazieren.",
               defaultOn: true,
             },
             {
-              title: "Zaehlerstand-Erinnerungen",
+              title: "Zählerstand-Erinnerungen",
               desc: "Monatlicher Stupser, die unbeliebteste Ecke im Keller zu besuchen.",
               defaultOn: false,
             },
@@ -150,7 +150,7 @@ export function SettingsPanel() {
             <div className="space-y-0.5">
               <p className="text-sm font-medium text-foreground">Daten exportieren</p>
               <p className="text-[11px] text-muted-foreground">
-                Alles als JSON herunterladen. Perfekt fuer deine naechste Tabellen-Obsession.
+                Alles als JSON herunterladen. Perfekt für deine nächste Tabellen-Obsession.
               </p>
             </div>
             <Button variant="outline" size="sm">
@@ -161,14 +161,14 @@ export function SettingsPanel() {
           <div className="flex items-center justify-between">
             <div className="space-y-0.5">
               <p className="text-sm font-medium text-foreground">
-                Alle Daten loeschen
+                Alle Daten löschen
               </p>
               <p className="text-[11px] text-muted-foreground">
-                Die nukleare Option. Kein Rueckgaengig. Keine Reue (hoffentlich).
+                Die nukleare Option. Kein Rückgängig. Keine Reue (hoffentlich).
               </p>
             </div>
             <Button variant="destructive" size="sm">
-              Loeschen
+              Löschen
             </Button>
           </div>
         </CardContent>
@@ -186,7 +186,7 @@ export function SettingsPanel() {
                 Adulting.exe v2.0
               </p>
               <p className="text-[11px] text-muted-foreground">
-                {"Immer noch Beta. Genau wie deine Erwachsenen-Faehigkeiten."}
+                {"Immer noch Beta. Genau wie deine Erwachsenen-Fähigkeiten."}
               </p>
             </div>
           </div>

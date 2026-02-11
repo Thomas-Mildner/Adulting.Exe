@@ -10,7 +10,7 @@ export default async function WishlistPage() {
   return (
     <DashboardLayout
       title="Die Wunschliste"
-      subtitle="Traeume, Illusionen und ueberraschend teure Zaeune."
+      subtitle="Träume, Illusionen und überraschend teure Zäune."
     >
       <WishlistBoard wishlistProjects={wishlistProjects} />
     </DashboardLayout>

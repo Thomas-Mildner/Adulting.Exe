@@ -150,28 +150,28 @@ export function LendOMeter({ lentItems }: { lentItems: LentItem[] }) {
         <Card>
           <CardContent className="p-5">
             <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
-              Puenktlich
+              Pünktlich
             </p>
             <p className="text-2xl font-semibold tabular-nums text-success mt-1">
               {active.length}
             </p>
             <p className="text-xs text-muted-foreground">
-              {"Glaube an die Menschheit: haelt"}
+              {"Glaube an die Menschheit: hält"}
             </p>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="p-5">
             <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
-              Ueberfaellig
+              Überfällig
             </p>
             <p className="text-2xl font-semibold tabular-nums text-destructive mt-1">
               {overdue.length}
             </p>
             <p className="text-xs text-muted-foreground">
               {overdue.length > 0
-                ? "Zeit fuer eine peinliche Nachricht"
-                : "Keine passiv-aggressiven Nachrichten noetig"}
+                ? "Zeit für eine peinliche Nachricht"
+                : "Keine passiv-aggressiven Nachrichten nötig"}
             </p>
           </CardContent>
         </Card>
@@ -182,9 +182,9 @@ export function LendOMeter({ lentItems }: { lentItems: LentItem[] }) {
         <CardHeader className="pb-3">
           <div className="flex items-center justify-between">
             <div>
-              <CardTitle className="text-sm font-medium">Alle verliehenen Gegenstaende</CardTitle>
+              <CardTitle className="text-sm font-medium">Alle verliehenen Gegenstände</CardTitle>
               <p className="text-xs text-muted-foreground mt-1">
-                {"Behalte im Blick, was draussen ist. Und wer es hat. Und wann du es zurueckbekommst (hoffentlich)."}
+                {"Behalte im Blick, was draußen ist. Und wer es hat. Und wann du es zurückbekommst (hoffentlich)."}
               </p>
             </div>
             <Dialog open={open} onOpenChange={(v) => { setOpen(v); if (!v) resetForm() }}>
@@ -199,7 +199,7 @@ export function LendOMeter({ lentItems }: { lentItems: LentItem[] }) {
                   <DialogHeader>
                     <DialogTitle>Neuen Verleih erfassen</DialogTitle>
                     <DialogDescription>
-                      Was wird verliehen, an wen, und wann soll es zurueckkommen?
+                      Was wird verliehen, an wen, und wann soll es zurückkommen?
                     </DialogDescription>
                   </DialogHeader>
                   <div className="grid gap-4 py-4">
@@ -235,7 +235,7 @@ export function LendOMeter({ lentItems }: { lentItems: LentItem[] }) {
                         />
                       </div>
                       <div className="grid gap-2">
-                        <Label htmlFor="expectedReturn">Rueckgabe bis</Label>
+                        <Label htmlFor="expectedReturn">Rückgabe bis</Label>
                         <Input
                           id="expectedReturn"
                           type="date"
@@ -275,7 +275,7 @@ export function LendOMeter({ lentItems }: { lentItems: LentItem[] }) {
                 <TableHead className="text-xs">Gegenstand</TableHead>
                 <TableHead className="text-xs">Nachbar</TableHead>
                 <TableHead className="text-xs hidden sm:table-cell">Ausleihdatum</TableHead>
-                <TableHead className="text-xs">Rueckgabe bis</TableHead>
+                <TableHead className="text-xs">Rückgabe bis</TableHead>
                 <TableHead className="text-xs hidden sm:table-cell">Vertrauenslevel</TableHead>
               </TableRow>
             </TableHeader>
@@ -329,8 +329,8 @@ export function LendOMeter({ lentItems }: { lentItems: LentItem[] }) {
                             }`}
                           >
                             {isOverdue
-                              ? `${Math.abs(days)}T ueberfaellig`
-                              : `${days}T uebrig`}
+                              ? `${Math.abs(days)}T überfällig`
+                              : `${days}T übrig`}
                           </Badge>
                         </TableCell>
                         <TableCell className="hidden sm:table-cell">

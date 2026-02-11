@@ -10,7 +10,7 @@ export default async function VaultPage() {
   return (
     <DashboardLayout
       title="Der Garantie- & Kartontresor"
-      subtitle="Wo Quittungen ihr bestes Leben fuehren."
+      subtitle="Wo Quittungen ihr bestes Leben führen."
     >
       <VaultGrid appliances={appliances} />
     </DashboardLayout>

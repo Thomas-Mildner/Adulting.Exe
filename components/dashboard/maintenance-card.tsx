@@ -64,7 +64,7 @@ export function MaintenanceCard({ initialTasks }: { initialTasks: MaintenanceTas
                 {task.title}
               </p>
               <p className="text-[11px] text-muted-foreground mt-1">
-                Faellig{" "}
+                Fällig{" "}
                 {new Date(task.dueDate).toLocaleDateString("de-DE", {
                   month: "short",
                   day: "numeric",

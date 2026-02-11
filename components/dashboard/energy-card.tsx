@@ -24,7 +24,7 @@ export function EnergyCard({ meterHistory }: { meterHistory: MeterReading[] }) {
           <CardTitle className="text-sm font-medium">Ressourcenfresser</CardTitle>
           <span className="text-[11px] font-mono text-muted-foreground">
             Strom {powerDelta > 0 ? "+" : ""}
-            {powerDelta} kWh ggue. Vormonat
+            {powerDelta} kWh ggü. Vormonat
           </span>
         </div>
         <p className="text-xs text-muted-foreground">

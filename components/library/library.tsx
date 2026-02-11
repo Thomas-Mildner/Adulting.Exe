@@ -103,7 +103,7 @@ export function Library({ documents }: { documents: Document[] }) {
           <CardContent className="flex flex-col items-center justify-center py-16 text-center">
             <FolderOpen className="h-8 w-8 text-muted-foreground/50 mb-3" />
             <p className="text-sm text-muted-foreground">
-              {"Keine Dokumente gefunden. Die Wissensgoetter haben dich verlassen."}
+              {"Keine Dokumente gefunden. Die Wissensgötter haben dich verlassen."}
             </p>
           </CardContent>
         </Card>
@@ -179,7 +179,7 @@ export function Library({ documents }: { documents: Document[] }) {
                       <div className="rounded-lg border border-dashed p-8 text-center">
                         <FileText className="h-8 w-8 text-muted-foreground/30 mx-auto mb-2" />
                         <p className="text-xs text-muted-foreground">
-                          {"PDF-Vorschau nicht verfuegbar. Aber immerhin weisst du, dass es existiert."}
+                          {"PDF-Vorschau nicht verfügbar. Aber immerhin weißt du, dass es existiert."}
                         </p>
                       </div>
                     )}

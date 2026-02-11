@@ -57,14 +57,14 @@ import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 
 const specialties = [
-  "Sanitaer",
+  "Sanitär",
   "Elektrik",
   "Heizung",
   "Dachdecker",
   "Maler",
   "Schreiner",
   "Gartenbau",
-  "Schluessel",
+  "Schlüssel",
   "Allgemein",
 ]
 
@@ -129,7 +129,7 @@ function ProviderFormFields({
           <Label htmlFor="sp-name">Name</Label>
           <Input
             id="sp-name"
-            placeholder="z.B. Mueller Sanitaer"
+            placeholder="z.B. Müller Sanitär"
             value={form.name}
             onChange={(e) => setForm((p) => ({ ...p, name: e.target.value }))}
             required
@@ -171,7 +171,7 @@ function ProviderFormFields({
           <Input
             id="sp-email"
             type="email"
-            placeholder="z.B. info@mueller-sanitaer.de"
+            placeholder="z.B. info@müller-sanitär.de"
             value={form.email}
             onChange={(e) => setForm((p) => ({ ...p, email: e.target.value }))}
             required
@@ -183,7 +183,7 @@ function ProviderFormFields({
         <Input
           id="sp-website"
           type="url"
-          placeholder="z.B. https://mueller-sanitaer.de"
+          placeholder="z.B. https://müller-sanitär.de"
           value={form.website}
           onChange={(e) => setForm((p) => ({ ...p, website: e.target.value }))}
         />
@@ -308,7 +308,7 @@ function DirectoryTab({ serviceProviders }: { serviceProviders: ServiceProvider[
                 <DialogHeader>
                   <DialogTitle>Neuen Handwerker erfassen</DialogTitle>
                   <DialogDescription>
-                    Kontaktdaten und Fachgebiet eintragen &mdash; fuer den naechsten Notfall.
+                    Kontaktdaten und Fachgebiet eintragen &mdash; für den nächsten Notfall.
                   </DialogDescription>
                 </DialogHeader>
                 <ProviderFormFields form={createForm} setForm={setCreateForm} />
@@ -483,7 +483,7 @@ function DirectoryTab({ serviceProviders }: { serviceProviders: ServiceProvider[
                     </div>
                     {provider.history.length === 0 && (
                       <p className="text-sm text-muted-foreground text-center py-6">
-                        {"Noch keine Reparaturen. Drueck die Daumen."}
+                        {"Noch keine Reparaturen. Drück die Daumen."}
                       </p>
                     )}
                   </div>
@@ -507,7 +507,7 @@ function DirectoryTab({ serviceProviders }: { serviceProviders: ServiceProvider[
             <DialogHeader>
               <DialogTitle>Handwerker bearbeiten</DialogTitle>
               <DialogDescription>
-                Aenderungen werden sofort gespeichert.
+                Änderungen werden sofort gespeichert.
               </DialogDescription>
             </DialogHeader>
             <ProviderFormFields form={editForm} setForm={setEditForm} />
@@ -523,7 +523,7 @@ function DirectoryTab({ serviceProviders }: { serviceProviders: ServiceProvider[
                 Abbrechen
               </Button>
               <Button type="submit" disabled={isPending}>
-                {isPending ? "Speichert..." : "Aenderungen speichern"}
+                {isPending ? "Speichert..." : "Änderungen speichern"}
               </Button>
             </DialogFooter>
           </form>
@@ -539,10 +539,10 @@ function DirectoryTab({ serviceProviders }: { serviceProviders: ServiceProvider[
       >
         <DialogContent className="sm:max-w-[400px]">
           <DialogHeader>
-            <DialogTitle>Handwerker loeschen?</DialogTitle>
+            <DialogTitle>Handwerker löschen?</DialogTitle>
             <DialogDescription>
               Der Handwerker und seine gesamte Servicehistorie werden dauerhaft
-              entfernt. Diese Aktion kann nicht rueckgaengig gemacht werden.
+              entfernt. Diese Aktion kann nicht rückgängig gemacht werden.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
@@ -554,7 +554,7 @@ function DirectoryTab({ serviceProviders }: { serviceProviders: ServiceProvider[
               disabled={isPending}
               onClick={() => deleteId && handleDelete(deleteId)}
             >
-              {isPending ? "Loescht..." : "Endgueltig loeschen"}
+              {isPending ? "Löscht..." : "Endgültig löschen"}
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -606,7 +606,7 @@ function InvoiceFormFields({
             onValueChange={(v) => onProviderSelect(v)}
           >
             <SelectTrigger id="inv-provider">
-              <SelectValue placeholder="Dienstleister waehlen..." />
+              <SelectValue placeholder="Dienstleister wählen..." />
             </SelectTrigger>
             <SelectContent>
               {serviceProviders.map((sp) => (
@@ -800,7 +800,7 @@ function InvoicesTab({ invoices, serviceProviders }: { invoices: Invoice[]; serv
                 <DialogHeader>
                   <DialogTitle>Neue Rechnung erfassen</DialogTitle>
                   <DialogDescription>
-                    Handwerkerrechnung dokumentieren &mdash; dein zukuenftiges Ich wird dir danken.
+                    Handwerkerrechnung dokumentieren &mdash; dein zukünftiges Ich wird dir danken.
                   </DialogDescription>
                 </DialogHeader>
                 <InvoiceFormFields
@@ -922,7 +922,7 @@ function InvoicesTab({ invoices, serviceProviders }: { invoices: Invoice[]; serv
             <DialogHeader>
               <DialogTitle>Rechnung bearbeiten</DialogTitle>
               <DialogDescription>
-                Aenderungen werden sofort gespeichert.
+                Änderungen werden sofort gespeichert.
               </DialogDescription>
             </DialogHeader>
             <InvoiceFormFields
@@ -943,7 +943,7 @@ function InvoicesTab({ invoices, serviceProviders }: { invoices: Invoice[]; serv
                 Abbrechen
               </Button>
               <Button type="submit" disabled={isPending}>
-                {isPending ? "Speichert..." : "Aenderungen speichern"}
+                {isPending ? "Speichert..." : "Änderungen speichern"}
               </Button>
             </DialogFooter>
           </form>
@@ -959,9 +959,9 @@ function InvoicesTab({ invoices, serviceProviders }: { invoices: Invoice[]; serv
       >
         <DialogContent className="sm:max-w-[400px]">
           <DialogHeader>
-            <DialogTitle>Rechnung loeschen?</DialogTitle>
+            <DialogTitle>Rechnung löschen?</DialogTitle>
             <DialogDescription>
-              Diese Aktion kann nicht rueckgaengig gemacht werden. Die Rechnung
+              Diese Aktion kann nicht rückgängig gemacht werden. Die Rechnung
               wird dauerhaft entfernt.
             </DialogDescription>
           </DialogHeader>
@@ -974,7 +974,7 @@ function InvoicesTab({ invoices, serviceProviders }: { invoices: Invoice[]; serv
               disabled={isPending}
               onClick={() => deleteId && handleDelete(deleteId)}
             >
-              {isPending ? "Loescht..." : "Endgueltig loeschen"}
+              {isPending ? "Löscht..." : "Endgültig löschen"}
             </Button>
           </DialogFooter>
         </DialogContent>

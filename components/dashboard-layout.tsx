@@ -3,8 +3,7 @@
 import React from "react"
 import { SidebarProvider, SidebarInset, SidebarTrigger } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/app-sidebar"
-import { Input } from "@/components/ui/input"
-import { Search } from "lucide-react"
+import { GlobalSearch } from "@/components/global-search"
 import { Separator } from "@/components/ui/separator"
 
 export function DashboardLayout({
@@ -30,13 +29,7 @@ export function DashboardLayout({
             )}
           </div>
           <div className="ml-auto flex items-center gap-4">
-            <div className="relative w-56 hidden md:block">
-              <Search className="absolute left-2.5 top-2.5 h-3.5 w-3.5 text-muted-foreground" />
-              <Input
-                placeholder="Alles durchsuchen..."
-                className="pl-8 h-8 text-xs bg-background"
-              />
-            </div>
+            <GlobalSearch />
           </div>
         </header>
         <main className="flex-1 overflow-auto p-4 lg:p-6">{children}</main>

@@ -28,7 +28,7 @@ function getPainLevel(current: number, previous: number) {
   if (delta > 5) return { level: "Leichte Panik", color: "text-chart-3" }
   if (delta > 0) return { level: "Leichte Sorge", color: "text-chart-3" }
   if (delta === 0) return { level: "Zen", color: "text-success" }
-  return { level: "Ueberraschend gut", color: "text-success" }
+  return { level: "Überraschend gut", color: "text-success" }
 }
 
 export function UtilityTracker({ meterHistory }: { meterHistory: MeterReading[] }) {
@@ -124,7 +124,7 @@ export function UtilityTracker({ meterHistory }: { meterHistory: MeterReading[] 
               Verbrauchshistorie
             </CardTitle>
             <p className="text-xs text-muted-foreground">
-              {"6-Monats-Ueberblick. Halt dich fest."}
+              {"6-Monats-Überblick. Halt dich fest."}
             </p>
           </CardHeader>
           <CardContent>
@@ -185,7 +185,7 @@ export function UtilityTracker({ meterHistory }: { meterHistory: MeterReading[] 
               Wasserverbrauch-Trend
             </CardTitle>
             <p className="text-xs text-muted-foreground">
-              {"Jeder Tropfen zaehlt. Wortwrtlich."}
+              {"Jeder Tropfen zählt. Wortwörtlich."}
             </p>
           </CardHeader>
           <CardContent>
@@ -251,10 +251,10 @@ export function UtilityTracker({ meterHistory }: { meterHistory: MeterReading[] 
       <Card>
         <CardHeader className="pb-3">
             <CardTitle className="text-sm font-medium">
-              Neue Zaehlerstaende erfassen
+              Neue Zählerstände erfassen
             </CardTitle>
             <p className="text-xs text-muted-foreground">
-              {"Zeit fuer deinen monatlichen Termin mit den Zaehlerstaenden."}
+              {"Zeit für deinen monatlichen Termin mit den Zählerständen."}
             </p>
         </CardHeader>
         <CardContent>
