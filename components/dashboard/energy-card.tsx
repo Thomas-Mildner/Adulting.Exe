@@ -1,7 +1,7 @@
 "use client"
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { type MeterReading } from "@/lib/data"
+import { type MeterReading, formatCurrency } from "@/lib/data"
 import {
   AreaChart,
   Area,
@@ -15,7 +15,14 @@ import {
 export function EnergyCard({ meterHistory }: { meterHistory: MeterReading[] }) {
   const latest = meterHistory[meterHistory.length - 1]
   const prev = meterHistory.length >= 2 ? meterHistory[meterHistory.length - 2] : latest
-  const powerDelta = latest.power - prev.power
+  const latestTotal = latest.powerCost + latest.waterCost + latest.heatingCost
+  const prevTotal = prev.powerCost + prev.waterCost + prev.heatingCost
+  const costDelta = latestTotal - prevTotal
+
+  const chartData = meterHistory.map(r => ({
+    month: r.month,
+    Gesamt: r.powerCost + r.waterCost + r.heatingCost,
+  }))
 
   return (
     <Card>
@@ -23,8 +30,7 @@ export function EnergyCard({ meterHistory }: { meterHistory: MeterReading[] }) {
         <div className="flex items-center justify-between">
           <CardTitle className="text-sm font-medium">Ressourcenfresser</CardTitle>
           <span className="text-[11px] font-mono text-muted-foreground">
-            Strom {powerDelta > 0 ? "+" : ""}
-            {powerDelta} kWh ggü. Vormonat
+            {costDelta > 0 ? "+" : ""}{formatCurrency(costDelta)} ggü. Vormonat
           </span>
         </div>
         <p className="text-xs text-muted-foreground">
@@ -34,11 +40,11 @@ export function EnergyCard({ meterHistory }: { meterHistory: MeterReading[] }) {
       <CardContent>
         <div className="h-[180px] w-full">
           <ResponsiveContainer width="100%" height="100%">
-            <AreaChart data={meterHistory} margin={{ top: 5, right: 5, left: -20, bottom: 0 }}>
+            <AreaChart data={chartData} margin={{ top: 5, right: 5, left: -10, bottom: 0 }}>
               <defs>
                 <linearGradient id="powerGrad" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="hsl(220, 72%, 50%)" stopOpacity={0.15} />
-                  <stop offset="95%" stopColor="hsl(220, 72%, 50%)" stopOpacity={0} />
+                  <stop offset="5%" stopColor="hsl(350, 65%, 55%)" stopOpacity={0.15} />
+                  <stop offset="95%" stopColor="hsl(350, 65%, 55%)" stopOpacity={0} />
                 </linearGradient>
               </defs>
               <CartesianGrid strokeDasharray="3 3" stroke="hsl(220, 13%, 91%)" />
@@ -52,6 +58,7 @@ export function EnergyCard({ meterHistory }: { meterHistory: MeterReading[] }) {
                 tick={{ fontSize: 10, fill: "hsl(220, 8%, 46%)" }}
                 axisLine={false}
                 tickLine={false}
+                tickFormatter={(v) => `${v}€`}
               />
               <Tooltip
                 contentStyle={{
@@ -60,14 +67,15 @@ export function EnergyCard({ meterHistory }: { meterHistory: MeterReading[] }) {
                   border: "1px solid hsl(220, 13%, 91%)",
                   boxShadow: "0 4px 6px -1px rgba(0,0,0,.05)",
                 }}
+                formatter={(v: number) => formatCurrency(v)}
               />
               <Area
                 type="monotone"
-                dataKey="power"
-                stroke="hsl(220, 72%, 50%)"
+                dataKey="Gesamt"
+                stroke="hsl(350, 65%, 55%)"
                 strokeWidth={2}
                 fill="url(#powerGrad)"
-                name="Strom (kWh)"
+                name="Gesamtkosten"
               />
             </AreaChart>
           </ResponsiveContainer>

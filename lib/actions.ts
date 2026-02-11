@@ -356,14 +356,23 @@ export async function getMeterReadings(): Promise<MeterReading[]> {
     power: r.power,
     water: r.water,
     heating: r.heating,
+    powerCost: r.powerCost,
+    waterCost: r.waterCost,
+    heatingCost: r.heatingCost,
   }))
 }
 
 export async function createMeterReading(data: MeterReading) {
   await prisma.meterReading.upsert({
     where: { month: data.month },
-    update: { power: data.power, water: data.water, heating: data.heating },
-    create: { month: data.month, power: data.power, water: data.water, heating: data.heating },
+    update: {
+      power: data.power, water: data.water, heating: data.heating,
+      powerCost: data.powerCost, waterCost: data.waterCost, heatingCost: data.heatingCost,
+    },
+    create: {
+      month: data.month, power: data.power, water: data.water, heating: data.heating,
+      powerCost: data.powerCost, waterCost: data.waterCost, heatingCost: data.heatingCost,
+    },
   })
   revalidatePath("/utilities")
   revalidatePath("/")

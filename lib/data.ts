@@ -75,6 +75,9 @@ export type MeterReading = {
   power: number
   water: number
   heating: number
+  powerCost: number
+  waterCost: number
+  heatingCost: number
 }
 
 export type WishlistProject = {
