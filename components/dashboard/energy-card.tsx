@@ -1,7 +1,7 @@
 "use client"
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { meterHistory } from "@/lib/data"
+import { type MeterReading } from "@/lib/data"
 import {
   AreaChart,
   Area,
@@ -12,9 +12,9 @@ import {
   ResponsiveContainer,
 } from "recharts"
 
-export function EnergyCard() {
+export function EnergyCard({ meterHistory }: { meterHistory: MeterReading[] }) {
   const latest = meterHistory[meterHistory.length - 1]
-  const prev = meterHistory[meterHistory.length - 2]
+  const prev = meterHistory.length >= 2 ? meterHistory[meterHistory.length - 2] : latest
   const powerDelta = latest.power - prev.power
 
   return (

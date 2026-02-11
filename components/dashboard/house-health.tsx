@@ -1,9 +1,15 @@
 "use client"
 
 import { Card, CardContent } from "@/components/ui/card"
-import { appliances, maintenanceTasks, lentItems, getDaysRemaining } from "@/lib/data"
+import { getDaysRemaining, type Appliance, type MaintenanceTask, type LentItem } from "@/lib/data"
 
-export function HouseHealth() {
+type HouseHealthProps = {
+  appliances: Appliance[]
+  maintenanceTasks: MaintenanceTask[]
+  lentItems: LentItem[]
+}
+
+export function HouseHealth({ appliances, maintenanceTasks, lentItems }: HouseHealthProps) {
   const activeWarranties = appliances.filter((a) => a.status === "protected").length
   const totalAppliances = appliances.length
   const pendingTasks = maintenanceTasks.filter((t) => !t.completed).length

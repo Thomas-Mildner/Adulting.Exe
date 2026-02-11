@@ -1,15 +1,18 @@
-"use client"
-
 import { DashboardLayout } from "@/components/dashboard-layout"
 import { WishlistBoard } from "@/components/wishlist/wishlist-board"
+import { getWishlistProjects } from "@/lib/actions"
 
-export default function WishlistPage() {
+export const dynamic = "force-dynamic"
+
+export default async function WishlistPage() {
+  const wishlistProjects = await getWishlistProjects()
+
   return (
     <DashboardLayout
       title="Die Wunschliste"
       subtitle="Traeume, Illusionen und ueberraschend teure Zaeune."
     >
-      <WishlistBoard />
+      <WishlistBoard wishlistProjects={wishlistProjects} />
     </DashboardLayout>
   )
 }

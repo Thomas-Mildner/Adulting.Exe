@@ -1,5 +1,3 @@
-"use client"
-
 import { DashboardLayout } from "@/components/dashboard-layout"
 import { SettingsPanel } from "@/components/settings/settings-panel"
 

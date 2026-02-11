@@ -2,11 +2,11 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { lentItems, getDaysRemaining } from "@/lib/data"
+import { getDaysRemaining, type LentItem } from "@/lib/data"
 import Link from "next/link"
 import { ArrowRight, ShieldAlert } from "lucide-react"
 
-export function LendingCard() {
+export function LendingCard({ lentItems }: { lentItems: LentItem[] }) {
   const overdue = lentItems.filter((i) => getDaysRemaining(i.expectedReturn) < 0)
 
   return (

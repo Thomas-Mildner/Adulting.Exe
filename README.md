@@ -33,34 +33,93 @@
 
 ## 🚀 Tech Stack
 
-* **Framework:** Next.js (App Router)
+* **Framework:** Next.js (App Router, Server Components)
 * **Styling:** Tailwind CSS
 * **Components:** Shadcn/UI
 * **Icons:** Lucide-React
 * **Charts:** Recharts
-* **Deployment:** Vercel
+* **Database:** PostgreSQL (via Docker)
+* **ORM:** Prisma
+* **Deployment:** Vercel / Docker
 
 ---
 
 ## 🛠️ Installation & Setup
 
-1.  **Clone the repository:**
-    ```bash
-    git clone [https://github.com/Thomas-Mildner/adulting-exe.git](https://github.com/your-username/adulting-exe.git)
-    ```
+### Prerequisites
 
-2.  **Install dependencies:**
-    ```bash
-    npm install
-    ```
+- [Node.js](https://nodejs.org/) >= 18
+- [pnpm](https://pnpm.io/) (recommended) or npm
+- [Docker](https://www.docker.com/) & Docker Compose
 
-3.  **Run the development server:**
-    ```bash
-    npm run dev
-    ```
+### 1. Clone the repository
 
-4.  **Open the dashboard:**
-    Navigate to [http://localhost:3000](http://localhost:3000) to see your home management in action.
+```bash
+git clone https://github.com/Thomas-Mildner/adulting-exe.git
+cd adulting-exe
+```
+
+### 2. Install dependencies
+
+```bash
+pnpm install
+```
+
+### 3. Start the PostgreSQL database
+
+```bash
+docker compose up -d
+```
+
+This starts a PostgreSQL 16 instance on port **5432** with:
+- **User:** `adulting`
+- **Password:** `adulting_secret`
+- **Database:** `adulting_exe`
+
+### 4. Configure environment
+
+Copy the example env file (or use the one already created):
+
+```bash
+cp .env.example .env
+```
+
+The default `DATABASE_URL` is:
+```
+postgresql://adulting:adulting_secret@localhost:5432/adulting_exe?schema=public
+```
+
+### 5. Push database schema & seed data
+
+```bash
+pnpm db:push     # Create tables from Prisma schema
+pnpm db:seed     # Populate with sample data
+```
+
+### 6. Run the development server
+
+```bash
+pnpm dev
+```
+
+### 7. Open the dashboard
+
+Navigate to [http://localhost:3000](http://localhost:3000) to see your home management in action.
+
+---
+
+## 📦 Database Commands
+
+| Command | Description |
+|---------|-------------|
+| `pnpm db:push` | Push schema changes to the database |
+| `pnpm db:seed` | Seed the database with sample data |
+| `pnpm db:studio` | Open Prisma Studio (visual DB editor) |
+| `pnpm db:generate` | Regenerate Prisma Client |
+| `pnpm db:reset` | Reset database and re-seed |
+| `docker compose up -d` | Start PostgreSQL |
+| `docker compose down` | Stop PostgreSQL |
+| `docker compose down -v` | Stop & delete database volume |
 
 ---
 
