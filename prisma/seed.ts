@@ -148,12 +148,18 @@ async function main() {
   // ─── Meter Readings ─────────────────────────────────────────────────────
   await prisma.meterReading.createMany({
     data: [
-      { id: "mr-1", month: "Sep 2025", power: 285, water: 11.2, heating: 45 },
-      { id: "mr-2", month: "Oct 2025", power: 310, water: 10.8, heating: 120 },
-      { id: "mr-3", month: "Nov 2025", power: 340, water: 10.5, heating: 280 },
-      { id: "mr-4", month: "Dec 2025", power: 380, water: 11.0, heating: 350 },
-      { id: "mr-5", month: "Jan 2026", power: 365, water: 10.9, heating: 320 },
-      { id: "mr-6", month: "Feb 2026", power: 345, water: 10.6, heating: 290 },
+      { id: "mr-01", month: "Mär 2025", power: 260, water: 10.4, heating: 240, powerCost: 83.20, waterCost: 24.96, heatingCost: 26.40 },
+      { id: "mr-02", month: "Apr 2025", power: 240, water: 10.1, heating: 140, powerCost: 76.80, waterCost: 24.24, heatingCost: 15.40 },
+      { id: "mr-03", month: "Mai 2025", power: 220, water: 11.5, heating: 60, powerCost: 70.40, waterCost: 27.60, heatingCost: 6.60 },
+      { id: "mr-04", month: "Jun 2025", power: 210, water: 12.8, heating: 20, powerCost: 67.20, waterCost: 30.72, heatingCost: 2.20 },
+      { id: "mr-05", month: "Jul 2025", power: 215, water: 14.2, heating: 10, powerCost: 68.80, waterCost: 34.08, heatingCost: 1.10 },
+      { id: "mr-06", month: "Aug 2025", power: 225, water: 13.5, heating: 15, powerCost: 72.00, waterCost: 32.40, heatingCost: 1.65 },
+      { id: "mr-07", month: "Sep 2025", power: 285, water: 11.2, heating: 45, powerCost: 91.20, waterCost: 26.88, heatingCost: 4.95 },
+      { id: "mr-08", month: "Okt 2025", power: 310, water: 10.8, heating: 120, powerCost: 99.20, waterCost: 25.92, heatingCost: 13.20 },
+      { id: "mr-09", month: "Nov 2025", power: 340, water: 10.5, heating: 280, powerCost: 108.80, waterCost: 25.20, heatingCost: 30.80 },
+      { id: "mr-10", month: "Dez 2025", power: 380, water: 11.0, heating: 350, powerCost: 121.60, waterCost: 26.40, heatingCost: 38.50 },
+      { id: "mr-11", month: "Jan 2026", power: 365, water: 10.9, heating: 320, powerCost: 116.80, waterCost: 26.16, heatingCost: 35.20 },
+      { id: "mr-12", month: "Feb 2026", power: 345, water: 10.6, heating: 290, powerCost: 110.40, waterCost: 25.44, heatingCost: 31.90 },
     ],
   })
   console.log("  ✅ Meter readings seeded")

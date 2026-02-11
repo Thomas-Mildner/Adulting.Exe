@@ -119,11 +119,14 @@ model LentItem {
 // ─── Utility / Meter Readings ───────────────────────────────────────────
 
 model MeterReading {
-  id      String @id @default(cuid())
-  month   String @unique
-  power   Float
-  water   Float
-  heating Float
+  id          String @id @default(cuid())
+  month       String @unique
+  power       Float
+  water       Float
+  heating     Float
+  powerCost   Float  @default(0)
+  waterCost   Float  @default(0)
+  heatingCost Float  @default(0)
 
   createdAt DateTime @default(now())
 }
