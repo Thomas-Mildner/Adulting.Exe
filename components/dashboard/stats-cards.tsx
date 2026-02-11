@@ -2,33 +2,39 @@
 
 import { Card, CardContent } from "@/components/ui/card"
 import { ShieldCheck, Wrench, Receipt } from "lucide-react"
-import { appliances, maintenanceTasks, getTotalTaxDeductible, formatCurrency } from "@/lib/data"
+import { type Appliance, type MaintenanceTask, formatCurrency } from "@/lib/data"
 
-const stats = [
-  {
-    title: "Aktive Garantien",
-    value: appliances.filter((a) => a.status === "protected").length.toString(),
-    subtitle: `${appliances.filter((a) => a.status === "zombie").length} abgelaufen, ${appliances.filter((a) => a.status === "solo").length} ohne Schutz`,
-    icon: ShieldCheck,
-    accent: "bg-primary/10 text-primary",
-  },
-  {
-    title: "Offene Wartungen",
-    value: maintenanceTasks.filter((t) => !t.completed).length.toString(),
-    subtitle: `${maintenanceTasks.filter((t) => t.priority === "high" && !t.completed).length} hohe Prioritaet`,
-    icon: Wrench,
-    accent: "bg-chart-3/10 text-chart-3",
-  },
-  {
-    title: "Steuerlich absetzbar (2025)",
-    value: formatCurrency(getTotalTaxDeductible()),
-    subtitle: "Handwerkerkosten gesamt",
-    icon: Receipt,
-    accent: "bg-success/10 text-success",
-  },
-]
+type StatsCardsProps = {
+  appliances: Appliance[]
+  maintenanceTasks: MaintenanceTask[]
+  taxDeductible: number
+}
 
-export function StatsCards() {
+export function StatsCards({ appliances, maintenanceTasks, taxDeductible }: StatsCardsProps) {
+  const stats = [
+    {
+      title: "Aktive Garantien",
+      value: appliances.filter((a) => a.status === "protected").length.toString(),
+      subtitle: `${appliances.filter((a) => a.status === "zombie").length} abgelaufen, ${appliances.filter((a) => a.status === "solo").length} ohne Schutz`,
+      icon: ShieldCheck,
+      accent: "bg-primary/10 text-primary",
+    },
+    {
+      title: "Offene Wartungen",
+      value: maintenanceTasks.filter((t) => !t.completed).length.toString(),
+      subtitle: `${maintenanceTasks.filter((t) => t.priority === "high" && !t.completed).length} hohe Prioritaet`,
+      icon: Wrench,
+      accent: "bg-chart-3/10 text-chart-3",
+    },
+    {
+      title: "Steuerlich absetzbar (2025)",
+      value: formatCurrency(taxDeductible),
+      subtitle: "Handwerkerkosten gesamt",
+      icon: Receipt,
+      accent: "bg-success/10 text-success",
+    },
+  ]
+
   return (
     <div className="grid gap-4 grid-cols-1 sm:grid-cols-3">
       {stats.map((stat) => (

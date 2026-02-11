@@ -24,7 +24,7 @@ import {
   FileCode,
   ExternalLink,
 } from "lucide-react"
-import { documents, type Document } from "@/lib/data"
+import { type Document } from "@/lib/data"
 import { Button } from "@/components/ui/button"
 
 const categoryIcons: Record<Document["category"], React.ElementType> = {
@@ -51,7 +51,7 @@ const categories: Document["category"][] = [
   "General",
 ]
 
-export function Library() {
+export function Library({ documents }: { documents: Document[] }) {
   const [search, setSearch] = useState("")
   const [activeCategory, setActiveCategory] = useState<string>("all")
 

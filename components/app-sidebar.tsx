@@ -10,6 +10,7 @@ import {
   Gauge,
   Sparkles,
   HandCoins,
+  ClipboardCheck,
   Settings,
   Terminal,
 } from "lucide-react"
@@ -36,6 +37,7 @@ const mainNav = [
 ]
 
 const toolsNav = [
+  { title: "Wartungen", href: "/maintenance", icon: ClipboardCheck },
   { title: "Ressourcenfresser", href: "/utilities", icon: Gauge },
   { title: "Wunschliste", href: "/wishlist", icon: Sparkles },
   { title: "Verleih-O-Meter", href: "/lending", icon: HandCoins },

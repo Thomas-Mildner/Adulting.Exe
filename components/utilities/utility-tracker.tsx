@@ -6,7 +6,8 @@ import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
-import { meterHistory } from "@/lib/data"
+import { type MeterReading } from "@/lib/data"
+import { createMeterReading } from "@/lib/actions"
 import { Zap, Droplets, Flame, TrendingUp } from "lucide-react"
 import {
   AreaChart,
@@ -21,9 +22,6 @@ import {
   Legend,
 } from "recharts"
 
-const latest = meterHistory[meterHistory.length - 1]
-const prev = meterHistory[meterHistory.length - 2]
-
 function getPainLevel(current: number, previous: number) {
   const delta = ((current - previous) / previous) * 100
   if (delta > 10) return { level: "Existenzielle Angst", color: "text-destructive" }
@@ -33,14 +31,35 @@ function getPainLevel(current: number, previous: number) {
   return { level: "Ueberraschend gut", color: "text-success" }
 }
 
-const powerPain = getPainLevel(latest.power, prev.power)
-const waterPain = getPainLevel(latest.water, prev.water)
-const heatingPain = getPainLevel(latest.heating, prev.heating)
-
-export function UtilityTracker() {
+export function UtilityTracker({ meterHistory }: { meterHistory: MeterReading[] }) {
   const [powerInput, setPowerInput] = useState("")
   const [waterInput, setWaterInput] = useState("")
   const [heatingInput, setHeatingInput] = useState("")
+  const [saving, setSaving] = useState(false)
+
+  const latest = meterHistory[meterHistory.length - 1]
+  const prev = meterHistory.length >= 2 ? meterHistory[meterHistory.length - 2] : latest
+
+  const powerPain = getPainLevel(latest.power, prev.power)
+  const waterPain = getPainLevel(latest.water, prev.water)
+  const heatingPain = getPainLevel(latest.heating, prev.heating)
+
+  const handleSave = async () => {
+    if (!powerInput && !waterInput && !heatingInput) return
+    setSaving(true)
+    const now = new Date()
+    const month = now.toLocaleDateString("en-US", { month: "short", year: "numeric" })
+    await createMeterReading({
+      month,
+      power: powerInput ? parseFloat(powerInput) : latest.power,
+      water: waterInput ? parseFloat(waterInput) : latest.water,
+      heating: heatingInput ? parseFloat(heatingInput) : latest.heating,
+    })
+    setPowerInput("")
+    setWaterInput("")
+    setHeatingInput("")
+    setSaving(false)
+  }
 
   const resources = [
     {
@@ -281,7 +300,9 @@ export function UtilityTracker() {
             </div>
           </div>
           <div className="flex justify-end mt-4">
-            <Button size="sm">Speichern</Button>
+            <Button size="sm" onClick={handleSave} disabled={saving}>
+              {saving ? "Speichert..." : "Speichern"}
+            </Button>
           </div>
         </CardContent>
       </Card>

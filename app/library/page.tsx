@@ -1,15 +1,18 @@
-"use client"
-
 import { DashboardLayout } from "@/components/dashboard-layout"
 import { Library } from "@/components/library/library"
+import { getDocuments } from "@/lib/actions"
 
-export default function LibraryPage() {
+export const dynamic = "force-dynamic"
+
+export default async function LibraryPage() {
+  const documents = await getDocuments()
+
   return (
     <DashboardLayout
       title="Die Bibliothek"
-      subtitle="Alle Anleitungen, die du erst oeffnest, wenn etwas kaputtgeht."
+      subtitle="Alle Anleitungen, die du erst öffnest, wenn etwas kaputtgeht."
     >
-      <Library />
+      <Library documents={documents} />
     </DashboardLayout>
   )
 }

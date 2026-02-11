@@ -1,0 +1,14 @@
+{
+  "Servers": {
+    "1": {
+      "Name": "Adulting.Exe DB",
+      "Group": "Servers",
+      "Host": "postgres",
+      "Port": 5432,
+      "MaintenanceDB": "adulting_exe",
+      "Username": "adulting",
+      "PassFile": "/var/lib/pgadmin/pgpass",
+      "SSLMode": "prefer"
+    }
+  }
+}

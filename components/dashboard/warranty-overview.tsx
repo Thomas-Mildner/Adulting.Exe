@@ -3,7 +3,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Progress } from "@/components/ui/progress"
-import { appliances, getDaysRemaining, getWarrantyPercent } from "@/lib/data"
+import { getDaysRemaining, getWarrantyPercent, type Appliance } from "@/lib/data"
 import Link from "next/link"
 import { ArrowRight } from "lucide-react"
 
@@ -13,7 +13,7 @@ const statusLabels: Record<string, { label: string; style: string }> = {
   zombie: { label: "Zombie-Modus", style: "bg-destructive/10 text-destructive border-destructive/20" },
 }
 
-export function WarrantyOverview() {
+export function WarrantyOverview({ appliances }: { appliances: Appliance[] }) {
   const upcoming = appliances
     .filter((a) => a.status !== "zombie")
     .sort(

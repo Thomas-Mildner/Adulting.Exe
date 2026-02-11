@@ -1,0 +1,144 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ─── Appliance / Warranty Vault ─────────────────────────────────────────
+
+model Appliance {
+  id           String   @id @default(cuid())
+  name         String
+  category     String
+  purchaseDate DateTime
+  warrantyEnd  DateTime
+  boxLocation  String
+  status       String   // "protected" | "solo" | "zombie"
+  brand        String
+  price        Float
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// ─── Service Providers & History ────────────────────────────────────────
+
+model ServiceProvider {
+  id        String   @id @default(cuid())
+  name      String
+  specialty String
+  phone     String
+  email     String
+  website   String?
+  rating    Int
+
+  history  ServiceHistory[]
+  invoices Invoice[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ServiceHistory {
+  id          String   @id @default(cuid())
+  date        DateTime
+  description String
+  cost        Float
+  taxRelevant Boolean
+
+  provider   ServiceProvider @relation(fields: [providerId], references: [id], onDelete: Cascade)
+  providerId String
+
+  invoiceId String?
+
+  createdAt DateTime @default(now())
+}
+
+// ─── Invoices ───────────────────────────────────────────────────────────
+
+model Invoice {
+  id           String   @id @default(cuid())
+  date         DateTime
+  description  String
+  amount       Float
+  taxRelevant  Boolean
+  fileName     String
+  providerName String
+
+  provider   ServiceProvider @relation(fields: [providerId], references: [id], onDelete: Cascade)
+  providerId String
+
+  createdAt DateTime @default(now())
+}
+
+// ─── Knowledge Base / Documents ─────────────────────────────────────────
+
+model Document {
+  id          String  @id @default(cuid())
+  title       String
+  category    String  // "Heating" | "Plumbing" | "Smart Home" | "Structural" | "General"
+  type        String  // "pdf" | "markdown"
+  description String
+  content     String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// ─── Maintenance Tasks ──────────────────────────────────────────────────
+
+model MaintenanceTask {
+  id        String   @id @default(cuid())
+  title     String
+  dueDate   DateTime
+  recurring String
+  priority  String   // "high" | "medium" | "low"
+  completed Boolean  @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// ─── Lending / Lent Items ───────────────────────────────────────────────
+
+model LentItem {
+  id             String   @id @default(cuid())
+  item           String
+  borrower       String
+  lentDate       DateTime
+  expectedReturn DateTime
+  trustLevel     Int
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// ─── Utility / Meter Readings ───────────────────────────────────────────
+
+model MeterReading {
+  id      String @id @default(cuid())
+  month   String @unique
+  power   Float
+  water   Float
+  heating Float
+
+  createdAt DateTime @default(now())
+}
+
+// ─── Wishlist / Projects ────────────────────────────────────────────────
+
+model WishlistProject {
+  id             String @id @default(cuid())
+  title          String
+  description    String
+  estimatedCost  Float
+  currentSavings Float
+  urgency        String // "nice-to-have" | "should-do" | "need-soon" | "falling-apart"
+  category       String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

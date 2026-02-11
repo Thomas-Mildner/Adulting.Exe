@@ -3,7 +3,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Progress } from "@/components/ui/progress"
-import { wishlistProjects, formatCurrency, type WishlistProject } from "@/lib/data"
+import { formatCurrency, type WishlistProject } from "@/lib/data"
 
 const urgencyConfig: Record<
   WishlistProject["urgency"],
@@ -27,7 +27,7 @@ const urgencyConfig: Record<
   },
 }
 
-export function WishlistBoard() {
+export function WishlistBoard({ wishlistProjects }: { wishlistProjects: WishlistProject[] }) {
   const totalEstimated = wishlistProjects.reduce(
     (s, p) => s + p.estimatedCost,
     0

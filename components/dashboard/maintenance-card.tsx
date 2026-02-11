@@ -1,10 +1,11 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useOptimistic } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Checkbox } from "@/components/ui/checkbox"
-import { maintenanceTasks } from "@/lib/data"
+import { type MaintenanceTask } from "@/lib/data"
+import { toggleMaintenanceTask } from "@/lib/actions"
 
 const priorityStyles: Record<string, string> = {
   high: "bg-destructive/10 text-destructive border-destructive/20",
@@ -12,13 +13,14 @@ const priorityStyles: Record<string, string> = {
   low: "bg-muted text-muted-foreground border-border",
 }
 
-export function MaintenanceCard() {
-  const [tasks, setTasks] = useState(maintenanceTasks)
+export function MaintenanceCard({ initialTasks }: { initialTasks: MaintenanceTask[] }) {
+  const [tasks, setTasks] = useState(initialTasks)
 
-  const toggleTask = (id: string) => {
+  const toggleTask = async (id: string) => {
     setTasks((prev) =>
       prev.map((t) => (t.id === id ? { ...t, completed: !t.completed } : t))
     )
+    await toggleMaintenanceTask(id)
   }
 
   const sorted = [...tasks].sort((a, b) => {
