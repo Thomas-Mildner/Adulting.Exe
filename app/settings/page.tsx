@@ -4,7 +4,6 @@ import {
   DataSettings,
   AboutSettings
 } from "@/components/settings/settings-panel"
-import { WasteTypeSettings } from "@/components/settings/waste-type-settings"
 import { HeatingSettings } from "@/components/settings/heating-settings"
 import { getWasteTypes, getAppConfig } from "@/lib/actions"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
@@ -48,9 +47,7 @@ export default async function SettingsPage() {
             <div className="md:col-span-1">
               <HeatingSettings currentType={appConfig.heatingType} />
             </div>
-            <div className="md:col-span-1 lg:col-span-2">
-              <WasteTypeSettings wasteTypes={wasteTypes} />
-            </div>
+            
           </div>
         </TabsContent>
 
