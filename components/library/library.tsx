@@ -1,18 +1,29 @@
-"use client"
+"use client";
 
-import React from "react"
-import { useState, useMemo } from "react"
-import { Card, CardContent } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Input } from "@/components/ui/input"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import React from "react";
+import { useState, useMemo, useTransition } from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Textarea } from "@/components/ui/textarea";
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
+} from "@/components/ui/dialog";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import {
   Search,
   Flame,
@@ -23,9 +34,11 @@ import {
   FileText,
   FileCode,
   ExternalLink,
-} from "lucide-react"
-import { type Document } from "@/lib/data"
-import { Button } from "@/components/ui/button"
+  Plus,
+} from "lucide-react";
+import { type Document } from "@/lib/data";
+import { Button } from "@/components/ui/button";
+import { createDocument } from "@/lib/actions";
 
 const categoryIcons: Record<Document["category"], React.ElementType> = {
   Heating: Flame,
@@ -33,7 +46,7 @@ const categoryIcons: Record<Document["category"], React.ElementType> = {
   "Smart Home": Wifi,
   Structural: Building,
   General: FolderOpen,
-}
+};
 
 const categoryColors: Record<Document["category"], string> = {
   Heating: "bg-chart-4/10 text-chart-4",
@@ -41,7 +54,7 @@ const categoryColors: Record<Document["category"], string> = {
   "Smart Home": "bg-chart-5/10 text-chart-5",
   Structural: "bg-chart-3/10 text-chart-3",
   General: "bg-muted text-muted-foreground",
-}
+};
 
 const categories: Document["category"][] = [
   "Heating",
@@ -49,26 +62,73 @@ const categories: Document["category"][] = [
   "Smart Home",
   "Structural",
   "General",
-]
+];
 
 export function Library({ documents }: { documents: Document[] }) {
-  const [search, setSearch] = useState("")
-  const [activeCategory, setActiveCategory] = useState<string>("all")
+  const [items, setItems] = useState(documents);
+  const [search, setSearch] = useState("");
+  const [activeCategory, setActiveCategory] = useState<string>("all");
+  const [isPending, startTransition] = useTransition();
+
+  // Create document dialog
+  const [createOpen, setCreateOpen] = useState(false);
+  const [docTitle, setDocTitle] = useState("");
+  const [docCategory, setDocCategory] =
+    useState<Document["category"]>("General");
+  const [docDescription, setDocDescription] = useState("");
+  const [docContent, setDocContent] = useState("");
+
+  function resetForm() {
+    setDocTitle("");
+    setDocCategory("General");
+    setDocDescription("");
+    setDocContent("");
+  }
+
+  function handleCreate(e: React.FormEvent) {
+    e.preventDefault();
+    if (!docTitle) return;
+
+    startTransition(async () => {
+      await createDocument({
+        title: docTitle,
+        category: docCategory,
+        type: "markdown",
+        description: docDescription,
+        content: docContent || undefined,
+        updatedAt: new Date().toISOString().split("T")[0],
+      });
+      setItems((prev) => [
+        {
+          id: `temp-${Date.now()}`,
+          title: docTitle,
+          category: docCategory,
+          type: "markdown",
+          description: docDescription,
+          content: docContent || undefined,
+          updatedAt: new Date().toISOString().split("T")[0],
+        },
+        ...prev,
+      ]);
+      resetForm();
+      setCreateOpen(false);
+    });
+  }
 
   const filtered = useMemo(() => {
-    const q = search.toLowerCase()
-    return documents
+    const q = search.toLowerCase();
+    return items
       .filter(
         (d) =>
           (activeCategory === "all" || d.category === activeCategory) &&
           (d.title.toLowerCase().includes(q) ||
-            d.description.toLowerCase().includes(q))
+            d.description.toLowerCase().includes(q)),
       )
       .sort(
         (a, b) =>
-          new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()
-      )
-  }, [search, activeCategory])
+          new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime(),
+      );
+  }, [search, activeCategory]);
 
   return (
     <div className="space-y-4">
@@ -96,6 +156,108 @@ export function Library({ documents }: { documents: Document[] }) {
             className="pl-8 h-9 text-sm"
           />
         </div>
+
+        {/* Create Document Dialog */}
+        <Dialog
+          open={createOpen}
+          onOpenChange={(v) => {
+            setCreateOpen(v);
+            if (!v) resetForm();
+          }}
+        >
+          <DialogTrigger asChild>
+            <Button size="sm" className="gap-1.5 shrink-0">
+              <Plus className="h-4 w-4" />
+              Neues Dokument
+            </Button>
+          </DialogTrigger>
+          <DialogContent className="sm:max-w-[560px]">
+            <form onSubmit={handleCreate}>
+              <DialogHeader>
+                <DialogTitle>Neues Markdown-Dokument</DialogTitle>
+                <DialogDescription>
+                  Wissen ist Macht &mdash; und gut dokumentiert ist halb
+                  repariert.
+                </DialogDescription>
+              </DialogHeader>
+              <div className="grid gap-4 py-4">
+                <div className="grid gap-2">
+                  <Label htmlFor="doc-title">Titel</Label>
+                  <Input
+                    id="doc-title"
+                    placeholder="z.B. Heizung entlüften Anleitung..."
+                    value={docTitle}
+                    onChange={(e) => setDocTitle(e.target.value)}
+                    required
+                  />
+                </div>
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="grid gap-2">
+                    <Label htmlFor="doc-category">Kategorie</Label>
+                    <Select
+                      value={docCategory}
+                      onValueChange={(v) =>
+                        setDocCategory(v as Document["category"])
+                      }
+                    >
+                      <SelectTrigger id="doc-category">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {categories.map((cat) => (
+                          <SelectItem key={cat} value={cat}>
+                            {cat}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="grid gap-2">
+                    <Label>Typ</Label>
+                    <Input value="Markdown" disabled className="h-9 text-sm" />
+                  </div>
+                </div>
+                <div className="grid gap-2">
+                  <Label htmlFor="doc-desc">Beschreibung</Label>
+                  <Input
+                    id="doc-desc"
+                    placeholder="Kurze Beschreibung des Dokuments..."
+                    value={docDescription}
+                    onChange={(e) => setDocDescription(e.target.value)}
+                  />
+                </div>
+                <div className="grid gap-2">
+                  <Label htmlFor="doc-content">Inhalt (Markdown)</Label>
+                  <Textarea
+                    id="doc-content"
+                    placeholder={
+                      "# Titel\n\nSchreibe hier deinen Markdown-Inhalt..."
+                    }
+                    value={docContent}
+                    onChange={(e) => setDocContent(e.target.value)}
+                    rows={10}
+                    className="font-mono text-xs"
+                  />
+                </div>
+              </div>
+              <DialogFooter>
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => {
+                    resetForm();
+                    setCreateOpen(false);
+                  }}
+                >
+                  Abbrechen
+                </Button>
+                <Button type="submit" disabled={isPending}>
+                  {isPending ? "Speichert..." : "Speichern"}
+                </Button>
+              </DialogFooter>
+            </form>
+          </DialogContent>
+        </Dialog>
       </div>
 
       {filtered.length === 0 ? (
@@ -103,14 +265,16 @@ export function Library({ documents }: { documents: Document[] }) {
           <CardContent className="flex flex-col items-center justify-center py-16 text-center">
             <FolderOpen className="h-8 w-8 text-muted-foreground/50 mb-3" />
             <p className="text-sm text-muted-foreground">
-              {"Keine Dokumente gefunden. Die Wissensgötter haben dich verlassen."}
+              {
+                "Keine Dokumente gefunden. Die Wissensgötter haben dich verlassen."
+              }
             </p>
           </CardContent>
         </Card>
       ) : (
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {filtered.map((doc) => {
-            const Icon = categoryIcons[doc.category]
+            const Icon = categoryIcons[doc.category];
             return (
               <Dialog key={doc.id}>
                 <DialogTrigger asChild>
@@ -133,7 +297,10 @@ export function Library({ documents }: { documents: Document[] }) {
                       </div>
                       <div className="flex items-center justify-between mt-3 pt-3 border-t">
                         <div className="flex items-center gap-2">
-                          <Badge variant="outline" className="text-[10px] gap-1">
+                          <Badge
+                            variant="outline"
+                            className="text-[10px] gap-1"
+                          >
                             {doc.type === "markdown" ? (
                               <FileCode className="h-2.5 w-2.5" />
                             ) : (
@@ -143,10 +310,13 @@ export function Library({ documents }: { documents: Document[] }) {
                           </Badge>
                           <span className="text-[10px] text-muted-foreground">
                             Aktualisiert{" "}
-                            {new Date(doc.updatedAt).toLocaleDateString("de-DE", {
-                              month: "short",
-                              day: "numeric",
-                            })}
+                            {new Date(doc.updatedAt).toLocaleDateString(
+                              "de-DE",
+                              {
+                                month: "short",
+                                day: "numeric",
+                              },
+                            )}
                           </span>
                         </div>
                         <ExternalLink className="h-3.5 w-3.5 text-muted-foreground/0 group-hover:text-primary transition-colors" />
@@ -179,7 +349,9 @@ export function Library({ documents }: { documents: Document[] }) {
                       <div className="rounded-lg border border-dashed p-8 text-center">
                         <FileText className="h-8 w-8 text-muted-foreground/30 mx-auto mb-2" />
                         <p className="text-xs text-muted-foreground">
-                          {"PDF-Vorschau nicht verfügbar. Aber immerhin weißt du, dass es existiert."}
+                          {
+                            "PDF-Vorschau nicht verfügbar. Aber immerhin weißt du, dass es existiert."
+                          }
                         </p>
                       </div>
                     )}
@@ -191,10 +363,10 @@ export function Library({ documents }: { documents: Document[] }) {
                   </div>
                 </DialogContent>
               </Dialog>
-            )
+            );
           })}
         </div>
       )}
     </div>
-  )
+  );
 }

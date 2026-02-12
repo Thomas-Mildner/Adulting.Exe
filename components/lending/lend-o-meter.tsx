@@ -1,11 +1,11 @@
-"use client"
+"use client";
 
-import { useState, useTransition } from "react"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+import { useState, useTransition } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
   Dialog,
   DialogContent,
@@ -14,14 +14,14 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
+} from "@/components/ui/dialog";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
+} from "@/components/ui/select";
 import {
   Table,
   TableBody,
@@ -29,13 +29,13 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table"
-import { getDaysRemaining, type LentItem } from "@/lib/data"
-import { createLentItem } from "@/lib/actions"
-import { ShieldAlert, ShieldCheck, Plus } from "lucide-react"
+} from "@/components/ui/table";
+import { getDaysRemaining, type LentItem } from "@/lib/data";
+import { createLentItem, updateLentItem, deleteLentItem } from "@/lib/actions";
+import { ShieldAlert, ShieldCheck, Plus, Pencil, Trash2 } from "lucide-react";
 
 function TrustStars({ level }: { level: number }) {
-  const labels = ["", "Autsch", "Hmm", "Okay", "Solide", "Seelenverwandt"]
+  const labels = ["", "Autsch", "Hmm", "Okay", "Solide", "Seelenverwandt"];
   return (
     <div className="flex items-center gap-1.5">
       <div className="flex gap-px">
@@ -50,17 +50,17 @@ function TrustStars({ level }: { level: number }) {
       </div>
       <span className="text-[10px] text-muted-foreground">{labels[level]}</span>
     </div>
-  )
+  );
 }
 
 function TrustLevelSelector({
   value,
   onChange,
 }: {
-  value: number
-  onChange: (v: 1 | 2 | 3 | 4 | 5) => void
+  value: number;
+  onChange: (v: 1 | 2 | 3 | 4 | 5) => void;
 }) {
-  const labels = ["Autsch", "Hmm", "Okay", "Solide", "Seelenverwandt"]
+  const labels = ["Autsch", "Hmm", "Okay", "Solide", "Seelenverwandt"];
   return (
     <div className="flex items-center gap-2">
       {[1, 2, 3, 4, 5].map((level) => (
@@ -88,34 +88,49 @@ function TrustLevelSelector({
         </button>
       ))}
     </div>
-  )
+  );
 }
 
 export function LendOMeter({ lentItems }: { lentItems: LentItem[] }) {
-  const [open, setOpen] = useState(false)
-  const [isPending, startTransition] = useTransition()
+  const [items, setItems] = useState(lentItems);
+  const [open, setOpen] = useState(false);
+  const [isPending, startTransition] = useTransition();
 
   // Form state
-  const [item, setItem] = useState("")
-  const [borrower, setBorrower] = useState("")
-  const [lentDate, setLentDate] = useState(() => new Date().toISOString().split("T")[0])
-  const [expectedReturn, setExpectedReturn] = useState("")
-  const [trustLevel, setTrustLevel] = useState<1 | 2 | 3 | 4 | 5>(3)
+  const [item, setItem] = useState("");
+  const [borrower, setBorrower] = useState("");
+  const [lentDate, setLentDate] = useState(
+    () => new Date().toISOString().split("T")[0],
+  );
+  const [expectedReturn, setExpectedReturn] = useState("");
+  const [trustLevel, setTrustLevel] = useState<1 | 2 | 3 | 4 | 5>(3);
 
-  const overdue = lentItems.filter((i) => getDaysRemaining(i.expectedReturn) < 0)
-  const active = lentItems.filter((i) => getDaysRemaining(i.expectedReturn) >= 0)
+  // Edit dialog
+  const [editOpen, setEditOpen] = useState(false);
+  const [editId, setEditId] = useState<string | null>(null);
+  const [editItem, setEditItem] = useState("");
+  const [editBorrower, setEditBorrower] = useState("");
+  const [editLentDate, setEditLentDate] = useState("");
+  const [editExpectedReturn, setEditExpectedReturn] = useState("");
+  const [editTrustLevel, setEditTrustLevel] = useState<1 | 2 | 3 | 4 | 5>(3);
+
+  // Delete confirm
+  const [deleteId, setDeleteId] = useState<string | null>(null);
+
+  const overdue = items.filter((i) => getDaysRemaining(i.expectedReturn) < 0);
+  const active = items.filter((i) => getDaysRemaining(i.expectedReturn) >= 0);
 
   function resetForm() {
-    setItem("")
-    setBorrower("")
-    setLentDate(new Date().toISOString().split("T")[0])
-    setExpectedReturn("")
-    setTrustLevel(3)
+    setItem("");
+    setBorrower("");
+    setLentDate(new Date().toISOString().split("T")[0]);
+    setExpectedReturn("");
+    setTrustLevel(3);
   }
 
   function handleSubmit(e: React.FormEvent) {
-    e.preventDefault()
-    if (!item || !borrower || !lentDate || !expectedReturn) return
+    e.preventDefault();
+    if (!item || !borrower || !lentDate || !expectedReturn) return;
 
     startTransition(async () => {
       await createLentItem({
@@ -124,10 +139,67 @@ export function LendOMeter({ lentItems }: { lentItems: LentItem[] }) {
         lentDate,
         expectedReturn,
         trustLevel,
-      })
-      resetForm()
-      setOpen(false)
-    })
+      });
+      setItems((prev) => [
+        ...prev,
+        {
+          id: `temp-${Date.now()}`,
+          item,
+          borrower,
+          lentDate,
+          expectedReturn,
+          trustLevel,
+        },
+      ]);
+      resetForm();
+      setOpen(false);
+    });
+  }
+
+  function openEdit(entry: LentItem) {
+    setEditId(entry.id);
+    setEditItem(entry.item);
+    setEditBorrower(entry.borrower);
+    setEditLentDate(entry.lentDate);
+    setEditExpectedReturn(entry.expectedReturn);
+    setEditTrustLevel(entry.trustLevel);
+    setEditOpen(true);
+  }
+
+  function handleEdit(e: React.FormEvent) {
+    e.preventDefault();
+    if (
+      !editId ||
+      !editItem ||
+      !editBorrower ||
+      !editLentDate ||
+      !editExpectedReturn
+    )
+      return;
+
+    startTransition(async () => {
+      const updated = {
+        item: editItem,
+        borrower: editBorrower,
+        lentDate: editLentDate,
+        expectedReturn: editExpectedReturn,
+        trustLevel: editTrustLevel,
+      };
+      await updateLentItem(editId!, updated);
+      setItems((prev) =>
+        prev.map((i) => (i.id === editId ? { ...i, ...updated } : i)),
+      );
+      setEditOpen(false);
+      setEditId(null);
+    });
+  }
+
+  function handleDelete(id: string) {
+    startTransition(async () => {
+      await deleteLentItem(id);
+      setItems((prev) => prev.filter((i) => i.id !== id));
+      setDeleteId(null);
+    });
   }
 
   return (
@@ -140,7 +212,7 @@ export function LendOMeter({ lentItems }: { lentItems: LentItem[] }) {
               Verliehene Sachen
             </p>
             <p className="text-2xl font-semibold tabular-nums text-foreground mt-1">
-              {lentItems.length}
+              {items.length}
             </p>
             <p className="text-xs text-muted-foreground">
               Verstreut in der Nachbarschaft
@@ -182,12 +254,22 @@ export function LendOMeter({ lentItems }: { lentItems: LentItem[] }) {
         <CardHeader className="pb-3">
           <div className="flex items-center justify-between">
             <div>
-              <CardTitle className="text-sm font-medium">Alle verliehenen Gegenstände</CardTitle>
+              <CardTitle className="text-sm font-medium">
+                Alle verliehenen Gegenstände
+              </CardTitle>
               <p className="text-xs text-muted-foreground mt-1">
-                {"Behalte im Blick, was draußen ist. Und wer es hat. Und wann du es zurückbekommst (hoffentlich)."}
+                {
+                  "Behalte im Blick, was draußen ist. Und wer es hat. Und wann du es zurückbekommst (hoffentlich)."
+                }
               </p>
             </div>
-            <Dialog open={open} onOpenChange={(v) => { setOpen(v); if (!v) resetForm() }}>
+            <Dialog
+              open={open}
+              onOpenChange={(v) => {
+                setOpen(v);
+                if (!v) resetForm();
+              }}
+            >
               <DialogTrigger asChild>
                 <Button size="sm" className="gap-1.5">
                   <Plus className="h-4 w-4" />
@@ -247,14 +329,20 @@ export function LendOMeter({ lentItems }: { lentItems: LentItem[] }) {
                     </div>
                     <div className="grid gap-2">
                       <Label>Vertrauenslevel</Label>
-                      <TrustLevelSelector value={trustLevel} onChange={setTrustLevel} />
+                      <TrustLevelSelector
+                        value={trustLevel}
+                        onChange={setTrustLevel}
+                      />
                     </div>
                   </div>
                   <DialogFooter>
                     <Button
                       type="button"
                       variant="outline"
-                      onClick={() => { resetForm(); setOpen(false) }}
+                      onClick={() => {
+                        resetForm();
+                        setOpen(false);
+                      }}
                     >
                       Abbrechen
                     </Button>
@@ -274,27 +362,38 @@ export function LendOMeter({ lentItems }: { lentItems: LentItem[] }) {
                 <TableHead className="text-xs">Status</TableHead>
                 <TableHead className="text-xs">Gegenstand</TableHead>
                 <TableHead className="text-xs">Nachbar</TableHead>
-                <TableHead className="text-xs hidden sm:table-cell">Ausleihdatum</TableHead>
+                <TableHead className="text-xs hidden sm:table-cell">
+                  Ausleihdatum
+                </TableHead>
                 <TableHead className="text-xs">Rückgabe bis</TableHead>
-                <TableHead className="text-xs hidden sm:table-cell">Vertrauenslevel</TableHead>
+                <TableHead className="text-xs hidden sm:table-cell">
+                  Vertrauenslevel
+                </TableHead>
+                <TableHead className="text-xs text-right">Aktionen</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {lentItems.length === 0 ? (
+              {items.length === 0 ? (
                 <TableRow>
                   <TableCell
-                    colSpan={6}
+                    colSpan={7}
                     className="text-center py-12 text-sm text-muted-foreground"
                   >
-                    {"Nichts verliehen. Entweder sehr vorsichtig oder kein Werkzeug."}
+                    {
+                      "Nichts verliehen. Entweder sehr vorsichtig oder kein Werkzeug."
+                    }
                   </TableCell>
                 </TableRow>
               ) : (
-                lentItems
-                  .sort((a, b) => getDaysRemaining(a.expectedReturn) - getDaysRemaining(b.expectedReturn))
+                items
+                  .sort(
+                    (a, b) =>
+                      getDaysRemaining(a.expectedReturn) -
+                      getDaysRemaining(b.expectedReturn),
+                  )
                   .map((item) => {
-                    const days = getDaysRemaining(item.expectedReturn)
-                    const isOverdue = days < 0
+                    const days = getDaysRemaining(item.expectedReturn);
+                    const isOverdue = days < 0;
 
                     return (
                       <TableRow key={item.id}>
@@ -336,14 +435,150 @@ export function LendOMeter({ lentItems }: { lentItems: LentItem[] }) {
                         <TableCell className="hidden sm:table-cell">
                           <TrustStars level={item.trustLevel} />
                         </TableCell>
+                        <TableCell className="text-right">
+                          <div className="flex items-center justify-end gap-1">
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="h-7 w-7"
+                              onClick={() => openEdit(item)}
+                            >
+                              <Pencil className="h-3.5 w-3.5" />
+                            </Button>
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="h-7 w-7 text-destructive hover:text-destructive"
+                              onClick={() => setDeleteId(item.id)}
+                            >
+                              <Trash2 className="h-3.5 w-3.5" />
+                            </Button>
+                          </div>
+                        </TableCell>
                       </TableRow>
-                    )
+                    );
                   })
               )}
             </TableBody>
           </Table>
         </CardContent>
       </Card>
+
+      {/* ── Edit Dialog ── */}
+      <Dialog
+        open={editOpen}
+        onOpenChange={(v) => {
+          setEditOpen(v);
+          if (!v) setEditId(null);
+        }}
+      >
+        <DialogContent className="sm:max-w-[480px]">
+          <form onSubmit={handleEdit}>
+            <DialogHeader>
+              <DialogTitle>Verleih bearbeiten</DialogTitle>
+              <DialogDescription>
+                Änderungen werden sofort gespeichert.
+              </DialogDescription>
+            </DialogHeader>
+            <div className="grid gap-4 py-4">
+              <div className="grid gap-2">
+                <Label htmlFor="edit-item">Gegenstand</Label>
+                <Input
+                  id="edit-item"
+                  placeholder="z.B. Bohrmaschine, Leiter, Raclette-Grill..."
+                  value={editItem}
+                  onChange={(e) => setEditItem(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="edit-borrower">Nachbar / Ausleiher</Label>
+                <Input
+                  id="edit-borrower"
+                  placeholder="z.B. Thomas von nebenan"
+                  value={editBorrower}
+                  onChange={(e) => setEditBorrower(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="grid gap-2">
+                  <Label htmlFor="edit-lentDate">Ausleihdatum</Label>
+                  <Input
+                    id="edit-lentDate"
+                    type="date"
+                    value={editLentDate}
+                    onChange={(e) => setEditLentDate(e.target.value)}
+                    required
+                  />
+                </div>
+                <div className="grid gap-2">
+                  <Label htmlFor="edit-expectedReturn">Rückgabe bis</Label>
+                  <Input
+                    id="edit-expectedReturn"
+                    type="date"
+                    value={editExpectedReturn}
+                    onChange={(e) => setEditExpectedReturn(e.target.value)}
+                    required
+                  />
+                </div>
+              </div>
+              <div className="grid gap-2">
+                <Label>Vertrauenslevel</Label>
+                <TrustLevelSelector
+                  value={editTrustLevel}
+                  onChange={setEditTrustLevel}
+                />
+              </div>
+            </div>
+            <DialogFooter>
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => {
+                  setEditOpen(false);
+                  setEditId(null);
+                }}
+              >
+                Abbrechen
+              </Button>
+              <Button type="submit" disabled={isPending}>
+                {isPending ? "Speichert..." : "Änderungen speichern"}
+              </Button>
+            </DialogFooter>
+          </form>
+        </DialogContent>
+      </Dialog>
+
+      {/* ── Delete Confirmation ── */}
+      <Dialog
+        open={deleteId !== null}
+        onOpenChange={(v) => {
+          if (!v) setDeleteId(null);
+        }}
+      >
+        <DialogContent className="sm:max-w-[400px]">
+          <DialogHeader>
+            <DialogTitle>Verleih löschen?</DialogTitle>
+            <DialogDescription>
+              Diese Aktion kann nicht rückgängig gemacht werden. Der Eintrag
+              wird dauerhaft entfernt.
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setDeleteId(null)}>
+              Abbrechen
+            </Button>
+            <Button
+              variant="destructive"
+              disabled={isPending}
+              onClick={() => deleteId && handleDelete(deleteId)}
+            >
+              {isPending ? "Löscht..." : "Endgültig löschen"}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
-  )
+  );
 }
