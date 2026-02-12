@@ -31,13 +31,17 @@ ENV NODE_ENV=production
 # Copy dependencies (including generated Prisma Client) from builder
 COPY --from=builder /app/node_modules ./node_modules
 
-# Copy built application and config from builder
+# Copy built application, config, and prisma schema from builder
 COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/public ./public
 COPY --from=builder /app/next.config.mjs ./
 COPY --from=builder /app/package.json ./
+COPY --from=builder /app/prisma ./prisma
 
+# Create entrypoint script that pushes the schema then starts the app
+RUN printf '#!/bin/sh\nset -e\necho "Pushing database schema..."\npnpm db:push\necho "Starting application..."\nexec pnpm start\n' > /app/entrypoint.sh \
+    && chmod +x /app/entrypoint.sh
 
 EXPOSE 3000
 
-CMD ["pnpm", "start"]
+ENTRYPOINT ["/app/entrypoint.sh"]
