@@ -13,6 +13,23 @@ services:
       - "5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U adulting -d adulting_exe"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  app:
+    build: .
+    container_name: adulting-exe-app
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: postgresql://adulting:adulting_secret@postgres:5432/adulting_exe
+    ports:
+      - "3000:3000"
+    depends_on:
+      postgres:
+        condition: service_healthy
 
   pgadmin:
     image: dpage/pgadmin4:latest
@@ -35,7 +52,8 @@ services:
       /entrypoint.sh
       "
     depends_on:
-      - postgres
+      postgres:
+        condition: service_healthy
 
 volumes:
   pgdata:
