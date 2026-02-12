@@ -35,12 +35,12 @@ ENV NODE_ENV=production
 
 # Copy package files
 COPY package.json pnpm-lock.yaml ./
+COPY prisma ./prisma
 
 # Install production dependencies only
-RUN pnpm install --frozen-lockfile --prod
+RUN pnpm install --frozen-lockfile --production
 
-# Copy prisma schema and generate client
-COPY prisma ./prisma
+# Generate Prisma Client
 RUN pnpm db:generate
 
 # Copy built application from builder
