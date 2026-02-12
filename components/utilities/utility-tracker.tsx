@@ -19,6 +19,15 @@ import {
 import { type MeterReading, formatCurrency } from "@/lib/data";
 import { createMeterReading } from "@/lib/actions";
 import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import {
   Zap,
   Droplets,
   Flame,
@@ -31,6 +40,7 @@ import {
   ArrowDownRight,
   CalendarDays,
   Target,
+  Plus,
 } from "lucide-react";
 import {
   AreaChart,
@@ -115,6 +125,161 @@ export function UtilityTracker({
   const [waterCostInput, setWaterCostInput] = useState("");
   const [heatingCostInput, setHeatingCostInput] = useState("");
   const [saving, setSaving] = useState(false);
+  const [addDialogOpen, setAddDialogOpen] = useState(false);
+  const [dlgPower, setDlgPower] = useState("");
+  const [dlgWater, setDlgWater] = useState("");
+  const [dlgHeating, setDlgHeating] = useState("");
+  const [dlgPowerCost, setDlgPowerCost] = useState("");
+  const [dlgWaterCost, setDlgWaterCost] = useState("");
+  const [dlgHeatingCost, setDlgHeatingCost] = useState("");
+  const [dlgMonth, setDlgMonth] = useState(
+    new Date().toLocaleDateString("de-DE", { month: "short", year: "numeric" }),
+  );
+
+  const handleDialogSave = async () => {
+    if (!dlgPower && !dlgWater && !dlgHeating) return;
+    setSaving(true);
+    await createMeterReading({
+      month: dlgMonth,
+      power: dlgPower ? parseFloat(dlgPower) : 0,
+      water: dlgWater ? parseFloat(dlgWater) : 0,
+      heating: dlgHeating ? parseFloat(dlgHeating) : 0,
+      powerCost: dlgPowerCost ? parseFloat(dlgPowerCost) : 0,
+      waterCost: dlgWaterCost ? parseFloat(dlgWaterCost) : 0,
+      heatingCost: dlgHeatingCost ? parseFloat(dlgHeatingCost) : 0,
+    });
+    setDlgPower("");
+    setDlgWater("");
+    setDlgHeating("");
+    setDlgPowerCost("");
+    setDlgWaterCost("");
+    setDlgHeatingCost("");
+    setSaving(false);
+    setAddDialogOpen(false);
+  };
+
+  const addMeterDialog = (
+    <Dialog
+      open={addDialogOpen}
+      onOpenChange={(v) => {
+        setAddDialogOpen(v);
+      }}
+    >
+      <DialogTrigger asChild>
+        <Button size="sm" className="gap-1.5 shrink-0">
+          <Plus className="h-4 w-4" />
+          Neuer Zählerstand
+        </Button>
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-[480px]">
+        <DialogHeader>
+          <DialogTitle>Neuen Zählerstand erfassen</DialogTitle>
+          <DialogDescription>
+            Zeit für deinen monatlichen Termin mit den Zählerständen.
+          </DialogDescription>
+        </DialogHeader>
+        <div className="grid gap-4 py-4">
+          <div className="grid gap-2">
+            <Label htmlFor="dlg-month">Monat</Label>
+            <Input
+              id="dlg-month"
+              placeholder="z.B. Jan 2026"
+              value={dlgMonth}
+              onChange={(e) => setDlgMonth(e.target.value)}
+              required
+            />
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+            <div className="grid gap-2">
+              <div className="flex items-center gap-1.5">
+                <Zap className="h-3.5 w-3.5 text-chart-1" />
+                <Label className="text-xs font-medium">Strom (kWh)</Label>
+              </div>
+              <Input
+                type="number"
+                placeholder="Verbrauch kWh"
+                value={dlgPower}
+                onChange={(e) => setDlgPower(e.target.value)}
+                className="h-9 text-sm"
+              />
+            </div>
+            <div className="grid gap-2">
+              <Label className="text-xs font-medium">Kosten Strom (€)</Label>
+              <Input
+                type="number"
+                placeholder="Kosten €"
+                value={dlgPowerCost}
+                onChange={(e) => setDlgPowerCost(e.target.value)}
+                className="h-9 text-sm"
+              />
+            </div>
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+            <div className="grid gap-2">
+              <div className="flex items-center gap-1.5">
+                <Droplets className="h-3.5 w-3.5 text-primary" />
+                <Label className="text-xs font-medium">Wasser (m³)</Label>
+              </div>
+              <Input
+                type="number"
+                placeholder="Verbrauch m³"
+                value={dlgWater}
+                onChange={(e) => setDlgWater(e.target.value)}
+                className="h-9 text-sm"
+              />
+            </div>
+            <div className="grid gap-2">
+              <Label className="text-xs font-medium">Kosten Wasser (€)</Label>
+              <Input
+                type="number"
+                placeholder="Kosten €"
+                value={dlgWaterCost}
+                onChange={(e) => setDlgWaterCost(e.target.value)}
+                className="h-9 text-sm"
+              />
+            </div>
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+            <div className="grid gap-2">
+              <div className="flex items-center gap-1.5">
+                <Flame className="h-3.5 w-3.5 text-chart-4" />
+                <Label className="text-xs font-medium">Heizung (kWh)</Label>
+              </div>
+              <Input
+                type="number"
+                placeholder="Verbrauch kWh"
+                value={dlgHeating}
+                onChange={(e) => setDlgHeating(e.target.value)}
+                className="h-9 text-sm"
+              />
+            </div>
+            <div className="grid gap-2">
+              <Label className="text-xs font-medium">Kosten Heizung (€)</Label>
+              <Input
+                type="number"
+                placeholder="Kosten €"
+                value={dlgHeatingCost}
+                onChange={(e) => setDlgHeatingCost(e.target.value)}
+                className="h-9 text-sm"
+              />
+            </div>
+          </div>
+        </div>
+        <DialogFooter>
+          <Button
+            type="button"
+            variant="outline"
+            onClick={() => setAddDialogOpen(false)}
+          >
+            Abbrechen
+          </Button>
+          <Button onClick={handleDialogSave} disabled={saving}>
+            {saving ? "Speichert..." : "Speichern"}
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  );
 
   const latest =
     meterHistory.length > 0 ? meterHistory[meterHistory.length - 1] : null;
@@ -127,10 +292,10 @@ export function UtilityTracker({
         <CardHeader>
           <CardTitle>Nebenkosten-Tracker</CardTitle>
           <p className="text-sm text-muted-foreground">
-            Noch keine Zählerstände vorhanden – erfasse deinen ersten Monat
-            oben.
+            Noch keine Zählerstände vorhanden – erfasse deinen ersten Monat.
           </p>
         </CardHeader>
+        <CardContent>{addMeterDialog}</CardContent>
       </Card>
     );
   }
@@ -324,6 +489,9 @@ export function UtilityTracker({
 
   return (
     <div className="space-y-6">
+      {/* ── Add Button ── */}
+      <div className="flex justify-end">{addMeterDialog}</div>
+
       {/* ── KPI Row ── */}
       <div className="grid gap-4 grid-cols-2 lg:grid-cols-4">
         <Card>

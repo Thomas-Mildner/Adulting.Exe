@@ -1,9 +1,36 @@
-"use client"
+"use client";
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Progress } from "@/components/ui/progress"
-import { formatCurrency, type WishlistProject } from "@/lib/data"
+import { useState, useTransition } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Progress } from "@/components/ui/progress";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Plus, Pencil, Trash2 } from "lucide-react";
+import { formatCurrency, type WishlistProject } from "@/lib/data";
+import {
+  createWishlistProject,
+  updateWishlistProject,
+  deleteWishlistProject,
+} from "@/lib/actions";
 
 const urgencyConfig: Record<
   WishlistProject["urgency"],
@@ -25,17 +52,114 @@ const urgencyConfig: Record<
     label: "Haus fällt auseinander",
     style: "bg-destructive/10 text-destructive border-destructive/20",
   },
-}
+};
 
-export function WishlistBoard({ wishlistProjects }: { wishlistProjects: WishlistProject[] }) {
-  const totalEstimated = wishlistProjects.reduce(
-    (s, p) => s + p.estimatedCost,
-    0
-  )
-  const totalSaved = wishlistProjects.reduce(
-    (s, p) => s + p.currentSavings,
-    0
-  )
+const urgencyOptions: WishlistProject["urgency"][] = [
+  "nice-to-have",
+  "should-do",
+  "need-soon",
+  "falling-apart",
+];
+
+const wishlistCategories = [
+  "Renovierung",
+  "Garten",
+  "Küche",
+  "Badezimmer",
+  "Technik",
+  "Möbel",
+  "Außenbereich",
+  "Sicherheit",
+  "Sonstiges",
+];
+
+type WishlistFormData = {
+  title: string;
+  description: string;
+  estimatedCost: number;
+  currentSavings: number;
+  urgency: WishlistProject["urgency"];
+  category: string;
+};
+
+const emptyWishlistForm: WishlistFormData = {
+  title: "",
+  description: "",
+  estimatedCost: 0,
+  currentSavings: 0,
+  urgency: "nice-to-have",
+  category: "Sonstiges",
+};
+
+export function WishlistBoard({
+  wishlistProjects,
+}: {
+  wishlistProjects: WishlistProject[];
+}) {
+  const [items, setItems] = useState(wishlistProjects);
+  const [isPending, startTransition] = useTransition();
+  const [createOpen, setCreateOpen] = useState(false);
+  const [form, setForm] = useState<WishlistFormData>({ ...emptyWishlistForm });
+
+  // Edit dialog
+  const [editOpen, setEditOpen] = useState(false);
+  const [editId, setEditId] = useState<string | null>(null);
+  const [editForm, setEditForm] = useState<WishlistFormData>({
+    ...emptyWishlistForm,
+  });
+
+  // Delete confirm
+  const [deleteId, setDeleteId] = useState<string | null>(null);
+
+  const totalEstimated = items.reduce((s, p) => s + p.estimatedCost, 0);
+  const totalSaved = items.reduce((s, p) => s + p.currentSavings, 0);
+
+  function handleCreate(e: React.FormEvent) {
+    e.preventDefault();
+    if (!form.title) return;
+
+    startTransition(async () => {
+      await createWishlistProject(form);
+      setItems((prev) => [...prev, { ...form, id: `temp-${Date.now()}` }]);
+      setForm({ ...emptyWishlistForm });
+      setCreateOpen(false);
+    });
+  }
+
+  function openEdit(project: WishlistProject) {
+    setEditId(project.id);
+    setEditForm({
+      title: project.title,
+      description: project.description,
+      estimatedCost: project.estimatedCost,
+      currentSavings: project.currentSavings,
+      urgency: project.urgency,
+      category: project.category,
+    });
+    setEditOpen(true);
+  }
+
+  function handleEdit(e: React.FormEvent) {
+    e.preventDefault();
+    if (!editId || !editForm.title) return;
+
+    startTransition(async () => {
+      await updateWishlistProject(editId!, editForm);
+      setItems((prev) =>
+        prev.map((p) => (p.id === editId ? { ...p, ...editForm } : p)),
+      );
+      setEditOpen(false);
+      setEditId(null);
+    });
+  }
+
+  function handleDelete(id: string) {
+    startTransition(async () => {
+      await deleteWishlistProject(id);
+      setItems((prev) => prev.filter((p) => p.id !== id));
+      setDeleteId(null);
+    });
+  }
 
   return (
     <div className="space-y-6">
@@ -47,10 +171,10 @@ export function WishlistBoard({ wishlistProjects }: { wishlistProjects: Wishlist
               Projekte gesamt
             </p>
             <p className="text-2xl font-semibold tabular-nums text-foreground mt-1">
-              {wishlistProjects.length}
+              {items.length}
             </p>
             <p className="text-xs text-muted-foreground">
-              {wishlistProjects.filter((p) => p.urgency === "falling-apart").length}{" "}
+              {items.filter((p) => p.urgency === "falling-apart").length}{" "}
               dringend
             </p>
           </CardContent>
@@ -83,30 +207,176 @@ export function WishlistBoard({ wishlistProjects }: { wishlistProjects: Wishlist
         </Card>
       </div>
 
+      {/* Add Project Dialog */}
+      <div className="flex justify-end">
+        <Dialog
+          open={createOpen}
+          onOpenChange={(v) => {
+            setCreateOpen(v);
+            if (!v) setForm({ ...emptyWishlistForm });
+          }}
+        >
+          <DialogTrigger asChild>
+            <Button size="sm" className="gap-1.5">
+              <Plus className="h-4 w-4" />
+              Neues Projekt
+            </Button>
+          </DialogTrigger>
+          <DialogContent className="sm:max-w-[520px]">
+            <form onSubmit={handleCreate}>
+              <DialogHeader>
+                <DialogTitle>Neues Wunschprojekt</DialogTitle>
+                <DialogDescription>
+                  Noch ein Traum für die Liste &mdash; diesmal wird gespart!
+                </DialogDescription>
+              </DialogHeader>
+              <div className="grid gap-4 py-4">
+                <div className="grid gap-2">
+                  <Label htmlFor="wp-title">Projektname</Label>
+                  <Input
+                    id="wp-title"
+                    placeholder="z.B. Neue Terrasse, Dachsanierung..."
+                    value={form.title}
+                    onChange={(e) =>
+                      setForm((p) => ({ ...p, title: e.target.value }))
+                    }
+                    required
+                  />
+                </div>
+                <div className="grid gap-2">
+                  <Label htmlFor="wp-desc">Beschreibung</Label>
+                  <Textarea
+                    id="wp-desc"
+                    placeholder="Was soll gemacht werden?"
+                    value={form.description}
+                    onChange={(e) =>
+                      setForm((p) => ({ ...p, description: e.target.value }))
+                    }
+                    rows={3}
+                  />
+                </div>
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="grid gap-2">
+                    <Label htmlFor="wp-cost">Geschätzte Kosten (€)</Label>
+                    <Input
+                      id="wp-cost"
+                      type="number"
+                      min="0"
+                      step="0.01"
+                      value={form.estimatedCost || ""}
+                      onChange={(e) =>
+                        setForm((p) => ({
+                          ...p,
+                          estimatedCost: parseFloat(e.target.value) || 0,
+                        }))
+                      }
+                      required
+                    />
+                  </div>
+                  <div className="grid gap-2">
+                    <Label htmlFor="wp-savings">Bereits gespart (€)</Label>
+                    <Input
+                      id="wp-savings"
+                      type="number"
+                      min="0"
+                      step="0.01"
+                      value={form.currentSavings || ""}
+                      onChange={(e) =>
+                        setForm((p) => ({
+                          ...p,
+                          currentSavings: parseFloat(e.target.value) || 0,
+                        }))
+                      }
+                    />
+                  </div>
+                </div>
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="grid gap-2">
+                    <Label htmlFor="wp-category">Kategorie</Label>
+                    <Select
+                      value={form.category}
+                      onValueChange={(v) =>
+                        setForm((p) => ({ ...p, category: v }))
+                      }
+                    >
+                      <SelectTrigger id="wp-category">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {wishlistCategories.map((c) => (
+                          <SelectItem key={c} value={c}>
+                            {c}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="grid gap-2">
+                    <Label>Dringlichkeit</Label>
+                    <Select
+                      value={form.urgency}
+                      onValueChange={(v) =>
+                        setForm((p) => ({
+                          ...p,
+                          urgency: v as WishlistProject["urgency"],
+                        }))
+                      }
+                    >
+                      <SelectTrigger>
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {urgencyOptions.map((u) => (
+                          <SelectItem key={u} value={u}>
+                            {urgencyConfig[u].label}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+              </div>
+              <DialogFooter>
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => {
+                    setForm({ ...emptyWishlistForm });
+                    setCreateOpen(false);
+                  }}
+                >
+                  Abbrechen
+                </Button>
+                <Button type="submit" disabled={isPending}>
+                  {isPending ? "Speichert..." : "Speichern"}
+                </Button>
+              </DialogFooter>
+            </form>
+          </DialogContent>
+        </Dialog>
+      </div>
+
       {/* Project Cards */}
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {wishlistProjects
+        {items
           .sort((a, b) => {
             const order: WishlistProject["urgency"][] = [
               "falling-apart",
               "need-soon",
               "should-do",
               "nice-to-have",
-            ]
-            return order.indexOf(a.urgency) - order.indexOf(b.urgency)
+            ];
+            return order.indexOf(a.urgency) - order.indexOf(b.urgency);
           })
           .map((project) => {
             const pct = Math.round(
-              (project.currentSavings / project.estimatedCost) * 100
-            )
-            const remaining = project.estimatedCost - project.currentSavings
-            const { label, style } = urgencyConfig[project.urgency]
+              (project.currentSavings / project.estimatedCost) * 100,
+            );
+            const remaining = project.estimatedCost - project.currentSavings;
+            const { label, style } = urgencyConfig[project.urgency];
 
             return (
-              <Card
-                key={project.id}
-                className="transition-all hover:shadow-md"
-              >
+              <Card key={project.id} className="transition-all hover:shadow-md">
                 <CardHeader className="pb-2">
                   <div className="flex items-start justify-between gap-2">
                     <div className="min-w-0">
@@ -117,12 +387,30 @@ export function WishlistBoard({ wishlistProjects }: { wishlistProjects: Wishlist
                         {project.category}
                       </Badge>
                     </div>
-                    <Badge
-                      variant="outline"
-                      className={`text-[10px] shrink-0 ${style}`}
-                    >
-                      {label}
-                    </Badge>
+                    <div className="flex items-center gap-1 shrink-0">
+                      <Badge
+                        variant="outline"
+                        className={`text-[10px] ${style}`}
+                      >
+                        {label}
+                      </Badge>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-7 w-7"
+                        onClick={() => openEdit(project)}
+                      >
+                        <Pencil className="h-3.5 w-3.5" />
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-7 w-7 text-destructive hover:text-destructive"
+                        onClick={() => setDeleteId(project.id)}
+                      >
+                        <Trash2 className="h-3.5 w-3.5" />
+                      </Button>
+                    </div>
                   </div>
                 </CardHeader>
                 <CardContent className="space-y-3">
@@ -150,9 +438,180 @@ export function WishlistBoard({ wishlistProjects }: { wishlistProjects: Wishlist
                   </p>
                 </CardContent>
               </Card>
-            )
+            );
           })}
       </div>
+
+      {/* ── Edit Dialog ── */}
+      <Dialog
+        open={editOpen}
+        onOpenChange={(v) => {
+          setEditOpen(v);
+          if (!v) setEditId(null);
+        }}
+      >
+        <DialogContent className="sm:max-w-[520px]">
+          <form onSubmit={handleEdit}>
+            <DialogHeader>
+              <DialogTitle>Wunschprojekt bearbeiten</DialogTitle>
+              <DialogDescription>
+                Änderungen werden sofort gespeichert.
+              </DialogDescription>
+            </DialogHeader>
+            <div className="grid gap-4 py-4">
+              <div className="grid gap-2">
+                <Label htmlFor="edit-wp-title">Projektname</Label>
+                <Input
+                  id="edit-wp-title"
+                  placeholder="z.B. Neue Terrasse, Dachsanierung..."
+                  value={editForm.title}
+                  onChange={(e) =>
+                    setEditForm((p) => ({ ...p, title: e.target.value }))
+                  }
+                  required
+                />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="edit-wp-desc">Beschreibung</Label>
+                <Textarea
+                  id="edit-wp-desc"
+                  placeholder="Was soll gemacht werden?"
+                  value={editForm.description}
+                  onChange={(e) =>
+                    setEditForm((p) => ({ ...p, description: e.target.value }))
+                  }
+                  rows={3}
+                />
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="grid gap-2">
+                  <Label htmlFor="edit-wp-cost">Geschätzte Kosten (€)</Label>
+                  <Input
+                    id="edit-wp-cost"
+                    type="number"
+                    min="0"
+                    step="0.01"
+                    value={editForm.estimatedCost || ""}
+                    onChange={(e) =>
+                      setEditForm((p) => ({
+                        ...p,
+                        estimatedCost: parseFloat(e.target.value) || 0,
+                      }))
+                    }
+                    required
+                  />
+                </div>
+                <div className="grid gap-2">
+                  <Label htmlFor="edit-wp-savings">Bereits gespart (€)</Label>
+                  <Input
+                    id="edit-wp-savings"
+                    type="number"
+                    min="0"
+                    step="0.01"
+                    value={editForm.currentSavings || ""}
+                    onChange={(e) =>
+                      setEditForm((p) => ({
+                        ...p,
+                        currentSavings: parseFloat(e.target.value) || 0,
+                      }))
+                    }
+                  />
+                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="grid gap-2">
+                  <Label htmlFor="edit-wp-category">Kategorie</Label>
+                  <Select
+                    value={editForm.category}
+                    onValueChange={(v) =>
+                      setEditForm((p) => ({ ...p, category: v }))
+                    }
+                  >
+                    <SelectTrigger id="edit-wp-category">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {wishlistCategories.map((c) => (
+                        <SelectItem key={c} value={c}>
+                          {c}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="grid gap-2">
+                  <Label>Dringlichkeit</Label>
+                  <Select
+                    value={editForm.urgency}
+                    onValueChange={(v) =>
+                      setEditForm((p) => ({
+                        ...p,
+                        urgency: v as WishlistProject["urgency"],
+                      }))
+                    }
+                  >
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {urgencyOptions.map((u) => (
+                        <SelectItem key={u} value={u}>
+                          {urgencyConfig[u].label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+            </div>
+            <DialogFooter>
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => {
+                  setEditOpen(false);
+                  setEditId(null);
+                }}
+              >
+                Abbrechen
+              </Button>
+              <Button type="submit" disabled={isPending}>
+                {isPending ? "Speichert..." : "Änderungen speichern"}
+              </Button>
+            </DialogFooter>
+          </form>
+        </DialogContent>
+      </Dialog>
+
+      {/* ── Delete Confirmation ── */}
+      <Dialog
+        open={deleteId !== null}
+        onOpenChange={(v) => {
+          if (!v) setDeleteId(null);
+        }}
+      >
+        <DialogContent className="sm:max-w-[400px]">
+          <DialogHeader>
+            <DialogTitle>Wunschprojekt löschen?</DialogTitle>
+            <DialogDescription>
+              Diese Aktion kann nicht rückgängig gemacht werden. Das Projekt
+              wird dauerhaft entfernt.
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setDeleteId(null)}>
+              Abbrechen
+            </Button>
+            <Button
+              variant="destructive"
+              disabled={isPending}
+              onClick={() => deleteId && handleDelete(deleteId)}
+            >
+              {isPending ? "Löscht..." : "Endgültig löschen"}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
-  )
+  );
 }

@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import {
   Card,
@@ -6,83 +6,25 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Switch } from "@/components/ui/switch"
-import { Button } from "@/components/ui/button"
-import { Separator } from "@/components/ui/separator"
-import { Home, Bell, Shield, Terminal } from "lucide-react"
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
+import { Home, Bell, Shield, Terminal } from "lucide-react";
 
 export function SettingsPanel() {
   return (
     <div className="space-y-6 max-w-2xl">
-      {/* Property Info */}
-      <Card>
-        <CardHeader className="pb-3">
-          <div className="flex items-center gap-2">
-            <Home className="h-4 w-4 text-primary" />
-            <CardTitle className="text-sm font-medium">Immobilieninformationen</CardTitle>
-          </div>
-          <CardDescription className="text-xs">
-            {"Wo die Magie (und die Hypothekenzahlungen) passieren."}
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="grid gap-4 sm:grid-cols-2">
-            <div className="space-y-2">
-              <Label htmlFor="address" className="text-xs">
-                Adresse
-              </Label>
-              <Input
-                id="address"
-                defaultValue="Musterstraße 12"
-                className="h-9 text-sm"
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="city" className="text-xs">
-                Stadt
-              </Label>
-              <Input
-                id="city"
-                defaultValue="Berlin"
-                className="h-9 text-sm"
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="zip" className="text-xs">
-                PLZ
-              </Label>
-              <Input
-                id="zip"
-                defaultValue="10115"
-                className="h-9 text-sm"
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="type" className="text-xs">
-                Immobilientyp
-              </Label>
-              <Input
-                id="type"
-                defaultValue="Einfamilienhaus"
-                className="h-9 text-sm"
-              />
-            </div>
-          </div>
-          <div className="flex justify-end">
-            <Button size="sm">Speichern</Button>
-          </div>
-        </CardContent>
-      </Card>
-
       {/* Notifications */}
       <Card>
         <CardHeader className="pb-3">
           <div className="flex items-center gap-2">
             <Bell className="h-4 w-4 text-primary" />
-            <CardTitle className="text-sm font-medium">Benachrichtigungen</CardTitle>
+            <CardTitle className="text-sm font-medium">
+              Benachrichtigungen
+            </CardTitle>
           </div>
           <CardDescription className="text-xs">
             {"Wähle, welche Erinnerungen du ignorieren möchtest."}
@@ -139,7 +81,9 @@ export function SettingsPanel() {
         <CardHeader className="pb-3">
           <div className="flex items-center gap-2">
             <Shield className="h-4 w-4 text-primary" />
-            <CardTitle className="text-sm font-medium">Daten & Datenschutz</CardTitle>
+            <CardTitle className="text-sm font-medium">
+              Daten & Datenschutz
+            </CardTitle>
           </div>
           <CardDescription className="text-xs">
             {"Deine Daten. Deine Regeln."}
@@ -148,9 +92,12 @@ export function SettingsPanel() {
         <CardContent className="space-y-4">
           <div className="flex items-center justify-between">
             <div className="space-y-0.5">
-              <p className="text-sm font-medium text-foreground">Daten exportieren</p>
+              <p className="text-sm font-medium text-foreground">
+                Daten exportieren
+              </p>
               <p className="text-[11px] text-muted-foreground">
-                Alles als JSON herunterladen. Perfekt für deine nächste Tabellen-Obsession.
+                Alles als JSON herunterladen. Perfekt für deine nächste
+                Tabellen-Obsession.
               </p>
             </div>
             <Button variant="outline" size="sm">
@@ -193,5 +140,5 @@ export function SettingsPanel() {
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }
