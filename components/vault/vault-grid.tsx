@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useMemo, useTransition } from "react"
+import { QRCodeDialog } from "@/components/vault/qr-code-dialog"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -32,6 +32,7 @@ import {
   type Appliance,
 } from "@/lib/data"
 import { createAppliance, updateAppliance, deleteAppliance } from "@/lib/actions"
+import { useMemo, useState, useTransition } from "react"
 
 const statusConfig: Record<
   Appliance["status"],
@@ -198,11 +199,10 @@ function ApplianceFormFields({
                   key={s}
                   type="button"
                   onClick={() => setForm((p) => ({ ...p, status: s }))}
-                  className={`rounded-md border px-2.5 py-1.5 text-[11px] transition-colors ${
-                    form.status === s
-                      ? "border-primary bg-primary/10 text-primary"
-                      : "border-border bg-background text-muted-foreground hover:border-primary/50"
-                  }`}
+                  className={`rounded-md border px-2.5 py-1.5 text-[11px] transition-colors ${form.status === s
+                    ? "border-primary bg-primary/10 text-primary"
+                    : "border-border bg-background text-muted-foreground hover:border-primary/50"
+                    }`}
                 >
                   {cfg.label}
                 </button>
@@ -446,6 +446,7 @@ export function VaultGrid({ appliances }: { appliances: Appliance[] }) {
                       </span>
                     </div>
                     <div className="flex items-center gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <QRCodeDialog id={item.id} name={item.name} />
                       <Button
                         variant="ghost"
                         size="icon"
