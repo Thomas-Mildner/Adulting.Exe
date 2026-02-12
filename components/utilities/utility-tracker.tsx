@@ -115,9 +115,12 @@ const tooltipStyle = {
 
 export function UtilityTracker({
   meterHistory,
+  heatingType = "Gas",
 }: {
   meterHistory: MeterReading[];
+  heatingType?: string;
 }) {
+  const heatingUnit = heatingType === "Gas" ? "m³" : heatingType === "Oil" ? "Liter" : heatingType === "Pellets" ? "kg" : "kWh";
   const [powerInput, setPowerInput] = useState("");
   const [waterInput, setWaterInput] = useState("");
   const [heatingInput, setHeatingInput] = useState("");
@@ -243,11 +246,11 @@ export function UtilityTracker({
             <div className="grid gap-2">
               <div className="flex items-center gap-1.5">
                 <Flame className="h-3.5 w-3.5 text-chart-4" />
-                <Label className="text-xs font-medium">Heizung (kWh)</Label>
+                <Label className="text-xs font-medium">Heizung ({heatingUnit})</Label>
               </div>
               <Input
                 type="number"
-                placeholder="Verbrauch kWh"
+                placeholder={`Verbrauch ${heatingUnit}`}
                 value={dlgHeating}
                 onChange={(e) => setDlgHeating(e.target.value)}
                 className="h-9 text-sm"
@@ -286,7 +289,7 @@ export function UtilityTracker({
   const prev =
     meterHistory.length >= 2 ? meterHistory[meterHistory.length - 2] : latest;
 
-  if (!latest) {
+  if (!latest || !prev) {
     return (
       <Card>
         <CardHeader>
@@ -332,11 +335,11 @@ export function UtilityTracker({
         costDelta:
           p.powerCost + p.waterCost + p.heatingCost > 0
             ? ((r.powerCost +
-                r.waterCost +
-                r.heatingCost -
-                (p.powerCost + p.waterCost + p.heatingCost)) /
-                (p.powerCost + p.waterCost + p.heatingCost)) *
-              100
+              r.waterCost +
+              r.heatingCost -
+              (p.powerCost + p.waterCost + p.heatingCost)) /
+              (p.powerCost + p.waterCost + p.heatingCost)) *
+            100
             : 0,
       };
     });
@@ -379,7 +382,7 @@ export function UtilityTracker({
     const avgCostDelta =
       recentDeltas.length > 0
         ? recentDeltas.reduce((s, d) => s + d.costDelta, 0) /
-          recentDeltas.length
+        recentDeltas.length
         : 0;
     const efficiency = getEfficiencyGrade(avgCostDelta);
 
@@ -477,7 +480,7 @@ export function UtilityTracker({
     },
     {
       label: "Heizung",
-      unit: "kWh",
+      unit: heatingUnit,
       value: latest.heating,
       cost: latest.heatingCost,
       icon: Flame,
@@ -843,7 +846,7 @@ export function UtilityTracker({
                       />
                       <Bar
                         dataKey="heating"
-                        name="Heizung (kWh)"
+                        name={`Heizung (${heatingUnit})`}
                         fill={CHART_COLORS.heating}
                         radius={[3, 3, 0, 0]}
                       />
@@ -1048,7 +1051,7 @@ export function UtilityTracker({
                         <span>Heizung</span>
                       </div>
                       <span className="font-mono font-medium tabular-nums">
-                        {analytics.latestPricePerKwhHeating.toFixed(2)} €/kWh
+                        {analytics.latestPricePerKwhHeating.toFixed(2)} €/{heatingUnit}
                       </span>
                     </div>
                     <Progress
@@ -1059,7 +1062,7 @@ export function UtilityTracker({
                       className="h-2"
                     />
                     <p className="text-[10px] text-muted-foreground">
-                      Bundesdurchschnitt: ~0,11 €/kWh
+                      Bundesdurchschnitt: ~0,11 €/{heatingUnit}
                     </p>
                   </div>
                 </div>
@@ -1293,7 +1296,7 @@ export function UtilityTracker({
               <div className="space-y-2">
                 <Input
                   type="number"
-                  placeholder={`Verbrauch kWh (Letzter: ${latest.heating})`}
+                  placeholder={`Verbrauch ${heatingUnit} (Letzter: ${latest.heating})`}
                   value={heatingInput}
                   onChange={(e) => setHeatingInput(e.target.value)}
                   className="h-9 text-sm"
