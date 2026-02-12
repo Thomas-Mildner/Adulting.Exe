@@ -663,3 +663,22 @@ export async function deleteWasteType(id: string) {
     throw new Error("Konnte Mülltyp nicht löschen (vielleicht wird er noch verwendet?)")
   }
 }
+
+// ─── App Config ───────────────────────────────────────────────────────
+
+export async function getAppConfig() {
+  let config = await prisma.appConfig.findUnique({ where: { id: "default" } })
+  if (!config) {
+    config = await prisma.appConfig.create({ data: { id: "default", heatingType: "Gas" } })
+  }
+  return config
+}
+
+export async function updateHeatingType(type: string) {
+  await prisma.appConfig.update({
+    where: { id: "default" },
+    data: { heatingType: type },
+  })
+  revalidatePath("/settings")
+  revalidatePath("/utilities")
+}
