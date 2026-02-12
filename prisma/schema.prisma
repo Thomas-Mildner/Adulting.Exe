@@ -145,3 +145,36 @@ model WishlistProject {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
+// ─── Waste Calendar ───────────────────────────────────────────────────
+
+model WasteType {
+  id      String @id @default(cuid())
+  name    String // e.g., "Restmüll", "Bio", "Papier", "Gelber Sack"
+  color   String // tailwind color class or hex, e.g., "gray-700", "green-600"
+  icon    String // lucide icon name
+
+  pickups WastePickup[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model WastePickup {
+  id          String   @id @default(cuid())
+  date        DateTime
+  wasteType   WasteType @relation(fields: [wasteTypeId], references: [id], onDelete: Cascade)
+  wasteTypeId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// ─── App Configuration ────────────────────────────────────────────────
+
+model AppConfig {
+  id          String   @id @default("default") // Only one row
+  heatingType String   @default("Gas") // "Gas", "Oil", "Fernwärme", "Wärmepumpe", "Pellets"
+
+  updatedAt DateTime @updatedAt
+}
