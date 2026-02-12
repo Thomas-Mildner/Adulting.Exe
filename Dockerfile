@@ -1,5 +1,5 @@
 # Build stage
-FROM node:18-alpine AS builder
+FROM node:20.9.0-alpine AS builder
 
 # Install pnpm
 RUN npm install -g pnpm
@@ -10,7 +10,7 @@ WORKDIR /app
 COPY package.json pnpm-lock.yaml ./
 
 # Install dependencies
-RUN pnpm install --frozen-lockfile
+RUN pnpm install --no-frozen-lockfile
 
 # Copy prisma schema and generate client
 COPY prisma ./prisma
@@ -23,7 +23,7 @@ COPY . .
 RUN pnpm build
 
 # Production stage
-FROM node:18-alpine AS runner
+FROM node:20.9.0-alpine AS runner
 
 # Install pnpm
 RUN npm install -g pnpm
@@ -38,7 +38,7 @@ COPY package.json pnpm-lock.yaml ./
 COPY prisma ./prisma
 
 # Install production dependencies only
-RUN pnpm install --frozen-lockfile --production
+RUN pnpm install --no-frozen-lockfile --production
 
 # Generate Prisma Client
 RUN pnpm db:generate
