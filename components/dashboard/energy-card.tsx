@@ -1,7 +1,7 @@
-"use client"
+"use client";
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { type MeterReading, formatCurrency } from "@/lib/data"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { type MeterReading, formatCurrency } from "@/lib/data";
 import {
   AreaChart,
   Area,
@@ -10,27 +10,46 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
-} from "recharts"
+} from "recharts";
 
 export function EnergyCard({ meterHistory }: { meterHistory: MeterReading[] }) {
-  const latest = meterHistory[meterHistory.length - 1]
-  const prev = meterHistory.length >= 2 ? meterHistory[meterHistory.length - 2] : latest
-  const latestTotal = latest.powerCost + latest.waterCost + latest.heatingCost
-  const prevTotal = prev.powerCost + prev.waterCost + prev.heatingCost
-  const costDelta = latestTotal - prevTotal
+  if (!meterHistory || meterHistory.length === 0) {
+    return (
+      <Card>
+        <CardHeader className="pb-3">
+          <CardTitle className="text-sm font-medium">
+            Ressourcenfresser
+          </CardTitle>
+          <p className="text-xs text-muted-foreground">
+            Noch keine Zählerstände vorhanden
+          </p>
+        </CardHeader>
+      </Card>
+    );
+  }
 
-  const chartData = meterHistory.map(r => ({
+  const latest = meterHistory[meterHistory.length - 1];
+  const prev =
+    meterHistory.length >= 2 ? meterHistory[meterHistory.length - 2] : latest;
+  const latestTotal = latest.powerCost + latest.waterCost + latest.heatingCost;
+  const prevTotal = prev.powerCost + prev.waterCost + prev.heatingCost;
+  const costDelta = latestTotal - prevTotal;
+
+  const chartData = meterHistory.map((r) => ({
     month: r.month,
     Gesamt: r.powerCost + r.waterCost + r.heatingCost,
-  }))
+  }));
 
   return (
     <Card>
       <CardHeader className="pb-3">
         <div className="flex items-center justify-between">
-          <CardTitle className="text-sm font-medium">Ressourcenfresser</CardTitle>
+          <CardTitle className="text-sm font-medium">
+            Ressourcenfresser
+          </CardTitle>
           <span className="text-[11px] font-mono text-muted-foreground">
-            {costDelta > 0 ? "+" : ""}{formatCurrency(costDelta)} ggü. Vormonat
+            {costDelta > 0 ? "+" : ""}
+            {formatCurrency(costDelta)} ggü. Vormonat
           </span>
         </div>
         <p className="text-xs text-muted-foreground">
@@ -40,14 +59,28 @@ export function EnergyCard({ meterHistory }: { meterHistory: MeterReading[] }) {
       <CardContent>
         <div className="h-[180px] w-full">
           <ResponsiveContainer width="100%" height="100%">
-            <AreaChart data={chartData} margin={{ top: 5, right: 5, left: -10, bottom: 0 }}>
+            <AreaChart
+              data={chartData}
+              margin={{ top: 5, right: 5, left: -10, bottom: 0 }}
+            >
               <defs>
                 <linearGradient id="powerGrad" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="hsl(350, 65%, 55%)" stopOpacity={0.15} />
-                  <stop offset="95%" stopColor="hsl(350, 65%, 55%)" stopOpacity={0} />
+                  <stop
+                    offset="5%"
+                    stopColor="hsl(350, 65%, 55%)"
+                    stopOpacity={0.15}
+                  />
+                  <stop
+                    offset="95%"
+                    stopColor="hsl(350, 65%, 55%)"
+                    stopOpacity={0}
+                  />
                 </linearGradient>
               </defs>
-              <CartesianGrid strokeDasharray="3 3" stroke="hsl(220, 13%, 91%)" />
+              <CartesianGrid
+                strokeDasharray="3 3"
+                stroke="hsl(220, 13%, 91%)"
+              />
               <XAxis
                 dataKey="month"
                 tick={{ fontSize: 10, fill: "hsl(220, 8%, 46%)" }}
@@ -82,5 +115,5 @@ export function EnergyCard({ meterHistory }: { meterHistory: MeterReading[] }) {
         </div>
       </CardContent>
     </Card>
-  )
+  );
 }
