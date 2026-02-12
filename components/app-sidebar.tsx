@@ -13,6 +13,7 @@ import {
   ClipboardCheck,
   Settings,
   Terminal,
+  CalendarDays,
 } from "lucide-react"
 
 import {
@@ -37,6 +38,7 @@ const mainNav = [
 ]
 
 const toolsNav = [
+  { title: "Müllkalender", href: "/waste", icon: CalendarDays },
   { title: "Wartungen", href: "/maintenance", icon: ClipboardCheck },
   { title: "Ressourcenfresser", href: "/utilities", icon: Gauge },
   { title: "Wunschliste", href: "/wishlist", icon: Sparkles },

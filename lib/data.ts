@@ -90,6 +90,20 @@ export type WishlistProject = {
   category: string
 }
 
+export type WasteType = {
+  id: string
+  name: string
+  color: string
+  icon: string
+}
+
+export type WastePickup = {
+  id: string
+  date: string
+  wasteTypeId: string
+  wasteType?: WasteType
+}
+
 // ─── Note ────────────────────────────────────────────────────────────────
 // Mock data has been moved to the database. Use server actions from
 // "@/lib/actions" to fetch / mutate data. Seed with `pnpm prisma db seed`.

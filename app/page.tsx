@@ -5,24 +5,27 @@ import { MaintenanceCard } from "@/components/dashboard/maintenance-card"
 import { LendingCard } from "@/components/dashboard/lending-card"
 import { EnergyCard } from "@/components/dashboard/energy-card"
 import { WarrantyOverview } from "@/components/dashboard/warranty-overview"
+import { WasteCard } from "@/components/dashboard/waste-card"
 import {
   getAppliances,
   getMaintenanceTasks,
   getLentItems,
   getMeterReadings,
   getTotalTaxDeductible,
+  getNextWastePickup,
 } from "@/lib/actions"
 
 export const dynamic = "force-dynamic"
 
 export default async function DashboardPage() {
-  const [appliances, maintenanceTasks, lentItems, meterHistory, taxDeductible] =
+  const [appliances, maintenanceTasks, lentItems, meterHistory, taxDeductible, nextWastePickup] =
     await Promise.all([
       getAppliances(),
       getMaintenanceTasks(),
       getLentItems(),
       getMeterReadings(),
       getTotalTaxDeductible(),
+      getNextWastePickup(),
     ])
 
   return (
@@ -30,7 +33,8 @@ export default async function DashboardPage() {
       <div className="space-y-6">
         <HouseHealth appliances={appliances} maintenanceTasks={maintenanceTasks} lentItems={lentItems} />
         <StatsCards appliances={appliances} maintenanceTasks={maintenanceTasks} taxDeductible={taxDeductible} />
-        <div className="grid gap-6 lg:grid-cols-2">
+        <div className="grid gap-6 lg:grid-cols-3">
+          <WasteCard nextPickup={nextWastePickup} />
           <MaintenanceCard initialTasks={maintenanceTasks} />
           <WarrantyOverview appliances={appliances} />
         </div>
