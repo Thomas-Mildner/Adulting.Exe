@@ -49,6 +49,7 @@ const systemNav = [
 
 export function AppSidebar() {
   const pathname = usePathname()
+  const version = process.env.NEXT_PUBLIC_APP_VERSION || '0.1.0'
 
   const renderNavGroup = (items: typeof mainNav, label: string) => (
     <SidebarGroup>
@@ -92,7 +93,7 @@ export function AppSidebar() {
               Adulting.exe
             </span>
             <span className="text-[10px] text-sidebar-foreground/50 font-mono">
-              v2.0 &mdash; immer noch Beta
+              v{version} &mdash; immer noch Beta
             </span>
           </div>
         </Link>

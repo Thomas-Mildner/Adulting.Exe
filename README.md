@@ -123,6 +123,47 @@ Navigate to [http://localhost:3000](http://localhost:3000) to see your home mana
 
 ---
 
+## 🔄 Versioning & Releases
+
+This project uses [semantic-release](https://semantic-release.gitbook.io/) for automated version management and package publishing.
+
+### How it works
+
+1. **Commit Messages:** Follow the [Conventional Commits](https://www.conventionalcommits.org/) specification:
+   - `feat:` - New features (triggers a minor release)
+   - `fix:` - Bug fixes (triggers a patch release)
+   - `perf:` - Performance improvements (triggers a patch release)
+   - `refactor:` - Code refactoring (triggers a patch release)
+   - `BREAKING CHANGE:` - Breaking changes (triggers a major release)
+   - `docs:`, `chore:`, `style:`, `test:` - No release
+
+2. **Automatic Releases:** When code is pushed to the `main` branch:
+   - Semantic-release analyzes commits since the last release
+   - Determines the next version number
+   - Updates `package.json` and `pnpm-lock.yaml`
+   - Generates a changelog in `CHANGELOG.md`
+   - Creates a GitHub release with release notes
+   - Tags Docker images with the semantic version
+
+3. **Version Display:** The current version is displayed in the app sidebar (read from `package.json` at build time).
+
+### Example Commits
+
+```bash
+git commit -m "feat: add new maintenance reminder feature"
+# This will trigger a minor version bump (e.g., 1.0.0 → 1.1.0)
+
+git commit -m "fix: resolve issue with warranty expiration dates"
+# This will trigger a patch version bump (e.g., 1.1.0 → 1.1.1)
+
+git commit -m "feat!: redesign dashboard layout
+
+BREAKING CHANGE: Dashboard layout has been completely redesigned"
+# This will trigger a major version bump (e.g., 1.1.1 → 2.0.0)
+```
+
+---
+
 ## 📝 Roadmap
 - [ ] QR Code Generator for moving boxes.
 - [ ] Automatic PDF Export for Home Insurance audits.
