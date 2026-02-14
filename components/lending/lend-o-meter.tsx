@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
+import { useTranslations } from "next-intl";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -16,13 +17,6 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import {
   Table,
   TableBody,
   TableCell,
@@ -35,20 +29,22 @@ import { createLentItem, updateLentItem, deleteLentItem } from "@/lib/actions";
 import { ShieldAlert, ShieldCheck, Plus, Pencil, Trash2 } from "lucide-react";
 
 function TrustStars({ level }: { level: number }) {
-  const labels = ["", "Autsch", "Hmm", "Okay", "Solide", "Seelenverwandt"];
+  const t = useTranslations("Lending.trust");
+  // keys: level1, level2, level3, level4, level5
+  const labelKey = `level${level}` as "level1" | "level2" | "level3" | "level4" | "level5";
+
   return (
     <div className="flex items-center gap-1.5">
       <div className="flex gap-px">
         {Array.from({ length: 5 }).map((_, i) => (
           <div
             key={i}
-            className={`h-1.5 w-3 rounded-sm ${
-              i < level ? "bg-primary" : "bg-border"
-            }`}
+            className={`h-1.5 w-3 rounded-sm ${i < level ? "bg-primary" : "bg-border"
+              }`}
           />
         ))}
       </div>
-      <span className="text-[10px] text-muted-foreground">{labels[level]}</span>
+      <span className="text-[10px] text-muted-foreground">{t(labelKey)}</span>
     </div>
   );
 }
@@ -60,33 +56,35 @@ function TrustLevelSelector({
   value: number;
   onChange: (v: 1 | 2 | 3 | 4 | 5) => void;
 }) {
-  const labels = ["Autsch", "Hmm", "Okay", "Solide", "Seelenverwandt"];
+  const t = useTranslations("Lending.trust");
+
   return (
     <div className="flex items-center gap-2">
-      {[1, 2, 3, 4, 5].map((level) => (
-        <button
-          key={level}
-          type="button"
-          onClick={() => onChange(level as 1 | 2 | 3 | 4 | 5)}
-          className={`flex flex-col items-center gap-0.5 rounded-md border px-2.5 py-1.5 text-xs transition-colors ${
-            value === level
-              ? "border-primary bg-primary/10 text-primary"
-              : "border-border bg-background text-muted-foreground hover:border-primary/50"
-          }`}
-        >
-          <div className="flex gap-px">
-            {Array.from({ length: 5 }).map((_, i) => (
-              <div
-                key={i}
-                className={`h-1 w-2 rounded-sm ${
-                  i < level ? "bg-primary" : "bg-border"
-                }`}
-              />
-            ))}
-          </div>
-          <span className="text-[10px]">{labels[level - 1]}</span>
-        </button>
-      ))}
+      {[1, 2, 3, 4, 5].map((level) => {
+        const labelKey = `level${level}` as "level1" | "level2" | "level3" | "level4" | "level5";
+        return (
+          <button
+            key={level}
+            type="button"
+            onClick={() => onChange(level as 1 | 2 | 3 | 4 | 5)}
+            className={`flex flex-col items-center gap-0.5 rounded-md border px-2.5 py-1.5 text-xs transition-colors ${value === level
+                ? "border-primary bg-primary/10 text-primary"
+                : "border-border bg-background text-muted-foreground hover:border-primary/50"
+              }`}
+          >
+            <div className="flex gap-px">
+              {Array.from({ length: 5 }).map((_, i) => (
+                <div
+                  key={i}
+                  className={`h-1 w-2 rounded-sm ${i < level ? "bg-primary" : "bg-border"
+                    }`}
+                />
+              ))}
+            </div>
+            <span className="text-[10px]">{t(labelKey)}</span>
+          </button>
+        )
+      })}
     </div>
   );
 }
@@ -95,6 +93,7 @@ export function LendOMeter({ lentItems }: { lentItems: LentItem[] }) {
   const [items, setItems] = useState(lentItems);
   const [open, setOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
+  const t = useTranslations("Lending");
 
   // Form state
   const [item, setItem] = useState("");
@@ -209,41 +208,41 @@ export function LendOMeter({ lentItems }: { lentItems: LentItem[] }) {
         <Card>
           <CardContent className="p-5">
             <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
-              Verliehene Sachen
+              {t("stats.totalItems")}
             </p>
             <p className="text-2xl font-semibold tabular-nums text-foreground mt-1">
               {items.length}
             </p>
             <p className="text-xs text-muted-foreground">
-              Verstreut in der Nachbarschaft
+              {t("stats.scattered")}
             </p>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="p-5">
             <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
-              Pünktlich
+              {t("stats.onTime")}
             </p>
             <p className="text-2xl font-semibold tabular-nums text-success mt-1">
               {active.length}
             </p>
             <p className="text-xs text-muted-foreground">
-              {"Glaube an die Menschheit: hält"}
+              {t("stats.faith")}
             </p>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="p-5">
             <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
-              Überfällig
+              {t("stats.overdue")}
             </p>
             <p className="text-2xl font-semibold tabular-nums text-destructive mt-1">
               {overdue.length}
             </p>
             <p className="text-xs text-muted-foreground">
               {overdue.length > 0
-                ? "Zeit für eine peinliche Nachricht"
-                : "Keine passiv-aggressiven Nachrichten nötig"}
+                ? t("stats.awkwardMessage")
+                : t("stats.noPassiveAggressive")}
             </p>
           </CardContent>
         </Card>
@@ -255,12 +254,10 @@ export function LendOMeter({ lentItems }: { lentItems: LentItem[] }) {
           <div className="flex items-center justify-between">
             <div>
               <CardTitle className="text-sm font-medium">
-                Alle verliehenen Gegenstände
+                {t("list.title")}
               </CardTitle>
               <p className="text-xs text-muted-foreground mt-1">
-                {
-                  "Behalte im Blick, was draußen ist. Und wer es hat. Und wann du es zurückbekommst (hoffentlich)."
-                }
+                {t("list.description")}
               </p>
             </div>
             <Dialog
@@ -273,33 +270,33 @@ export function LendOMeter({ lentItems }: { lentItems: LentItem[] }) {
               <DialogTrigger asChild>
                 <Button size="sm" className="gap-1.5">
                   <Plus className="h-4 w-4" />
-                  Neuer Eintrag
+                  {t("create.button")}
                 </Button>
               </DialogTrigger>
               <DialogContent className="sm:max-w-[480px]">
                 <form onSubmit={handleSubmit}>
                   <DialogHeader>
-                    <DialogTitle>Neuen Verleih erfassen</DialogTitle>
+                    <DialogTitle>{t("create.title")}</DialogTitle>
                     <DialogDescription>
-                      Was wird verliehen, an wen, und wann soll es zurückkommen?
+                      {t("create.description")}
                     </DialogDescription>
                   </DialogHeader>
                   <div className="grid gap-4 py-4">
                     <div className="grid gap-2">
-                      <Label htmlFor="item">Gegenstand</Label>
+                      <Label htmlFor="item">{t("form.item")}</Label>
                       <Input
                         id="item"
-                        placeholder="z.B. Bohrmaschine, Leiter, Raclette-Grill..."
+                        placeholder={t("form.itemPlaceholder")}
                         value={item}
                         onChange={(e) => setItem(e.target.value)}
                         required
                       />
                     </div>
                     <div className="grid gap-2">
-                      <Label htmlFor="borrower">Nachbar / Ausleiher</Label>
+                      <Label htmlFor="borrower">{t("form.borrower")}</Label>
                       <Input
                         id="borrower"
-                        placeholder="z.B. Thomas von nebenan"
+                        placeholder={t("form.borrowerPlaceholder")}
                         value={borrower}
                         onChange={(e) => setBorrower(e.target.value)}
                         required
@@ -307,7 +304,7 @@ export function LendOMeter({ lentItems }: { lentItems: LentItem[] }) {
                     </div>
                     <div className="grid grid-cols-2 gap-4">
                       <div className="grid gap-2">
-                        <Label htmlFor="lentDate">Ausleihdatum</Label>
+                        <Label htmlFor="lentDate">{t("form.lentDate")}</Label>
                         <Input
                           id="lentDate"
                           type="date"
@@ -317,7 +314,7 @@ export function LendOMeter({ lentItems }: { lentItems: LentItem[] }) {
                         />
                       </div>
                       <div className="grid gap-2">
-                        <Label htmlFor="expectedReturn">Rückgabe bis</Label>
+                        <Label htmlFor="expectedReturn">{t("form.expectedReturn")}</Label>
                         <Input
                           id="expectedReturn"
                           type="date"
@@ -328,7 +325,7 @@ export function LendOMeter({ lentItems }: { lentItems: LentItem[] }) {
                       </div>
                     </div>
                     <div className="grid gap-2">
-                      <Label>Vertrauenslevel</Label>
+                      <Label>{t("form.trustLevel")}</Label>
                       <TrustLevelSelector
                         value={trustLevel}
                         onChange={setTrustLevel}
@@ -344,10 +341,10 @@ export function LendOMeter({ lentItems }: { lentItems: LentItem[] }) {
                         setOpen(false);
                       }}
                     >
-                      Abbrechen
+                      {t("form.cancel")}
                     </Button>
                     <Button type="submit" disabled={isPending}>
-                      {isPending ? "Speichert..." : "Speichern"}
+                      {isPending ? t("form.saving") : t("form.save")}
                     </Button>
                   </DialogFooter>
                 </form>
@@ -359,17 +356,17 @@ export function LendOMeter({ lentItems }: { lentItems: LentItem[] }) {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead className="text-xs">Status</TableHead>
-                <TableHead className="text-xs">Gegenstand</TableHead>
-                <TableHead className="text-xs">Nachbar</TableHead>
+                <TableHead className="text-xs">{t("table.status")}</TableHead>
+                <TableHead className="text-xs">{t("table.item")}</TableHead>
+                <TableHead className="text-xs">{t("table.borrower")}</TableHead>
                 <TableHead className="text-xs hidden sm:table-cell">
-                  Ausleihdatum
+                  {t("table.lentDate")}
                 </TableHead>
-                <TableHead className="text-xs">Rückgabe bis</TableHead>
+                <TableHead className="text-xs">{t("table.returnBy")}</TableHead>
                 <TableHead className="text-xs hidden sm:table-cell">
-                  Vertrauenslevel
+                  {t("table.trustLevel")}
                 </TableHead>
-                <TableHead className="text-xs text-right">Aktionen</TableHead>
+                <TableHead className="text-xs text-right">{t("table.actions")}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -379,9 +376,7 @@ export function LendOMeter({ lentItems }: { lentItems: LentItem[] }) {
                     colSpan={7}
                     className="text-center py-12 text-sm text-muted-foreground"
                   >
-                    {
-                      "Nichts verliehen. Entweder sehr vorsichtig oder kein Werkzeug."
-                    }
+                    {t("list.empty")}
                   </TableCell>
                 </TableRow>
               ) : (
@@ -419,17 +414,16 @@ export function LendOMeter({ lentItems }: { lentItems: LentItem[] }) {
                         <TableCell>
                           <Badge
                             variant="outline"
-                            className={`text-[10px] ${
-                              isOverdue
+                            className={`text-[10px] ${isOverdue
                                 ? "bg-destructive/10 text-destructive border-destructive/20"
                                 : days <= 3
                                   ? "bg-chart-3/10 text-chart-3 border-chart-3/20"
                                   : "text-muted-foreground"
-                            }`}
+                              }`}
                           >
                             {isOverdue
-                              ? `${Math.abs(days)}T überfällig`
-                              : `${days}T übrig`}
+                              ? t("list.overdueBadge", { days: Math.abs(days) })
+                              : t("list.remainingBadge", { days })}
                           </Badge>
                         </TableCell>
                         <TableCell className="hidden sm:table-cell">
@@ -475,27 +469,27 @@ export function LendOMeter({ lentItems }: { lentItems: LentItem[] }) {
         <DialogContent className="sm:max-w-[480px]">
           <form onSubmit={handleEdit}>
             <DialogHeader>
-              <DialogTitle>Verleih bearbeiten</DialogTitle>
+              <DialogTitle>{t("edit.title")}</DialogTitle>
               <DialogDescription>
-                Änderungen werden sofort gespeichert.
+                {t("edit.description")}
               </DialogDescription>
             </DialogHeader>
             <div className="grid gap-4 py-4">
               <div className="grid gap-2">
-                <Label htmlFor="edit-item">Gegenstand</Label>
+                <Label htmlFor="edit-item">{t("form.item")}</Label>
                 <Input
                   id="edit-item"
-                  placeholder="z.B. Bohrmaschine, Leiter, Raclette-Grill..."
+                  placeholder={t("form.itemPlaceholder")}
                   value={editItem}
                   onChange={(e) => setEditItem(e.target.value)}
                   required
                 />
               </div>
               <div className="grid gap-2">
-                <Label htmlFor="edit-borrower">Nachbar / Ausleiher</Label>
+                <Label htmlFor="edit-borrower">{t("form.borrower")}</Label>
                 <Input
                   id="edit-borrower"
-                  placeholder="z.B. Thomas von nebenan"
+                  placeholder={t("form.borrowerPlaceholder")}
                   value={editBorrower}
                   onChange={(e) => setEditBorrower(e.target.value)}
                   required
@@ -503,7 +497,7 @@ export function LendOMeter({ lentItems }: { lentItems: LentItem[] }) {
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div className="grid gap-2">
-                  <Label htmlFor="edit-lentDate">Ausleihdatum</Label>
+                  <Label htmlFor="edit-lentDate">{t("form.lentDate")}</Label>
                   <Input
                     id="edit-lentDate"
                     type="date"
@@ -513,7 +507,7 @@ export function LendOMeter({ lentItems }: { lentItems: LentItem[] }) {
                   />
                 </div>
                 <div className="grid gap-2">
-                  <Label htmlFor="edit-expectedReturn">Rückgabe bis</Label>
+                  <Label htmlFor="edit-expectedReturn">{t("form.expectedReturn")}</Label>
                   <Input
                     id="edit-expectedReturn"
                     type="date"
@@ -524,7 +518,7 @@ export function LendOMeter({ lentItems }: { lentItems: LentItem[] }) {
                 </div>
               </div>
               <div className="grid gap-2">
-                <Label>Vertrauenslevel</Label>
+                <Label>{t("form.trustLevel")}</Label>
                 <TrustLevelSelector
                   value={editTrustLevel}
                   onChange={setEditTrustLevel}
@@ -540,10 +534,10 @@ export function LendOMeter({ lentItems }: { lentItems: LentItem[] }) {
                   setEditId(null);
                 }}
               >
-                Abbrechen
+                {t("form.cancel")}
               </Button>
               <Button type="submit" disabled={isPending}>
-                {isPending ? "Speichert..." : "Änderungen speichern"}
+                {isPending ? t("form.saving") : t("form.editSave")}
               </Button>
             </DialogFooter>
           </form>
@@ -559,22 +553,21 @@ export function LendOMeter({ lentItems }: { lentItems: LentItem[] }) {
       >
         <DialogContent className="sm:max-w-[400px]">
           <DialogHeader>
-            <DialogTitle>Verleih löschen?</DialogTitle>
+            <DialogTitle>{t("delete.title")}</DialogTitle>
             <DialogDescription>
-              Diese Aktion kann nicht rückgängig gemacht werden. Der Eintrag
-              wird dauerhaft entfernt.
+              {t("delete.description")}
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
             <Button variant="outline" onClick={() => setDeleteId(null)}>
-              Abbrechen
+              {t("delete.cancel")}
             </Button>
             <Button
               variant="destructive"
               disabled={isPending}
               onClick={() => deleteId && handleDelete(deleteId)}
             >
-              {isPending ? "Löscht..." : "Endgültig löschen"}
+              {isPending ? t("delete.deleting") : t("delete.confirm")}
             </Button>
           </DialogFooter>
         </DialogContent>

@@ -1,5 +1,7 @@
 "use client"
 
+import { useTranslations } from "next-intl"
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { getDaysRemaining, type LentItem } from "@/lib/data"
@@ -7,24 +9,23 @@ import Link from "next/link"
 import { ArrowRight, ShieldAlert } from "lucide-react"
 
 export function LendingCard({ lentItems }: { lentItems: LentItem[] }) {
+  const t = useTranslations("LendingCard")
   const overdue = lentItems.filter((i) => getDaysRemaining(i.expectedReturn) < 0)
 
   return (
     <Card>
       <CardHeader className="pb-3">
         <div className="flex items-center justify-between">
-          <CardTitle className="text-sm font-medium">Verleih-O-Meter</CardTitle>
+          <CardTitle className="text-sm font-medium">{t("title")}</CardTitle>
           <Link
             href="/lending"
             className="text-xs text-primary hover:underline flex items-center gap-1"
           >
-            Alle anzeigen <ArrowRight className="h-3 w-3" />
+            {t("viewAll")} <ArrowRight className="h-3 w-3" />
           </Link>
         </div>
         <p className="text-xs text-muted-foreground">
-          {overdue.length > 0
-            ? `${overdue.length} Gegenstand${overdue.length > 1 ? "e" : ""} überfällig. Vertrauensprobleme im Anmarsch.`
-            : "Alles zurückgegeben. Glaube an die Menschheit: intakt."}
+          {t("overdueMessage", { count: overdue.length })}
         </p>
       </CardHeader>
       <CardContent className="space-y-1.5">
@@ -41,20 +42,22 @@ export function LendingCard({ lentItems }: { lentItems: LentItem[] }) {
               <div className="flex-1 min-w-0">
                 <p className="text-sm text-foreground truncate">{item.item}</p>
                 <p className="text-[11px] text-muted-foreground">
-                  Verliehen an {item.borrower} &middot; Vertrauen:{" "}
+                  {t("lentTo", { name: item.borrower })} &middot; {t("trust")}:{" "}
                   {"*".repeat(item.trustLevel)}
                   {"*".repeat(0)}
                 </p>
               </div>
               <Badge
                 variant="outline"
-                className={`text-[10px] shrink-0 ${
-                  isOverdue
+                className={`text-[10px] shrink-0 ${isOverdue
                     ? "bg-destructive/10 text-destructive border-destructive/20"
                     : "text-muted-foreground"
-                }`}
+                  }`}
               >
-                {isOverdue ? `${Math.abs(days)}T überfällig` : `${days}T übrig`}
+                {isOverdue
+                  ? t("daysOverdue", { days: Math.abs(days) })
+                  : t("daysRemaining", { days })
+                }
               </Badge>
             </div>
           )
