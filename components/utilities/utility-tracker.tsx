@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useMemo } from "react";
+import { useTranslations } from "next-intl";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
@@ -66,13 +67,13 @@ import {
 function getPainLevel(current: number, previous: number) {
   const delta = ((current - previous) / previous) * 100;
   if (delta > 10)
-    return { level: "Existenzielle Angst", color: "text-destructive", delta };
+    return { level: "painLevels.existential", color: "text-destructive", delta };
   if (delta > 5)
-    return { level: "Leichte Panik", color: "text-chart-3", delta };
+    return { level: "painLevels.panic", color: "text-chart-3", delta };
   if (delta > 0)
-    return { level: "Leichte Sorge", color: "text-chart-3", delta };
-  if (delta === 0) return { level: "Zen", color: "text-success", delta };
-  return { level: "Überraschend gut", color: "text-success", delta };
+    return { level: "painLevels.worry", color: "text-chart-3", delta };
+  if (delta === 0) return { level: "painLevels.zen", color: "text-success", delta };
+  return { level: "painLevels.good", color: "text-success", delta };
 }
 
 function getDeltaIcon(delta: number) {
@@ -87,15 +88,15 @@ function getEfficiencyGrade(avgDelta: number): {
   color: string;
 } {
   if (avgDelta <= -10)
-    return { grade: "A+", label: "Vorbildlich", color: "text-success" };
+    return { grade: "A+", label: "efficiencyGrades.exemplary", color: "text-success" };
   if (avgDelta <= -5)
-    return { grade: "A", label: "Sehr gut", color: "text-success" };
-  if (avgDelta <= 0) return { grade: "B", label: "Gut", color: "text-primary" };
+    return { grade: "A", label: "efficiencyGrades.veryGood", color: "text-success" };
+  if (avgDelta <= 0) return { grade: "B", label: "efficiencyGrades.good", color: "text-primary" };
   if (avgDelta <= 5)
-    return { grade: "C", label: "Ausbaufähig", color: "text-chart-3" };
+    return { grade: "C", label: "efficiencyGrades.expandable", color: "text-chart-3" };
   if (avgDelta <= 10)
-    return { grade: "D", label: "Kritisch", color: "text-destructive" };
-  return { grade: "F", label: "Katastrophe", color: "text-destructive" };
+    return { grade: "D", label: "efficiencyGrades.critical", color: "text-destructive" };
+  return { grade: "F", label: "efficiencyGrades.catastrophe", color: "text-destructive" };
 }
 
 const CHART_COLORS = {
@@ -120,6 +121,7 @@ export function UtilityTracker({
   meterHistory: MeterReading[];
   heatingType?: string;
 }) {
+  const t = useTranslations("Utilities");
   const heatingUnit = heatingType === "Gas" ? "m³" : heatingType === "Oil" ? "Liter" : heatingType === "Pellets" ? "kg" : "kWh";
   const [powerInput, setPowerInput] = useState("");
   const [waterInput, setWaterInput] = useState("");
@@ -171,22 +173,22 @@ export function UtilityTracker({
       <DialogTrigger asChild>
         <Button size="sm" className="gap-1.5 shrink-0">
           <Plus className="h-4 w-4" />
-          Neuer Zählerstand
+          {t("addReading")}
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[480px]">
         <DialogHeader>
-          <DialogTitle>Neuen Zählerstand erfassen</DialogTitle>
+          <DialogTitle>{t("addDialogTitle")}</DialogTitle>
           <DialogDescription>
-            Zeit für deinen monatlichen Termin mit den Zählerständen.
+            {t("addDialogDesc")}
           </DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">
           <div className="grid gap-2">
-            <Label htmlFor="dlg-month">Monat</Label>
+            <Label htmlFor="dlg-month">{t("month")}</Label>
             <Input
               id="dlg-month"
-              placeholder="z.B. Jan 2026"
+              placeholder={t("placeholders.month")}
               value={dlgMonth}
               onChange={(e) => setDlgMonth(e.target.value)}
               required
@@ -196,21 +198,21 @@ export function UtilityTracker({
             <div className="grid gap-2">
               <div className="flex items-center gap-1.5">
                 <Zap className="h-3.5 w-3.5 text-chart-1" />
-                <Label className="text-xs font-medium">Strom (kWh)</Label>
+                <Label className="text-xs font-medium">{t("power")} (kWh)</Label>
               </div>
               <Input
                 type="number"
-                placeholder="Verbrauch kWh"
+                placeholder={t("placeholders.consumption", { unit: "kWh" })}
                 value={dlgPower}
                 onChange={(e) => setDlgPower(e.target.value)}
                 className="h-9 text-sm"
               />
             </div>
             <div className="grid gap-2">
-              <Label className="text-xs font-medium">Kosten Strom (€)</Label>
+              <Label className="text-xs font-medium">{t("cost")} {t("power")} (€)</Label>
               <Input
                 type="number"
-                placeholder="Kosten €"
+                placeholder={t("placeholders.cost")}
                 value={dlgPowerCost}
                 onChange={(e) => setDlgPowerCost(e.target.value)}
                 className="h-9 text-sm"
@@ -221,21 +223,21 @@ export function UtilityTracker({
             <div className="grid gap-2">
               <div className="flex items-center gap-1.5">
                 <Droplets className="h-3.5 w-3.5 text-primary" />
-                <Label className="text-xs font-medium">Wasser (m³)</Label>
+                <Label className="text-xs font-medium">{t("water")} (m³)</Label>
               </div>
               <Input
                 type="number"
-                placeholder="Verbrauch m³"
+                placeholder={t("placeholders.consumption", { unit: "m³" })}
                 value={dlgWater}
                 onChange={(e) => setDlgWater(e.target.value)}
                 className="h-9 text-sm"
               />
             </div>
             <div className="grid gap-2">
-              <Label className="text-xs font-medium">Kosten Wasser (€)</Label>
+              <Label className="text-xs font-medium">{t("cost")} {t("water")} (€)</Label>
               <Input
                 type="number"
-                placeholder="Kosten €"
+                placeholder={t("placeholders.cost")}
                 value={dlgWaterCost}
                 onChange={(e) => setDlgWaterCost(e.target.value)}
                 className="h-9 text-sm"
@@ -246,21 +248,21 @@ export function UtilityTracker({
             <div className="grid gap-2">
               <div className="flex items-center gap-1.5">
                 <Flame className="h-3.5 w-3.5 text-chart-4" />
-                <Label className="text-xs font-medium">Heizung ({heatingUnit})</Label>
+                <Label className="text-xs font-medium">{t("heating")} ({heatingUnit})</Label>
               </div>
               <Input
                 type="number"
-                placeholder={`Verbrauch ${heatingUnit}`}
+                placeholder={t("placeholders.consumption", { unit: heatingUnit })}
                 value={dlgHeating}
                 onChange={(e) => setDlgHeating(e.target.value)}
                 className="h-9 text-sm"
               />
             </div>
             <div className="grid gap-2">
-              <Label className="text-xs font-medium">Kosten Heizung (€)</Label>
+              <Label className="text-xs font-medium">{t("cost")} {t("heating")} (€)</Label>
               <Input
                 type="number"
-                placeholder="Kosten €"
+                placeholder={t("placeholders.cost")}
                 value={dlgHeatingCost}
                 onChange={(e) => setDlgHeatingCost(e.target.value)}
                 className="h-9 text-sm"
@@ -274,10 +276,10 @@ export function UtilityTracker({
             variant="outline"
             onClick={() => setAddDialogOpen(false)}
           >
-            Abbrechen
+            {t("cancel")}
           </Button>
           <Button onClick={handleDialogSave} disabled={saving}>
-            {saving ? "Speichert..." : "Speichern"}
+            {saving ? t("saving") : t("save")}
           </Button>
         </DialogFooter>
       </DialogContent>
@@ -293,9 +295,9 @@ export function UtilityTracker({
     return (
       <Card>
         <CardHeader>
-          <CardTitle>Nebenkosten-Tracker</CardTitle>
+          <CardTitle>{t("trackerTitle")}</CardTitle>
           <p className="text-sm text-muted-foreground">
-            Noch keine Zählerstände vorhanden – erfasse deinen ersten Monat.
+            {t("noData")}
           </p>
         </CardHeader>
         <CardContent>{addMeterDialog}</CardContent>
@@ -433,6 +435,7 @@ export function UtilityTracker({
     if (!powerInput && !waterInput && !heatingInput) return;
     setSaving(true);
     const now = new Date();
+    // TODO: Use locale from hook
     const month = now.toLocaleDateString("de-DE", {
       month: "short",
       year: "numeric",
@@ -459,7 +462,7 @@ export function UtilityTracker({
 
   const resources = [
     {
-      label: "Strom",
+      label: t("power"),
       unit: "kWh",
       value: latest.power,
       cost: latest.powerCost,
@@ -469,7 +472,7 @@ export function UtilityTracker({
       avg: analytics.avgPower,
     },
     {
-      label: "Wasser",
+      label: t("water"),
       unit: "m\u00B3",
       value: latest.water,
       cost: latest.waterCost,
@@ -479,7 +482,7 @@ export function UtilityTracker({
       avg: analytics.avgWater,
     },
     {
-      label: "Heizung",
+      label: t("heating"),
       unit: heatingUnit,
       value: latest.heating,
       cost: latest.heatingCost,
@@ -505,7 +508,7 @@ export function UtilityTracker({
               </div>
               <div>
                 <p className="text-[10px] font-medium text-muted-foreground uppercase tracking-wide">
-                  Gesamtkosten
+                  {t("totalCost")}
                 </p>
                 <p className="text-lg font-semibold tabular-nums">
                   {formatCurrency(analytics.totalCost)}
@@ -513,7 +516,7 @@ export function UtilityTracker({
               </div>
             </div>
             <p className="text-[10px] text-muted-foreground mt-2">
-              Über {meterHistory.length} Monate
+              {t("overMonths", { count: meterHistory.length })}
             </p>
           </CardContent>
         </Card>
@@ -526,7 +529,7 @@ export function UtilityTracker({
               </div>
               <div>
                 <p className="text-[10px] font-medium text-muted-foreground uppercase tracking-wide">
-                  Ø Monat
+                  {t("avgMonth")}
                 </p>
                 <p className="text-lg font-semibold tabular-nums">
                   {formatCurrency(analytics.avgMonthlyCost)}
@@ -534,7 +537,7 @@ export function UtilityTracker({
               </div>
             </div>
             <p className="text-[10px] text-muted-foreground mt-2">
-              Hochrechnung: {formatCurrency(analytics.yearProjection)}/Jahr
+              {t("projection", { amount: formatCurrency(analytics.yearProjection) })}
             </p>
           </CardContent>
         </Card>
@@ -547,7 +550,7 @@ export function UtilityTracker({
               </div>
               <div>
                 <p className="text-[10px] font-medium text-muted-foreground uppercase tracking-wide">
-                  Effizienz-Note
+                  {t("efficiencyGrade")}
                 </p>
                 <p
                   className={`text-lg font-bold ${analytics.efficiency.color}`}
@@ -557,7 +560,7 @@ export function UtilityTracker({
               </div>
             </div>
             <p className="text-[10px] text-muted-foreground mt-2">
-              {analytics.efficiency.label} (letzte 3 Monate)
+              {t(analytics.efficiency.label)} (letzte 3 Monate)
             </p>
           </CardContent>
         </Card>
@@ -570,7 +573,7 @@ export function UtilityTracker({
               </div>
               <div>
                 <p className="text-[10px] font-medium text-muted-foreground uppercase tracking-wide">
-                  Letztes Quartal
+                  {t("lastQuarter")}
                 </p>
                 <p className="text-lg font-semibold tabular-nums">
                   {formatCurrency(analytics.qCost)}
@@ -578,7 +581,7 @@ export function UtilityTracker({
               </div>
             </div>
             <p className="text-[10px] text-muted-foreground mt-2">
-              Teuerster: {analytics.peakMonth.month} (
+              {t("mostExpensive")}: {analytics.peakMonth.month} (
               {formatCurrency(analytics.peakMonth.total)})
             </p>
           </CardContent>
@@ -607,7 +610,7 @@ export function UtilityTracker({
                         className={`text-[11px] font-medium ${r.pain.color}`}
                       >
                         {r.pain.delta > 0 ? "+" : ""}
-                        {r.pain.delta.toFixed(1)}% ggü. Vormonat
+                        {t("comparison", { amount: r.pain.delta.toFixed(1) + "%" })}
                       </span>
                     </div>
                   </div>
@@ -620,14 +623,14 @@ export function UtilityTracker({
 
                 <div className="mt-3 pt-3 border-t space-y-2">
                   <div className="flex items-center justify-between text-[11px]">
-                    <span className="text-muted-foreground">Kosten</span>
+                    <span className="text-muted-foreground">{t("cost")}</span>
                     <span className="font-medium tabular-nums">
                       {formatCurrency(r.cost)}
                     </span>
                   </div>
                   <div className="flex items-center justify-between text-[11px]">
                     <span className="text-muted-foreground">
-                      vs. Durchschnitt
+                      {t("vsAverage")}
                     </span>
                     <Badge
                       variant="outline"
@@ -638,9 +641,9 @@ export function UtilityTracker({
                     </Badge>
                   </div>
                   <div className="flex items-center justify-between text-[11px]">
-                    <span className="text-muted-foreground">Schmerzlevel</span>
+                    <span className="text-muted-foreground">{t("painLevel")}</span>
                     <span className={`font-medium ${r.pain.color}`}>
-                      {r.pain.level}
+                      {t(r.pain.level)}
                     </span>
                   </div>
                 </div>
@@ -654,16 +657,16 @@ export function UtilityTracker({
       <Tabs defaultValue="costs" className="space-y-4">
         <TabsList className="grid w-full grid-cols-4">
           <TabsTrigger value="costs" className="text-xs">
-            Kosten
+            {t("tabs.costs")}
           </TabsTrigger>
           <TabsTrigger value="consumption" className="text-xs">
-            Verbrauch
+            {t("tabs.consumption")}
           </TabsTrigger>
           <TabsTrigger value="breakdown" className="text-xs">
-            Verteilung
+            {t("tabs.breakdown")}
           </TabsTrigger>
           <TabsTrigger value="trends" className="text-xs">
-            Trends
+            {t("tabs.trends")}
           </TabsTrigger>
         </TabsList>
 
@@ -673,11 +676,10 @@ export function UtilityTracker({
             <Card>
               <CardHeader className="pb-3">
                 <CardTitle className="text-sm font-medium">
-                  Monatliche Kosten
+                  {t("charts.monthlyCosts")}
                 </CardTitle>
                 <p className="text-xs text-muted-foreground">
-                  Aufgeschlüsselt nach Ressource — sieh deinem Geld beim
-                  Verdampfen zu.
+                  {t("charts.monthlyCostsDesc")}
                 </p>
               </CardHeader>
               <CardContent>
@@ -734,10 +736,10 @@ export function UtilityTracker({
             <Card>
               <CardHeader className="pb-3">
                 <CardTitle className="text-sm font-medium">
-                  Gesamtkosten-Verlauf
+                  {t("charts.totalCostTrend")}
                 </CardTitle>
                 <p className="text-xs text-muted-foreground">
-                  Die Kurve deines finanziellen Schmerzes.
+                  {t("charts.totalCostTrendDesc")}
                 </p>
               </CardHeader>
               <CardContent>
@@ -808,10 +810,10 @@ export function UtilityTracker({
             <Card>
               <CardHeader className="pb-3">
                 <CardTitle className="text-sm font-medium">
-                  Verbrauchshistorie
+                  {t("charts.consumptionHistory")}
                 </CardTitle>
                 <p className="text-xs text-muted-foreground">
-                  {meterHistory.length}-Monats-Überblick. Halt dich fest.
+                  {t("charts.consumptionHistoryDesc", { count: meterHistory.length })}
                 </p>
               </CardHeader>
               <CardContent>
@@ -840,20 +842,20 @@ export function UtilityTracker({
                       <Legend iconSize={8} wrapperStyle={{ fontSize: 11 }} />
                       <Bar
                         dataKey="power"
-                        name="Strom (kWh)"
+                        name={t("power") + " (kWh)"}
                         fill={CHART_COLORS.power}
                         radius={[3, 3, 0, 0]}
                       />
                       <Bar
                         dataKey="heating"
-                        name={`Heizung (${heatingUnit})`}
+                        name={`${t("heating")} (${heatingUnit})`}
                         fill={CHART_COLORS.heating}
                         radius={[3, 3, 0, 0]}
                       />
                       <Line
                         type="monotone"
                         dataKey="water"
-                        name="Wasser (m³)"
+                        name={t("water") + " (m³)"}
                         stroke={CHART_COLORS.water}
                         strokeWidth={2}
                         dot={{ r: 3 }}
@@ -868,10 +870,10 @@ export function UtilityTracker({
             <Card>
               <CardHeader className="pb-3">
                 <CardTitle className="text-sm font-medium">
-                  Wasserverbrauch-Trend
+                  {t("charts.waterTrend")}
                 </CardTitle>
                 <p className="text-xs text-muted-foreground">
-                  Jeder Tropfen zählt. Wortwörtlich.
+                  {t("charts.waterTrendDesc")}
                 </p>
               </CardHeader>
               <CardContent>
@@ -923,7 +925,7 @@ export function UtilityTracker({
                         stroke={CHART_COLORS.water}
                         strokeWidth={2}
                         fill="url(#waterGrad)"
-                        name="Wasser (m³)"
+                        name={t("water") + " (m³)"}
                       />
                     </AreaChart>
                   </ResponsiveContainer>
@@ -939,10 +941,10 @@ export function UtilityTracker({
             <Card>
               <CardHeader className="pb-3">
                 <CardTitle className="text-sm font-medium">
-                  Kostenverteilung
+                  {t("charts.costDistribution")}
                 </CardTitle>
                 <p className="text-xs text-muted-foreground">
-                  Wo dein Geld wirklich hingeht.
+                  {t("charts.costDistributionDesc")}
                 </p>
               </CardHeader>
               <CardContent>
@@ -992,10 +994,10 @@ export function UtilityTracker({
             <Card>
               <CardHeader className="pb-3">
                 <CardTitle className="text-sm font-medium">
-                  Stückkosten
+                  {t("charts.unitCosts")}
                 </CardTitle>
                 <p className="text-xs text-muted-foreground">
-                  Was dich jede Einheit tatsächlich kostet.
+                  {t("charts.unitCostsDesc")}
                 </p>
               </CardHeader>
               <CardContent className="space-y-6">
@@ -1004,7 +1006,7 @@ export function UtilityTracker({
                     <div className="flex items-center justify-between text-sm">
                       <div className="flex items-center gap-2">
                         <Zap className="h-3.5 w-3.5 text-chart-1" />
-                        <span>Strom</span>
+                        <span>{t("power")}</span>
                       </div>
                       <span className="font-mono font-medium tabular-nums">
                         {analytics.latestPricePerKwh.toFixed(2)} €/kWh
@@ -1018,7 +1020,7 @@ export function UtilityTracker({
                       className="h-2"
                     />
                     <p className="text-[10px] text-muted-foreground">
-                      Bundesdurchschnitt: ~0,32 €/kWh
+                      {t("averageOf", { amount: "0,32", unit: "kWh" })}
                     </p>
                   </div>
 
@@ -1026,7 +1028,7 @@ export function UtilityTracker({
                     <div className="flex items-center justify-between text-sm">
                       <div className="flex items-center gap-2">
                         <Droplets className="h-3.5 w-3.5 text-primary" />
-                        <span>Wasser</span>
+                        <span>{t("water")}</span>
                       </div>
                       <span className="font-mono font-medium tabular-nums">
                         {analytics.latestPricePerM3.toFixed(2)} €/m³
@@ -1040,7 +1042,7 @@ export function UtilityTracker({
                       className="h-2"
                     />
                     <p className="text-[10px] text-muted-foreground">
-                      Bundesdurchschnitt: ~2,20 €/m³
+                      {t("averageOf", { amount: "2,20", unit: "m³" })}
                     </p>
                   </div>
 
@@ -1048,7 +1050,7 @@ export function UtilityTracker({
                     <div className="flex items-center justify-between text-sm">
                       <div className="flex items-center gap-2">
                         <Flame className="h-3.5 w-3.5 text-chart-4" />
-                        <span>Heizung</span>
+                        <span>{t("heating")}</span>
                       </div>
                       <span className="font-mono font-medium tabular-nums">
                         {analytics.latestPricePerKwhHeating.toFixed(2)} €/{heatingUnit}
@@ -1062,7 +1064,7 @@ export function UtilityTracker({
                       className="h-2"
                     />
                     <p className="text-[10px] text-muted-foreground">
-                      Bundesdurchschnitt: ~0,11 €/{heatingUnit}
+                      {t("averageOf", { amount: "0,11", unit: heatingUnit })}
                     </p>
                   </div>
                 </div>

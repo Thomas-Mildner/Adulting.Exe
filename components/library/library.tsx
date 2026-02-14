@@ -2,6 +2,7 @@
 
 import React from "react";
 import { useState, useMemo, useTransition } from "react";
+import { useTranslations } from "next-intl";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
@@ -69,6 +70,7 @@ export function Library({ documents }: { documents: Document[] }) {
   const [search, setSearch] = useState("");
   const [activeCategory, setActiveCategory] = useState<string>("all");
   const [isPending, startTransition] = useTransition();
+  const t = useTranslations("Library");
 
   // Create document dialog
   const [createOpen, setCreateOpen] = useState(false);
@@ -139,10 +141,10 @@ export function Library({ documents }: { documents: Document[] }) {
           className="w-full sm:w-auto"
         >
           <TabsList className="flex-wrap h-auto">
-            <TabsTrigger value="all">Alle</TabsTrigger>
+            <TabsTrigger value="all">{t("tabs.all")}</TabsTrigger>
             {categories.map((cat) => (
               <TabsTrigger key={cat} value={cat}>
-                {cat}
+                {t(`categories.${cat}`)}
               </TabsTrigger>
             ))}
           </TabsList>
@@ -150,7 +152,7 @@ export function Library({ documents }: { documents: Document[] }) {
         <div className="relative sm:ml-auto w-full sm:w-64">
           <Search className="absolute left-2.5 top-2.5 h-3.5 w-3.5 text-muted-foreground" />
           <Input
-            placeholder="Dokumente suchen..."
+            placeholder={t("searchPlaceholder")}
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             className="pl-8 h-9 text-sm"
@@ -168,24 +170,23 @@ export function Library({ documents }: { documents: Document[] }) {
           <DialogTrigger asChild>
             <Button size="sm" className="gap-1.5 shrink-0">
               <Plus className="h-4 w-4" />
-              Neues Dokument
+              {t("newDocument")}
             </Button>
           </DialogTrigger>
           <DialogContent className="sm:max-w-[560px]">
             <form onSubmit={handleCreate}>
               <DialogHeader>
-                <DialogTitle>Neues Markdown-Dokument</DialogTitle>
+                <DialogTitle>{t("create.title")}</DialogTitle>
                 <DialogDescription>
-                  Wissen ist Macht &mdash; und gut dokumentiert ist halb
-                  repariert.
+                  {t("create.description")}
                 </DialogDescription>
               </DialogHeader>
               <div className="grid gap-4 py-4">
                 <div className="grid gap-2">
-                  <Label htmlFor="doc-title">Titel</Label>
+                  <Label htmlFor="doc-title">{t("form.title")}</Label>
                   <Input
                     id="doc-title"
-                    placeholder="z.B. Heizung entlüften Anleitung..."
+                    placeholder={t("form.titlePlaceholder")}
                     value={docTitle}
                     onChange={(e) => setDocTitle(e.target.value)}
                     required
@@ -193,7 +194,7 @@ export function Library({ documents }: { documents: Document[] }) {
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <div className="grid gap-2">
-                    <Label htmlFor="doc-category">Kategorie</Label>
+                    <Label htmlFor="doc-category">{t("form.category")}</Label>
                     <Select
                       value={docCategory}
                       onValueChange={(v) =>
@@ -206,33 +207,31 @@ export function Library({ documents }: { documents: Document[] }) {
                       <SelectContent>
                         {categories.map((cat) => (
                           <SelectItem key={cat} value={cat}>
-                            {cat}
+                            {t(`categories.${cat}`)}
                           </SelectItem>
                         ))}
                       </SelectContent>
                     </Select>
                   </div>
                   <div className="grid gap-2">
-                    <Label>Typ</Label>
+                    <Label>{t("form.type")}</Label>
                     <Input value="Markdown" disabled className="h-9 text-sm" />
                   </div>
                 </div>
                 <div className="grid gap-2">
-                  <Label htmlFor="doc-desc">Beschreibung</Label>
+                  <Label htmlFor="doc-desc">{t("form.description")}</Label>
                   <Input
                     id="doc-desc"
-                    placeholder="Kurze Beschreibung des Dokuments..."
+                    placeholder={t("form.descriptionPlaceholder")}
                     value={docDescription}
                     onChange={(e) => setDocDescription(e.target.value)}
                   />
                 </div>
                 <div className="grid gap-2">
-                  <Label htmlFor="doc-content">Inhalt (Markdown)</Label>
+                  <Label htmlFor="doc-content">{t("form.content")}</Label>
                   <Textarea
                     id="doc-content"
-                    placeholder={
-                      "# Titel\n\nSchreibe hier deinen Markdown-Inhalt..."
-                    }
+                    placeholder={t("form.contentPlaceholder")}
                     value={docContent}
                     onChange={(e) => setDocContent(e.target.value)}
                     rows={10}
@@ -249,10 +248,10 @@ export function Library({ documents }: { documents: Document[] }) {
                     setCreateOpen(false);
                   }}
                 >
-                  Abbrechen
+                  {t("create.cancel")}
                 </Button>
                 <Button type="submit" disabled={isPending}>
-                  {isPending ? "Speichert..." : "Speichern"}
+                  {isPending ? t("create.saving") : t("create.save")}
                 </Button>
               </DialogFooter>
             </form>
@@ -265,9 +264,7 @@ export function Library({ documents }: { documents: Document[] }) {
           <CardContent className="flex flex-col items-center justify-center py-16 text-center">
             <FolderOpen className="h-8 w-8 text-muted-foreground/50 mb-3" />
             <p className="text-sm text-muted-foreground">
-              {
-                "Keine Dokumente gefunden. Die Wissensgötter haben dich verlassen."
-              }
+              {t("empty")}
             </p>
           </CardContent>
         </Card>
@@ -309,7 +306,7 @@ export function Library({ documents }: { documents: Document[] }) {
                             {doc.type.toUpperCase()}
                           </Badge>
                           <span className="text-[10px] text-muted-foreground">
-                            Aktualisiert{" "}
+                            {t("card.updated")}{" "}
                             {new Date(doc.updatedAt).toLocaleDateString(
                               "de-DE",
                               {
@@ -331,7 +328,7 @@ export function Library({ documents }: { documents: Document[] }) {
                   <div className="space-y-4">
                     <div className="flex items-center gap-2">
                       <Badge variant="secondary" className="text-xs">
-                        {doc.category}
+                        {t(`categories.${doc.category}`)}
                       </Badge>
                       <Badge variant="outline" className="text-xs">
                         {doc.type.toUpperCase()}
@@ -349,15 +346,13 @@ export function Library({ documents }: { documents: Document[] }) {
                       <div className="rounded-lg border border-dashed p-8 text-center">
                         <FileText className="h-8 w-8 text-muted-foreground/30 mx-auto mb-2" />
                         <p className="text-xs text-muted-foreground">
-                          {
-                            "PDF-Vorschau nicht verfügbar. Aber immerhin weißt du, dass es existiert."
-                          }
+                          {t("card.noPdf")}
                         </p>
                       </div>
                     )}
                     <div className="flex justify-end">
                       <Button size="sm" variant="outline">
-                        Herunterladen
+                        {t("card.download")}
                       </Button>
                     </div>
                   </div>

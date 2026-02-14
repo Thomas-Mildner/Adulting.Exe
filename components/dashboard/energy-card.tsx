@@ -1,5 +1,7 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { type MeterReading, formatCurrency } from "@/lib/data";
 import {
@@ -13,15 +15,17 @@ import {
 } from "recharts";
 
 export function EnergyCard({ meterHistory }: { meterHistory: MeterReading[] }) {
+  const t = useTranslations("EnergyCard");
+
   if (!meterHistory || meterHistory.length === 0) {
     return (
       <Card>
         <CardHeader className="pb-3">
           <CardTitle className="text-sm font-medium">
-            Ressourcenfresser
+            {t("title")}
           </CardTitle>
           <p className="text-xs text-muted-foreground">
-            Noch keine Zählerstände vorhanden
+            {t("noData")}
           </p>
         </CardHeader>
       </Card>
@@ -45,15 +49,15 @@ export function EnergyCard({ meterHistory }: { meterHistory: MeterReading[] }) {
       <CardHeader className="pb-3">
         <div className="flex items-center justify-between">
           <CardTitle className="text-sm font-medium">
-            Ressourcenfresser
+            {t("title")}
           </CardTitle>
           <span className="text-[11px] font-mono text-muted-foreground">
             {costDelta > 0 ? "+" : ""}
-            {formatCurrency(costDelta)} ggü. Vormonat
+            {t("comparison", { amount: formatCurrency(costDelta) })}
           </span>
         </div>
         <p className="text-xs text-muted-foreground">
-          {"Wohin dein Geld verschwindet, visualisiert"}
+          {t("description")}
         </p>
       </CardHeader>
       <CardContent>
@@ -108,7 +112,7 @@ export function EnergyCard({ meterHistory }: { meterHistory: MeterReading[] }) {
                 stroke="hsl(350, 65%, 55%)"
                 strokeWidth={2}
                 fill="url(#powerGrad)"
-                name="Gesamtkosten"
+                name={t("totalCost")}
               />
             </AreaChart>
           </ResponsiveContainer>

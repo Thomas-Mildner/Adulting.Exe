@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 import { Card, CardContent } from "@/components/ui/card";
 import {
@@ -19,6 +20,7 @@ export function HouseHealth({
   maintenanceTasks,
   lentItems,
 }: HouseHealthProps) {
+  const t = useTranslations("HouseHealth");
   const activeWarranties = appliances.filter(
     (a) => a.status === "protected",
   ).length;
@@ -35,18 +37,18 @@ export function HouseHealth({
     totalAppliances === 0 && pendingTasks === 0 && lentItems.length === 0
       ? 100
       : Math.round(
-          (activeWarranties / Math.max(totalAppliances, 1)) * 40 +
-            (1 - highPriority / Math.max(pendingTasks, 1)) * 40 +
-            (1 - overdueItems / Math.max(lentItems.length, 1)) * 20,
-        );
+        (activeWarranties / Math.max(totalAppliances, 1)) * 40 +
+        (1 - highPriority / Math.max(pendingTasks, 1)) * 40 +
+        (1 - overdueItems / Math.max(lentItems.length, 1)) * 20,
+      );
 
   const getVerdict = () => {
-    if (score >= 80) return { text: "Steht (vorerst)", color: "text-success" };
+    if (score >= 80) return { text: t("verdicts.excellent"), color: "text-success" };
     if (score >= 60)
-      return { text: "Braucht Aufmerksamkeit", color: "text-chart-3" };
+      return { text: t("verdicts.good"), color: "text-chart-3" };
     if (score >= 40)
-      return { text: "Klebeband-Territorium", color: "text-warning" };
-    return { text: "Beten und Handwerker rufen", color: "text-destructive" };
+      return { text: t("verdicts.warning"), color: "text-warning" };
+    return { text: t("verdicts.critical"), color: "text-destructive" };
   };
 
   const verdict = getVerdict();
@@ -57,7 +59,7 @@ export function HouseHealth({
         <div className="flex items-center justify-between">
           <div className="space-y-0.5">
             <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
-              Hauszustand
+              {t("title")}
             </p>
             <p className={`text-lg font-semibold ${verdict.color}`}>
               {verdict.text}
