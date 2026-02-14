@@ -1,5 +1,7 @@
 "use client"
 
+import { useTranslations } from "next-intl"
+
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
@@ -17,6 +19,7 @@ const heatingTypes = [
 ]
 
 export function HeatingSettings({ currentType }: { currentType: string }) {
+    const t = useTranslations("Settings.heating")
     const [isPending, startTransition] = useTransition()
     const [value, setValue] = useState(currentType)
 
@@ -25,9 +28,9 @@ export function HeatingSettings({ currentType }: { currentType: string }) {
         startTransition(async () => {
             try {
                 await updateHeatingType(newValue)
-                toast.success("Heizungstyp aktualisiert")
+                toast.success(t("success"))
             } catch (e) {
-                toast.error("Fehler beim Speichern")
+                toast.error(t("error"))
             }
         })
     }
@@ -37,10 +40,10 @@ export function HeatingSettings({ currentType }: { currentType: string }) {
             <CardHeader className="pb-3">
                 <div className="flex items-center gap-2">
                     <Flame className="h-4 w-4 text-orange-500" />
-                    <CardTitle className="text-sm font-medium">Heizungstyp</CardTitle>
+                    <CardTitle className="text-sm font-medium">{t("title")}</CardTitle>
                 </div>
                 <CardDescription className="text-xs">
-                    Wähle deine Wärmequelle, damit die Einheiten im "Ressourcenfresser" stimmen.
+                    {t("description")}
                 </CardDescription>
             </CardHeader>
             <CardContent>
@@ -50,7 +53,7 @@ export function HeatingSettings({ currentType }: { currentType: string }) {
                     </Label>
                     <Select value={value} onValueChange={handleChange} disabled={isPending}>
                         <SelectTrigger id="heating-type">
-                            <SelectValue placeholder="Wähle einen Typ" />
+                            <SelectValue placeholder={t("placeholder")} />
                         </SelectTrigger>
                         <SelectContent>
                             {heatingTypes.map((t) => (

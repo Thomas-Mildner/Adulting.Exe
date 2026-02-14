@@ -1,11 +1,28 @@
 "use client"
 
-import { useState, useMemo, useTransition } from "react"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import {
+  ChevronsUpDown,
+  FileText,
+  Globe,
+  Mail,
+  MoreHorizontal,
+  Pencil,
+  Phone,
+  Plus,
+  Search,
+  Star,
+  Trash2,
+  ChevronUp,
+  ChevronDown,
+  Receipt,
+} from "lucide-react"
+import { useMemo, useState, useTransition } from "react"
+import { useTranslations } from "next-intl"
+
 import { Badge } from "@/components/ui/badge"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent } from "@/components/ui/card"
+import { Checkbox } from "@/components/ui/checkbox"
 import {
   Dialog,
   DialogContent,
@@ -15,6 +32,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
 import {
   Select,
   SelectContent,
@@ -30,31 +49,17 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import {
-  Search,
-  Star,
-  Phone,
-  Mail,
-  ChevronDown,
-  ChevronUp,
-  Receipt,
-  FileText,
-  Plus,
-  Pencil,
-  Trash2,
-  Globe,
-} from "lucide-react"
-import { formatCurrency, type ServiceProvider, type Invoice } from "@/lib/data"
-import {
-  createServiceProvider,
-  updateServiceProvider,
-  deleteServiceProvider,
   createInvoice,
-  updateInvoice,
+  createServiceProvider,
   deleteInvoice,
+  deleteServiceProvider,
+  updateInvoice,
+  updateServiceProvider,
 } from "@/lib/actions"
-import { Button } from "@/components/ui/button"
-import { Checkbox } from "@/components/ui/checkbox"
+import { Invoice, ServiceProvider } from "@/lib/data"
+import { cn, formatCurrency } from "@/lib/utils"
 
 const specialties = [
   "Sanitär",
@@ -66,7 +71,7 @@ const specialties = [
   "Gartenbau",
   "Schlüssel",
   "Allgemein",
-]
+] as const
 
 type ProviderForm = {
   name: string
@@ -103,11 +108,10 @@ function RatingSelector({
           className="p-0.5 transition-colors"
         >
           <Star
-            className={`h-5 w-5 ${
-              level <= value
-                ? "fill-chart-3 text-chart-3"
-                : "text-border hover:text-chart-3/50"
-            }`}
+            className={`h-5 w-5 ${level <= value
+              ? "fill-chart-3 text-chart-3"
+              : "text-border hover:text-chart-3/50"
+              }`}
           />
         </button>
       ))}
@@ -122,11 +126,13 @@ function ProviderFormFields({
   form: ProviderForm
   setForm: (fn: (prev: ProviderForm) => ProviderForm) => void
 }) {
+  const t = useTranslations("Services")
+
   return (
     <div className="grid gap-4 py-4">
       <div className="grid grid-cols-2 gap-4">
         <div className="grid gap-2">
-          <Label htmlFor="sp-name">Name</Label>
+          <Label htmlFor="sp-name">{t("form.name")}</Label>
           <Input
             id="sp-name"
             placeholder="z.B. Müller Sanitär"
@@ -136,7 +142,7 @@ function ProviderFormFields({
           />
         </div>
         <div className="grid gap-2">
-          <Label htmlFor="sp-specialty">Fachgebiet</Label>
+          <Label htmlFor="sp-specialty">{t("form.specialty")}</Label>
           <Select
             value={form.specialty}
             onValueChange={(v) => setForm((p) => ({ ...p, specialty: v }))}
@@ -147,7 +153,7 @@ function ProviderFormFields({
             <SelectContent>
               {specialties.map((s) => (
                 <SelectItem key={s} value={s}>
-                  {s}
+                  {t(`specialties.${s}`)}
                 </SelectItem>
               ))}
             </SelectContent>
@@ -156,7 +162,7 @@ function ProviderFormFields({
       </div>
       <div className="grid grid-cols-2 gap-4">
         <div className="grid gap-2">
-          <Label htmlFor="sp-phone">Telefon</Label>
+          <Label htmlFor="sp-phone">{t("form.phone")}</Label>
           <Input
             id="sp-phone"
             type="tel"
@@ -167,7 +173,7 @@ function ProviderFormFields({
           />
         </div>
         <div className="grid gap-2">
-          <Label htmlFor="sp-email">E-Mail</Label>
+          <Label htmlFor="sp-email">{t("form.email")}</Label>
           <Input
             id="sp-email"
             type="email"
@@ -179,7 +185,7 @@ function ProviderFormFields({
         </div>
       </div>
       <div className="grid gap-2">
-        <Label htmlFor="sp-website">Webseite</Label>
+        <Label htmlFor="sp-website">{t("form.website")}</Label>
         <Input
           id="sp-website"
           type="url"
@@ -189,7 +195,7 @@ function ProviderFormFields({
         />
       </div>
       <div className="grid gap-2">
-        <Label>Bewertung</Label>
+        <Label>{t("form.rating")}</Label>
         <RatingSelector
           value={form.rating}
           onChange={(v) => setForm((p) => ({ ...p, rating: v }))}
@@ -200,6 +206,7 @@ function ProviderFormFields({
 }
 
 function DirectoryTab({ serviceProviders }: { serviceProviders: ServiceProvider[] }) {
+  const t = useTranslations("Services")
   const [providers, setProviders] = useState(serviceProviders)
   const [search, setSearch] = useState("")
   const [expandedId, setExpandedId] = useState<string | null>(null)
@@ -283,7 +290,7 @@ function DirectoryTab({ serviceProviders }: { serviceProviders: ServiceProvider[
         <div className="relative w-full sm:w-64">
           <Search className="absolute left-2.5 top-2.5 h-3.5 w-3.5 text-muted-foreground" />
           <Input
-            placeholder="Dienstleister suchen..."
+            placeholder={t("directory.searchPlaceholder")}
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             className="pl-8 h-9 text-sm"
@@ -300,15 +307,15 @@ function DirectoryTab({ serviceProviders }: { serviceProviders: ServiceProvider[
             <DialogTrigger asChild>
               <Button size="sm" className="gap-1.5">
                 <Plus className="h-4 w-4" />
-                Neuer Handwerker
+                {t("directory.newProvider")}
               </Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[480px]">
               <form onSubmit={handleCreate}>
                 <DialogHeader>
-                  <DialogTitle>Neuen Handwerker erfassen</DialogTitle>
+                  <DialogTitle>{t("createProvider.title")}</DialogTitle>
                   <DialogDescription>
-                    Kontaktdaten und Fachgebiet eintragen &mdash; für den nächsten Notfall.
+                    {t("createProvider.description")}
                   </DialogDescription>
                 </DialogHeader>
                 <ProviderFormFields form={createForm} setForm={setCreateForm} />
@@ -321,10 +328,10 @@ function DirectoryTab({ serviceProviders }: { serviceProviders: ServiceProvider[
                       setCreateOpen(false)
                     }}
                   >
-                    Abbrechen
+                    {t("form.cancel")}
                   </Button>
                   <Button type="submit" disabled={isPending}>
-                    {isPending ? "Speichert..." : "Speichern"}
+                    {isPending ? t("form.saving") : t("form.save")}
                   </Button>
                 </DialogFooter>
               </form>
@@ -336,7 +343,7 @@ function DirectoryTab({ serviceProviders }: { serviceProviders: ServiceProvider[
       {filtered.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-16 text-center">
           <p className="text-sm text-muted-foreground">
-            {"Keine Dienstleister gefunden. Diesmal bist du auf dich allein gestellt."}
+            {t("directory.empty")}
           </p>
         </div>
       ) : (
@@ -366,7 +373,7 @@ function DirectoryTab({ serviceProviders }: { serviceProviders: ServiceProvider[
                               {provider.name}
                             </p>
                             <Badge variant="secondary" className="text-[10px]">
-                              {provider.specialty}
+                              {t(`specialties.${provider.specialty}`)}
                             </Badge>
                           </div>
                           <div className="flex items-center gap-3 mt-1">
@@ -384,7 +391,7 @@ function DirectoryTab({ serviceProviders }: { serviceProviders: ServiceProvider[
                                 className="hidden sm:flex items-center gap-1 text-[11px] text-primary hover:underline"
                                 onClick={(e) => e.stopPropagation()}
                               >
-                                <Globe className="h-3 w-3" /> Webseite
+                                <Globe className="h-3 w-3" /> {t("form.website")}
                               </a>
                             )}
                           </div>
@@ -394,11 +401,10 @@ function DirectoryTab({ serviceProviders }: { serviceProviders: ServiceProvider[
                             {Array.from({ length: 5 }).map((_, i) => (
                               <Star
                                 key={i}
-                                className={`h-3 w-3 ${
-                                  i < provider.rating
-                                    ? "fill-chart-3 text-chart-3"
-                                    : "text-border"
-                                }`}
+                                className={`h-3 w-3 ${i < provider.rating
+                                  ? "fill-chart-3 text-chart-3"
+                                  : "text-border"
+                                  }`}
                               />
                             ))}
                           </div>
@@ -441,10 +447,10 @@ function DirectoryTab({ serviceProviders }: { serviceProviders: ServiceProvider[
                   <div className="border-t px-4 pb-4 pt-3 space-y-3">
                     <div className="flex items-center justify-between">
                       <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
-                        Servicehistorie
+                        {t("directory.history")}
                       </p>
                       <p className="text-xs text-muted-foreground">
-                        Gesamt: {formatCurrency(totalCost)}
+                        {t("directory.total")}: {formatCurrency(totalCost)}
                       </p>
                     </div>
                     <div className="space-y-2">
@@ -474,7 +480,7 @@ function DirectoryTab({ serviceProviders }: { serviceProviders: ServiceProvider[
                                 variant="outline"
                                 className="text-[10px] bg-success/10 text-success border-success/20"
                               >
-                                Steuer
+                                {t("directory.tax")}
                               </Badge>
                             )}
                           </div>
@@ -483,7 +489,7 @@ function DirectoryTab({ serviceProviders }: { serviceProviders: ServiceProvider[
                     </div>
                     {provider.history.length === 0 && (
                       <p className="text-sm text-muted-foreground text-center py-6">
-                        {"Noch keine Reparaturen. Drück die Daumen."}
+                        {t("directory.noHistory")}
                       </p>
                     )}
                   </div>
@@ -505,9 +511,9 @@ function DirectoryTab({ serviceProviders }: { serviceProviders: ServiceProvider[
         <DialogContent className="sm:max-w-[480px]">
           <form onSubmit={handleEdit}>
             <DialogHeader>
-              <DialogTitle>Handwerker bearbeiten</DialogTitle>
+              <DialogTitle>{t("editProvider.title")}</DialogTitle>
               <DialogDescription>
-                Änderungen werden sofort gespeichert.
+                {t("editProvider.description")}
               </DialogDescription>
             </DialogHeader>
             <ProviderFormFields form={editForm} setForm={setEditForm} />
@@ -520,10 +526,10 @@ function DirectoryTab({ serviceProviders }: { serviceProviders: ServiceProvider[
                   setEditId(null)
                 }}
               >
-                Abbrechen
+                {t("form.cancel")}
               </Button>
               <Button type="submit" disabled={isPending}>
-                {isPending ? "Speichert..." : "Änderungen speichern"}
+                {isPending ? t("form.saving") : t("form.editSave")}
               </Button>
             </DialogFooter>
           </form>
@@ -539,22 +545,21 @@ function DirectoryTab({ serviceProviders }: { serviceProviders: ServiceProvider[
       >
         <DialogContent className="sm:max-w-[400px]">
           <DialogHeader>
-            <DialogTitle>Handwerker löschen?</DialogTitle>
+            <DialogTitle>{t("deleteProvider.title")}</DialogTitle>
             <DialogDescription>
-              Der Handwerker und seine gesamte Servicehistorie werden dauerhaft
-              entfernt. Diese Aktion kann nicht rückgängig gemacht werden.
+              {t("deleteProvider.description")}
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
             <Button variant="outline" onClick={() => setDeleteId(null)}>
-              Abbrechen
+              {t("form.cancel")}
             </Button>
             <Button
               variant="destructive"
               disabled={isPending}
               onClick={() => deleteId && handleDelete(deleteId)}
             >
-              {isPending ? "Löscht..." : "Endgültig löschen"}
+              {isPending ? t("form.deleting") : t("form.delete")}
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -596,17 +601,19 @@ function InvoiceFormFields({
   serviceProviders: ServiceProvider[]
   onProviderSelect: (providerId: string) => void
 }) {
+  const t = useTranslations("Services")
+
   return (
     <div className="grid gap-4 py-4">
       <div className="grid grid-cols-2 gap-4">
         <div className="grid gap-2">
-          <Label htmlFor="inv-provider">Dienstleister</Label>
+          <Label htmlFor="inv-provider">{t("form.provider")}</Label>
           <Select
             value={form.providerId}
             onValueChange={(v) => onProviderSelect(v)}
           >
             <SelectTrigger id="inv-provider">
-              <SelectValue placeholder="Dienstleister wählen..." />
+              <SelectValue placeholder={t("form.providerPlaceholder")} />
             </SelectTrigger>
             <SelectContent>
               {serviceProviders.map((sp) => (
@@ -618,7 +625,7 @@ function InvoiceFormFields({
           </Select>
         </div>
         <div className="grid gap-2">
-          <Label htmlFor="inv-date">Datum</Label>
+          <Label htmlFor="inv-date">{t("form.date")}</Label>
           <Input
             id="inv-date"
             type="date"
@@ -629,10 +636,10 @@ function InvoiceFormFields({
         </div>
       </div>
       <div className="grid gap-2">
-        <Label htmlFor="inv-description">Beschreibung</Label>
+        <Label htmlFor="inv-description">{t("form.description")}</Label>
         <Input
           id="inv-description"
-          placeholder="z.B. Heizungswartung, Rohr repariert..."
+          placeholder={t("form.descriptionPlaceholder")}
           value={form.description}
           onChange={(e) => setForm((p) => ({ ...p, description: e.target.value }))}
           required
@@ -640,7 +647,7 @@ function InvoiceFormFields({
       </div>
       <div className="grid grid-cols-2 gap-4">
         <div className="grid gap-2">
-          <Label htmlFor="inv-amount">Betrag (EUR)</Label>
+          <Label htmlFor="inv-amount">{t("form.amount")}</Label>
           <Input
             id="inv-amount"
             type="number"
@@ -654,10 +661,10 @@ function InvoiceFormFields({
           />
         </div>
         <div className="grid gap-2">
-          <Label htmlFor="inv-fileName">Dateiname</Label>
+          <Label htmlFor="inv-fileName">{t("form.fileName")}</Label>
           <Input
             id="inv-fileName"
-            placeholder="z.B. rechnung-2026-01.pdf"
+            placeholder={t("form.fileNamePlaceholder")}
             value={form.fileName}
             onChange={(e) => setForm((p) => ({ ...p, fileName: e.target.value }))}
           />
@@ -672,7 +679,7 @@ function InvoiceFormFields({
           }
         />
         <Label htmlFor="inv-taxRelevant" className="text-sm font-normal cursor-pointer">
-          Steuerlich absetzbar (Handwerkerleistung)
+          {t("form.taxRelevant")}
         </Label>
       </div>
     </div>
@@ -680,6 +687,7 @@ function InvoiceFormFields({
 }
 
 function InvoicesTab({ invoices, serviceProviders }: { invoices: Invoice[]; serviceProviders: ServiceProvider[] }) {
+  const t = useTranslations("Services")
   const [items, setItems] = useState(invoices)
   const [search, setSearch] = useState("")
   const [isPending, startTransition] = useTransition()
@@ -771,7 +779,7 @@ function InvoicesTab({ invoices, serviceProviders }: { invoices: Invoice[]; serv
         <div className="relative w-full sm:w-64">
           <Search className="absolute left-2.5 top-2.5 h-3.5 w-3.5 text-muted-foreground" />
           <Input
-            placeholder="Rechnungen suchen..."
+            placeholder={t("invoices.searchPlaceholder")}
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             className="pl-8 h-9 text-sm"
@@ -780,7 +788,7 @@ function InvoicesTab({ invoices, serviceProviders }: { invoices: Invoice[]; serv
         <div className="sm:ml-auto flex items-center gap-2">
           <Badge variant="secondary" className="text-xs">
             <Receipt className="h-3 w-3 mr-1" />
-            Steuerlich absetzbar: {formatCurrency(taxTotal)}
+            {t("invoices.taxDeductible", { amount: formatCurrency(taxTotal) })}
           </Badge>
           <Dialog
             open={createOpen}
@@ -792,15 +800,15 @@ function InvoicesTab({ invoices, serviceProviders }: { invoices: Invoice[]; serv
             <DialogTrigger asChild>
               <Button size="sm" className="gap-1.5">
                 <Plus className="h-4 w-4" />
-                Neue Rechnung
+                {t("invoices.newInvoice")}
               </Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[480px]">
               <form onSubmit={handleCreate}>
                 <DialogHeader>
-                  <DialogTitle>Neue Rechnung erfassen</DialogTitle>
+                  <DialogTitle>{t("invoices.createTitle")}</DialogTitle>
                   <DialogDescription>
-                    Handwerkerrechnung dokumentieren &mdash; dein zukünftiges Ich wird dir danken.
+                    {t("invoices.createDesc")}
                   </DialogDescription>
                 </DialogHeader>
                 <InvoiceFormFields
@@ -818,10 +826,10 @@ function InvoicesTab({ invoices, serviceProviders }: { invoices: Invoice[]; serv
                       setCreateOpen(false)
                     }}
                   >
-                    Abbrechen
+                    {t("form.cancel")}
                   </Button>
                   <Button type="submit" disabled={isPending}>
-                    {isPending ? "Speichert..." : "Speichern"}
+                    {isPending ? t("form.saving") : t("form.save")}
                   </Button>
                 </DialogFooter>
               </form>
@@ -835,19 +843,19 @@ function InvoicesTab({ invoices, serviceProviders }: { invoices: Invoice[]; serv
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead className="text-xs">Datum</TableHead>
-                <TableHead className="text-xs">Dienstleister</TableHead>
-                <TableHead className="text-xs hidden sm:table-cell">Beschreibung</TableHead>
-                <TableHead className="text-xs text-right">Betrag</TableHead>
-                <TableHead className="text-xs text-center">Steuer</TableHead>
-                <TableHead className="text-xs text-right">Aktionen</TableHead>
+                <TableHead className="text-xs">{t("form.date")}</TableHead>
+                <TableHead className="text-xs">{t("form.provider")}</TableHead>
+                <TableHead className="text-xs hidden sm:table-cell">{t("form.description")}</TableHead>
+                <TableHead className="text-xs text-right">{t("form.amount")}</TableHead>
+                <TableHead className="text-xs text-center">{t("directory.tax")}</TableHead>
+                <TableHead className="text-xs text-right"></TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {filtered.length === 0 ? (
                 <TableRow>
                   <TableCell colSpan={6} className="text-center py-12 text-sm text-muted-foreground">
-                    {"Noch keine Rechnungen. Dein Geldbeutel dankt es dir."}
+                    {t("invoices.empty")}
                   </TableCell>
                 </TableRow>
               ) : (
@@ -875,10 +883,10 @@ function InvoicesTab({ invoices, serviceProviders }: { invoices: Invoice[]; serv
                           variant="outline"
                           className="text-[10px] bg-success/10 text-success border-success/20"
                         >
-                          Ja
+                          {t("directory.tax")}
                         </Badge>
                       ) : (
-                        <span className="text-xs text-muted-foreground">Nein</span>
+                        <span className="text-xs text-muted-foreground">-</span>
                       )}
                     </TableCell>
                     <TableCell className="text-right">
@@ -920,9 +928,9 @@ function InvoicesTab({ invoices, serviceProviders }: { invoices: Invoice[]; serv
         <DialogContent className="sm:max-w-[480px]">
           <form onSubmit={handleEdit}>
             <DialogHeader>
-              <DialogTitle>Rechnung bearbeiten</DialogTitle>
+              <DialogTitle>{t("invoices.editTitle")}</DialogTitle>
               <DialogDescription>
-                Änderungen werden sofort gespeichert.
+                {t("invoices.editDesc")}
               </DialogDescription>
             </DialogHeader>
             <InvoiceFormFields
@@ -940,10 +948,10 @@ function InvoicesTab({ invoices, serviceProviders }: { invoices: Invoice[]; serv
                   setEditId(null)
                 }}
               >
-                Abbrechen
+                {t("form.cancel")}
               </Button>
               <Button type="submit" disabled={isPending}>
-                {isPending ? "Speichert..." : "Änderungen speichern"}
+                {isPending ? t("form.saving") : t("form.editSave")}
               </Button>
             </DialogFooter>
           </form>
@@ -959,22 +967,21 @@ function InvoicesTab({ invoices, serviceProviders }: { invoices: Invoice[]; serv
       >
         <DialogContent className="sm:max-w-[400px]">
           <DialogHeader>
-            <DialogTitle>Rechnung löschen?</DialogTitle>
+            <DialogTitle>{t("invoices.deleteTitle")}</DialogTitle>
             <DialogDescription>
-              Diese Aktion kann nicht rückgängig gemacht werden. Die Rechnung
-              wird dauerhaft entfernt.
+              {t("invoices.deleteDesc")}
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
             <Button variant="outline" onClick={() => setDeleteId(null)}>
-              Abbrechen
+              {t("form.cancel")}
             </Button>
             <Button
               variant="destructive"
               disabled={isPending}
               onClick={() => deleteId && handleDelete(deleteId)}
             >
-              {isPending ? "Löscht..." : "Endgültig löschen"}
+              {isPending ? t("form.deleting") : t("form.delete")}
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -984,16 +991,17 @@ function InvoicesTab({ invoices, serviceProviders }: { invoices: Invoice[]; serv
 }
 
 export function ServiceHub({ serviceProviders, invoices }: { serviceProviders: ServiceProvider[]; invoices: Invoice[] }) {
+  const t = useTranslations("Services")
   return (
     <Tabs defaultValue="directory" className="space-y-4">
       <TabsList>
         <TabsTrigger value="directory" className="gap-1.5">
           <Phone className="h-3.5 w-3.5" />
-          Verzeichnis
+          {t("tabs.directory")}
         </TabsTrigger>
         <TabsTrigger value="invoices" className="gap-1.5">
           <FileText className="h-3.5 w-3.5" />
-          Rechnungen (Handwerkerkosten)
+          {t("tabs.invoices")}
         </TabsTrigger>
       </TabsList>
       <TabsContent value="directory">

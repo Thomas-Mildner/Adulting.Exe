@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useMemo, useTransition } from "react"
+import { useTranslations } from "next-intl"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -33,23 +34,7 @@ import {
 } from "@/lib/data"
 import { createAppliance, updateAppliance, deleteAppliance } from "@/lib/actions"
 
-const statusConfig: Record<
-  Appliance["status"],
-  { label: string; style: string }
-> = {
-  protected: {
-    label: "Unter Schutz",
-    style: "bg-success/10 text-success border-success/20",
-  },
-  solo: {
-    label: "Auf sich allein gestellt",
-    style: "bg-chart-3/10 text-chart-3 border-chart-3/20",
-  },
-  zombie: {
-    label: "Zombie-Modus",
-    style: "bg-destructive/10 text-destructive border-destructive/20",
-  },
-}
+// Status config moved inside components for translation
 
 const categories = [
   "Küche",
@@ -91,24 +76,30 @@ function ApplianceFormFields({
   form: FormData
   setForm: (fn: (prev: FormData) => FormData) => void
 }) {
+  const t = useTranslations("Vault")
+  const statusConfig = {
+    protected: { label: t("status.protected"), style: "bg-success/10 text-success border-success/20" },
+    solo: { label: t("status.solo"), style: "bg-chart-3/10 text-chart-3 border-chart-3/20" },
+    zombie: { label: t("status.zombie"), style: "bg-destructive/10 text-destructive border-destructive/20" },
+  }
   return (
     <div className="grid gap-4 py-4">
       <div className="grid grid-cols-2 gap-4">
         <div className="grid gap-2">
-          <Label htmlFor="name">Name</Label>
+          <Label htmlFor="name">{t("fields.name")}</Label>
           <Input
             id="name"
-            placeholder="z.B. Waschmaschine, Staubsauger..."
+            placeholder={t("fields.namePlaceholder")}
             value={form.name}
             onChange={(e) => setForm((p) => ({ ...p, name: e.target.value }))}
             required
           />
         </div>
         <div className="grid gap-2">
-          <Label htmlFor="brand">Marke</Label>
+          <Label htmlFor="brand">{t("fields.brand")}</Label>
           <Input
             id="brand"
-            placeholder="z.B. Bosch, Dyson..."
+            placeholder={t("fields.brandPlaceholder")}
             value={form.brand}
             onChange={(e) => setForm((p) => ({ ...p, brand: e.target.value }))}
             required
@@ -117,7 +108,7 @@ function ApplianceFormFields({
       </div>
       <div className="grid grid-cols-2 gap-4">
         <div className="grid gap-2">
-          <Label htmlFor="category">Kategorie</Label>
+          <Label htmlFor="category">{t("fields.category")}</Label>
           <Select
             value={form.category}
             onValueChange={(v) => setForm((p) => ({ ...p, category: v }))}
@@ -135,7 +126,7 @@ function ApplianceFormFields({
           </Select>
         </div>
         <div className="grid gap-2">
-          <Label htmlFor="price">Preis (EUR)</Label>
+          <Label htmlFor="price">{t("fields.price")}</Label>
           <Input
             id="price"
             type="number"
@@ -151,7 +142,7 @@ function ApplianceFormFields({
       </div>
       <div className="grid grid-cols-2 gap-4">
         <div className="grid gap-2">
-          <Label htmlFor="purchaseDate">Kaufdatum</Label>
+          <Label htmlFor="purchaseDate">{t("fields.purchaseDate")}</Label>
           <Input
             id="purchaseDate"
             type="date"
@@ -163,7 +154,7 @@ function ApplianceFormFields({
           />
         </div>
         <div className="grid gap-2">
-          <Label htmlFor="warrantyEnd">Garantie bis</Label>
+          <Label htmlFor="warrantyEnd">{t("fields.warrantyEnd")}</Label>
           <Input
             id="warrantyEnd"
             type="date"
@@ -177,10 +168,10 @@ function ApplianceFormFields({
       </div>
       <div className="grid grid-cols-2 gap-4">
         <div className="grid gap-2">
-          <Label htmlFor="boxLocation">Aufbewahrungsort</Label>
+          <Label htmlFor="boxLocation">{t("fields.boxLocation")}</Label>
           <Input
             id="boxLocation"
-            placeholder="z.B. Regal A3, Keller Box 2..."
+            placeholder={t("fields.boxLocationPlaceholder")}
             value={form.boxLocation}
             onChange={(e) =>
               setForm((p) => ({ ...p, boxLocation: e.target.value }))
@@ -189,7 +180,7 @@ function ApplianceFormFields({
           />
         </div>
         <div className="grid gap-2">
-          <Label>Status</Label>
+          <Label>{t("fields.status")}</Label>
           <div className="flex gap-2">
             {(["protected", "solo", "zombie"] as const).map((s) => {
               const cfg = statusConfig[s]
@@ -198,11 +189,10 @@ function ApplianceFormFields({
                   key={s}
                   type="button"
                   onClick={() => setForm((p) => ({ ...p, status: s }))}
-                  className={`rounded-md border px-2.5 py-1.5 text-[11px] transition-colors ${
-                    form.status === s
-                      ? "border-primary bg-primary/10 text-primary"
-                      : "border-border bg-background text-muted-foreground hover:border-primary/50"
-                  }`}
+                  className={`rounded-md border px-2.5 py-1.5 text-[11px] transition-colors ${form.status === s
+                    ? "border-primary bg-primary/10 text-primary"
+                    : "border-border bg-background text-muted-foreground hover:border-primary/50"
+                    }`}
                 >
                   {cfg.label}
                 </button>
@@ -216,6 +206,13 @@ function ApplianceFormFields({
 }
 
 export function VaultGrid({ appliances }: { appliances: Appliance[] }) {
+  const t = useTranslations("Vault")
+  const statusConfig = {
+    protected: { label: t("status.protected"), style: "bg-success/10 text-success border-success/20" },
+    solo: { label: t("status.solo"), style: "bg-chart-3/10 text-chart-3 border-chart-3/20" },
+    zombie: { label: t("status.zombie"), style: "bg-destructive/10 text-destructive border-destructive/20" },
+  }
+
   const [items, setItems] = useState(appliances)
   const [search, setSearch] = useState("")
   const [tab, setTab] = useState("all")
@@ -307,20 +304,20 @@ export function VaultGrid({ appliances }: { appliances: Appliance[] }) {
         <Tabs value={tab} onValueChange={setTab} className="w-full sm:w-auto">
           <TabsList>
             <TabsTrigger value="all">
-              Alle ({items.length})
+              {t("tabs.all", { count: items.length })}
             </TabsTrigger>
             <TabsTrigger value="active">
-              Aktiv ({items.filter((a) => a.status !== "zombie").length})
+              {t("tabs.active", { count: items.filter((a) => a.status !== "zombie").length })}
             </TabsTrigger>
             <TabsTrigger value="zombie">
-              Zombie ({items.filter((a) => a.status === "zombie").length})
+              {t("tabs.zombie", { count: items.filter((a) => a.status === "zombie").length })}
             </TabsTrigger>
           </TabsList>
         </Tabs>
         <div className="relative sm:ml-auto w-full sm:w-64">
           <Search className="absolute left-2.5 top-2.5 h-3.5 w-3.5 text-muted-foreground" />
           <Input
-            placeholder="Tresor durchsuchen..."
+            placeholder={t("searchPlaceholder")}
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             className="pl-8 h-9 text-sm"
@@ -338,15 +335,15 @@ export function VaultGrid({ appliances }: { appliances: Appliance[] }) {
           <DialogTrigger asChild>
             <Button size="sm" className="gap-1.5 shrink-0">
               <Plus className="h-4 w-4" />
-              Neuer Eintrag
+              {t("create.button")}
             </Button>
           </DialogTrigger>
           <DialogContent className="sm:max-w-[520px]">
             <form onSubmit={handleCreate}>
               <DialogHeader>
-                <DialogTitle>Neues Gerät erfassen</DialogTitle>
+                <DialogTitle>{t("create.title")}</DialogTitle>
                 <DialogDescription>
-                  Quittung raus, Daten rein &mdash; dein Tresor wird stärker.
+                  {t("create.description")}
                 </DialogDescription>
               </DialogHeader>
               <ApplianceFormFields form={createForm} setForm={setCreateForm} />
@@ -359,10 +356,10 @@ export function VaultGrid({ appliances }: { appliances: Appliance[] }) {
                     setCreateOpen(false)
                   }}
                 >
-                  Abbrechen
+                  {t("create.cancel")}
                 </Button>
                 <Button type="submit" disabled={isPending}>
-                  {isPending ? "Speichert..." : "Speichern"}
+                  {isPending ? t("create.saving") : t("create.save")}
                 </Button>
               </DialogFooter>
             </form>
@@ -374,7 +371,7 @@ export function VaultGrid({ appliances }: { appliances: Appliance[] }) {
         <Card className="border-dashed">
           <CardContent className="flex flex-col items-center justify-center py-16 text-center">
             <p className="text-sm text-muted-foreground">
-              {"Nichts gefunden. Entweder falsch gesucht oder du besitzt nichts. Beides besorgniserregend."}
+              {t("emptyState")}
             </p>
           </CardContent>
         </Card>
@@ -414,9 +411,9 @@ export function VaultGrid({ appliances }: { appliances: Appliance[] }) {
                 <CardContent className="space-y-3">
                   <div className="space-y-1.5">
                     <div className="flex items-center justify-between text-[11px]">
-                      <span className="text-muted-foreground">Garantie</span>
+                      <span className="text-muted-foreground">{t("card.warranty")}</span>
                       <span className="font-mono text-muted-foreground tabular-nums">
-                        {days > 0 ? `${days} Tage übrig` : "Abgelaufen"}
+                        {days > 0 ? t("card.daysRemaining", { days }) : t("card.expired")}
                       </span>
                     </div>
                     <Progress
@@ -482,9 +479,9 @@ export function VaultGrid({ appliances }: { appliances: Appliance[] }) {
         <DialogContent className="sm:max-w-[520px]">
           <form onSubmit={handleEdit}>
             <DialogHeader>
-              <DialogTitle>Gerät bearbeiten</DialogTitle>
+              <DialogTitle>{t("edit.title")}</DialogTitle>
               <DialogDescription>
-                Änderungen werden sofort gespeichert.
+                {t("edit.description")}
               </DialogDescription>
             </DialogHeader>
             <ApplianceFormFields form={editForm} setForm={setEditForm} />
@@ -497,10 +494,10 @@ export function VaultGrid({ appliances }: { appliances: Appliance[] }) {
                   setEditId(null)
                 }}
               >
-                Abbrechen
+                {t("create.cancel")}
               </Button>
               <Button type="submit" disabled={isPending}>
-                {isPending ? "Speichert..." : "Änderungen speichern"}
+                {isPending ? t("create.saving") : t("edit.save")}
               </Button>
             </DialogFooter>
           </form>
@@ -516,22 +513,21 @@ export function VaultGrid({ appliances }: { appliances: Appliance[] }) {
       >
         <DialogContent className="sm:max-w-[400px]">
           <DialogHeader>
-            <DialogTitle>Eintrag löschen?</DialogTitle>
+            <DialogTitle>{t("delete.title")}</DialogTitle>
             <DialogDescription>
-              Diese Aktion kann nicht rückgängig gemacht werden. Der Eintrag
-              wird dauerhaft aus dem Tresor entfernt.
+              {t("delete.description")}
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
             <Button variant="outline" onClick={() => setDeleteId(null)}>
-              Abbrechen
+              {t("create.cancel")}
             </Button>
             <Button
               variant="destructive"
               disabled={isPending}
               onClick={() => deleteId && handleDelete(deleteId)}
             >
-              {isPending ? "Löscht..." : "Endgültig löschen"}
+              {isPending ? t("delete.deleting") : t("delete.confirm")}
             </Button>
           </DialogFooter>
         </DialogContent>
