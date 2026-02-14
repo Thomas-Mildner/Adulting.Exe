@@ -1,0 +1,582 @@
+{
+  "Navigation": {
+    "dashboard": "Dashboard",
+    "vault": "Tresor",
+    "waste": "Müllkalender",
+    "utilities": "Ressourcen",
+    "library": "Bibliothek",
+    "settings": "Einstellungen",
+    "services": "Rettungsteam",
+    "maintenance": "Wartungen",
+    "wishlist": "Wunschliste",
+    "lending": "Verleih",
+    "sidebarStatus": "Status: Haus steht (vorerst)"
+  },
+  "Dashboard": {
+    "welcome": "Willkommen zurück",
+    "nextWaste": "Nächste Abholung",
+    "warrantyAlert": "Garantie läuft ab",
+    "subtitle": "Willkommen zurück. Dein Haus hat dich vermisst."
+  },
+  "Settings": {
+    "title": "Einstellungen",
+    "subtitle": "Konfiguriere deine digitale Festung",
+    "general": "Allgemein",
+    "household": "Haushalt",
+    "system": "System",
+    "language": "Sprache",
+    "notifications": {
+      "title": "Benachrichtigungen",
+      "description": "Wähle, welche Erinnerungen du ignorieren möchtest.",
+      "warranty": "Garantie-Ablauf-Warnungen",
+      "warrantyDesc": "30 Tage bevor eine Garantie in den Zombie-Modus wechselt.",
+      "maintenance": "Wartungserinnerungen",
+      "maintenanceDesc": "Weil sich dein HVAC-Filter nicht von selbst wechselt.",
+      "lending": "Verleih-O-Meter Warnungen",
+      "lendingDesc": "Wenn Nachbarn ihr Werkzeug-Willkommen überstrapazieren.",
+      "meter": "Zählerstand-Erinnerungen",
+      "meterDesc": "Monatlicher Stupser, die unbeliebteste Ecke im Keller zu besuchen.",
+      "wishlist": "Wunschlisten-Meilensteine",
+      "wishlistDesc": "Wenn ein Sparziel 50%, 75% oder 100% erreicht."
+    },
+    "data": {
+      "title": "Daten & Datenschutz",
+      "description": "Deine Daten. Deine Regeln.",
+      "exportTitle": "Daten exportieren",
+      "exportDesc": "Alles als JSON herunterladen. Perfekt für deine nächste Tabellen-Obsession.",
+      "exportBtn": "Exportieren",
+      "deleteTitle": "Alle Daten löschen",
+      "deleteDesc": "Die nukleare Option. Kein Rückgängig. Keine Reue (hoffentlich).",
+      "deleteBtn": "Löschen"
+    },
+    "about": {
+      "funny": "Immer noch Beta. Genau wie deine Erwachsenen-Fähigkeiten."
+    },
+    "heating": {
+      "title": "Heizungstyp",
+      "description": "Wähle deine Wärmequelle, damit die Einheiten im 'Ressourcenfresser' stimmen.",
+      "placeholder": "Wähle einen Typ",
+      "success": "Heizungstyp aktualisiert",
+      "error": "Fehler beim Speichern"
+    }
+  },
+  "HouseHealth": {
+    "title": "Hauszustand",
+    "verdicts": {
+      "excellent": "Steht (vorerst)",
+      "good": "Braucht Aufmerksamkeit",
+      "warning": "Klebeband-Territorium",
+      "critical": "Beten und Handwerker rufen"
+    }
+  },
+  "StatsCards": {
+    "activeWarranties": "Aktive Garantien",
+    "warrantySubtitle": "{expired} abgelaufen, {solo} ohne Schutz",
+    "openMaintenance": "Offene Wartungen",
+    "maintenanceSubtitle": "{count} hohe Priorität",
+    "taxDeductible": "Steuerlich absetzbar ({year})",
+    "taxSubtitle": "Handwerkerkosten gesamt"
+  },
+  "MaintenanceCard": {
+    "title": "Offene Wartungen",
+    "openCount": "{count} offen",
+    "description": "Dinge, die sich leider nicht von selbst reparieren",
+    "due": "Fällig",
+    "recurring": {
+      "yearly": "Jährlich",
+      "monthly": "Monatlich",
+      "every2months": "Alle 2 Monate",
+      "every3months": "Alle 3 Monate",
+      "every6months": "Alle 6 Monate"
+    }
+  },
+  "LendingCard": {
+    "title": "Verleih-O-Meter",
+    "viewAll": "Alle anzeigen",
+    "overdueMessage": "{count, plural, =0 {Alles zurückgegeben. Glaube an die Menschheit: intakt.} one {# Gegenstand überfällig. Vertrauensprobleme im Anmarsch.} other {# Gegenstände überfällig. Vertrauensprobleme im Anmarsch.}}",
+    "lentTo": "Verliehen an {name}",
+    "trust": "Vertrauen",
+    "daysOverdue": "{days}T überfällig",
+    "daysRemaining": "{days}T übrig"
+  },
+  "WarrantyOverview": {
+    "title": "Garantie-Lebenserhaltung",
+    "openVault": "Tresor öffnen",
+    "description": "Countdown bis 'du bist auf dich allein gestellt, Kumpel'",
+    "status": {
+      "protected": "Unter Schutz",
+      "solo": "Auf sich allein gestellt",
+      "zombie": "Zombie-Modus"
+    },
+    "expired": "Abgelaufen",
+    "daysRemaining": "{days}T übrig"
+  },
+  "EnergyCard": {
+    "title": "Ressourcenfresser",
+    "noData": "Noch keine Zählerstände vorhanden",
+    "comparison": "{amount} ggü. Vormonat",
+    "description": "Wohin dein Geld verschwindet, visualisiert",
+    "totalCost": "Gesamtkosten"
+  },
+  "Utilities": {
+    "title": "Der Ressourcenfresser",
+    "subtitle": "Sieh deinem Geld in Echtzeit beim Verdampfen zu.",
+    "trackerTitle": "Nebenkosten-Tracker",
+    "noData": "Noch keine Zählerstände vorhanden – erfasse deinen ersten Monat.",
+    "addReading": "Neuer Zählerstand",
+    "addDialogTitle": "Neuen Zählerstand erfassen",
+    "addDialogDesc": "Zeit für deinen monatlichen Termin mit den Zählerständen.",
+    "saving": "Speichert...",
+    "save": "Speichern",
+    "cancel": "Abbrechen",
+    "month": "Monat",
+    "power": "Strom",
+    "water": "Wasser",
+    "heating": "Heizung",
+    "cost": "Kosten",
+    "consumption": "Verbrauch",
+    "totalCost": "Gesamtkosten",
+    "avgMonth": "Ø Monat",
+    "projection": "Hochrechnung: {amount}/Jahr",
+    "efficiencyGrade": "Effizienz-Note",
+    "lastQuarter": "Letztes Quartal",
+    "mostExpensive": "Teuerster",
+    "cheapest": "Günstigster",
+    "painLevel": "Schmerzlevel",
+    "vsAverage": "vs. Durchschnitt",
+    "overMonths": "Über {count} Monate",
+    "tabs": {
+      "costs": "Kosten",
+      "consumption": "Verbrauch",
+      "breakdown": "Verteilung",
+      "trends": "Trends"
+    },
+    "charts": {
+      "monthlyCosts": "Monatliche Kosten",
+      "monthlyCostsDesc": "Aufgeschlüsselt nach Ressource — sieh deinem Geld beim Verdampfen zu.",
+      "totalCostTrend": "Gesamtkosten-Verlauf",
+      "totalCostTrendDesc": "Die Kurve deines finanziellen Schmerzes.",
+      "consumptionHistory": "Verbrauchshistorie",
+      "consumptionHistoryDesc": "{count}-Monats-Überblick. Halt dich fest.",
+      "waterTrend": "Wasserverbrauch-Trend",
+      "waterTrendDesc": "Jeder Tropfen zählt. Wortwörtlich.",
+      "costDistribution": "Kostenverteilung",
+      "costDistributionDesc": "Wo dein Geld wirklich hingeht.",
+      "unitCosts": "Stückkosten",
+      "unitCostsDesc": "Was dich jede Einheit tatsächlich kostet.",
+      "monthlyChange": "Monatliche Veränderung (%)",
+      "monthlyChangeDesc": "Positiv = mehr Schmerz. Negativ = Hoffnung.",
+      "monthComparison": "Monatsvergleich",
+      "monthComparisonDesc": "Alle Monate auf einen Blick. Sortiert nach Schmerz."
+    },
+    "placeholders": {
+      "month": "z.B. Jan 2026",
+      "consumption": "Verbrauch {unit}",
+      "cost": "Kosten €",
+      "consumptionLast": "Verbrauch {unit} (Letzter: {value})",
+      "costLast": "Kosten € (Letzter: {value})"
+    },
+    "painLevels": {
+      "existential": "Existenzielle Angst",
+      "panic": "Leichte Panik",
+      "worry": "Leichte Sorge",
+      "zen": "Zen",
+      "good": "Überraschend gut"
+    },
+    "efficiencyGrades": {
+      "exemplary": "Vorbildlich",
+      "veryGood": "Sehr gut",
+      "good": "Gut",
+      "expandable": "Ausbaufähig",
+      "critical": "Kritisch",
+      "catastrophe": "Catastrophe"
+    },
+    "averageOf": "Bundesdurchschnitt: ~{amount} €/{unit}"
+  },
+  "Vault": {
+    "title": "Der Garantie- & Kartontresor",
+    "subtitle": "Wo Quittungen ihr bestes Leben führen.",
+    "searchPlaceholder": "Tresor durchsuchen...",
+    "tabs": {
+      "all": "Alle ({count})",
+      "active": "Aktiv ({count})",
+      "zombie": "Zombie ({count})"
+    },
+    "status": {
+      "protected": "Unter Schutz",
+      "solo": "Auf sich allein gestellt",
+      "zombie": "Zombie-Modus"
+    },
+    "create": {
+      "button": "Neuer Eintrag",
+      "title": "Neues Gerät erfassen",
+      "description": "Quittung raus, Daten rein &mdash; dein Tresor wird stärker.",
+      "save": "Speichern",
+      "saving": "Speichert...",
+      "cancel": "Abbrechen"
+    },
+    "edit": {
+      "title": "Gerät bearbeiten",
+      "description": "Änderungen werden sofort gespeichert.",
+      "save": "Änderungen speichern"
+    },
+    "delete": {
+      "title": "Eintrag löschen?",
+      "description": "Diese Aktion kann nicht rückgängig gemacht werden. Der Eintrag wird dauerhaft aus dem Tresor entfernt.",
+      "confirm": "Endgültig löschen",
+      "deleting": "Löscht..."
+    },
+    "fields": {
+      "name": "Name",
+      "namePlaceholder": "z.B. Waschmaschine, Staubsauger...",
+      "brand": "Marke",
+      "brandPlaceholder": "z.B. Bosch, Dyson...",
+      "category": "Kategorie",
+      "price": "Preis (EUR)",
+      "purchaseDate": "Kaufdatum",
+      "warrantyEnd": "Garantie bis",
+      "boxLocation": "Aufbewahrungsort",
+      "boxLocationPlaceholder": "z.B. Regal A3, Keller Box 2...",
+      "status": "Status"
+    },
+    "card": {
+      "warranty": "Garantie",
+      "daysRemaining": "{days} Tage übrig",
+      "expired": "Abgelaufen"
+    },
+    "emptyState": "Nichts gefunden. Entweder falsch gesucht oder du besitzt nichts. Beides besorgniserregend."
+  },
+  "GlobalSearch": {
+    "placeholder": "Alles durchsuchen...",
+    "commandPlaceholder": "Seite, Aktion oder Stichwort suchen...",
+    "empty": "Nichts gefunden. Versuch ein anderes Stichwort.",
+    "sections": {
+      "pages": "Seiten",
+      "actions": "Schnellaktionen"
+    },
+    "actions": {
+      "newAppliance": "Neues Gerät erfassen",
+      "newMaintenance": "Wartung anlegen",
+      "newInvoice": "Rechnung erfassen",
+      "newReading": "Zählerstände eintragen"
+    }
+  },
+  "Services": {
+    "title": "Das Rettungsteam",
+    "subtitle": "Deine Handwerker-Avengers. Hoffentlich gehen sie ans Telefon.",
+    "tabs": {
+      "directory": "Verzeichnis",
+      "invoices": "Rechnungen"
+    },
+    "directory": {
+      "searchPlaceholder": "Dienstleister suchen...",
+      "newProvider": "Neuer Handwerker",
+      "empty": "Keine Dienstleister gefunden. Diesmal bist du auf dich allein gestellt.",
+      "history": "Servicehistorie",
+      "total": "Gesamt",
+      "noHistory": "Noch keine Reparaturen. Drück die Daumen.",
+      "tax": "Steuer"
+    },
+    "invoices": {
+      "searchPlaceholder": "Rechnungen suchen...",
+      "taxDeductible": "Steuerlich absetzbar: {amount}",
+      "newInvoice": "Neue Rechnung",
+      "createTitle": "Rechnung erfassen",
+      "createDesc": "Lad die Rechnung hoch, bevor du sie verlierst.",
+      "editTitle": "Rechnung bearbeiten",
+      "editDesc": "Änderungen werden sofort gespeichert.",
+      "deleteTitle": "Rechnung löschen?",
+      "deleteDesc": "Der Rechnungseintrag wird unwiderruflich gelöscht.",
+      "empty": "Keine Rechnungen gefunden. Ein gutes Zeichen oder Quittung verloren?"
+    },
+    "form": {
+      "name": "Name",
+      "specialty": "Fachgebiet",
+      "phone": "Telefon",
+      "email": "E-Mail",
+      "website": "Webseite",
+      "rating": "Bewertung",
+      "provider": "Dienstleister",
+      "providerPlaceholder": "Dienstleister wählen...",
+      "date": "Datum",
+      "description": "Beschreibung",
+      "descriptionPlaceholder": "z.B. Heizungswartung, Rohr repariert...",
+      "amount": "Betrag (EUR)",
+      "fileName": "Dateiname",
+      "fileNamePlaceholder": "z.B. rechnung-2026-01.pdf",
+      "taxRelevant": "Steuerlich absetzbar (Handwerkerleistung)",
+      "save": "Speichern",
+      "saving": "Speichert...",
+      "cancel": "Abbrechen",
+      "delete": "Endgültig löschen",
+      "deleting": "Löscht...",
+      "editSave": "Änderungen speichern"
+    },
+    "createProvider": {
+      "title": "Neuen Handwerker erfassen",
+      "description": "Kontaktdaten und Fachgebiet eintragen — für den nächsten Notfall."
+    },
+    "editProvider": {
+      "title": "Handwerker bearbeiten",
+      "description": "Änderungen werden sofort gespeichert."
+    },
+    "deleteProvider": {
+      "title": "Handwerker löschen?",
+      "description": "Der Handwerker und seine gesamte Servicehistorie werden dauerhaft entfernt. Diese Aktion kann nicht rückgängig gemacht werden."
+    },
+    "specialties": {
+      "Sanitär": "Sanitär",
+      "Elektrik": "Elektrik",
+      "Heizung": "Heizung",
+      "Dachdecker": "Dachdecker",
+      "Maler": "Maler",
+      "Schreiner": "Schreiner",
+      "Gartenbau": "Gartenbau",
+      "Schlüssel": "Schlüssel",
+      "Allgemein": "Allgemein",
+      "Heizungstechnikerin": "Heizungstechnikerin",
+      "Klempner": "Klempner",
+      "Elektriker": "Elektriker",
+      "Malerin": "Malerin",
+      "Schlosser": "Schlosser"
+    }
+  },
+  "Library": {
+    "title": "Die Bibliothek",
+    "subtitle": "Alle Anleitungen, die du erst öffnest, wenn etwas kaputtgeht.",
+    "searchPlaceholder": "Dokumente suchen...",
+    "newDocument": "Neues Dokument",
+    "tabs": {
+      "all": "Alle"
+    },
+    "categories": {
+      "Heating": "Heizung",
+      "Plumbing": "Sanitär",
+      "Smart Home": "Smart Home",
+      "Structural": "Bausubstanz",
+      "General": "Allgemein"
+    },
+    "create": {
+      "title": "Neues Markdown-Dokument",
+      "description": "Wissen ist Macht — und gut dokumentiert ist halb repariert.",
+      "save": "Speichern",
+      "saving": "Speichert...",
+      "cancel": "Abbrechen"
+    },
+    "form": {
+      "title": "Titel",
+      "titlePlaceholder": "z.B. Heizung entlüften Anleitung...",
+      "category": "Kategorie",
+      "type": "Typ",
+      "description": "Beschreibung",
+      "descriptionPlaceholder": "Kurze Beschreibung des Dokuments...",
+      "content": "Inhalt (Markdown)",
+      "contentPlaceholder": "# Titel\n\nSchreibe hier deinen Markdown-Inhalt..."
+    },
+    "card": {
+      "updated": "Aktualisiert",
+      "download": "Herunterladen",
+      "noPdf": "PDF-Vorschau nicht verfügbar. Aber immerhin weißt du, dass es existiert."
+    },
+    "empty": "Keine Dokumente gefunden. Die Wissensgötter haben dich verlassen."
+  },
+  "Maintenance": {
+    "title": "Wartungen",
+    "subtitle": "Planen. Prüfen. Abhaken. Dein Haus dankt es dir.",
+    "stats": {
+      "total": "Gesamt",
+      "tasks": "Wartungsaufgaben",
+      "open": "Offen",
+      "highPriorityCount": "{count} hohe Priorität",
+      "allGood": "Alles im Griff",
+      "overdue": "Überfällig",
+      "betterToday": "Besser heute als morgen",
+      "onTime": "Alles pünktlich",
+      "done": "Erledigt",
+      "wellDone": "Gut gemacht!"
+    },
+    "list": {
+      "title": "Alle Wartungsaufgaben",
+      "description": "Planen, prüfen, abhaken — das Haus dankt es dir.",
+      "empty": "Keine Wartungen vorhanden. Entweder perfektes Haus oder perfekte Verleugnung.",
+      "overdueBadge": "überfällig"
+    },
+    "create": {
+      "button": "Neue Wartung",
+      "title": "Neue Wartung erfassen",
+      "description": "Was muss wann gemacht werden?"
+    },
+    "edit": {
+      "title": "Wartung bearbeiten",
+      "description": "Änderungen werden sofort gespeichert."
+    },
+    "delete": {
+      "title": "Wartung löschen?",
+      "description": "Diese Aktion kann nicht rückgängig gemacht werden. Die Wartung wird dauerhaft entfernt.",
+      "cancel": "Abbrechen",
+      "confirm": "Endgültig löschen",
+      "deleting": "Löscht..."
+    },
+    "form": {
+      "task": "Aufgabe",
+      "taskPlaceholder": "z.B. Heizung entlüften, Rauchmelder prüfen...",
+      "dueDate": "Fällig am",
+      "recurring": "Wiederholung",
+      "priority": "Priorität",
+      "save": "Speichern",
+      "saving": "Speichert...",
+      "cancel": "Abbrechen",
+      "editSave": "Änderungen speichern"
+    },
+    "table": {
+      "status": "Status",
+      "task": "Aufgabe",
+      "due": "Fällig",
+      "recurring": "Wiederholung",
+      "priority": "Priorität",
+      "actions": "Aktionen"
+    },
+    "priority": {
+      "high": "Hoch",
+      "medium": "Mittel",
+      "low": "Niedrig"
+    },
+    "recurring": {
+      "once": "Einmalig",
+      "weekly": "Wöchentlich",
+      "monthly": "Monatlich",
+      "quarterly": "Vierteljährlich",
+      "biannually": "Halbjährlich",
+      "yearly": "Jährlich"
+    }
+  },
+  "Wishlist": {
+    "title": "Die Wunschliste",
+    "subtitle": "Träume, Illusionen und überraschend teure Zäune.",
+    "stats": {
+      "totalProjects": "Projekte gesamt",
+      "urgent": "dringend",
+      "estimatedCost": "Geschätzte Kosten",
+      "avocadoToasts": "Das sind viele Avocado-Toasts",
+      "totalSaved": "Gesamt gespart",
+      "done": "% geschafft"
+    },
+    "urgency": {
+      "nice-to-have": "Wäre schön",
+      "should-do": "Sollte man machen",
+      "need-soon": "Bald nötig",
+      "falling-apart": "Haus fällt auseinander"
+    },
+    "categories": {
+      "Renovierung": "Renovierung",
+      "Garten": "Garten",
+      "Küche": "Küche",
+      "Badezimmer": "Badezimmer",
+      "Technik": "Technik",
+      "Möbel": "Möbel",
+      "Außenbereich": "Außenbereich",
+      "Sicherheit": "Sicherheit",
+      "Sonstiges": "Sonstiges"
+    },
+    "create": {
+      "button": "Neues Projekt",
+      "title": "Neues Wunschprojekt",
+      "description": "Noch ein Traum für die Liste — diesmal wird gespart!"
+    },
+    "edit": {
+      "title": "Wunschprojekt bearbeiten",
+      "description": "Änderungen werden sofort gespeichert."
+    },
+    "delete": {
+      "title": "Wunschprojekt löschen?",
+      "description": "Diese Aktion kann nicht rückgängig gemacht werden. Das Projekt wird dauerhaft entfernt.",
+      "cancel": "Abbrechen",
+      "confirm": "Endgültig löschen",
+      "deleting": "Löscht..."
+    },
+    "form": {
+      "name": "Projektname",
+      "namePlaceholder": "z.B. Neue Terrasse, Dachsanierung...",
+      "description": "Beschreibung",
+      "descriptionPlaceholder": "Was soll gemacht werden?",
+      "cost": "Geschätzte Kosten (€)",
+      "savings": "Bereits gespart (€)",
+      "category": "Kategorie",
+      "urgency": "Dringlichkeit",
+      "save": "Speichern",
+      "saving": "Speichert...",
+      "cancel": "Abbrechen",
+      "editSave": "Änderungen speichern"
+    },
+    "progress": {
+      "almost": "% geschafft! Fast Zeit zum Loslegen.",
+      "halfway": "Halbzeit. Weiter sparen!",
+      "remote": "Noch {amount} zu gehen. Limonadenstand eröffnen?"
+    }
+  },
+  "Lending": {
+    "title": "Verleih-O-Meter",
+    "subtitle": "Vertrauen wird verdient. Werkzeug wird geliehen. Belege werden aufbewahrt.",
+    "stats": {
+      "totalItems": "Verliehene Sachen",
+      "scattered": "Verstreut in der Nachbarschaft",
+      "onTime": "Pünktlich",
+      "faith": "Glaube an die Menschheit: hält",
+      "overdue": "Überfällig",
+      "awkwardMessage": "Zeit für eine peinliche Nachricht",
+      "noPassiveAggressive": "Keine passiv-aggressiven Nachrichten nötig"
+    },
+    "trust": {
+      "level1": "Autsch",
+      "level2": "Hmm",
+      "level3": "Okay",
+      "level4": "Solide",
+      "level5": "Seelenverwandt"
+    },
+    "list": {
+      "title": "Alle verliehenen Gegenstände",
+      "description": "Behalte im Blick, was draußen ist. Und wer es hat. Und wann du es zurückbekommst (hoffentlich).",
+      "empty": "Nichts verliehen. Entweder sehr vorsichtig oder kein Werkzeug.",
+      "overdueBadge": "{days}T überfällig",
+      "remainingBadge": "{days}T übrig"
+    },
+    "create": {
+      "button": "Neuer Eintrag",
+      "title": "Neuen Verleih erfassen",
+      "description": "Was wird verliehen, an wen, und wann soll es zurückkommen?"
+    },
+    "edit": {
+      "title": "Verleih bearbeiten",
+      "description": "Änderungen werden sofort gespeichert."
+    },
+    "delete": {
+      "title": "Verleih löschen?",
+      "description": "Diese Aktion kann nicht rückgängig gemacht werden. Der Eintrag wird dauerhaft entfernt.",
+      "cancel": "Abbrechen",
+      "confirm": "Endgültig löschen",
+      "deleting": "Löscht..."
+    },
+    "form": {
+      "item": "Gegenstand",
+      "itemPlaceholder": "z.B. Bohrmaschine, Leiter, Raclette-Grill...",
+      "borrower": "Nachbar / Ausleiher",
+      "borrowerPlaceholder": "z.B. Thomas von nebenan",
+      "lentDate": "Ausleihdatum",
+      "expectedReturn": "Rückgabe bis",
+      "trustLevel": "Vertrauenslevel",
+      "save": "Speichern",
+      "saving": "Speichert...",
+      "cancel": "Abbrechen",
+      "editSave": "Änderungen speichern"
+    },
+    "table": {
+      "status": "Status",
+      "item": "Gegenstand",
+      "borrower": "Nachbar",
+      "lentDate": "Ausleihdatum",
+      "returnBy": "Rückgabe bis",
+      "trustLevel": "Vertrauenslevel",
+      "actions": "Aktionen"
+    }
+  }
+}

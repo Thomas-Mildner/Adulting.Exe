@@ -1,7 +1,7 @@
 "use client"
 
-import Link from "next/link"
-import { usePathname } from "next/navigation"
+import { Link, usePathname } from "@/lib/navigation"
+import { useTranslations } from "next-intl"
 import {
   LayoutDashboard,
   PackageOpen,
@@ -29,27 +29,28 @@ import {
   SidebarSeparator,
 } from "@/components/ui/sidebar"
 
-const mainNav = [
-  { title: "Dashboard", href: "/", icon: LayoutDashboard },
-  { title: "Der Tresor", href: "/vault", icon: PackageOpen },
-  { title: "Rettungsteam", href: "/services", icon: Wrench },
-  { title: "Bibliothek", href: "/library", icon: BookOpen },
-]
-
-const toolsNav = [
-  { title: "Wartungen", href: "/maintenance", icon: ClipboardCheck },
-  { title: "Ressourcenfresser", href: "/utilities", icon: Gauge },
-  { title: "Wunschliste", href: "/wishlist", icon: Sparkles },
-  { title: "Verleih-O-Meter", href: "/lending", icon: HandCoins },
-]
-
-const systemNav = [
-  { title: "Einstellungen", href: "/settings", icon: Settings },
-]
-
 export function AppSidebar() {
   const pathname = usePathname()
+  const t = useTranslations("Navigation")
   const version = process.env.NEXT_PUBLIC_APP_VERSION || '0.1.0'
+
+  const mainNav = [
+    { title: t("dashboard"), href: "/", icon: LayoutDashboard },
+    { title: t("vault"), href: "/vault", icon: PackageOpen },
+    { title: t("services"), href: "/services", icon: Wrench }, // "Rettungsteam" needs translation key if not present, assume "services"
+    { title: t("library"), href: "/library", icon: BookOpen },
+  ]
+
+  const toolsNav = [
+    { title: t("maintenance"), href: "/maintenance", icon: ClipboardCheck }, // "Wartungen"
+    { title: t("utilities"), href: "/utilities", icon: Gauge },
+    { title: t("wishlist"), href: "/wishlist", icon: Sparkles },
+    { title: t("lending"), href: "/lending", icon: HandCoins }, // "Verleih-O-Meter"
+  ]
+
+  const systemNav = [
+    { title: t("settings"), href: "/settings", icon: Settings },
+  ]
 
   const renderNavGroup = (items: typeof mainNav, label: string) => (
     <SidebarGroup>
@@ -107,7 +108,7 @@ export function AppSidebar() {
       <SidebarFooter className="p-4 group-data-[collapsible=icon]:hidden">
         <div className="rounded-lg bg-sidebar-accent/50 border border-sidebar-border p-3">
           <p className="text-[11px] text-sidebar-foreground/50 font-mono leading-relaxed">
-            {"Status: Haus steht (vorerst)"}
+            {t("sidebarStatus")}
           </p>
         </div>
       </SidebarFooter>

@@ -1,5 +1,7 @@
 "use client"
 
+import { useFormatter, useTranslations } from "next-intl"
+
 import { useState, useOptimistic } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -14,6 +16,8 @@ const priorityStyles: Record<string, string> = {
 }
 
 export function MaintenanceCard({ initialTasks }: { initialTasks: MaintenanceTask[] }) {
+  const t = useTranslations("MaintenanceCard")
+  const format = useFormatter()
   const [tasks, setTasks] = useState(initialTasks)
 
   const toggleTask = async (id: string) => {
@@ -33,13 +37,13 @@ export function MaintenanceCard({ initialTasks }: { initialTasks: MaintenanceTas
     <Card>
       <CardHeader className="pb-3">
         <div className="flex items-center justify-between">
-          <CardTitle className="text-sm font-medium">Offene Wartungen</CardTitle>
+          <CardTitle className="text-sm font-medium">{t("title")}</CardTitle>
           <Badge variant="secondary" className="text-[10px] font-mono">
-            {tasks.filter((t) => !t.completed).length} offen
+            {t("openCount", { count: tasks.filter((t) => !t.completed).length })}
           </Badge>
         </div>
         <p className="text-xs text-muted-foreground">
-          {"Dinge, die sich leider nicht von selbst reparieren"}
+          {t("description")}
         </p>
       </CardHeader>
       <CardContent className="space-y-1.5">
@@ -55,21 +59,30 @@ export function MaintenanceCard({ initialTasks }: { initialTasks: MaintenanceTas
             />
             <div className="flex-1 min-w-0">
               <p
-                className={`text-sm leading-none ${
-                  task.completed
-                    ? "line-through text-muted-foreground"
-                    : "text-foreground"
-                }`}
+                className={`text-sm leading-none ${task.completed
+                  ? "line-through text-muted-foreground"
+                  : "text-foreground"
+                  }`}
               >
                 {task.title}
               </p>
               <p className="text-[11px] text-muted-foreground mt-1">
-                Fällig{" "}
-                {new Date(task.dueDate).toLocaleDateString("de-DE", {
+                {t("due")}{" "}
+                {format.dateTime(new Date(task.dueDate), {
                   month: "short",
                   day: "numeric",
                 })}{" "}
-                &middot; {task.recurring}
+                &middot; {(() => {
+                  const map: Record<string, string> = {
+                    "Jährlich": "yearly",
+                    "Monatlich": "monthly",
+                    "Alle 2 Monate": "every2months",
+                    "Alle 3 Monate": "every3months",
+                    "Alle 6 Monate": "every6months",
+                  }
+                  const key = map[task.recurring]
+                  return key ? t(`recurring.${key}`) : task.recurring
+                })()}
               </p>
             </div>
             <Badge variant="outline" className={`text-[10px] ${priorityStyles[task.priority]}`}>

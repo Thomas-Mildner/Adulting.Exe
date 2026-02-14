@@ -1,5 +1,7 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 import {
   Card,
   CardContent,
@@ -13,44 +15,46 @@ import { Separator } from "@/components/ui/separator";
 import { Bell, Shield, Terminal } from "lucide-react";
 
 export function NotificationSettings() {
+  const t = useTranslations("Settings.notifications");
+
   return (
     <Card>
       <CardHeader className="pb-3">
         <div className="flex items-center gap-2">
           <Bell className="h-4 w-4 text-primary" />
           <CardTitle className="text-sm font-medium">
-            Benachrichtigungen
+            {t("title")}
           </CardTitle>
         </div>
         <CardDescription className="text-xs">
-          {"Wähle, welche Erinnerungen du ignorieren möchtest."}
+          {t("description")}
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
         {[
           {
-            title: "Garantie-Ablauf-Warnungen",
-            desc: "30 Tage bevor eine Garantie in den Zombie-Modus wechselt.",
+            title: t("warranty"),
+            desc: t("warrantyDesc"),
             defaultOn: true,
           },
           {
-            title: "Wartungserinnerungen",
-            desc: "Weil sich dein HVAC-Filter nicht von selbst wechselt.",
+            title: t("maintenance"),
+            desc: t("maintenanceDesc"),
             defaultOn: true,
           },
           {
-            title: "Verleih-O-Meter Warnungen",
-            desc: "Wenn Nachbarn ihr Werkzeug-Willkommen überstrapazieren.",
+            title: t("lending"),
+            desc: t("lendingDesc"),
             defaultOn: true,
           },
           {
-            title: "Zählerstand-Erinnerungen",
-            desc: "Monatlicher Stupser, die unbeliebteste Ecke im Keller zu besuchen.",
+            title: t("meter"),
+            desc: t("meterDesc"),
             defaultOn: false,
           },
           {
-            title: "Wunschlisten-Meilensteine",
-            desc: "Wenn ein Sparziel 50%, 75% oder 100% erreicht.",
+            title: t("wishlist"),
+            desc: t("wishlistDesc"),
             defaultOn: false,
           },
         ].map((item, idx) => (
@@ -75,46 +79,47 @@ export function NotificationSettings() {
 }
 
 export function DataSettings() {
+  const t = useTranslations("Settings.data");
+
   return (
     <Card>
       <CardHeader className="pb-3">
         <div className="flex items-center gap-2">
           <Shield className="h-4 w-4 text-primary" />
           <CardTitle className="text-sm font-medium">
-            Daten & Datenschutz
+            {t("title")}
           </CardTitle>
         </div>
         <CardDescription className="text-xs">
-          {"Deine Daten. Deine Regeln."}
+          {t("description")}
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="flex items-center justify-between">
           <div className="space-y-0.5">
             <p className="text-sm font-medium text-foreground">
-              Daten exportieren
+              {t("exportTitle")}
             </p>
             <p className="text-[11px] text-muted-foreground">
-              Alles als JSON herunterladen. Perfekt für deine nächste
-              Tabellen-Obsession.
+              {t("exportDesc")}
             </p>
           </div>
           <Button variant="outline" size="sm">
-            Exportieren
+            {t("exportBtn")}
           </Button>
         </div>
         <Separator />
         <div className="flex items-center justify-between">
           <div className="space-y-0.5">
             <p className="text-sm font-medium text-foreground">
-              Alle Daten löschen
+              {t("deleteTitle")}
             </p>
             <p className="text-[11px] text-muted-foreground">
-              Die nukleare Option. Kein Rückgängig. Keine Reue (hoffentlich).
+              {t("deleteDesc")}
             </p>
           </div>
           <Button variant="destructive" size="sm">
-            Löschen
+            {t("deleteBtn")}
           </Button>
         </div>
       </CardContent>
@@ -123,6 +128,8 @@ export function DataSettings() {
 }
 
 export function AboutSettings() {
+  const t = useTranslations("Settings.about");
+
   return (
     <Card className="border-dashed">
       <CardContent className="p-5">
@@ -135,7 +142,7 @@ export function AboutSettings() {
               Adulting.exe v2.0
             </p>
             <p className="text-[11px] text-muted-foreground">
-              {"Immer noch Beta. Genau wie deine Erwachsenen-Fähigkeiten."}
+              {t("funny")}
             </p>
           </div>
         </div>
