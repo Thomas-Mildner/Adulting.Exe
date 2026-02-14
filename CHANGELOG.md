@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/Thomas-Mildner/Adulting.Exe/compare/v1.0.0...v1.1.0) (2026-02-14)
+
+
+### Features
+
+* Add internationalization support with English translations ([95cd536](https://github.com/Thomas-Mildner/Adulting.Exe/commit/95cd5361593d158f831850ee68247fb5ea20ac31))
+
 # 1.0.0 (2026-02-13)
 
 
