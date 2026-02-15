@@ -11,6 +11,8 @@ import type {
   LentItem,
   MeterReading,
   WishlistProject,
+  WasteType,
+  WastePickup,
 } from "@/lib/data"
 import type {
   Appliance as PrismaAppliance,
@@ -22,6 +24,8 @@ import type {
   LentItem as PrismaLentItem,
   MeterReading as PrismaMeterReading,
   WishlistProject as PrismaWishlistProject,
+  WasteType as PrismaWasteType,
+  WastePickup as PrismaWastePickup,
 } from "@prisma/client"
 
 type PrismaServiceProvider = PrismaSP & { history: PrismaServiceHistory[] }
