@@ -6,24 +6,19 @@ import {
 } from "@/components/settings/settings-panel"
 import { HeatingSettings } from "@/components/settings/heating-settings"
 import { LanguageSwitcher } from "@/components/settings/language-switcher"
-// import { WasteTypeSettings } from "@/components/settings/waste-type-settings" // Was deleted? I should check if it exists. 
-// Step 700 said: "The following file was deleted: .../waste-type-settings.tsx". 
-// If it was deleted, I cannot import it. I must remove it from the page.
-// This explains why the lint error "Cannot find name 'WasteTypeSettings'" appeared.
-// I will remove WasteTypeSettings usage for now, or check if I should restore it.
-// Given the user wants i18n now, I'll proceed without it to fix the build, and maybe restore it later if needed.
-// actually, I'll check if I can just comment it out or remove it.
-import { getAppConfig } from "@/lib/actions"
-// getWasteTypes was also likely associated with WasteTypeSettings.
+import { WasteTypeSettings } from "@/components/settings/waste-type-settings"
+import { getAppConfig, getWasteTypes } from "@/lib/actions"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Bell, Home, Shield } from "lucide-react"
 import { getTranslations } from "next-intl/server"
+import pkg from "@/package.json"
 
 export const dynamic = "force-dynamic"
 
 export default async function SettingsPage() {
-  const [appConfig, t] = await Promise.all([
+  const [appConfig, wasteTypes, t] = await Promise.all([
     getAppConfig(),
+    getWasteTypes(),
     getTranslations("Settings")
   ])
 
@@ -49,7 +44,9 @@ export default async function SettingsPage() {
         </TabsList>
 
         <TabsContent value="general" className="space-y-6 max-w-2xl animate-in fade-in-50 duration-500">
-          <LanguageSwitcher />
+          <div className="flex items-center justify-between">
+            <LanguageSwitcher />
+          </div>
           <NotificationSettings />
         </TabsContent>
 
@@ -66,7 +63,7 @@ export default async function SettingsPage() {
 
         <TabsContent value="system" className="space-y-6 max-w-2xl animate-in fade-in-50 duration-500">
           <DataSettings />
-          <AboutSettings />
+          <AboutSettings version={pkg.version} />
         </TabsContent>
       </Tabs>
     </DashboardLayout>

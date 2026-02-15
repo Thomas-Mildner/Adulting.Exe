@@ -127,7 +127,7 @@ export function DataSettings() {
   );
 }
 
-export function AboutSettings() {
+export function AboutSettings({ version }: { version: string }) {
   const t = useTranslations("Settings.about");
 
   return (
@@ -138,9 +138,14 @@ export function AboutSettings() {
             <Terminal className="h-4 w-4 text-primary" />
           </div>
           <div>
-            <p className="text-sm font-medium text-foreground">
-              Adulting.exe v2.0
-            </p>
+            <a
+              href={`https://github.com/Thomas-Mildner/Adulting.Exe/releases/tag/v${version}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm font-medium text-foreground hover:underline"
+            >
+              Adulting.exe v{version}
+            </a>
             <p className="text-[11px] text-muted-foreground">
               {t("funny")}
             </p>
@@ -151,12 +156,12 @@ export function AboutSettings() {
   );
 }
 
-export function SettingsPanel() {
+export function SettingsPanel({ version }: { version: string }) {
   return (
     <div className="space-y-6 max-w-2xl">
       <NotificationSettings />
       <DataSettings />
-      <AboutSettings />
+      <AboutSettings version={version} />
     </div>
   );
 }
