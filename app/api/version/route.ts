@@ -21,6 +21,11 @@ interface GitHubRelease {
  * For production serverless deployments, consider using a distributed cache
  * like Redis or Vercel KV. However, for this use case (displaying version info),
  * the 5-minute cache window is acceptable and helps reduce GitHub API calls.
+ * 
+ * Authentication:
+ * - For public repositories: No authentication required
+ * - For private repositories: Set GITHUB_TOKEN or GH_TOKEN environment variable
+ *   with a GitHub Personal Access Token that has 'repo' scope
  */
 let cachedVersion: { version: string; timestamp: number } | null = null;
 const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes in milliseconds
@@ -35,15 +40,23 @@ export async function GET() {
       });
     }
 
+    // Prepare headers for GitHub API
+    const headers: HeadersInit = {
+      'Accept': 'application/vnd.github.v3+json',
+      'User-Agent': 'Adulting.Exe-App',
+    };
+
+    // Add authentication if GitHub token is available (required for private repos)
+    const githubToken = process.env.GITHUB_TOKEN || process.env.GH_TOKEN;
+    if (githubToken) {
+      headers['Authorization'] = `Bearer ${githubToken}`;
+    }
+
     // Fetch latest release from GitHub
     const response = await fetch(
       `https://api.github.com/repos/${GITHUB_REPO}/releases/latest`,
       {
-        headers: {
-          'Accept': 'application/vnd.github.v3+json',
-          // Add User-Agent as required by GitHub API
-          'User-Agent': 'Adulting.Exe-App',
-        },
+        headers,
         // Don't cache in Next.js, we'll handle our own caching
         cache: 'no-store',
       }
