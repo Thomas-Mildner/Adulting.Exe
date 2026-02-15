@@ -1,5 +1,6 @@
 "use client";
 
+import * as React from "react";
 import { useTranslations } from "next-intl";
 
 import {
@@ -127,8 +128,24 @@ export function DataSettings() {
   );
 }
 
-export function AboutSettings({ version }: { version: string }) {
+export function AboutSettings() {
   const t = useTranslations("Settings.about");
+  const [version, setVersion] = React.useState<string>("...");
+  const [releaseUrl, setReleaseUrl] = React.useState<string>("");
+
+  React.useEffect(() => {
+    fetch('/api/version')
+      .then(res => res.json())
+      .then(data => {
+        setVersion(data.version || "1.0.0");
+        setReleaseUrl(data.releaseUrl || `https://github.com/Thomas-Mildner/Adulting.Exe/releases/tag/v${data.version}`);
+      })
+      .catch(err => {
+        console.error("Failed to fetch version:", err);
+        setVersion("1.0.0");
+        setReleaseUrl("https://github.com/Thomas-Mildner/Adulting.Exe/releases");
+      });
+  }, []);
 
   return (
     <Card className="border-dashed">
@@ -139,7 +156,7 @@ export function AboutSettings({ version }: { version: string }) {
           </div>
           <div>
             <a
-              href={`https://github.com/Thomas-Mildner/Adulting.Exe/releases/tag/v${version}`}
+              href={releaseUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="text-sm font-medium text-foreground hover:underline"
@@ -156,12 +173,12 @@ export function AboutSettings({ version }: { version: string }) {
   );
 }
 
-export function SettingsPanel({ version }: { version: string }) {
+export function SettingsPanel() {
   return (
     <div className="space-y-6 max-w-2xl">
       <NotificationSettings />
       <DataSettings />
-      <AboutSettings version={version} />
+      <AboutSettings />
     </div>
   );
 }

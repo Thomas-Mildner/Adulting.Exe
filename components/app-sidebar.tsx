@@ -1,5 +1,6 @@
 "use client"
 
+import * as React from "react"
 import { Link, usePathname } from "@/lib/navigation"
 import { useTranslations } from "next-intl"
 import {
@@ -33,7 +34,20 @@ import {
 export function AppSidebar() {
   const pathname = usePathname()
   const t = useTranslations("Navigation")
-  const version = process.env.NEXT_PUBLIC_APP_VERSION || '0.1.0'
+  const [version, setVersion] = React.useState<string>(process.env.NEXT_PUBLIC_APP_VERSION || '0.1.0')
+
+  React.useEffect(() => {
+    fetch('/api/version')
+      .then(res => res.json())
+      .then(data => {
+        if (data.version) {
+          setVersion(data.version);
+        }
+      })
+      .catch(err => {
+        console.error("Failed to fetch version:", err);
+      });
+  }, []);
 
   const mainNav = [
     { title: t("dashboard"), href: "/", icon: LayoutDashboard },
