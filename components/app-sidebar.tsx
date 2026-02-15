@@ -35,13 +35,20 @@ export function AppSidebar() {
   const pathname = usePathname()
   const t = useTranslations("Navigation")
   const [version, setVersion] = React.useState<string>(process.env.NEXT_PUBLIC_APP_VERSION || '0.1.0')
+  const [isUpdateAvailable, setIsUpdateAvailable] = React.useState<boolean>(false)
 
   React.useEffect(() => {
+    const builtVersion = process.env.NEXT_PUBLIC_APP_VERSION || '0.1.0';
+    
     fetch('/api/version')
       .then(res => res.json())
       .then(data => {
         if (data.version) {
           setVersion(data.version);
+          // Check if update is available
+          if (data.version !== builtVersion && !data.fallback) {
+            setIsUpdateAvailable(true);
+          }
         }
       })
       .catch(err => {
@@ -102,8 +109,14 @@ export function AppSidebar() {
     <Sidebar collapsible="icon">
       <SidebarHeader className="p-4">
         <Link href="/" className="flex items-center gap-2.5">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-sidebar-primary">
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-sidebar-primary relative">
             <Terminal className="h-4 w-4 text-sidebar-primary-foreground" />
+            {isUpdateAvailable && (
+              <span className="absolute -top-1 -right-1 flex h-3 w-3">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-3 w-3 bg-primary"></span>
+              </span>
+            )}
           </div>
           <div className="flex flex-col group-data-[collapsible=icon]:hidden">
             <span className="text-sm font-semibold tracking-tight text-sidebar-accent-foreground">
