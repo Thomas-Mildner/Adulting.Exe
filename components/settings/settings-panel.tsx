@@ -132,17 +132,31 @@ export function AboutSettings() {
   const t = useTranslations("Settings.about");
   const [version, setVersion] = React.useState<string>("...");
   const [releaseUrl, setReleaseUrl] = React.useState<string>("");
+  const [isUpdateAvailable, setIsUpdateAvailable] = React.useState<boolean>(false);
+  const [currentBuiltVersion, setCurrentBuiltVersion] = React.useState<string>("");
 
   React.useEffect(() => {
+    // Get the version that was built into the app
+    const builtVersion = process.env.NEXT_PUBLIC_APP_VERSION || "1.0.0";
+    setCurrentBuiltVersion(builtVersion);
+
+    // Fetch the latest release version from GitHub
     fetch('/api/version')
       .then(res => res.json())
       .then(data => {
-        setVersion(data.version || "1.0.0");
-        setReleaseUrl(data.releaseUrl || `https://github.com/Thomas-Mildner/Adulting.Exe/releases/tag/v${data.version}`);
+        const latestVersion = data.version || "1.0.0";
+        setVersion(latestVersion);
+        setReleaseUrl(data.releaseUrl || `https://github.com/Thomas-Mildner/Adulting.Exe/releases/tag/v${latestVersion}`);
+        
+        // Check if update is available by comparing versions
+        // Simple version comparison: if versions are different, assume update is available
+        if (latestVersion !== builtVersion && !data.fallback) {
+          setIsUpdateAvailable(true);
+        }
       })
       .catch(err => {
         console.error("Failed to fetch version:", err);
-        setVersion("1.0.0");
+        setVersion(builtVersion);
         setReleaseUrl("https://github.com/Thomas-Mildner/Adulting.Exe/releases");
       });
   }, []);
@@ -150,23 +164,34 @@ export function AboutSettings() {
   return (
     <Card className="border-dashed">
       <CardContent className="p-5">
-        <div className="flex items-center gap-3">
-          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary/10">
-            <Terminal className="h-4 w-4 text-primary" />
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary/10">
+              <Terminal className="h-4 w-4 text-primary" />
+            </div>
+            <div>
+              <a
+                href={releaseUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm font-medium text-foreground hover:underline"
+              >
+                Adulting.exe v{version}
+              </a>
+              <p className="text-[11px] text-muted-foreground">
+                {t("funny")}
+              </p>
+            </div>
           </div>
-          <div>
-            <a
-              href={releaseUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-sm font-medium text-foreground hover:underline"
-            >
-              Adulting.exe v{version}
-            </a>
-            <p className="text-[11px] text-muted-foreground">
-              {t("funny")}
-            </p>
-          </div>
+          {isUpdateAvailable && (
+            <div className="flex items-center gap-2">
+              <div className="px-2 py-1 rounded-md bg-primary/10 border border-primary/20">
+                <p className="text-[10px] font-medium text-primary">
+                  Update available
+                </p>
+              </div>
+            </div>
+          )}
         </div>
       </CardContent>
     </Card>
