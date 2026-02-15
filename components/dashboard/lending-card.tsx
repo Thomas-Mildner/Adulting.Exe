@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { getDaysRemaining, type LentItem } from "@/lib/data"
-import Link from "next/link"
+import { Link } from "@/lib/navigation"
 import { ArrowRight, ShieldAlert } from "lucide-react"
 
 export function LendingCard({ lentItems }: { lentItems: LentItem[] }) {

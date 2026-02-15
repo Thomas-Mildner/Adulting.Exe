@@ -6,7 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Progress } from "@/components/ui/progress"
 import { getDaysRemaining, getWarrantyPercent, type Appliance } from "@/lib/data"
-import Link from "next/link"
+import { Link } from "@/lib/navigation"
 import { ArrowRight } from "lucide-react"
 
 // Status labels moved inside component for translation

@@ -15,6 +15,8 @@ async function main() {
   await prisma.lentItem.deleteMany()
   await prisma.meterReading.deleteMany()
   await prisma.wishlistProject.deleteMany()
+  await prisma.wastePickup.deleteMany()
+  await prisma.wasteType.deleteMany()
 
   // ─── Appliances ─────────────────────────────────────────────────────────
   await prisma.appliance.createMany({
@@ -175,6 +177,30 @@ async function main() {
     ],
   })
   console.log("  ✅ Wishlist projects seeded")
+
+  // ─── Waste Calendar ───────────────────────────────────────────────────
+  await prisma.wasteType.createMany({
+    data: [
+      { id: "wt-rest", name: "Restmüll", color: "gray-700", icon: "Trash2" },
+      { id: "wt-bio", name: "Bio", color: "green-600", icon: "Leaf" },
+      { id: "wt-papier", name: "Papier", color: "blue-600", icon: "FileText" },
+      { id: "wt-gelb", name: "Gelber Sack", color: "yellow-500", icon: "Package" },
+    ],
+  })
+
+  const today = new Date()
+  const nextWeek = new Date(today)
+  nextWeek.setDate(today.getDate() + 4)
+  const inTwoWeeks = new Date(today)
+  inTwoWeeks.setDate(today.getDate() + 11)
+
+  await prisma.wastePickup.createMany({
+    data: [
+      { date: nextWeek, wasteTypeId: "wt-rest" },
+      { date: inTwoWeeks, wasteTypeId: "wt-bio" },
+    ],
+  })
+  console.log("  ✅ Waste calendar seeded")
 
   console.log("🎉 Seeding complete!")
 }
