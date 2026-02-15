@@ -1,3 +1,16 @@
+# [1.3.0](https://github.com/Thomas-Mildner/Adulting.Exe/compare/v1.2.0...v1.3.0) (2026-02-15)
+
+
+### Bug Fixes
+
+* Add comparison text for utility costs in English and German localization ([2a9f087](https://github.com/Thomas-Mildner/Adulting.Exe/commit/2a9f087fbcb01ea3c91e2bdd63d66faea3a894dd))
+
+
+### Features
+
+* Add waste management with colors and icons ([1825975](https://github.com/Thomas-Mildner/Adulting.Exe/commit/18259751e33a563eb0345328a46543bd9a77ec43))
+* Implement theme toggle and support dark mode ([625db64](https://github.com/Thomas-Mildner/Adulting.Exe/commit/625db64b30f27f05b62db860826d843510e44b0b))
+
 # [1.2.0](https://github.com/Thomas-Mildner/Adulting.Exe/compare/v1.1.0...v1.2.0) (2026-02-15)
 
 
