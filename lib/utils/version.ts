@@ -15,6 +15,10 @@ export const FALLBACK_VERSION = '1.0.0';
  * @param v1 - First version string (e.g., "1.2.3")
  * @param v2 - Second version string (e.g., "1.3.0")
  * @returns true if v1 < v2, false otherwise
+ * 
+ * Note: This is a simple comparison that works for standard semantic versions (X.Y.Z).
+ * It does not handle pre-release versions (e.g., "1.0.0-beta") or build metadata.
+ * For more complex version comparison needs, consider using the 'semver' library.
  */
 export function isVersionLessThan(v1: string, v2: string): boolean {
   const parts1 = v1.split('.').map(Number);

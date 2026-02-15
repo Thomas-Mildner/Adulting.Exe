@@ -9,7 +9,19 @@ interface GitHubRelease {
   html_url: string;
 }
 
-// Cache the version for 5 minutes to avoid hitting GitHub API rate limits
+/**
+ * Module-level cache for the latest version.
+ * 
+ * Note: This is a simple in-memory cache that works well for traditional deployments
+ * but has limitations in serverless environments:
+ * - Cache is lost between cold starts
+ * - Each serverless instance maintains its own cache
+ * - Cache doesn't persist across deployments
+ * 
+ * For production serverless deployments, consider using a distributed cache
+ * like Redis or Vercel KV. However, for this use case (displaying version info),
+ * the 5-minute cache window is acceptable and helps reduce GitHub API calls.
+ */
 let cachedVersion: { version: string; timestamp: number } | null = null;
 const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes in milliseconds
 

@@ -131,16 +131,16 @@ export function DataSettings() {
 
 export function AboutSettings() {
   const t = useTranslations("Settings.about");
-  const [version, setVersion] = React.useState<string>("...");
-  const [releaseUrl, setReleaseUrl] = React.useState<string>("");
+  const builtVersion = process.env.NEXT_PUBLIC_APP_VERSION || FALLBACK_VERSION;
+  const [version, setVersion] = React.useState<string>(builtVersion);
+  const [releaseUrl, setReleaseUrl] = React.useState<string>(`https://github.com/${GITHUB_REPO}/releases`);
   const [isUpdateAvailable, setIsUpdateAvailable] = React.useState<boolean>(false);
 
   React.useEffect(() => {
-    // Get the version that was built into the app
-    const builtVersion = process.env.NEXT_PUBLIC_APP_VERSION || FALLBACK_VERSION;
+    const abortController = new AbortController();
 
     // Fetch the latest release version from GitHub
-    fetch('/api/version')
+    fetch('/api/version', { signal: abortController.signal })
       .then(res => {
         if (!res.ok) {
           throw new Error(`HTTP error! status: ${res.status}`);
@@ -158,11 +158,15 @@ export function AboutSettings() {
         }
       })
       .catch(err => {
+        // Ignore abort errors
+        if (err.name === 'AbortError') return;
         console.error("Failed to fetch version:", err);
-        setVersion(builtVersion);
-        setReleaseUrl(`https://github.com/${GITHUB_REPO}/releases`);
       });
-  }, []);
+
+    return () => {
+      abortController.abort();
+    };
+  }, [builtVersion]);
 
   return (
     <Card className="border-dashed">
