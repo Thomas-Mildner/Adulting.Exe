@@ -58,7 +58,9 @@ export default async function SettingsPage() {
             <div className="md:col-span-1">
               <HeatingSettings currentType={appConfig.heatingType} />
             </div>
-            {/* WasteTypeSettings removed as file was deleted */}
+            <div className="md:col-span-1">
+              <WasteTypeSettings initialTypes={wasteTypes} />
+            </div>
           </div>
         </TabsContent>
 

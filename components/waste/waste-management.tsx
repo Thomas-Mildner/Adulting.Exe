@@ -27,6 +27,18 @@ const iconMap: Record<string, any> = {
     Package,
 }
 
+const colorToHex: Record<string, string> = {
+    "green-500": "#22c55e",
+    "blue-500": "#3b82f6",
+    "yellow-500": "#eab308",
+    "gray-500": "#6b7280",
+    "orange-500": "#f97316",
+    "purple-500": "#a855f7",
+    "red-500": "#ef4444",
+    "amber-800": "#92400e",
+    "black": "#000000"
+}
+
 export function WasteManagement({
     pickups,
     wasteTypes
@@ -193,22 +205,33 @@ export function WasteManagement({
                         const isToday = new Date().toDateString() === d.toDateString()
                         const isPast = d < new Date() && !isToday
 
-                        // Fallback for legacy tailwind colors if needed
-                        const tailwindClass = !pickup.wasteType?.color?.startsWith("#")
-                            ? `text-${pickup.wasteType?.color} bg-${pickup.wasteType?.color}/10`
-                            : ""
+                        const colorKey = pickup.wasteType?.color || "gray-500"
+                        // Try to resolve to a hex if it's a known color name
+                        const resolvedColor = colorToHex[colorKey] || colorKey
+
+                        // We will always use inline styles for reliability
+                        // Background: 10% opacity, Text: 100% opacity
+                        const bgStyle = { backgroundColor: resolvedColor + (resolvedColor.startsWith("#") && resolvedColor.length === 7 ? "1A" : "") }
+                        // If it's not a hex with length 7, we can't easily add alpha hex. 
+                        // But mostly we deal with our hex map or direct hex. 
+                        // Fallback: if it's a named color not in our map (e.g. 'black'), simple text color works.
+                        if (colorKey === "black") {
+                            bgStyle.backgroundColor = "rgba(0,0,0,0.1)"
+                        }
+
+                        const textStyle = { color: resolvedColor }
 
                         return (
                             <Card key={pickup.id} className={isPast ? "opacity-50" : ""}>
                                 <CardContent className="p-4 flex items-center justify-between">
                                     <div className="flex items-center gap-3">
                                         <div
-                                            className={`p-2 rounded-full ${tailwindClass}`}
-                                            style={pickup.wasteType?.color?.startsWith("#") ? { backgroundColor: `${pickup.wasteType.color}1A` } : {}}
+                                            className="p-2 rounded-full"
+                                            style={bgStyle}
                                         >
                                             <Icon
-                                                className={`h-4 w-4 ${!pickup.wasteType?.color?.startsWith("#") ? `text-${pickup.wasteType?.color}` : ""}`}
-                                                style={pickup.wasteType?.color?.startsWith("#") ? { color: pickup.wasteType.color } : {}}
+                                                className="h-4 w-4"
+                                                style={textStyle}
                                             />
                                         </div>
                                         <div>
