@@ -89,6 +89,12 @@ The default `DATABASE_URL` is:
 postgresql://adulting:adulting_secret@localhost:5432/adulting_exe?schema=public
 ```
 
+**Optional:** If the repository is private, add a GitHub token to fetch release information:
+```bash
+GITHUB_TOKEN=ghp_your_token_here
+```
+You can create a Personal Access Token at [GitHub Settings > Developer settings > Personal access tokens](https://github.com/settings/tokens) with `repo` scope.
+
 ### 5. Push database schema & seed data
 
 ```bash
