@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import { useTranslations } from "next-intl"
 import { Calendar } from "@/components/ui/calendar"
 import { type WastePickup } from "@/lib/data"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -10,6 +11,7 @@ export function WasteCalendarView({ pickups }: { pickups: WastePickup[] }) {
     // Create modifiers for each waste type based on their color/name
     const modifiers: Record<string, Date[]> = {}
     const modifierStyles: Record<string, React.CSSProperties> = {}
+    const t = useTranslations("Waste.calendar")
 
     pickups.forEach((pickup) => {
         const date = new Date(pickup.date)
@@ -28,7 +30,7 @@ export function WasteCalendarView({ pickups }: { pickups: WastePickup[] }) {
     return (
         <Card className="h-full">
             <CardHeader>
-                <CardTitle className="text-sm font-medium">Kalenderansicht</CardTitle>
+                <CardTitle className="text-sm font-medium">{t("title")}</CardTitle>
             </CardHeader>
             <CardContent className="flex flex-col md:flex-row gap-8 items-center md:items-start">
                 <Calendar
@@ -41,7 +43,7 @@ export function WasteCalendarView({ pickups }: { pickups: WastePickup[] }) {
                 />
 
                 <div className="space-y-4 flex-1">
-                    <h4 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Legend</h4>
+                    <h4 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">{t("legend")}</h4>
                     <div className="grid gap-2">
                         {Array.from(new Set(pickups.map(p => p.wasteType?.name))).map(name => {
                             const pickup = pickups.find(p => p.wasteType?.name === name)
@@ -58,7 +60,7 @@ export function WasteCalendarView({ pickups }: { pickups: WastePickup[] }) {
                     </div>
 
                     <div className="pt-4 border-t">
-                        <h4 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">Anstehend</h4>
+                        <h4 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">{t("upcoming")}</h4>
                         <div className="space-y-2">
                             {pickups
                                 .filter(p => new Date(p.date).getTime() >= new Date().setHours(0, 0, 0, 0))

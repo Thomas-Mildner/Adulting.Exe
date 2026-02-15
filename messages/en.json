@@ -578,5 +578,55 @@
       "trustLevel": "Trust Level",
       "actions": "Actions"
     }
+  },
+  "Waste": {
+    "title": "Waste Calendar",
+    "subtitle": "Organize your pickups so nothing rots on your doorstep.",
+    "management": {
+      "title": "Pickup Dates",
+      "importCsv": "ICS Import",
+      "manual": "Manual",
+      "empty": "No pickups found. Time to fill the calendar!",
+      "today": "Today",
+      "delete": "Delete"
+    },
+    "add": {
+      "title": "Plan New Pickup",
+      "description": "Create a single appointment or a pattern",
+      "startDate": "Start Date",
+      "wasteType": "Waste Type",
+      "wasteTypePlaceholder": "Select...",
+      "recurrence": "Recurrence",
+      "recurrenceOptions": {
+        "none": "None",
+        "weekly": "Weekly",
+        "biWeekly": "Every 2 Weeks",
+        "fourWeekly": "Every 4 Weeks",
+        "monthly": "Monthly"
+      },
+      "submit": "Create",
+      "success": "Pickup(s) successfully created",
+      "error": "Error creating pickup"
+    },
+    "import": {
+      "toast": {
+        "success": "{imported} of {total} appointments imported",
+        "warning": "0 of {total} appointments imported",
+        "error": "Error importing ICS file",
+        "details": "Check the import log for details.",
+        "checkNames": "Check if waste type names match.",
+        "protocol": "Log",
+        "analysis": "Analysis"
+      },
+      "dialog": {
+        "title": "Import Log",
+        "description": "{imported} of {total} appointments imported."
+      }
+    },
+    "calendar": {
+      "title": "Calendar View",
+      "legend": "Legend",
+      "upcoming": "Upcoming"
+    }
   }
 }
