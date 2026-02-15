@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/Thomas-Mildner/Adulting.Exe/compare/v1.1.0...v1.2.0) (2026-02-15)
+
+
+### Features
+
+* Implement waste management localization and enhance UI with translations ([b4a48ea](https://github.com/Thomas-Mildner/Adulting.Exe/commit/b4a48ea1b7baae9f2aed859af0be53bfcd00a78d))
+
 # [1.1.0](https://github.com/Thomas-Mildner/Adulting.Exe/compare/v1.0.0...v1.1.0) (2026-02-14)
 
 
