@@ -578,5 +578,55 @@
       "trustLevel": "Vertrauenslevel",
       "actions": "Aktionen"
     }
+  },
+  "Waste": {
+    "title": "Müllkalender",
+    "subtitle": "Organisiere deine Abholtermine, damit nichts vor der Tür gammelt.",
+    "management": {
+      "title": "Abholtermine",
+      "importCsv": "ICS Import",
+      "manual": "Manuell",
+      "empty": "Keine Termine gefunden. Zeit, den Kalender zu füllen!",
+      "today": "Heute",
+      "delete": "Löschen"
+    },
+    "add": {
+      "title": "Neuen Termin planen",
+      "description": "Erstelle einen Einzeltermin oder ein Muster",
+      "startDate": "Startdatum",
+      "wasteType": "Müllart",
+      "wasteTypePlaceholder": "Wählen...",
+      "recurrence": "Wiederholung",
+      "recurrenceOptions": {
+        "none": "Keine",
+        "weekly": "Wöchentlich",
+        "biWeekly": "Alle 2 Wochen",
+        "fourWeekly": "Alle 4 Wochen",
+        "monthly": "Monatlich"
+      },
+      "submit": "Anlegen",
+      "success": "Termin(e) erfolgreich angelegt",
+      "error": "Fehler beim Anlegen"
+    },
+    "import": {
+      "toast": {
+        "success": "{imported} von {total} Terminen importiert",
+        "warning": "0 von {total} Terminen importiert",
+        "error": "Fehler beim Importieren der ICS-Datei",
+        "details": "Details findest du im Import-Protokoll.",
+        "checkNames": "Prüfe, ob die Mülltypen-Namen übereinstimmen.",
+        "protocol": "Protokoll",
+        "analysis": "Fehleranalyse"
+      },
+      "dialog": {
+        "title": "Import-Protokoll",
+        "description": "{imported} von {total} Terminen importiert."
+      }
+    },
+    "calendar": {
+      "title": "Kalenderansicht",
+      "legend": "Legende",
+      "upcoming": "Anstehend"
+    }
   }
 }
