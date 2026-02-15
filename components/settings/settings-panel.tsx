@@ -15,6 +15,22 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Bell, Shield, Terminal } from "lucide-react";
 
+// Simple semantic version comparison: returns true if v1 < v2
+function isVersionLessThan(v1: string, v2: string): boolean {
+  const parts1 = v1.split('.').map(Number);
+  const parts2 = v2.split('.').map(Number);
+  
+  for (let i = 0; i < Math.max(parts1.length, parts2.length); i++) {
+    const num1 = parts1[i] || 0;
+    const num2 = parts2[i] || 0;
+    
+    if (num1 < num2) return true;
+    if (num1 > num2) return false;
+  }
+  
+  return false;
+}
+
 export function NotificationSettings() {
   const t = useTranslations("Settings.notifications");
 
@@ -133,24 +149,26 @@ export function AboutSettings() {
   const [version, setVersion] = React.useState<string>("...");
   const [releaseUrl, setReleaseUrl] = React.useState<string>("");
   const [isUpdateAvailable, setIsUpdateAvailable] = React.useState<boolean>(false);
-  const [currentBuiltVersion, setCurrentBuiltVersion] = React.useState<string>("");
 
   React.useEffect(() => {
     // Get the version that was built into the app
     const builtVersion = process.env.NEXT_PUBLIC_APP_VERSION || "1.0.0";
-    setCurrentBuiltVersion(builtVersion);
 
     // Fetch the latest release version from GitHub
     fetch('/api/version')
-      .then(res => res.json())
+      .then(res => {
+        if (!res.ok) {
+          throw new Error(`HTTP error! status: ${res.status}`);
+        }
+        return res.json();
+      })
       .then(data => {
         const latestVersion = data.version || "1.0.0";
         setVersion(latestVersion);
         setReleaseUrl(data.releaseUrl || `https://github.com/Thomas-Mildner/Adulting.Exe/releases/tag/v${latestVersion}`);
         
-        // Check if update is available by comparing versions
-        // Simple version comparison: if versions are different, assume update is available
-        if (latestVersion !== builtVersion && !data.fallback) {
+        // Check if update is available using semantic version comparison
+        if (!data.fallback && isVersionLessThan(builtVersion, latestVersion)) {
           setIsUpdateAvailable(true);
         }
       })

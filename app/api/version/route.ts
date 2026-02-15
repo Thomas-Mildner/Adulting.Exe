@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import pkg from '@/package.json';
 
 interface GitHubRelease {
   tag_name: string;
@@ -37,7 +38,6 @@ export async function GET() {
 
     if (!response.ok) {
       // If we can't fetch from GitHub, fall back to package.json version
-      const pkg = await import('@/package.json');
       return NextResponse.json({ 
         version: pkg.version,
         fallback: true,
@@ -67,7 +67,6 @@ export async function GET() {
     console.error('Error fetching version from GitHub:', error);
     
     // Fall back to package.json version
-    const pkg = await import('@/package.json');
     return NextResponse.json({ 
       version: pkg.version,
       fallback: true,

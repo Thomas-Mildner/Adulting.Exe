@@ -31,6 +31,22 @@ import {
   SidebarSeparator,
 } from "@/components/ui/sidebar"
 
+// Simple semantic version comparison: returns true if v1 < v2
+function isVersionLessThan(v1: string, v2: string): boolean {
+  const parts1 = v1.split('.').map(Number);
+  const parts2 = v2.split('.').map(Number);
+  
+  for (let i = 0; i < Math.max(parts1.length, parts2.length); i++) {
+    const num1 = parts1[i] || 0;
+    const num2 = parts2[i] || 0;
+    
+    if (num1 < num2) return true;
+    if (num1 > num2) return false;
+  }
+  
+  return false;
+}
+
 export function AppSidebar() {
   const pathname = usePathname()
   const t = useTranslations("Navigation")
@@ -41,12 +57,17 @@ export function AppSidebar() {
     const builtVersion = process.env.NEXT_PUBLIC_APP_VERSION || '0.1.0';
     
     fetch('/api/version')
-      .then(res => res.json())
+      .then(res => {
+        if (!res.ok) {
+          throw new Error(`HTTP error! status: ${res.status}`);
+        }
+        return res.json();
+      })
       .then(data => {
         if (data.version) {
           setVersion(data.version);
-          // Check if update is available
-          if (data.version !== builtVersion && !data.fallback) {
+          // Check if update is available using semantic version comparison
+          if (!data.fallback && isVersionLessThan(builtVersion, data.version)) {
             setIsUpdateAvailable(true);
           }
         }
