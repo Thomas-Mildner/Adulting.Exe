@@ -151,6 +151,7 @@
   "Utilities": {
     "title": "Der Ressourcenfresser",
     "subtitle": "Sieh deinem Geld in Echtzeit beim Verdampfen zu.",
+    "comparison": "{amount} ggü. Vormonat",
     "trackerTitle": "Nebenkosten-Tracker",
     "noData": "Noch keine Zählerstände vorhanden – erfasse deinen ersten Monat.",
     "addReading": "Neuer Zählerstand",

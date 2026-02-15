@@ -151,6 +151,7 @@
   "Utilities": {
     "title": "The Resource Guzzler",
     "subtitle": "Watch your money evaporate in real-time.",
+    "comparison": "{amount} vs last month",
     "trackerTitle": "Utility Tracker",
     "noData": "No meter readings yet – record your first month.",
     "addReading": "New Reading",
