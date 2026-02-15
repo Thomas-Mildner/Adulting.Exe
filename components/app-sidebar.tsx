@@ -35,13 +35,14 @@ import { isVersionLessThan, FALLBACK_VERSION } from "@/lib/utils/version"
 export function AppSidebar() {
   const pathname = usePathname()
   const t = useTranslations("Navigation")
-  const [version, setVersion] = React.useState<string>(process.env.NEXT_PUBLIC_APP_VERSION || FALLBACK_VERSION)
+  const builtVersion = process.env.NEXT_PUBLIC_APP_VERSION || FALLBACK_VERSION;
+  const [version, setVersion] = React.useState<string>(builtVersion)
   const [isUpdateAvailable, setIsUpdateAvailable] = React.useState<boolean>(false)
 
   React.useEffect(() => {
-    const builtVersion = process.env.NEXT_PUBLIC_APP_VERSION || FALLBACK_VERSION;
+    const abortController = new AbortController();
     
-    fetch('/api/version')
+    fetch('/api/version', { signal: abortController.signal })
       .then(res => {
         if (!res.ok) {
           throw new Error(`HTTP error! status: ${res.status}`);
@@ -58,9 +59,15 @@ export function AppSidebar() {
         }
       })
       .catch(err => {
+        // Ignore abort errors
+        if (err.name === 'AbortError') return;
         console.error("Failed to fetch version:", err);
       });
-  }, []);
+
+    return () => {
+      abortController.abort();
+    };
+  }, [builtVersion]);
 
   const mainNav = [
     { title: t("dashboard"), href: "/", icon: LayoutDashboard },
