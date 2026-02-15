@@ -25,6 +25,11 @@
     "household": "Household",
     "system": "System",
     "language": "Language",
+    "theme": {
+      "light": "Light",
+      "dark": "Dark",
+      "system": "System"
+    },
     "notifications": {
       "title": "Notifications",
       "description": "Choose which reminders you want to ignore.",
@@ -58,6 +63,31 @@
       "placeholder": "Select a type",
       "success": "Heating type updated",
       "error": "Error saving"
+    },
+    "waste": {
+      "title": "Waste Types",
+      "description": "Manage the types of waste for your calendar.",
+      "list": "Existing Types",
+      "create": "Create Type",
+      "name": "Name",
+      "color": "Color",
+      "icon": "Icon",
+      "placeholder": "e.g. Hazardous Waste",
+      "success": "Waste type created",
+      "error": "Error creating waste type",
+      "delete": "Delete",
+      "deleteConfirm": "Really delete?",
+      "colors": {
+        "green": "Green (Bio)",
+        "blue": "Blue (Paper)",
+        "yellow": "Yellow (Recycling)",
+        "gray": "Gray (Residual)",
+        "orange": "Orange (Bulk)",
+        "purple": "Purple (Special)",
+        "red": "Red (Hazardous)",
+        "brown": "Brown (Bio)",
+        "black": "Black"
+      }
     }
   },
   "HouseHealth": {

@@ -25,6 +25,11 @@
     "household": "Haushalt",
     "system": "System",
     "language": "Sprache",
+    "theme": {
+      "light": "Hell",
+      "dark": "Dunkel",
+      "system": "System"
+    },
     "notifications": {
       "title": "Benachrichtigungen",
       "description": "Wähle, welche Erinnerungen du ignorieren möchtest.",
@@ -58,6 +63,31 @@
       "placeholder": "Wähle einen Typ",
       "success": "Heizungstyp aktualisiert",
       "error": "Fehler beim Speichern"
+    },
+    "waste": {
+      "title": "Müllarten",
+      "description": "Verwalte die Müllarten für deinen Kalender.",
+      "list": "Vorhandene Arten",
+      "create": "Art erstellen",
+      "name": "Bezeichnung",
+      "color": "Farbe",
+      "icon": "Symbol",
+      "placeholder": "z.B. Sondermüll",
+      "success": "Müllart erstellt",
+      "error": "Fehler beim Erstellen",
+      "delete": "Löschen",
+      "deleteConfirm": "Wirklich löschen?",
+      "colors": {
+        "green": "Grün (Bio)",
+        "blue": "Blau (Papier)",
+        "yellow": "Gelb (Wertstoff)",
+        "gray": "Grau (Restmüll)",
+        "orange": "Orange (Sperrmüll)",
+        "purple": "Lila (Sonder)",
+        "red": "Rot (Gefahrgut)",
+        "brown": "Braun (Bio)",
+        "black": "Schwarz"
+      }
     }
   },
   "HouseHealth": {
