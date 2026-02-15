@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import pkg from '@/package.json';
+import { GITHUB_REPO } from '@/lib/utils/version';
 
 interface GitHubRelease {
   tag_name: string;
@@ -24,7 +25,7 @@ export async function GET() {
 
     // Fetch latest release from GitHub
     const response = await fetch(
-      'https://api.github.com/repos/Thomas-Mildner/Adulting.Exe/releases/latest',
+      `https://api.github.com/repos/${GITHUB_REPO}/releases/latest`,
       {
         headers: {
           'Accept': 'application/vnd.github.v3+json',
