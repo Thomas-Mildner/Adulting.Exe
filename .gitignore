@@ -9,3 +9,6 @@ node_modules/
 .env
 .env*.local
 .DS_Store
+
+# Lock files (using pnpm)
+package-lock.json
