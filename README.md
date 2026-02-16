@@ -75,18 +75,12 @@ Built for people who want to know exactly where the blender's original box is lo
 * **Searchable Content:** Quickly find the information you need
 * **Custom Entries:** Write and save your own how-to guides and notes
 
-### 🎨 Paint & Color Palette Log
-* **Color Storage:** Save hex codes and names for every paint color used in your home
-* **Photo Documentation:** Attach photos of paint cans and color swatches
-* **Room Mapping:** Link colors to specific rooms and surfaces
-* **Never Guess Again:** Know exactly which "Eggshell" or "Off-White" you used
 
 ### ⚙️ Settings & Customization
 * **Multi-Language Support:** Switch between multiple languages
 * **Theme Toggle:** Dark and light mode support
 * **Household Configuration:** Set heating type, manage waste categories
 * **Data Management:** Control your household data and preferences
-* **Version Display:** See the current app version in the sidebar
 
 ### 🏡 Dashboard Overview
 * **House Health Status:** Visual indicators for overall household status
@@ -161,25 +155,25 @@ Navigate to [http://localhost:3000](http://localhost:3000) to see your home mana
 
 ### Database Commands
 
-| Command | Description |
-|---------|-------------|
-| `pnpm db:push` | Push schema changes to the database |
-| `pnpm db:seed` | Seed the database with sample data |
-| `pnpm db:studio` | Open Prisma Studio (visual DB editor) |
-| `pnpm db:generate` | Regenerate Prisma Client |
-| `pnpm db:reset` | Reset database and re-seed |
-| `docker compose up -d` | Start PostgreSQL |
-| `docker compose down` | Stop PostgreSQL |
-| `docker compose down -v` | Stop & delete database volume |
+| Command                  | Description                           |
+| ------------------------ | ------------------------------------- |
+| `pnpm db:push`           | Push schema changes to the database   |
+| `pnpm db:seed`           | Seed the database with sample data    |
+| `pnpm db:studio`         | Open Prisma Studio (visual DB editor) |
+| `pnpm db:generate`       | Regenerate Prisma Client              |
+| `pnpm db:reset`          | Reset database and re-seed            |
+| `docker compose up -d`   | Start PostgreSQL                      |
+| `docker compose down`    | Stop PostgreSQL                       |
+| `docker compose down -v` | Stop & delete database volume         |
 
 ### Available Scripts
 
-| Script | Description |
-|--------|-------------|
-| `pnpm dev` | Start development server with Turbo |
-| `pnpm build` | Build for production |
-| `pnpm start` | Start production server |
-| `pnpm lint` | Run ESLint |
+| Script       | Description                         |
+| ------------ | ----------------------------------- |
+| `pnpm dev`   | Start development server with Turbo |
+| `pnpm build` | Build for production                |
+| `pnpm start` | Start production server             |
+| `pnpm lint`  | Run ESLint                          |
 
 ---
 
