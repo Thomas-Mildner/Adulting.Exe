@@ -678,9 +678,12 @@
       "title": "TÜV Status",
       "safe": "Safe to Drive",
       "illegal": "Illegal Go-Kart",
+      "warning": "Warning",
       "dueIn": "Due in {days} days",
       "overdue": "Overdue by {days} days",
-      "nextInspection": "Next Inspection"
+      "nextInspection": "Next Inspection",
+      "notSet": "Not set",
+      "expired": "Expired"
     },
     "tireReminder": {
       "title": "The Tire Ritual",
@@ -705,6 +708,12 @@
       "maintenance": "Maintenance",
       "tolls": "Tolls",
       "vsComparison": "Fuel vs. Repairs vs. Tolls"
+    },
+    "details": {
+      "title": "Car Details",
+      "purchaseDate": "Purchase Date",
+      "purchasePrice": "Purchase Price",
+      "analyticsPlaceholder": "Cost analytics will be displayed here."
     },
     "maintenance": {
       "title": "Maintenance Log",
