@@ -72,8 +72,8 @@ export function CarFormDialog({
       <DialogContent className="max-h-[90vh] overflow-y-auto">
         <form onSubmit={handleSubmit}>
           <DialogHeader>
-            <DialogTitle>{t("carName")}</DialogTitle>
-            <DialogDescription>Register your money pit.</DialogDescription>
+            <DialogTitle>{t("../create.title")}</DialogTitle>
+            <DialogDescription>{t("../create.description")}</DialogDescription>
           </DialogHeader>
           <div className="space-y-4 py-4">
             <div className="grid gap-2">
@@ -157,8 +157,8 @@ export function CarFormDialog({
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="summer">Summer</SelectItem>
-                  <SelectItem value="winter">Winter</SelectItem>
+                  <SelectItem value="summer">{t("../tireReminder.summer")}</SelectItem>
+                  <SelectItem value="winter">{t("../tireReminder.winter")}</SelectItem>
                 </SelectContent>
               </Select>
             </div>

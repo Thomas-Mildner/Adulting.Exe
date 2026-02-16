@@ -59,7 +59,7 @@ export function CarOverview({ car }: { car: Car }) {
                   <>
                     <Badge variant="outline" className="gap-1 border-yellow-500 text-yellow-600">
                       <AlertTriangle className="h-3 w-3" />
-                      Warning
+                      {t("tuv.warning")}
                     </Badge>
                     <p className="text-sm text-muted-foreground">
                       {t("tuv.dueIn", { days: tuvStatus.days })}
@@ -79,7 +79,7 @@ export function CarOverview({ car }: { car: Car }) {
                 )}
               </div>
             ) : (
-              <p className="text-sm text-muted-foreground">Not set</p>
+              <p className="text-sm text-muted-foreground">{t("tuv.notSet")}</p>
             )}
           </CardContent>
         </Card>
@@ -126,7 +126,7 @@ export function CarOverview({ car }: { car: Car }) {
                   <>
                     <Badge variant="destructive" className="gap-1">
                       <AlertCircle className="h-3 w-3" />
-                      Expired
+                      {t("tuv.expired")}
                     </Badge>
                     <p className="text-xs text-muted-foreground">{t("firstAid.expired")}</p>
                   </>
@@ -146,7 +146,7 @@ export function CarOverview({ car }: { car: Car }) {
       {/* Details Section */}
       <Card>
         <CardHeader>
-          <CardTitle>Car Details</CardTitle>
+          <CardTitle>{t("details.title")}</CardTitle>
           <CardDescription>
             {car.brand} {car.model} • {car.licensePlate}
           </CardDescription>
@@ -154,11 +154,11 @@ export function CarOverview({ car }: { car: Car }) {
         <CardContent>
           <div className="grid gap-4 md:grid-cols-2">
             <div>
-              <p className="text-sm font-medium">Purchase Date</p>
+              <p className="text-sm font-medium">{t("details.purchaseDate")}</p>
               <p className="text-sm text-muted-foreground">{car.purchaseDate}</p>
             </div>
             <div>
-              <p className="text-sm font-medium">Purchase Price</p>
+              <p className="text-sm font-medium">{t("details.purchasePrice")}</p>
               <p className="text-sm text-muted-foreground">
                 €{car.purchasePrice.toLocaleString("de-DE", { minimumFractionDigits: 2 })}
               </p>
@@ -208,7 +208,7 @@ export function CarOverview({ car }: { car: Car }) {
             </CardHeader>
             <CardContent>
               <p className="text-sm text-muted-foreground">
-                Cost analytics will be displayed here.
+                {t("details.analyticsPlaceholder")}
               </p>
             </CardContent>
           </Card>

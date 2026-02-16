@@ -678,9 +678,12 @@
       "title": "TÜV-Status",
       "safe": "Fahrtüchtig",
       "illegal": "Illegales Go-Kart",
+      "warning": "Warnung",
       "dueIn": "Fällig in {days} Tagen",
       "overdue": "Überfällig seit {days} Tagen",
-      "nextInspection": "Nächste Inspektion"
+      "nextInspection": "Nächste Inspektion",
+      "notSet": "Nicht angegeben",
+      "expired": "Abgelaufen"
     },
     "tireReminder": {
       "title": "Das Reifen-Ritual",
@@ -705,6 +708,12 @@
       "maintenance": "Wartung",
       "tolls": "Maut",
       "vsComparison": "Sprit vs. Reparaturen vs. Maut"
+    },
+    "details": {
+      "title": "Fahrzeugdetails",
+      "purchaseDate": "Kaufdatum",
+      "purchasePrice": "Kaufpreis",
+      "analyticsPlaceholder": "Kostenanalyse wird hier angezeigt."
     },
     "maintenance": {
       "title": "Wartungsprotokoll",
