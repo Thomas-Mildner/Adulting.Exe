@@ -2,49 +2,96 @@
 
 **Because your house didn't come with a manual.**
 
-`Adulting.exe` is a high-end home management dashboard designed to organize the mess of receipts, warranties, contractor numbers, and meter readings. Built for people who want to know exactly where the blender’s original box is located *before* the motor starts smoking.
+---
+
+## 📖 Overview
+
+`Adulting.exe` is a comprehensive home management dashboard designed to bring order to the chaos of household administration. Keep track of warranties, appliances, service providers, utility consumption, maintenance tasks, and more – all in one place.
+
+Built for people who want to know exactly where the blender's original box is located *before* the motor starts smoking, and who never want to search through old receipts again when tax season arrives.
+
+**Tech Stack:** Next.js • React • TypeScript • Tailwind CSS • Shadcn/UI • PostgreSQL • Prisma • Docker
 
 ---
 
 ## ✨ Features
 
-### 📦 The Box Vault (Inventory & Warranty)
-* **Warranty Tracker:** Keep tabs on expiration dates with a visual "Zombie Mode" for items that are now living on the edge (out of warranty).
-* **Box Locator:** Stop the basement scavenger hunt. "Where’s the box?" – "Attic, Sector 7, behind the Christmas lights."
+### 📦 Vault (Appliance & Warranty Management)
+* **Appliance Inventory:** Catalog all household appliances with purchase dates, prices, brands, and categories
+* **Warranty Tracker:** Monitor warranty expiration dates with visual status indicators
+  - 🛡️ **Protected:** Under warranty
+  - 🔧 **Solo:** Basic protection expired
+  - 🧟 **Zombie Mode:** Living dangerously without any warranty
+* **Box Locator:** Document where original packaging is stored (e.g., "Attic, Sector 7, behind the Christmas lights")
+* **Quick Stats:** Dashboard overview of total appliances and warranty status
 
-### 🛠️ The Hero Directory (Handymen & Service)
-* **Contractor Hub:** A searchable directory of plumbers, electricians, and the people who keep your roof from leaking.
-* **Service Log:** Track who fixed what, when they did it, and exactly how much it hurt your wallet.
-* **Tax-Ready:** Toggle invoices as "Tax-Deductible" to make your next tax return a breeze.
+### 🛠️ Services & Invoicing
+* **Service Provider Directory:** Maintain a searchable database of contractors (plumbers, electricians, handymen, etc.)
+* **Contact Management:** Store specialty areas, phone numbers, emails, and ratings for each provider
+* **Service History:** Track all service calls with dates, providers, and costs
+* **Invoice Storage:** Attach and organize invoice files for every service
+* **Tax-Deductible Tracking:** Mark expenses as tax-relevant for easy year-end reporting
+* **Provider Ratings:** Rate service quality to remember the good (and avoid the bad)
 
-### 📚 The Holy Manuals (Knowledge Base)
-* **Markdown Support:** Upload or write your own documentation for home systems (e.g., "How to bleed the radiators without flooding the parquet").
-* **Palette Log:** Store hex codes and photos of paint buckets for every room. Never guess between "Eggshell" and "Off-White" again.
+### 🔧 Maintenance Management
+* **Task Tracking:** Create and manage maintenance tasks with due dates
+* **Priority Levels:** Categorize tasks as high, medium, or low priority
+* **Recurring Tasks:** Set up repeating maintenance reminders (filter changes, inspections, etc.)
+* **Completion Tracking:** Mark tasks as done and maintain a service history
+* **Dashboard Integration:** See pending tasks at a glance on your home screen
 
-### 📉 The Resource Drain (Utility Tracking)
-* **Usage Visualization:** Interactive charts for electricity, water, and heating consumption history via Recharts.
-* **Meter Logs:** Log your readings and track trends before the dreaded "Annual Adjustment" bill arrives.
+### 📉 Utility Tracker
+* **Meter Readings:** Log monthly readings for electricity, water, and heating
+* **Cost Tracking:** Record costs for each utility per month
+* **Multiple Heating Types:** Support for Gas, Oil, Fernwärme (district heating), Heat Pump, and Pellets
+* **Visual Analytics:** Interactive charts showing consumption trends over time
+* **Cost Visualization:** Track utility expenses and identify usage patterns
 
-### 💰 Future Dreams (Projects & Savings)
-* **Project Planner:** From "New Fence" to "Kitchen Remodel." Set budgets and track your savings progress.
-* **Lend-O-Meter:** Keep track of which neighbor has had your power drill for the last three months.
+### 🗑️ Waste Calendar
+* **Pickup Schedule:** Manage waste collection dates for multiple waste types
+* **Customizable Categories:** Restmüll, Bio, Papier, Gelber Sack, and more
+* **Color-Coded Display:** Visual waste type identification with custom icons
+* **Next Pickup Widget:** Dashboard card showing upcoming waste collection days
+* **Custom Waste Types:** Add and configure waste types in settings
+
+### 💸 Lending Tracker (Lend-O-Meter)
+* **Item Lending Log:** Track tools and items you've lent to others
+* **Borrower Management:** Record who borrowed what and when
+* **Return Dates:** Set expected return dates and monitor overdue items
+* **Trust Rating:** Rate borrowers' reliability for future reference
+* **Dashboard Visualization:** See all currently lent items at a glance
+
+### 🎯 Wishlist & Project Planning
+* **Future Projects:** Plan home improvement projects with descriptions and goals
+* **Budget Tracking:** Set estimated costs and track current savings progress
+* **Urgency Levels:** Prioritize projects from "nice-to-have" to "falling-apart"
+* **Project Categories:** Organize renovation, repair, and improvement plans
+* **Progress Visualization:** See how close you are to funding each project
+
+### 📚 Knowledge Base
+* **Documentation Library:** Centralized storage for manuals, guides, and home documentation
+* **Category Organization:** Organize by Heating, Plumbing, Smart Home, Structural, or General
+* **Multiple Formats:** Support for PDFs and Markdown documents
+* **Searchable Content:** Quickly find the information you need
+* **Custom Entries:** Write and save your own how-to guides and notes
+
+
+### ⚙️ Settings & Customization
+* **Multi-Language Support:** Switch between multiple languages
+* **Theme Toggle:** Dark and light mode support
+* **Household Configuration:** Set heating type, manage waste categories
+* **Data Management:** Control your household data and preferences
+
+### 🏡 Dashboard Overview
+* **House Health Status:** Visual indicators for overall household status
+* **Quick Stats Cards:** At-a-glance metrics for appliances, maintenance, and expenses
+* **Quick Access Tiles:** Jump directly to waste calendar, maintenance, warranties, energy, and lending
+* **Responsive Design:** Optimized for desktop and mobile devices
+* **Global Search:** Find anything across all modules quickly
 
 ---
 
-## 🚀 Tech Stack
-
-* **Framework:** Next.js (App Router, Server Components)
-* **Styling:** Tailwind CSS
-* **Components:** Shadcn/UI
-* **Icons:** Lucide-React
-* **Charts:** Recharts
-* **Database:** PostgreSQL (via Docker)
-* **ORM:** Prisma
-* **Deployment:** Vercel / Docker
-
----
-
-## 🛠️ Installation & Setup
+## 🚀 Development
 
 ### Prerequisites
 
@@ -106,72 +153,152 @@ pnpm dev
 
 Navigate to [http://localhost:3000](http://localhost:3000) to see your home management in action.
 
+### Database Commands
+
+| Command                  | Description                           |
+| ------------------------ | ------------------------------------- |
+| `pnpm db:push`           | Push schema changes to the database   |
+| `pnpm db:seed`           | Seed the database with sample data    |
+| `pnpm db:studio`         | Open Prisma Studio (visual DB editor) |
+| `pnpm db:generate`       | Regenerate Prisma Client              |
+| `pnpm db:reset`          | Reset database and re-seed            |
+| `docker compose up -d`   | Start PostgreSQL                      |
+| `docker compose down`    | Stop PostgreSQL                       |
+| `docker compose down -v` | Stop & delete database volume         |
+
+### Available Scripts
+
+| Script       | Description                         |
+| ------------ | ----------------------------------- |
+| `pnpm dev`   | Start development server with Turbo |
+| `pnpm build` | Build for production                |
+| `pnpm start` | Start production server             |
+| `pnpm lint`  | Run ESLint                          |
+
 ---
 
-## 📦 Database Commands
+## 🤝 Contributing
 
-| Command | Description |
-|---------|-------------|
-| `pnpm db:push` | Push schema changes to the database |
-| `pnpm db:seed` | Seed the database with sample data |
-| `pnpm db:studio` | Open Prisma Studio (visual DB editor) |
-| `pnpm db:generate` | Regenerate Prisma Client |
-| `pnpm db:reset` | Reset database and re-seed |
-| `docker compose up -d` | Start PostgreSQL |
-| `docker compose down` | Stop PostgreSQL |
-| `docker compose down -v` | Stop & delete database volume |
+We welcome contributions to Adulting.Exe! Whether you're fixing bugs, adding features, or improving documentation, your help is appreciated.
 
----
+### Getting Started
 
-## 🔄 Versioning & Releases
+1. **Fork the repository** on GitHub
+2. **Clone your fork** locally:
+   ```bash
+   git clone https://github.com/your-username/Adulting.Exe.git
+   cd Adulting.Exe
+   ```
+3. **Create a feature branch:**
+   ```bash
+   git checkout -b feature/your-feature-name
+   ```
 
-This project uses [semantic-release](https://semantic-release.gitbook.io/) for automated version management and package publishing.
+### Development Workflow
 
-### How it works
+1. **Make your changes** following the project's coding style
+2. **Test your changes** thoroughly:
+   ```bash
+   pnpm dev        # Test in development mode
+   pnpm build      # Verify production build works
+   pnpm lint       # Check for linting issues
+   ```
+3. **Commit your changes** using [Conventional Commits](https://www.conventionalcommits.org/):
+   ```bash
+   git commit -m "feat: add new feature description"
+   git commit -m "fix: resolve specific bug"
+   git commit -m "docs: update documentation"
+   ```
+4. **Push to your fork:**
+   ```bash
+   git push origin feature/your-feature-name
+   ```
+5. **Open a Pull Request** on GitHub with a clear description of your changes
 
-1. **Commit Messages:** Follow the [Conventional Commits](https://www.conventionalcommits.org/) specification:
-   - `feat:` - New features (triggers a minor release)
-   - `fix:` - Bug fixes (triggers a patch release)
-   - `perf:` - Performance improvements (triggers a patch release)
-   - `refactor:` - Code refactoring (triggers a patch release)
-   - `BREAKING CHANGE:` - Breaking changes (triggers a major release)
-   - `docs:`, `chore:`, `style:`, `test:` - No release
+### Commit Message Guidelines
 
-2. **Automatic Releases:** When code is pushed to the `main` branch:
-   - Semantic-release analyzes commits since the last release
-   - Determines the next version number
-   - Updates `package.json` and `pnpm-lock.yaml`
-   - Generates a changelog in `CHANGELOG.md`
-   - Creates a GitHub release with release notes
-   - Tags Docker images with the semantic version
+This project uses [semantic-release](https://semantic-release.gitbook.io/) for automated versioning. Please follow the [Conventional Commits](https://www.conventionalcommits.org/) specification:
 
-3. **Version Display:** The current version is displayed in the app sidebar (read from `package.json` at build time).
+- `feat:` - New features (triggers a minor release)
+- `fix:` - Bug fixes (triggers a patch release)
+- `perf:` - Performance improvements (triggers a patch release)
+- `refactor:` - Code refactoring (triggers a patch release)
+- `docs:` - Documentation changes (no release)
+- `chore:` - Maintenance tasks (no release)
+- `style:` - Code style changes (no release)
+- `test:` - Test updates (no release)
+- `BREAKING CHANGE:` - Breaking changes (triggers a major release)
 
-### Example Commits
-
+**Examples:**
 ```bash
-git commit -m "feat: add new maintenance reminder feature"
-# This will trigger a minor version bump (e.g., 1.0.0 → 1.1.0)
+feat: add QR code generation for inventory items
+fix: resolve warranty expiration date calculation
+docs: update installation instructions
+feat!: redesign dashboard layout
 
-git commit -m "fix: resolve issue with warranty expiration dates"
-# This will trigger a patch version bump (e.g., 1.1.0 → 1.1.1)
-
-git commit -m "feat!: redesign dashboard layout
-
-BREAKING CHANGE: Dashboard layout has been completely redesigned"
-# This will trigger a major version bump (e.g., 1.1.1 → 2.0.0)
+BREAKING CHANGE: Dashboard layout has been completely redesigned
 ```
+
+### Code Style
+
+- Follow the existing code style and conventions
+- Use TypeScript for type safety
+- Write clear, descriptive variable and function names
+- Add comments for complex logic
+- Keep components small and focused
+
+### What to Contribute
+
+- 🐛 **Bug fixes** - Help squash bugs and improve stability
+- ✨ **New features** - Add functionality from the roadmap or propose your own
+- 📚 **Documentation** - Improve guides, add examples, fix typos
+- 🎨 **UI/UX improvements** - Enhance the user interface and experience
+- 🧪 **Tests** - Add test coverage for existing or new features
+- 🌍 **Translations** - Add or improve language translations
+
+### Code Review Process
+
+- All submissions require review before merging
+- Maintainers will provide feedback and may request changes
+- Once approved, your contribution will be merged and included in the next release
+- Contributors will be credited in release notes
+
+### Questions or Issues?
+
+- **Bug reports:** Open an issue with detailed steps to reproduce
+- **Feature requests:** Open an issue describing the feature and use case
+- **Questions:** Start a discussion in GitHub Discussions
+
+### Versioning & Releases
+
+When code is merged to the `main` branch:
+- Semantic-release analyzes commits since the last release
+- Automatically determines the next version number
+- Updates `package.json` and `pnpm-lock.yaml`
+- Generates a changelog in `CHANGELOG.md`
+- Creates a GitHub release with release notes
+- Tags Docker images with the semantic version
+
+The current version is displayed in the app sidebar.
 
 ---
 
 ## 📝 Roadmap
-- [ ] QR Code Generator for moving boxes.
-- [ ] Automatic PDF Export for Home Insurance audits.
-- [ ] Smart Meter API integrations.
+
+Future features and improvements:
+
+- [ ] QR Code Generator for moving boxes and quick inventory access
+- [ ] Automatic PDF Export for home insurance audits
+- [ ] Smart Meter API integrations for automated utility tracking
+- [ ] Notification system for upcoming maintenance and warranty expirations
+- [ ] Mobile app (iOS/Android) companion
+- [ ] Import/Export functionality for data portability
+- [ ] Multi-household support for property managers
 
 ---
 
 ## 🛡️ License
+
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ---
