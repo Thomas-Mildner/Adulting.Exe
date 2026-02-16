@@ -664,7 +664,9 @@
   "Garage": {
     "title": "The Money Pit",
     "subtitle": "From legal reminders to detailed cost analysis of fuel and repairs.",
+    "loading": "Loading...",
     "emptyState": "No car added? Enjoy your functional legs while they last.",
+    "optional": "Optional",
     "tabs": {
       "overview": "Overview",
       "maintenance": "Maintenance Log",
@@ -700,15 +702,6 @@
       "expired": "Expired! Replace it before the next inspection.",
       "notSet": "Not tracked"
     },
-    "costSummary": {
-      "title": "Cost Summary",
-      "total": "Total spent on this machine: {amount}",
-      "subtitle": "Price of a small island",
-      "fuel": "Fuel",
-      "maintenance": "Maintenance",
-      "tolls": "Tolls",
-      "vsComparison": "Fuel vs. Repairs vs. Tolls"
-    },
     "details": {
       "title": "Car Details",
       "purchaseDate": "Purchase Date",
@@ -720,6 +713,7 @@
       "subtitle": "Record repairs, oil changes, and parts replacements.",
       "empty": "No maintenance records yet. Keep fingers crossed.",
       "addEntry": "New Entry",
+      "editEntry": "Edit Entry",
       "date": "Date",
       "description": "Description",
       "cost": "Cost (€)",
@@ -735,9 +729,13 @@
     },
     "fuel": {
       "title": "Fuel & Toll Tracker",
+      "fuel": "Fuel",
+      "tolls": "Tolls",
       "subtitle": "Quick-entry form for refueling and highway tolls.",
       "addFuel": "Add Fuel",
       "addToll": "Add Toll",
+      "editEntry": "Edit Entry",
+      "editToll": "Edit Toll",
       "fuelEmpty": "No fuel entries yet.",
       "tollEmpty": "No toll entries yet.",
       "date": "Date",
@@ -756,11 +754,19 @@
       "country": "Country",
       "routePlaceholder": "e.g., Munich to Berlin"
     },
+    "costSummary": {
+      "title": "Cost Summary",
+      "subtitle": "Expenses and Distribution",
+      "history": "History",
+      "distribution": "Distribution",
+      "total": "Total"
+    },
     "documents": {
       "title": "Digital Glovebox",
       "subtitle": "Upload registration documents and insurance policies.",
       "empty": "No documents uploaded yet.",
       "upload": "Upload Document",
+      "download": "Download",
       "fileName": "File Name",
       "category": "Category",
       "categories": {

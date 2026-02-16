@@ -664,7 +664,9 @@
   "Garage": {
     "title": "Die Geldgrube",
     "subtitle": "Von gesetzlichen Erinnerungen bis zur detaillierten Kostenanalyse von Treibstoff und Reparaturen.",
+    "loading": "Lädt...",
     "emptyState": "Kein Auto hinzugefügt? Genieß deine funktionierenden Beine, solange sie halten.",
+    "optional": "Optional",
     "tabs": {
       "overview": "Übersicht",
       "maintenance": "Wartungsprotokoll",
@@ -700,15 +702,6 @@
       "expired": "Abgelaufen! Vor der nächsten Kontrolle austauschen.",
       "notSet": "Nicht überwacht"
     },
-    "costSummary": {
-      "title": "Kostenzusammenfassung",
-      "total": "Insgesamt in diese Maschine gesteckt: {amount}",
-      "subtitle": "Preis einer kleinen Insel",
-      "fuel": "Sprit",
-      "maintenance": "Wartung",
-      "tolls": "Maut",
-      "vsComparison": "Sprit vs. Reparaturen vs. Maut"
-    },
     "details": {
       "title": "Fahrzeugdetails",
       "purchaseDate": "Kaufdatum",
@@ -720,6 +713,7 @@
       "subtitle": "Reparaturen, Ölwechsel und Teileaustausch dokumentieren.",
       "empty": "Noch keine Wartungseinträge. Daumen drücken.",
       "addEntry": "Neuer Eintrag",
+      "editEntry": "Eintrag bearbeiten",
       "date": "Datum",
       "description": "Beschreibung",
       "cost": "Kosten (€)",
@@ -735,9 +729,13 @@
     },
     "fuel": {
       "title": "Sprit- & Maut-Tracker",
+      "fuel": "Sprit",
+      "tolls": "Maut",
       "subtitle": "Schnelleingabe für Tankvorgänge und Autobahnmaut.",
       "addFuel": "Tankvorgang hinzufügen",
       "addToll": "Maut hinzufügen",
+      "editEntry": "Eintrag bearbeiten",
+      "editToll": "Maut bearbeiten",
       "fuelEmpty": "Noch keine Tankeinträge.",
       "tollEmpty": "Noch keine Mauteinträge.",
       "date": "Datum",
@@ -756,11 +754,19 @@
       "country": "Land",
       "routePlaceholder": "z.B. München nach Berlin"
     },
+    "costSummary": {
+      "title": "Kostenübersicht",
+      "subtitle": "Ausgaben und Verteilung",
+      "history": "Verlauf",
+      "distribution": "Verteilung",
+      "total": "Gesamt"
+    },
     "documents": {
       "title": "Digitales Handschuhfach",
       "subtitle": "Fahrzeugschein, Fahrzeugbrief und Versicherungspolicen hochladen.",
       "empty": "Noch keine Dokumente hochgeladen.",
       "upload": "Dokument hochladen",
+      "download": "Herunterladen",
       "fileName": "Dateiname",
       "category": "Kategorie",
       "categories": {

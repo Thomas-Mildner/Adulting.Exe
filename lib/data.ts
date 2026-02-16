@@ -135,7 +135,7 @@ export type FuelEntry = {
   liters: number
   pricePerLiter: number
   totalCost: number
-  mileage: number
+  mileage: number | null
   fuelType: "diesel" | "petrol" | "e10" | "electric"
 }
 

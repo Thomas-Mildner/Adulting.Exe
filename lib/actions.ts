@@ -1,5 +1,8 @@
 "use server"
 
+import { writeFile } from "fs/promises"
+import { join } from "path"
+
 import { prisma } from "@/lib/prisma"
 import { revalidatePath } from "next/cache"
 import type {
@@ -802,6 +805,29 @@ export async function createCarMaintenance(data: {
   revalidatePath("/garage")
 }
 
+export async function updateCarMaintenance(
+  id: string,
+  data: {
+    date: string
+    description: string
+    cost: number
+    mileage?: number
+    category: string
+  }
+) {
+  await prisma.carMaintenance.update({
+    where: { id },
+    data: {
+      date: new Date(data.date),
+      description: data.description,
+      cost: data.cost,
+      mileage: data.mileage || null,
+      category: data.category,
+    },
+  })
+  revalidatePath("/garage")
+}
+
 export async function deleteCarMaintenance(id: string) {
   await prisma.carMaintenance.delete({ where: { id } })
   revalidatePath("/garage")
@@ -832,12 +858,37 @@ export async function createFuelEntry(data: {
   liters: number
   pricePerLiter: number
   totalCost: number
-  mileage: number
+  mileage: number | null
   fuelType: string
 }) {
   await prisma.fuelEntry.create({
     data: {
       carId: data.carId,
+      date: new Date(data.date),
+      liters: data.liters,
+      pricePerLiter: data.pricePerLiter,
+      totalCost: data.totalCost,
+      mileage: data.mileage,
+      fuelType: data.fuelType,
+    },
+  })
+  revalidatePath("/garage")
+}
+
+export async function updateFuelEntry(
+  id: string,
+  data: {
+    date: string
+    liters: number
+    pricePerLiter: number
+    totalCost: number
+    mileage: number | null
+    fuelType: string
+  }
+) {
+  await prisma.fuelEntry.update({
+    where: { id },
+    data: {
       date: new Date(data.date),
       liters: data.liters,
       pricePerLiter: data.pricePerLiter,
@@ -890,6 +941,27 @@ export async function createTollEntry(data: {
   revalidatePath("/garage")
 }
 
+export async function updateTollEntry(
+  id: string,
+  data: {
+    date: string
+    cost: number
+    route?: string
+    country?: string
+  }
+) {
+  await prisma.tollEntry.update({
+    where: { id },
+    data: {
+      date: new Date(data.date),
+      cost: data.cost,
+      route: data.route || null,
+      country: data.country || null,
+    },
+  })
+  revalidatePath("/garage")
+}
+
 export async function deleteTollEntry(id: string) {
   await prisma.tollEntry.delete({ where: { id } })
   revalidatePath("/garage")
@@ -931,5 +1003,33 @@ export async function createCarDocument(data: {
 
 export async function deleteCarDocument(id: string) {
   await prisma.carDocument.delete({ where: { id } })
+  revalidatePath("/garage")
+}
+
+export async function uploadCarDocument(formData: FormData) {
+  const file = formData.get("file") as File
+  const carId = formData.get("carId") as string
+  const title = formData.get("title") as string
+  const category = formData.get("category") as string
+
+  if (!file) throw new Error("No file uploaded")
+
+  const bytes = await file.arrayBuffer()
+  const buffer = Buffer.from(bytes)
+
+  const fileName = `${Date.now()}-${file.name}`
+  const path = join(process.cwd(), "public/uploads", fileName)
+
+  await writeFile(path, buffer)
+
+  await prisma.carDocument.create({
+    data: {
+      carId,
+      title,
+      category,
+      fileName,
+      uploadDate: new Date(),
+    },
+  })
   revalidatePath("/garage")
 }

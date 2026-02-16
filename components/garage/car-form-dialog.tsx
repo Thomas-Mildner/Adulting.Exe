@@ -32,7 +32,7 @@ export function CarFormDialog({
 }) {
   const [open, setOpen] = useState(false)
   const [isPending, startTransition] = useTransition()
-  const t = useTranslations("Garage.form")
+  const t = useTranslations("Garage")
 
   // Form state
   const [name, setName] = useState("")
@@ -72,55 +72,55 @@ export function CarFormDialog({
       <DialogContent className="max-h-[90vh] overflow-y-auto">
         <form onSubmit={handleSubmit}>
           <DialogHeader>
-            <DialogTitle>{t("../create.title")}</DialogTitle>
-            <DialogDescription>{t("../create.description")}</DialogDescription>
+            <DialogTitle>{t("create.title")}</DialogTitle>
+            <DialogDescription>{t("create.description")}</DialogDescription>
           </DialogHeader>
           <div className="space-y-4 py-4">
             <div className="grid gap-2">
-              <Label htmlFor="name">{t("carName")}</Label>
+              <Label htmlFor="name">{t("form.carName")}</Label>
               <Input
                 id="name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                placeholder={t("carNamePlaceholder")}
+                placeholder={t("form.carNamePlaceholder")}
                 required
               />
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div className="grid gap-2">
-                <Label htmlFor="brand">{t("brand")}</Label>
+                <Label htmlFor="brand">{t("form.brand")}</Label>
                 <Input
                   id="brand"
                   value={brand}
                   onChange={(e) => setBrand(e.target.value)}
-                  placeholder={t("brandPlaceholder")}
+                  placeholder={t("form.brandPlaceholder")}
                   required
                 />
               </div>
               <div className="grid gap-2">
-                <Label htmlFor="model">{t("model")}</Label>
+                <Label htmlFor="model">{t("form.model")}</Label>
                 <Input
                   id="model"
                   value={model}
                   onChange={(e) => setModel(e.target.value)}
-                  placeholder={t("modelPlaceholder")}
+                  placeholder={t("form.modelPlaceholder")}
                   required
                 />
               </div>
             </div>
             <div className="grid gap-2">
-              <Label htmlFor="licensePlate">{t("licensePlate")}</Label>
+              <Label htmlFor="licensePlate">{t("form.licensePlate")}</Label>
               <Input
                 id="licensePlate"
                 value={licensePlate}
                 onChange={(e) => setLicensePlate(e.target.value)}
-                placeholder={t("licensePlatePlaceholder")}
+                placeholder={t("form.licensePlatePlaceholder")}
                 required
               />
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div className="grid gap-2">
-                <Label htmlFor="purchaseDate">{t("purchaseDate")}</Label>
+                <Label htmlFor="purchaseDate">{t("form.purchaseDate")}</Label>
                 <Input
                   id="purchaseDate"
                   type="date"
@@ -130,7 +130,7 @@ export function CarFormDialog({
                 />
               </div>
               <div className="grid gap-2">
-                <Label htmlFor="purchasePrice">{t("purchasePrice")}</Label>
+                <Label htmlFor="purchasePrice">{t("form.purchasePrice")}</Label>
                 <Input
                   id="purchasePrice"
                   type="number"
@@ -142,7 +142,7 @@ export function CarFormDialog({
               </div>
             </div>
             <div className="grid gap-2">
-              <Label htmlFor="nextInspection">{t("nextInspection")}</Label>
+              <Label htmlFor="nextInspection">{t("form.nextInspection")}</Label>
               <Input
                 id="nextInspection"
                 type="date"
@@ -151,28 +151,28 @@ export function CarFormDialog({
               />
             </div>
             <div className="grid gap-2">
-              <Label htmlFor="tireType">{t("tireType")}</Label>
+              <Label htmlFor="tireType">{t("form.tireType")}</Label>
               <Select value={currentTireType} onValueChange={setCurrentTireType}>
                 <SelectTrigger>
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="summer">{t("../tireReminder.summer")}</SelectItem>
-                  <SelectItem value="winter">{t("../tireReminder.winter")}</SelectItem>
+                  <SelectItem value="summer">{t("tireReminder.summer")}</SelectItem>
+                  <SelectItem value="winter">{t("tireReminder.winter")}</SelectItem>
                 </SelectContent>
               </Select>
             </div>
             <div className="grid gap-2">
-              <Label htmlFor="tireStorage">{t("tireStorage")}</Label>
+              <Label htmlFor="tireStorage">{t("form.tireStorage")}</Label>
               <Input
                 id="tireStorage"
                 value={tireStorageLocation}
                 onChange={(e) => setTireStorageLocation(e.target.value)}
-                placeholder={t("tireStoragePlaceholder")}
+                placeholder={t("form.tireStoragePlaceholder")}
               />
             </div>
             <div className="grid gap-2">
-              <Label htmlFor="firstAidExpiry">{t("firstAidExpiry")}</Label>
+              <Label htmlFor="firstAidExpiry">{t("form.firstAidExpiry")}</Label>
               <Input
                 id="firstAidExpiry"
                 type="date"
@@ -183,10 +183,10 @@ export function CarFormDialog({
           </div>
           <DialogFooter>
             <Button type="button" variant="outline" onClick={() => setOpen(false)}>
-              {t("cancel")}
+              {t("form.cancel")}
             </Button>
             <Button type="submit" disabled={isPending}>
-              {isPending ? t("saving") : t("save")}
+              {isPending ? t("form.saving") : t("form.save")}
             </Button>
           </DialogFooter>
         </form>
