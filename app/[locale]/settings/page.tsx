@@ -11,7 +11,6 @@ import { getAppConfig, getWasteTypes } from "@/lib/actions"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Bell, Home, Shield } from "lucide-react"
 import { getTranslations } from "next-intl/server"
-import pkg from "@/package.json"
 
 export const dynamic = "force-dynamic"
 
@@ -63,7 +62,7 @@ export default async function SettingsPage() {
 
         <TabsContent value="system" className="space-y-6 max-w-2xl animate-in fade-in-50 duration-500">
           <DataSettings />
-          <AboutSettings version={pkg.version} />
+          <AboutSettings />
         </TabsContent>
       </Tabs>
     </DashboardLayout>
