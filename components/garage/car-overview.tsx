@@ -4,9 +4,15 @@ import { useTranslations } from "next-intl"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { AlertCircle, AlertTriangle, CheckCircle2, Snowflake, Sun } from "lucide-react"
+import { AlertCircle, AlertTriangle, CheckCircle2, Snowflake, Sun, Pencil } from "lucide-react"
 import type { Car } from "@/lib/data"
 import { getDaysRemaining } from "@/lib/data"
+import { Button } from "@/components/ui/button"
+import { CarEditDialog } from "./car-edit-dialog"
+import { MaintenanceList } from "./maintenance-list"
+import { FuelList } from "./fuel-list"
+import { DocumentList } from "./document-list"
+import { CostAnalytics } from "./cost-analytics"
 
 export function CarOverview({ car }: { car: Car }) {
   const t = useTranslations("Garage")
@@ -145,11 +151,22 @@ export function CarOverview({ car }: { car: Car }) {
 
       {/* Details Section */}
       <Card>
-        <CardHeader>
-          <CardTitle>{t("details.title")}</CardTitle>
-          <CardDescription>
-            {car.brand} {car.model} • {car.licensePlate}
-          </CardDescription>
+        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+          <div className="flex flex-col space-y-1.5">
+            <CardTitle>{t("details.title")}</CardTitle>
+            <CardDescription>
+              {car.brand} {car.model} • {car.licensePlate}
+            </CardDescription>
+          </div>
+          <CarEditDialog
+            car={car}
+            trigger={
+              <Button variant="ghost" size="icon">
+                <Pencil className="h-4 w-4" />
+              </Button>
+            }
+            onSuccess={() => window.location.reload()}
+          />
         </CardHeader>
         <CardContent>
           <div className="grid gap-4 md:grid-cols-2">
@@ -178,24 +195,16 @@ export function CarOverview({ car }: { car: Car }) {
 
         <TabsContent value="maintenance">
           <Card>
-            <CardHeader>
-              <CardTitle>{t("maintenance.title")}</CardTitle>
-              <CardDescription>{t("maintenance.subtitle")}</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm text-muted-foreground">{t("maintenance.empty")}</p>
+            <CardContent className="pt-6">
+              <MaintenanceList carId={car.id} />
             </CardContent>
           </Card>
         </TabsContent>
 
         <TabsContent value="fuel">
           <Card>
-            <CardHeader>
-              <CardTitle>{t("fuel.title")}</CardTitle>
-              <CardDescription>{t("fuel.subtitle")}</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm text-muted-foreground">{t("fuel.fuelEmpty")}</p>
+            <CardContent className="pt-6">
+              <FuelList carId={car.id} />
             </CardContent>
           </Card>
         </TabsContent>
@@ -207,21 +216,15 @@ export function CarOverview({ car }: { car: Car }) {
               <CardDescription>{t("costSummary.subtitle")}</CardDescription>
             </CardHeader>
             <CardContent>
-              <p className="text-sm text-muted-foreground">
-                {t("details.analyticsPlaceholder")}
-              </p>
+              <CostAnalytics carId={car.id} />
             </CardContent>
           </Card>
         </TabsContent>
 
         <TabsContent value="documents">
           <Card>
-            <CardHeader>
-              <CardTitle>{t("documents.title")}</CardTitle>
-              <CardDescription>{t("documents.subtitle")}</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm text-muted-foreground">{t("documents.empty")}</p>
+            <CardContent className="pt-6">
+              <DocumentList carId={car.id} />
             </CardContent>
           </Card>
         </TabsContent>
