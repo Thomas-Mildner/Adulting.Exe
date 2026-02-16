@@ -10,6 +10,7 @@
     "maintenance": "Wartungen",
     "wishlist": "Wunschliste",
     "lending": "Verleih",
+    "garage": "Die Geldgrube",
     "sidebarStatus": "Status: Haus steht (vorerst)"
   },
   "Dashboard": {
@@ -658,6 +659,149 @@
       "title": "Kalenderansicht",
       "legend": "Legende",
       "upcoming": "Anstehend"
+    }
+  },
+  "Garage": {
+    "title": "Die Geldgrube",
+    "subtitle": "Von gesetzlichen Erinnerungen bis zur detaillierten Kostenanalyse von Treibstoff und Reparaturen.",
+    "emptyState": "Kein Auto hinzugefügt? Genieß deine funktionierenden Beine, solange sie halten.",
+    "tabs": {
+      "overview": "Übersicht",
+      "maintenance": "Wartungsprotokoll",
+      "fuel": "Sprit & Maut",
+      "analytics": "Kostenanalyse",
+      "documents": "Digitales Handschuhfach"
+    },
+    "addCar": "Auto hinzufügen",
+    "noCars": "Noch keine Autos registriert.",
+    "tuv": {
+      "title": "TÜV-Status",
+      "safe": "Fahrtüchtig",
+      "illegal": "Illegales Go-Kart",
+      "dueIn": "Fällig in {days} Tagen",
+      "overdue": "Überfällig seit {days} Tagen",
+      "nextInspection": "Nächste Inspektion"
+    },
+    "tireReminder": {
+      "title": "Das Reifen-Ritual",
+      "current": "Aktuell montiert: {type}-Reifen",
+      "storage": "Lagerort: {location}",
+      "noStorage": "Lagerort nicht angegeben",
+      "summer": "Sommer",
+      "winter": "Winter",
+      "changeDue": "Zeit für den Reifenwechsel!"
+    },
+    "firstAid": {
+      "title": "Verbandskasten-Check",
+      "expires": "Läuft ab: {date}",
+      "expired": "Abgelaufen! Vor der nächsten Kontrolle austauschen.",
+      "notSet": "Nicht überwacht"
+    },
+    "costSummary": {
+      "title": "Kostenzusammenfassung",
+      "total": "Insgesamt in diese Maschine gesteckt: {amount}",
+      "subtitle": "Preis einer kleinen Insel",
+      "fuel": "Sprit",
+      "maintenance": "Wartung",
+      "tolls": "Maut",
+      "vsComparison": "Sprit vs. Reparaturen vs. Maut"
+    },
+    "maintenance": {
+      "title": "Wartungsprotokoll",
+      "subtitle": "Reparaturen, Ölwechsel und Teileaustausch dokumentieren.",
+      "empty": "Noch keine Wartungseinträge. Daumen drücken.",
+      "addEntry": "Neuer Eintrag",
+      "date": "Datum",
+      "description": "Beschreibung",
+      "cost": "Kosten (€)",
+      "mileage": "Kilometerstand",
+      "category": "Kategorie",
+      "categories": {
+        "oil_change": "Ölwechsel",
+        "repair": "Reparatur",
+        "inspection": "Inspektion",
+        "parts": "Teileaustausch",
+        "other": "Sonstiges"
+      }
+    },
+    "fuel": {
+      "title": "Sprit- & Maut-Tracker",
+      "subtitle": "Schnelleingabe für Tankvorgänge und Autobahnmaut.",
+      "addFuel": "Tankvorgang hinzufügen",
+      "addToll": "Maut hinzufügen",
+      "fuelEmpty": "Noch keine Tankeinträge.",
+      "tollEmpty": "Noch keine Mauteinträge.",
+      "date": "Datum",
+      "liters": "Liter",
+      "pricePerLiter": "Preis/Liter (€)",
+      "totalCost": "Gesamtkosten (€)",
+      "mileage": "Kilometerstand",
+      "fuelType": "Treibstoffart",
+      "fuelTypes": {
+        "diesel": "Diesel",
+        "petrol": "Benzin",
+        "e10": "E10",
+        "electric": "Elektro"
+      },
+      "route": "Strecke",
+      "country": "Land",
+      "routePlaceholder": "z.B. München nach Berlin"
+    },
+    "documents": {
+      "title": "Digitales Handschuhfach",
+      "subtitle": "Fahrzeugschein, Fahrzeugbrief und Versicherungspolicen hochladen.",
+      "empty": "Noch keine Dokumente hochgeladen.",
+      "upload": "Dokument hochladen",
+      "fileName": "Dateiname",
+      "category": "Kategorie",
+      "categories": {
+        "registration": "Zulassung (Fahrzeugschein/Brief)",
+        "insurance": "Versicherungspolice",
+        "invoice": "Rechnung",
+        "other": "Sonstiges"
+      },
+      "uploadDate": "Hochgeladen"
+    },
+    "resaleValue": {
+      "title": "Wiederverkaufswert-Beschützer",
+      "subtitle": "Wartungshistorie als PDF für Wiederverkauf exportieren.",
+      "export": "Historie exportieren",
+      "exporting": "PDF wird erstellt..."
+    },
+    "form": {
+      "carName": "Autoname",
+      "carNamePlaceholder": "z.B. Die Bestie, Alltagsauto",
+      "brand": "Marke",
+      "brandPlaceholder": "z.B. BMW, VW",
+      "model": "Modell",
+      "modelPlaceholder": "z.B. 3er, Golf",
+      "licensePlate": "Kennzeichen",
+      "licensePlatePlaceholder": "z.B. M-AB 1234",
+      "purchaseDate": "Kaufdatum",
+      "purchasePrice": "Kaufpreis (€)",
+      "nextInspection": "Nächste Inspektion (TÜV)",
+      "tireType": "Aktueller Reifentyp",
+      "tireStorage": "Reifenlagerort",
+      "tireStoragePlaceholder": "z.B. In der Garage, links unten, unter der alten Plane",
+      "firstAidExpiry": "Verbandskasten Ablaufdatum",
+      "save": "Speichern",
+      "saving": "Speichern...",
+      "cancel": "Abbrechen",
+      "delete": "Auto löschen",
+      "deleting": "Löschen..."
+    },
+    "create": {
+      "title": "Neues Auto hinzufügen",
+      "description": "Registriere deine Geldgrube."
+    },
+    "edit": {
+      "title": "Auto bearbeiten",
+      "description": "Fahrzeugdetails aktualisieren."
+    },
+    "delete": {
+      "title": "Auto löschen?",
+      "description": "Dies löscht das Auto permanent und alle zugehörigen Wartungseinträge, Tankeinträge und Dokumente.",
+      "confirm": "Permanent löschen"
     }
   }
 }

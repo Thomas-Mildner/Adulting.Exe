@@ -104,6 +104,59 @@ export type WastePickup = {
   wasteType?: WasteType
 }
 
+export type Car = {
+  id: string
+  name: string
+  brand: string
+  model: string
+  licensePlate: string
+  purchaseDate: string
+  purchasePrice: number
+  nextInspection?: string
+  currentTireType: "summer" | "winter"
+  tireStorageLocation?: string
+  firstAidKitExpiry?: string
+}
+
+export type CarMaintenance = {
+  id: string
+  carId: string
+  date: string
+  description: string
+  cost: number
+  mileage?: number
+  category: "oil_change" | "repair" | "inspection" | "parts" | "other"
+}
+
+export type FuelEntry = {
+  id: string
+  carId: string
+  date: string
+  liters: number
+  pricePerLiter: number
+  totalCost: number
+  mileage: number
+  fuelType: "diesel" | "petrol" | "e10" | "electric"
+}
+
+export type TollEntry = {
+  id: string
+  carId: string
+  date: string
+  cost: number
+  route?: string
+  country?: string
+}
+
+export type CarDocument = {
+  id: string
+  carId: string
+  title: string
+  category: "registration" | "insurance" | "invoice" | "other"
+  fileName: string
+  uploadDate: string
+}
+
 // ─── Note ────────────────────────────────────────────────────────────────
 // Mock data has been moved to the database. Use server actions from
 // "@/lib/actions" to fetch / mutate data. Seed with `pnpm prisma db seed`.

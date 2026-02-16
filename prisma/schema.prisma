@@ -178,3 +178,89 @@ model AppConfig {
 
   updatedAt DateTime @updatedAt
 }
+
+// ─── Car Management ("The Money Pit") ─────────────────────────────────
+
+model Car {
+  id           String   @id @default(cuid())
+  name         String   // e.g., "The Beast", "Daily Driver"
+  brand        String
+  model        String
+  licensePlate String
+  purchaseDate DateTime
+  purchasePrice Float
+
+  // TÜV & Legal
+  nextInspection DateTime? // Next TÜV date
+  
+  // Tire tracking
+  currentTireType String @default("summer") // "summer" | "winter"
+  tireStorageLocation String?
+  
+  // First aid kit
+  firstAidKitExpiry DateTime?
+
+  maintenanceLogs CarMaintenance[]
+  fuelEntries     FuelEntry[]
+  tollEntries     TollEntry[]
+  documents       CarDocument[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model CarMaintenance {
+  id          String   @id @default(cuid())
+  date        DateTime
+  description String
+  cost        Float
+  mileage     Int?
+  category    String   // "oil_change" | "repair" | "inspection" | "parts" | "other"
+  
+  car   Car    @relation(fields: [carId], references: [id], onDelete: Cascade)
+  carId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model FuelEntry {
+  id       String   @id @default(cuid())
+  date     DateTime
+  liters   Float
+  pricePerLiter Float
+  totalCost Float
+  mileage  Int
+  fuelType String   @default("diesel") // "diesel" | "petrol" | "e10" | "electric"
+  
+  car   Car    @relation(fields: [carId], references: [id], onDelete: Cascade)
+  carId String
+
+  createdAt DateTime @default(now())
+}
+
+model TollEntry {
+  id        String   @id @default(cuid())
+  date      DateTime
+  cost      Float
+  route     String?  // Optional description of the route
+  country   String?  // e.g., "Austria", "Switzerland"
+  
+  car   Car    @relation(fields: [carId], references: [id], onDelete: Cascade)
+  carId String
+
+  createdAt DateTime @default(now())
+}
+
+model CarDocument {
+  id          String   @id @default(cuid())
+  title       String
+  category    String   // "registration" | "insurance" | "invoice" | "other"
+  fileName    String
+  uploadDate  DateTime @default(now())
+  
+  car   Car    @relation(fields: [carId], references: [id], onDelete: Cascade)
+  carId String
+
+  createdAt DateTime @default(now())
+}
