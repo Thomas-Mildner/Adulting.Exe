@@ -10,6 +10,7 @@
     "maintenance": "Maintenance",
     "wishlist": "Wishlist",
     "lending": "Lending",
+    "garage": "The Money Pit",
     "sidebarStatus": "Status: House standing (for now)"
   },
   "Dashboard": {
@@ -658,6 +659,149 @@
       "title": "Calendar View",
       "legend": "Legend",
       "upcoming": "Upcoming"
+    }
+  },
+  "Garage": {
+    "title": "The Money Pit",
+    "subtitle": "From legal reminders to detailed cost analysis of fuel and repairs.",
+    "emptyState": "No car added? Enjoy your functional legs while they last.",
+    "tabs": {
+      "overview": "Overview",
+      "maintenance": "Maintenance Log",
+      "fuel": "Fuel & Tolls",
+      "analytics": "Cost Analytics",
+      "documents": "Digital Glovebox"
+    },
+    "addCar": "Add Car",
+    "noCars": "No cars registered yet.",
+    "tuv": {
+      "title": "TÜV Status",
+      "safe": "Safe to Drive",
+      "illegal": "Illegal Go-Kart",
+      "dueIn": "Due in {days} days",
+      "overdue": "Overdue by {days} days",
+      "nextInspection": "Next Inspection"
+    },
+    "tireReminder": {
+      "title": "The Tire Ritual",
+      "current": "Currently on: {type} tires",
+      "storage": "Storage: {location}",
+      "noStorage": "Storage location not set",
+      "summer": "Summer",
+      "winter": "Winter",
+      "changeDue": "Time to change tires!"
+    },
+    "firstAid": {
+      "title": "First Aid Expiry",
+      "expires": "Expires: {date}",
+      "expired": "Expired! Replace it before the next inspection.",
+      "notSet": "Not tracked"
+    },
+    "costSummary": {
+      "title": "Cost Summary",
+      "total": "Total spent on this machine: {amount}",
+      "subtitle": "Price of a small island",
+      "fuel": "Fuel",
+      "maintenance": "Maintenance",
+      "tolls": "Tolls",
+      "vsComparison": "Fuel vs. Repairs vs. Tolls"
+    },
+    "maintenance": {
+      "title": "Maintenance Log",
+      "subtitle": "Record repairs, oil changes, and parts replacements.",
+      "empty": "No maintenance records yet. Keep fingers crossed.",
+      "addEntry": "New Entry",
+      "date": "Date",
+      "description": "Description",
+      "cost": "Cost (€)",
+      "mileage": "Mileage (km)",
+      "category": "Category",
+      "categories": {
+        "oil_change": "Oil Change",
+        "repair": "Repair",
+        "inspection": "Inspection",
+        "parts": "Parts Replacement",
+        "other": "Other"
+      }
+    },
+    "fuel": {
+      "title": "Fuel & Toll Tracker",
+      "subtitle": "Quick-entry form for refueling and highway tolls.",
+      "addFuel": "Add Fuel",
+      "addToll": "Add Toll",
+      "fuelEmpty": "No fuel entries yet.",
+      "tollEmpty": "No toll entries yet.",
+      "date": "Date",
+      "liters": "Liters",
+      "pricePerLiter": "Price/Liter (€)",
+      "totalCost": "Total Cost (€)",
+      "mileage": "Mileage (km)",
+      "fuelType": "Fuel Type",
+      "fuelTypes": {
+        "diesel": "Diesel",
+        "petrol": "Petrol",
+        "e10": "E10",
+        "electric": "Electric"
+      },
+      "route": "Route",
+      "country": "Country",
+      "routePlaceholder": "e.g., Munich to Berlin"
+    },
+    "documents": {
+      "title": "Digital Glovebox",
+      "subtitle": "Upload registration documents and insurance policies.",
+      "empty": "No documents uploaded yet.",
+      "upload": "Upload Document",
+      "fileName": "File Name",
+      "category": "Category",
+      "categories": {
+        "registration": "Registration (Fahrzeugschein/Brief)",
+        "insurance": "Insurance Policy",
+        "invoice": "Invoice",
+        "other": "Other"
+      },
+      "uploadDate": "Uploaded"
+    },
+    "resaleValue": {
+      "title": "Resale Value Protector",
+      "subtitle": "Export maintenance history as PDF for resale.",
+      "export": "Export History",
+      "exporting": "Generating PDF..."
+    },
+    "form": {
+      "carName": "Car Name",
+      "carNamePlaceholder": "e.g., The Beast, Daily Driver",
+      "brand": "Brand",
+      "brandPlaceholder": "e.g., BMW, VW",
+      "model": "Model",
+      "modelPlaceholder": "e.g., 3 Series, Golf",
+      "licensePlate": "License Plate",
+      "licensePlatePlaceholder": "e.g., M-AB 1234",
+      "purchaseDate": "Purchase Date",
+      "purchasePrice": "Purchase Price (€)",
+      "nextInspection": "Next Inspection (TÜV)",
+      "tireType": "Current Tire Type",
+      "tireStorage": "Tire Storage Location",
+      "tireStoragePlaceholder": "e.g., In the garage, bottom left, under the old tarp",
+      "firstAidExpiry": "First Aid Kit Expiry",
+      "save": "Save",
+      "saving": "Saving...",
+      "cancel": "Cancel",
+      "delete": "Delete Car",
+      "deleting": "Deleting..."
+    },
+    "create": {
+      "title": "Add New Car",
+      "description": "Register your money pit."
+    },
+    "edit": {
+      "title": "Edit Car",
+      "description": "Update car details."
+    },
+    "delete": {
+      "title": "Delete Car?",
+      "description": "This will permanently delete the car and all its maintenance records, fuel entries, and documents.",
+      "confirm": "Permanently Delete"
     }
   }
 }
