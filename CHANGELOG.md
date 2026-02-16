@@ -1,3 +1,19 @@
+# [1.4.0](https://github.com/Thomas-Mildner/Adulting.Exe/compare/v1.3.0...v1.4.0) (2026-02-16)
+
+
+### Bug Fixes
+
+* add cleanup handlers and improve documentation ([f74ee9d](https://github.com/Thomas-Mildner/Adulting.Exe/commit/f74ee9daba05c2583ecdb408fef772cf62a89806))
+* add proper semantic version comparison and error handling ([8876325](https://github.com/Thomas-Mildner/Adulting.Exe/commit/8876325ed9742e1406dcc064f40ce58504b7c393))
+* update version handling and add new release notifier ([03f8bfc](https://github.com/Thomas-Mildner/Adulting.Exe/commit/03f8bfccf0751345f59813dab5eb5d9a95e62f94))
+
+
+### Features
+
+* add API route to fetch latest GitHub release version ([9f6eca1](https://github.com/Thomas-Mildner/Adulting.Exe/commit/9f6eca18a5f93b4eb00114cc10d4e94ec1c0f7e3))
+* add GitHub authentication support for private repositories ([a7c73b8](https://github.com/Thomas-Mildner/Adulting.Exe/commit/a7c73b8ef2a79208d66f44273c6a896117e20b04))
+* add update available indicator to sidebar and settings ([36a4015](https://github.com/Thomas-Mildner/Adulting.Exe/commit/36a4015ae68cf3c3f8244aaf1eb6e277de808719))
+
 # [1.3.0](https://github.com/Thomas-Mildner/Adulting.Exe/compare/v1.2.0...v1.3.0) (2026-02-15)
 
 
