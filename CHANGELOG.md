@@ -1,3 +1,10 @@
+# [1.5.0](https://github.com/Thomas-Mildner/Adulting.Exe/compare/v1.4.0...v1.5.0) (2026-02-16)
+
+
+### Features
+
+* add cost and consumption projection features to UtilityTracker component ([cdeb668](https://github.com/Thomas-Mildner/Adulting.Exe/commit/cdeb668b8fe998c01b9b3772118c5bcd50e1ce84))
+
 # [1.4.0](https://github.com/Thomas-Mildner/Adulting.Exe/compare/v1.3.0...v1.4.0) (2026-02-16)
 
 
