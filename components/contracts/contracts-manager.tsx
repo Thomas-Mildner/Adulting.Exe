@@ -35,7 +35,7 @@ import {
 import { Checkbox } from "@/components/ui/checkbox";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { getDaysRemaining, formatCurrency, type Contract } from "@/lib/data";
-import { createContract, updateContract, deleteContract, generateCancellationLetter } from "@/lib/actions";
+import { createContract, updateContract, deleteContract, generateContractCancellationLetter } from "@/lib/actions";
 import { Plus, Pencil, Trash2, AlertTriangle, FileText, TrendingDown, CreditCard } from "lucide-react";
 
 const CATEGORIES = ["Utilities", "Entertainment", "Fitness", "Software", "Guilty Pleasure", "Other"] as const;
@@ -186,7 +186,7 @@ export function ContractsManager({ contracts: initialContracts }: { contracts: C
 
   const handleGenerateCancellation = async (contract: Contract) => {
     setSelectedContract(contract);
-    const letter = await generateCancellationLetter(contract.id);
+    const letter = await generateContractCancellationLetter(contract.id);
     setCancellationLetter(letter);
     setCancellationOpen(true);
   };

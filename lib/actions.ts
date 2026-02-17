@@ -802,7 +802,7 @@ export async function deleteContract(id: string) {
   revalidatePath("/")
 }
 
-export async function generateCancellationLetter(id: string): Promise<string> {
+export async function generateContractCancellationLetter(id: string): Promise<string> {
   const contract = await getContract(id)
   if (!contract) throw new Error("Contract not found")
 
