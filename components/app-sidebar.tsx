@@ -1,7 +1,8 @@
-"use client"
+"use client";
 
-import { Link, usePathname } from "@/lib/navigation"
-import { useTranslations } from "next-intl"
+import * as React from "react";
+import { Link, usePathname } from "@/lib/navigation";
+import { useTranslations } from "next-intl";
 import {
   LayoutDashboard,
   PackageOpen,
@@ -29,32 +30,66 @@ import {
   SidebarMenuItem,
   SidebarFooter,
   SidebarSeparator,
-} from "@/components/ui/sidebar"
+} from "@/components/ui/sidebar";
+import { isVersionLessThan, FALLBACK_VERSION } from "@/lib/utils/version";
 
 export function AppSidebar() {
-  const pathname = usePathname()
-  const t = useTranslations("Navigation")
-  const version = process.env.NEXT_PUBLIC_APP_VERSION || '0.1.0'
+  const pathname = usePathname();
+  const t = useTranslations("Navigation");
+  const builtVersion = process.env.NEXT_PUBLIC_APP_VERSION || FALLBACK_VERSION;
+  const [latestVersion, setLatestVersion] = React.useState<string | null>(null);
+  const [isUpdateAvailable, setIsUpdateAvailable] =
+    React.useState<boolean>(false);
+
+  React.useEffect(() => {
+    const abortController = new AbortController();
+
+    fetch("/api/version", { signal: abortController.signal })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error(`HTTP error! status: ${res.status}`);
+        }
+        return res.json();
+      })
+      .then((data) => {
+        if (data.version) {
+          setLatestVersion(data.version);
+          // Check if update is available using semantic version comparison
+          if (!data.fallback && isVersionLessThan(builtVersion, data.version)) {
+            setIsUpdateAvailable(true);
+          }
+        }
+      })
+      .catch((err) => {
+        // Ignore abort errors
+        if (err.name === "AbortError") return;
+        console.error("Failed to fetch version:", err);
+      });
+
+    return () => {
+      abortController.abort();
+    };
+  }, [builtVersion]);
 
   const mainNav = [
     { title: t("dashboard"), href: "/", icon: LayoutDashboard },
     { title: t("vault"), href: "/vault", icon: PackageOpen },
     { title: t("services"), href: "/services", icon: Wrench }, // "Rettungsteam" needs translation key if not present, assume "services"
     { title: t("library"), href: "/library", icon: BookOpen },
-  ]
+  ];
 
   const toolsNav = [
     { title: t("waste"), href: "/waste", icon: CalendarDays },
-  { title: t("maintenance"), href: "/maintenance", icon: ClipboardCheck }, // "Wartungen"
+    { title: t("maintenance"), href: "/maintenance", icon: ClipboardCheck }, // "Wartungen"
     { title: t("utilities"), href: "/utilities", icon: Gauge },
     { title: t("garage"), href: "/garage", icon: Car },
     { title: t("wishlist"), href: "/wishlist", icon: Sparkles },
     { title: t("lending"), href: "/lending", icon: HandCoins }, // "Verleih-O-Meter"
-  ]
+  ];
 
   const systemNav = [
     { title: t("settings"), href: "/settings", icon: Settings },
-  ]
+  ];
 
   const renderNavGroup = (items: typeof mainNav, label: string) => (
     <SidebarGroup>
@@ -84,22 +119,33 @@ export function AppSidebar() {
         </SidebarMenu>
       </SidebarGroupContent>
     </SidebarGroup>
-  )
+  );
 
   return (
     <Sidebar collapsible="icon">
       <SidebarHeader className="p-4">
         <Link href="/" className="flex items-center gap-2.5">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-sidebar-primary">
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-sidebar-primary relative">
             <Terminal className="h-4 w-4 text-sidebar-primary-foreground" />
+            {isUpdateAvailable && (
+              <span className="absolute -top-1 -right-1 flex h-3 w-3">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-500 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+              </span>
+            )}
           </div>
           <div className="flex flex-col group-data-[collapsible=icon]:hidden">
             <span className="text-sm font-semibold tracking-tight text-sidebar-accent-foreground">
               Adulting.exe
             </span>
             <span className="text-[10px] text-sidebar-foreground/50 font-mono">
-              v{version} &mdash; immer noch Beta
+              v{builtVersion} &mdash; immer noch Beta
             </span>
+            {isUpdateAvailable && latestVersion && (
+              <span className="text-[10px] text-green-500 font-mono mt-0.5 animate-pulse">
+                Update verfügbar: v{latestVersion}
+              </span>
+            )}
           </div>
         </Link>
       </SidebarHeader>
@@ -117,5 +163,5 @@ export function AppSidebar() {
         </div>
       </SidebarFooter>
     </Sidebar>
-  )
+  );
 }
