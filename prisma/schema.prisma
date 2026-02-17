@@ -3,8 +3,8 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider = "sqlite"
+  url      = "file:./dev.db"
 }
 
 // ─── Appliance / Warranty Vault ─────────────────────────────────────────
@@ -201,6 +201,25 @@ model Insurance {
 
   createdAt            DateTime @default(now())
   updatedAt            DateTime @updatedAt
+}
+
+// ─── Recurring Contracts / Subscriptions ──────────────────────────────
+
+model Contract {
+  id              String   @id @default(cuid())
+  providerName    String
+  accountId       String?
+  monthlyCost     Float
+  yearlyCost      Float?
+  category        String   // "Utilities", "Entertainment", "Fitness", "Software", "Guilty Pleasure"
+  lastUsedDate    DateTime?
+  isTrial         Boolean  @default(false)
+  trialEndDate    DateTime?
+  nextBillingDate DateTime
+  notes           String?
+
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
 }
 
 // ─── Notification History ──────────────────────────────────────────────

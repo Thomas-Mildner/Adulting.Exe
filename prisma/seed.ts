@@ -17,6 +17,7 @@ async function main() {
   await prisma.wishlistProject.deleteMany()
   await prisma.wastePickup.deleteMany()
   await prisma.wasteType.deleteMany()
+  await prisma.contract.deleteMany()
 
   // ─── Appliances ─────────────────────────────────────────────────────────
   await prisma.appliance.createMany({
@@ -201,6 +202,102 @@ async function main() {
     ],
   })
   console.log("  ✅ Waste calendar seeded")
+
+  // ─── Contracts ──────────────────────────────────────────────────────────
+  const now = new Date()
+  const trialEndingSoon = new Date(now)
+  trialEndingSoon.setHours(now.getHours() + 36) // Within 48 hours for trial-trap alert
+  
+  await prisma.contract.createMany({
+    data: [
+      {
+        id: "con-1",
+        providerName: "Netflix",
+        accountId: "netflix@example.com",
+        monthlyCost: 17.99,
+        yearlyCost: 215.88,
+        category: "Entertainment",
+        lastUsedDate: new Date("2026-02-15"),
+        isTrial: false,
+        nextBillingDate: new Date("2026-03-01"),
+        notes: "Premium plan with 4K",
+      },
+      {
+        id: "con-2",
+        providerName: "Spotify",
+        accountId: "user@example.com",
+        monthlyCost: 10.99,
+        yearlyCost: 131.88,
+        category: "Entertainment",
+        lastUsedDate: new Date("2026-02-17"),
+        isTrial: false,
+        nextBillingDate: new Date("2026-02-25"),
+      },
+      {
+        id: "con-3",
+        providerName: "Ultra-Premium Yoga App",
+        monthlyCost: 19.99,
+        category: "Guilty Pleasure",
+        lastUsedDate: new Date("2022-03-15"),
+        isTrial: false,
+        nextBillingDate: new Date("2026-03-05"),
+        notes: "Used once in 2022. Classic.",
+      },
+      {
+        id: "con-4",
+        providerName: "Electricity Provider",
+        accountId: "KD-1234567",
+        monthlyCost: 95.0,
+        category: "Utilities",
+        lastUsedDate: new Date(),
+        isTrial: false,
+        nextBillingDate: new Date("2026-03-01"),
+      },
+      {
+        id: "con-5",
+        providerName: "Internet & Fiber",
+        accountId: "12345678",
+        monthlyCost: 49.99,
+        category: "Utilities",
+        lastUsedDate: new Date(),
+        isTrial: false,
+        nextBillingDate: new Date("2026-02-28"),
+      },
+      {
+        id: "con-6",
+        providerName: "Cloud Storage Pro",
+        accountId: "cloud@example.com",
+        monthlyCost: 9.99,
+        yearlyCost: 99.99,
+        category: "Software",
+        lastUsedDate: new Date("2026-01-20"),
+        isTrial: false,
+        nextBillingDate: new Date("2026-03-15"),
+      },
+      {
+        id: "con-7",
+        providerName: "Premium Fitness Tracker",
+        monthlyCost: 14.99,
+        category: "Fitness",
+        isTrial: true,
+        trialEndDate: trialEndingSoon,
+        nextBillingDate: trialEndingSoon,
+        notes: "Trial ending soon! Cancel before first charge!",
+      },
+      {
+        id: "con-8",
+        providerName: "Meal Kit Delivery",
+        accountId: "meal@example.com",
+        monthlyCost: 89.99,
+        category: "Guilty Pleasure",
+        lastUsedDate: new Date("2025-11-10"),
+        isTrial: false,
+        nextBillingDate: new Date("2026-03-10"),
+        notes: "Haven't ordered in months but still paying",
+      },
+    ],
+  })
+  console.log("  ✅ Contracts seeded")
 
   console.log("🎉 Seeding complete!")
 }

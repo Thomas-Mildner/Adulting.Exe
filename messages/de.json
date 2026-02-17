@@ -10,6 +10,7 @@
     "maintenance": "Wartungen",
     "wishlist": "Wunschliste",
     "lending": "Verleih",
+    "contracts": "Verträge",
     "sidebarStatus": "Status: Haus steht (vorerst)"
   },
   "Dashboard": {
@@ -658,6 +659,86 @@
       "title": "Kalenderansicht",
       "legend": "Legende",
       "upcoming": "Anstehend"
+    }
+  },
+  "Contracts": {
+    "title": "Wiederkehrende Verträge",
+    "subtitle": "Das moderne Leben ist eine Serie monatlicher Zahlungen bis zum Tod",
+    "burnRate": "Monatlicher Abfluss",
+    "burnRateNote": "Deine Abos kosten mehr als eine Hypothek aus den 90ern. Nur so nebenbei.",
+    "totalContracts": "Aktive Verträge",
+    "activeTrials": "Testversionen",
+    "cumulativeDonation": "Kumulative Spende",
+    "regretMeter": "Reue-Meter",
+    "regretMeterSubtitle": "Geld an Anbieter gesendet, ohne den Service tatsächlich zu nutzen",
+    "wasted": "verschwendet",
+    "lastUsed": "Zuletzt verwendet",
+    "monthsAgo": "Monate her",
+    "allCategories": "Alle",
+    "tableTitle": "Alle Verträge",
+    "tableSubtitle": "Sortiert nach nächstem Abrechnungsdatum",
+    "trialTrapAlert": "Testversion läuft ab!",
+    "trial": "Testversion",
+    "active": "Aktiv",
+    "killSwitch": "Kündigungsschreiben generieren",
+    "cancel": "Abbrechen",
+    "close": "Schließen",
+    "categories": {
+      "Utilities": "Versorgung",
+      "Entertainment": "Unterhaltung",
+      "Fitness": "Fitness",
+      "Software": "Software",
+      "Guilty Pleasure": "Schlechtes Gewissen",
+      "Other": "Andere"
+    },
+    "table": {
+      "provider": "Anbieter",
+      "category": "Kategorie",
+      "monthlyCost": "Monatliche Kosten",
+      "nextBilling": "Nächste Abrechnung",
+      "status": "Status",
+      "actions": "Aktionen"
+    },
+    "fields": {
+      "providerName": "Anbieter",
+      "accountId": "Konto-/Kundennummer",
+      "monthlyCost": "Monatliche Kosten (€)",
+      "yearlyCost": "Jährliche Kosten (€)",
+      "category": "Kategorie",
+      "lastUsedDate": "Letztes echtes Nutzungsdatum",
+      "isTrial": "Kostenlose Testversion",
+      "trialEndDate": "Ende der Testversion",
+      "nextBillingDate": "Nächstes Abrechnungsdatum",
+      "notes": "Notizen"
+    },
+    "placeholders": {
+      "providerName": "z.B. Netflix, Spotify",
+      "accountId": "Optional: Kunden-/Kontonummer",
+      "notes": "Optionale Notizen oder Erinnerungen"
+    },
+    "create": {
+      "title": "Vertrag hinzufügen",
+      "description": "Eine neue wiederkehrende Zahlung erfassen",
+      "action": "Vertrag hinzufügen"
+    },
+    "edit": {
+      "title": "Vertrag bearbeiten",
+      "description": "Vertragsdetails aktualisieren",
+      "action": "Änderungen speichern"
+    },
+    "delete": {
+      "title": "Vertrag löschen",
+      "description": "Bist du sicher? Diese Aktion kann nicht rückgängig gemacht werden.",
+      "action": "Löschen"
+    },
+    "cancellation": {
+      "title": "Kündigungsschreiben",
+      "description": "Generiertes Kündigungsschreiben versandbereit",
+      "copy": "In Zwischenablage kopieren"
+    },
+    "emptyState": {
+      "title": "Keine Abonnements?",
+      "message": "Lebst du in einer Höhle oder leihst du dir einfach alle Passwörter?"
     }
   }
 }

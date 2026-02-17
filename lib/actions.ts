@@ -13,7 +13,7 @@ import type {
   WishlistProject,
   WasteType,
   WastePickup,
-
+  Contract,
   Notification,
 } from "@/lib/data"
 import type {
@@ -29,6 +29,7 @@ import type {
   WasteType as PrismaWasteType,
   WastePickup as PrismaWastePickup,
   Insurance as PrismaInsurance,
+  Contract as PrismaContract,
 } from "@prisma/client"
 
 type PrismaServiceProvider = PrismaSP & { history: PrismaServiceHistory[] }
@@ -719,6 +720,130 @@ Mit freundlichen Grüßen
 Max Mustermann`
 }
 
+// ─── Contracts ──────────────────────────────────────────────────────────
+
+export async function getContracts(): Promise<Contract[]> {
+  const rows = await prisma.contract.findMany({ orderBy: { nextBillingDate: "asc" } })
+  return rows.map((r: PrismaContract) => ({
+    id: r.id,
+    providerName: r.providerName,
+    accountId: r.accountId || undefined,
+    monthlyCost: r.monthlyCost,
+    yearlyCost: r.yearlyCost || undefined,
+    category: r.category as Contract["category"],
+    lastUsedDate: r.lastUsedDate ? dateToStr(r.lastUsedDate) : undefined,
+    isTrial: r.isTrial,
+    trialEndDate: r.trialEndDate ? dateToStr(r.trialEndDate) : undefined,
+    nextBillingDate: dateToStr(r.nextBillingDate),
+    notes: r.notes || undefined,
+  }))
+}
+
+export async function getContract(id: string): Promise<Contract | null> {
+  const r = await prisma.contract.findUnique({ where: { id } })
+  if (!r) return null
+  return {
+    id: r.id,
+    providerName: r.providerName,
+    accountId: r.accountId || undefined,
+    monthlyCost: r.monthlyCost,
+    yearlyCost: r.yearlyCost || undefined,
+    category: r.category as Contract["category"],
+    lastUsedDate: r.lastUsedDate ? dateToStr(r.lastUsedDate) : undefined,
+    isTrial: r.isTrial,
+    trialEndDate: r.trialEndDate ? dateToStr(r.trialEndDate) : undefined,
+    nextBillingDate: dateToStr(r.nextBillingDate),
+    notes: r.notes || undefined,
+  }
+}
+
+export async function createContract(data: Omit<Contract, "id">) {
+  await prisma.contract.create({
+    data: {
+      providerName: data.providerName,
+      accountId: data.accountId || null,
+      monthlyCost: data.monthlyCost,
+      yearlyCost: data.yearlyCost || null,
+      category: data.category,
+      lastUsedDate: data.lastUsedDate ? new Date(data.lastUsedDate) : null,
+      isTrial: data.isTrial,
+      trialEndDate: data.trialEndDate ? new Date(data.trialEndDate) : null,
+      nextBillingDate: new Date(data.nextBillingDate),
+      notes: data.notes || null,
+    },
+  })
+  revalidatePath("/contracts")
+  revalidatePath("/")
+}
+
+export async function updateContract(id: string, data: Partial<Omit<Contract, "id">>) {
+  await prisma.contract.update({
+    where: { id },
+    data: {
+      ...(data.providerName !== undefined && { providerName: data.providerName }),
+      ...(data.accountId !== undefined && { accountId: data.accountId || null }),
+      ...(data.monthlyCost !== undefined && { monthlyCost: data.monthlyCost }),
+      ...(data.yearlyCost !== undefined && { yearlyCost: data.yearlyCost || null }),
+      ...(data.category !== undefined && { category: data.category }),
+      ...(data.lastUsedDate !== undefined && { lastUsedDate: data.lastUsedDate ? new Date(data.lastUsedDate) : null }),
+      ...(data.isTrial !== undefined && { isTrial: data.isTrial }),
+      ...(data.trialEndDate !== undefined && { trialEndDate: data.trialEndDate ? new Date(data.trialEndDate) : null }),
+      ...(data.nextBillingDate !== undefined && { nextBillingDate: new Date(data.nextBillingDate) }),
+      ...(data.notes !== undefined && { notes: data.notes || null }),
+    },
+  })
+  revalidatePath("/contracts")
+  revalidatePath("/")
+}
+
+export async function deleteContract(id: string) {
+  await prisma.contract.delete({ where: { id } })
+  revalidatePath("/contracts")
+  revalidatePath("/")
+}
+
+export async function generateCancellationLetter(id: string): Promise<string> {
+  const contract = await getContract(id)
+  if (!contract) throw new Error("Contract not found")
+
+  const today = new Date()
+  const todayStr = today.toLocaleDateString("de-DE", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+  })
+
+  // Calculate cancellation date (30 days from now as default)
+  const endDate = new Date(today)
+  endDate.setDate(endDate.getDate() + 30)
+  const endDateStr = endDate.toLocaleDateString("de-DE", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+  })
+
+  return `Max Mustermann
+Musterstraße 1
+12345 Musterstadt
+
+${contract.providerName}
+${contract.accountId ? `Kundennummer: ${contract.accountId}` : ""}
+
+${todayStr}
+
+**Betreff: Kündigung des Vertrags${contract.accountId ? ` (Kundennummer: ${contract.accountId})` : ""}**
+
+Sehr geehrte Damen und Herren,
+
+hiermit kündige ich meinen Vertrag bei ${contract.providerName}${contract.accountId ? ` (Kundennummer: ${contract.accountId})` : ""} fristgerecht zum ${endDateStr} oder hilfsweise zum nächstmöglichen Termin.
+
+Bitte senden Sie mir eine schriftliche Bestätigung der Kündigung unter Angabe des Beendigungszeitpunktes zu.
+
+Mit freundlichen Grüßen
+
+Max Mustermann`
+}
+
 // ─── Notifications ──────────────────────────────────────────────────────
 
 export async function getNotifications(): Promise<Notification[]> {
@@ -816,6 +941,32 @@ export async function getNotifications(): Promise<Notification[]> {
       category: "Lent",
       link: "/lending",
       date: dateToStr(l.expectedReturn),
+    })
+  })
+
+  // 5. Contracts (Trial ending in 48 hours)
+  const in48Hours = new Date(today)
+  in48Hours.setHours(today.getHours() + 48)
+  
+  const trials = await prisma.contract.findMany({
+    where: {
+      isTrial: true,
+      trialEndDate: {
+        gte: today,
+        lte: in48Hours,
+      },
+    },
+  })
+
+  trials.forEach((c) => {
+    notifications.push({
+      id: `contract-trial-${c.id}`,
+      title: `🚨 Trial-Trap Alert: ${c.providerName}`,
+      message: `Free trial ends in 48 hours! First charge: €${c.monthlyCost}/month`,
+      type: "warning",
+      category: "Contract",
+      link: "/contracts",
+      date: c.trialEndDate ? dateToStr(c.trialEndDate) : undefined,
     })
   })
 
