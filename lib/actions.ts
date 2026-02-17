@@ -13,6 +13,7 @@ import type {
   WishlistProject,
   WasteType,
   WastePickup,
+  Insurance,
 } from "@/lib/data"
 import type {
   Appliance as PrismaAppliance,
@@ -26,6 +27,7 @@ import type {
   WishlistProject as PrismaWishlistProject,
   WasteType as PrismaWasteType,
   WastePickup as PrismaWastePickup,
+  Insurance as PrismaInsurance,
 } from "@prisma/client"
 
 type PrismaServiceProvider = PrismaSP & { history: PrismaServiceHistory[] }
@@ -665,4 +667,83 @@ export async function updateHeatingType(type: string) {
   })
   revalidatePath("/settings")
   revalidatePath("/utilities")
+}
+
+// ─── Insurance ──────────────────────────────────────────────────────────
+
+export async function getInsurances(): Promise<Insurance[]> {
+  const rows = await prisma.insurance.findMany({ orderBy: { cancellationDeadline: "asc" } })
+  return rows.map((r: PrismaInsurance) => ({
+    id: r.id,
+    providerName: r.providerName,
+    policyType: r.policyType as Insurance["policyType"],
+    customPolicyType: r.customPolicyType || undefined,
+    policyNumber: r.policyNumber,
+    premiumAmount: r.premiumAmount,
+    paymentFrequency: r.paymentFrequency as Insurance["paymentFrequency"],
+    deductible: r.deductible,
+    startDate: dateToStr(r.startDate),
+    endDate: r.endDate ? dateToStr(r.endDate) : undefined,
+    cancellationDeadline: dateToStr(r.cancellationDeadline),
+    documentPath: r.documentPath || undefined,
+    claimsHotline: r.claimsHotline,
+    agentEmail: r.agentEmail,
+    beneficiary: r.beneficiary || undefined,
+    notes: r.notes || undefined,
+  }))
+}
+
+export async function createInsurance(data: Omit<Insurance, "id">) {
+  await prisma.insurance.create({
+    data: {
+      providerName: data.providerName,
+      policyType: data.policyType,
+      customPolicyType: data.customPolicyType || null,
+      policyNumber: data.policyNumber,
+      premiumAmount: data.premiumAmount,
+      paymentFrequency: data.paymentFrequency,
+      deductible: data.deductible,
+      startDate: new Date(data.startDate),
+      endDate: data.endDate ? new Date(data.endDate) : null,
+      cancellationDeadline: new Date(data.cancellationDeadline),
+      documentPath: data.documentPath || null,
+      claimsHotline: data.claimsHotline,
+      agentEmail: data.agentEmail,
+      beneficiary: data.beneficiary || null,
+      notes: data.notes || null,
+    },
+  })
+  revalidatePath("/insurance")
+  revalidatePath("/")
+}
+
+export async function updateInsurance(id: string, data: Partial<Omit<Insurance, "id">>) {
+  await prisma.insurance.update({
+    where: { id },
+    data: {
+      ...(data.providerName !== undefined && { providerName: data.providerName }),
+      ...(data.policyType !== undefined && { policyType: data.policyType }),
+      ...(data.customPolicyType !== undefined && { customPolicyType: data.customPolicyType || null }),
+      ...(data.policyNumber !== undefined && { policyNumber: data.policyNumber }),
+      ...(data.premiumAmount !== undefined && { premiumAmount: data.premiumAmount }),
+      ...(data.paymentFrequency !== undefined && { paymentFrequency: data.paymentFrequency }),
+      ...(data.deductible !== undefined && { deductible: data.deductible }),
+      ...(data.startDate !== undefined && { startDate: new Date(data.startDate) }),
+      ...(data.endDate !== undefined && { endDate: data.endDate ? new Date(data.endDate) : null }),
+      ...(data.cancellationDeadline !== undefined && { cancellationDeadline: new Date(data.cancellationDeadline) }),
+      ...(data.documentPath !== undefined && { documentPath: data.documentPath || null }),
+      ...(data.claimsHotline !== undefined && { claimsHotline: data.claimsHotline }),
+      ...(data.agentEmail !== undefined && { agentEmail: data.agentEmail }),
+      ...(data.beneficiary !== undefined && { beneficiary: data.beneficiary || null }),
+      ...(data.notes !== undefined && { notes: data.notes || null }),
+    },
+  })
+  revalidatePath("/insurance")
+  revalidatePath("/")
+}
+
+export async function deleteInsurance(id: string) {
+  await prisma.insurance.delete({ where: { id } })
+  revalidatePath("/insurance")
+  revalidatePath("/")
 }
