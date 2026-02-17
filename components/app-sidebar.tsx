@@ -30,45 +30,12 @@ import {
   SidebarFooter,
   SidebarSeparator,
 } from "@/components/ui/sidebar";
-import { isVersionLessThan, FALLBACK_VERSION } from "@/lib/utils/version";
+import { useVersionCheck } from "@/hooks/use-version-check";
 
 export function AppSidebar() {
   const pathname = usePathname();
   const t = useTranslations("Navigation");
-  const builtVersion = process.env.NEXT_PUBLIC_APP_VERSION || FALLBACK_VERSION;
-  const [latestVersion, setLatestVersion] = React.useState<string | null>(null);
-  const [isUpdateAvailable, setIsUpdateAvailable] =
-    React.useState<boolean>(false);
-
-  React.useEffect(() => {
-    const abortController = new AbortController();
-
-    fetch("/api/version", { signal: abortController.signal })
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error(`HTTP error! status: ${res.status}`);
-        }
-        return res.json();
-      })
-      .then((data) => {
-        if (data.version) {
-          setLatestVersion(data.version);
-          // Check if update is available using semantic version comparison
-          if (!data.fallback && isVersionLessThan(builtVersion, data.version)) {
-            setIsUpdateAvailable(true);
-          }
-        }
-      })
-      .catch((err) => {
-        // Ignore abort errors
-        if (err.name === "AbortError") return;
-        console.error("Failed to fetch version:", err);
-      });
-
-    return () => {
-      abortController.abort();
-    };
-  }, [builtVersion]);
+  const { isUpdateAvailable, latestVersion, currentVersion: builtVersion } = useVersionCheck();
 
   const mainNav = [
     { title: t("dashboard"), href: "/", icon: LayoutDashboard },
