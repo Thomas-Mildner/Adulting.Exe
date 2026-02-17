@@ -17,19 +17,22 @@ import {
 
 export const dynamic = "force-dynamic"
 
+import { getTranslations } from "next-intl/server"
+
 export default async function DashboardPage() {
-  const [appliances, maintenanceTasks, lentItems, meterHistory, taxDeductible, nextWastePickup] =
+  const [appliances, maintenanceTasks, lentItems, meterHistory, taxDeductible, t, nextWastePickup] =
     await Promise.all([
       getAppliances(),
       getMaintenanceTasks(),
       getLentItems(),
       getMeterReadings(),
       getTotalTaxDeductible(),
+      getTranslations("Dashboard"),
       getNextWastePickup(),
     ])
 
   return (
-    <DashboardLayout title="Dashboard" subtitle="Willkommen zurück. Dein Haus hat dich vermisst.">
+    <DashboardLayout title={t("welcome")} subtitle={t("subtitle")}>
       <div className="space-y-6">
         <HouseHealth appliances={appliances} maintenanceTasks={maintenanceTasks} lentItems={lentItems} />
         <StatsCards appliances={appliances} maintenanceTasks={maintenanceTasks} taxDeductible={taxDeductible} />

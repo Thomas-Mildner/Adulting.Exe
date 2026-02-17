@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useMemo } from "react";
+import { useTranslations } from "next-intl";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
@@ -59,6 +60,7 @@ import {
   PieChart,
   Pie,
   Cell,
+  ReferenceLine,
 } from "recharts";
 
 // ─── Helpers ────────────────────────────────────────────────────────────
@@ -66,13 +68,13 @@ import {
 function getPainLevel(current: number, previous: number) {
   const delta = ((current - previous) / previous) * 100;
   if (delta > 10)
-    return { level: "Existenzielle Angst", color: "text-destructive", delta };
+    return { level: "painLevels.existential", color: "text-destructive", delta };
   if (delta > 5)
-    return { level: "Leichte Panik", color: "text-chart-3", delta };
+    return { level: "painLevels.panic", color: "text-chart-3", delta };
   if (delta > 0)
-    return { level: "Leichte Sorge", color: "text-chart-3", delta };
-  if (delta === 0) return { level: "Zen", color: "text-success", delta };
-  return { level: "Überraschend gut", color: "text-success", delta };
+    return { level: "painLevels.worry", color: "text-chart-3", delta };
+  if (delta === 0) return { level: "painLevels.zen", color: "text-success", delta };
+  return { level: "painLevels.good", color: "text-success", delta };
 }
 
 function getDeltaIcon(delta: number) {
@@ -87,15 +89,15 @@ function getEfficiencyGrade(avgDelta: number): {
   color: string;
 } {
   if (avgDelta <= -10)
-    return { grade: "A+", label: "Vorbildlich", color: "text-success" };
+    return { grade: "A+", label: "efficiencyGrades.exemplary", color: "text-success" };
   if (avgDelta <= -5)
-    return { grade: "A", label: "Sehr gut", color: "text-success" };
-  if (avgDelta <= 0) return { grade: "B", label: "Gut", color: "text-primary" };
+    return { grade: "A", label: "efficiencyGrades.veryGood", color: "text-success" };
+  if (avgDelta <= 0) return { grade: "B", label: "efficiencyGrades.good", color: "text-primary" };
   if (avgDelta <= 5)
-    return { grade: "C", label: "Ausbaufähig", color: "text-chart-3" };
+    return { grade: "C", label: "efficiencyGrades.expandable", color: "text-chart-3" };
   if (avgDelta <= 10)
-    return { grade: "D", label: "Kritisch", color: "text-destructive" };
-  return { grade: "F", label: "Katastrophe", color: "text-destructive" };
+    return { grade: "D", label: "efficiencyGrades.critical", color: "text-destructive" };
+  return { grade: "F", label: "efficiencyGrades.catastrophe", color: "text-destructive" };
 }
 
 const CHART_COLORS = {
@@ -111,6 +113,46 @@ const tooltipStyle = {
   boxShadow: "0 4px 6px -1px rgba(0,0,0,.05)",
 };
 
+// ─── Projection Helpers ─────────────────────────────────────────────────
+
+const MONTHS_DE_SHORT = [
+  "Jan", "Feb", "Mär", "Apr", "Mai", "Jun",
+  "Jul", "Aug", "Sep", "Okt", "Nov", "Dez",
+];
+
+function parseGermanMonth(str: string): Date | null {
+  const cleaned = str.replace(/\./g, "").trim();
+  for (let i = 0; i < MONTHS_DE_SHORT.length; i++) {
+    if (cleaned.startsWith(MONTHS_DE_SHORT[i])) {
+      const yearMatch = cleaned.match(/\d{4}/);
+      if (yearMatch) {
+        return new Date(parseInt(yearMatch[0]), i, 1);
+      }
+    }
+  }
+  return null;
+}
+
+function formatMonthDE(date: Date): string {
+  return date.toLocaleDateString("de-DE", { month: "short", year: "numeric" });
+}
+
+function linearRegression(values: number[]): { slope: number; intercept: number } {
+  const n = values.length;
+  if (n < 2) return { slope: 0, intercept: values[0] || 0 };
+  const xMean = (n - 1) / 2;
+  const yMean = values.reduce((s, v) => s + v, 0) / n;
+  let num = 0;
+  let den = 0;
+  for (let i = 0; i < n; i++) {
+    num += (i - xMean) * (values[i] - yMean);
+    den += (i - xMean) * (i - xMean);
+  }
+  const slope = den !== 0 ? num / den : 0;
+  const intercept = yMean - slope * xMean;
+  return { slope, intercept };
+}
+
 // ─── Component ──────────────────────────────────────────────────────────
 
 export function UtilityTracker({
@@ -120,6 +162,7 @@ export function UtilityTracker({
   meterHistory: MeterReading[];
   heatingType?: string;
 }) {
+  const t = useTranslations("Utilities");
   const heatingUnit = heatingType === "Gas" ? "m³" : heatingType === "Oil" ? "Liter" : heatingType === "Pellets" ? "kg" : "kWh";
   const [powerInput, setPowerInput] = useState("");
   const [waterInput, setWaterInput] = useState("");
@@ -171,22 +214,22 @@ export function UtilityTracker({
       <DialogTrigger asChild>
         <Button size="sm" className="gap-1.5 shrink-0">
           <Plus className="h-4 w-4" />
-          Neuer Zählerstand
+          {t("addReading")}
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[480px]">
         <DialogHeader>
-          <DialogTitle>Neuen Zählerstand erfassen</DialogTitle>
+          <DialogTitle>{t("addDialogTitle")}</DialogTitle>
           <DialogDescription>
-            Zeit für deinen monatlichen Termin mit den Zählerständen.
+            {t("addDialogDesc")}
           </DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">
           <div className="grid gap-2">
-            <Label htmlFor="dlg-month">Monat</Label>
+            <Label htmlFor="dlg-month">{t("month")}</Label>
             <Input
               id="dlg-month"
-              placeholder="z.B. Jan 2026"
+              placeholder={t("placeholders.month")}
               value={dlgMonth}
               onChange={(e) => setDlgMonth(e.target.value)}
               required
@@ -196,21 +239,21 @@ export function UtilityTracker({
             <div className="grid gap-2">
               <div className="flex items-center gap-1.5">
                 <Zap className="h-3.5 w-3.5 text-chart-1" />
-                <Label className="text-xs font-medium">Strom (kWh)</Label>
+                <Label className="text-xs font-medium">{t("power")} (kWh)</Label>
               </div>
               <Input
                 type="number"
-                placeholder="Verbrauch kWh"
+                placeholder={t("placeholders.consumption", { unit: "kWh" })}
                 value={dlgPower}
                 onChange={(e) => setDlgPower(e.target.value)}
                 className="h-9 text-sm"
               />
             </div>
             <div className="grid gap-2">
-              <Label className="text-xs font-medium">Kosten Strom (€)</Label>
+              <Label className="text-xs font-medium">{t("cost")} {t("power")} (€)</Label>
               <Input
                 type="number"
-                placeholder="Kosten €"
+                placeholder={t("placeholders.cost")}
                 value={dlgPowerCost}
                 onChange={(e) => setDlgPowerCost(e.target.value)}
                 className="h-9 text-sm"
@@ -221,21 +264,21 @@ export function UtilityTracker({
             <div className="grid gap-2">
               <div className="flex items-center gap-1.5">
                 <Droplets className="h-3.5 w-3.5 text-primary" />
-                <Label className="text-xs font-medium">Wasser (m³)</Label>
+                <Label className="text-xs font-medium">{t("water")} (m³)</Label>
               </div>
               <Input
                 type="number"
-                placeholder="Verbrauch m³"
+                placeholder={t("placeholders.consumption", { unit: "m³" })}
                 value={dlgWater}
                 onChange={(e) => setDlgWater(e.target.value)}
                 className="h-9 text-sm"
               />
             </div>
             <div className="grid gap-2">
-              <Label className="text-xs font-medium">Kosten Wasser (€)</Label>
+              <Label className="text-xs font-medium">{t("cost")} {t("water")} (€)</Label>
               <Input
                 type="number"
-                placeholder="Kosten €"
+                placeholder={t("placeholders.cost")}
                 value={dlgWaterCost}
                 onChange={(e) => setDlgWaterCost(e.target.value)}
                 className="h-9 text-sm"
@@ -257,10 +300,10 @@ export function UtilityTracker({
               />
             </div>
             <div className="grid gap-2">
-              <Label className="text-xs font-medium">Kosten Heizung (€)</Label>
+              <Label className="text-xs font-medium">{t("cost")} {t("heating")} (€)</Label>
               <Input
                 type="number"
-                placeholder="Kosten €"
+                placeholder={t("placeholders.cost")}
                 value={dlgHeatingCost}
                 onChange={(e) => setDlgHeatingCost(e.target.value)}
                 className="h-9 text-sm"
@@ -274,10 +317,10 @@ export function UtilityTracker({
             variant="outline"
             onClick={() => setAddDialogOpen(false)}
           >
-            Abbrechen
+            {t("cancel")}
           </Button>
           <Button onClick={handleDialogSave} disabled={saving}>
-            {saving ? "Speichert..." : "Speichern"}
+            {saving ? t("saving") : t("save")}
           </Button>
         </DialogFooter>
       </DialogContent>
@@ -293,9 +336,9 @@ export function UtilityTracker({
     return (
       <Card>
         <CardHeader>
-          <CardTitle>Nebenkosten-Tracker</CardTitle>
+          <CardTitle>{t("trackerTitle")}</CardTitle>
           <p className="text-sm text-muted-foreground">
-            Noch keine Zählerstände vorhanden – erfasse deinen ersten Monat.
+            {t("noData")}
           </p>
         </CardHeader>
         <CardContent>{addMeterDialog}</CardContent>
@@ -397,6 +440,151 @@ export function UtilityTracker({
     const latestPricePerKwhHeating =
       latest.heating > 0 ? latest.heatingCost / latest.heating : 0;
 
+    // ─── Projection (Hochrechnung) ──────────────────────────────────
+    const PROJ_MONTHS = 6;
+    const powerCostReg = linearRegression(meterHistory.map((r) => r.powerCost));
+    const waterCostReg = linearRegression(meterHistory.map((r) => r.waterCost));
+    const heatingCostReg = linearRegression(
+      meterHistory.map((r) => r.heatingCost),
+    );
+    const powerUsageReg = linearRegression(meterHistory.map((r) => r.power));
+    const waterUsageReg = linearRegression(meterHistory.map((r) => r.water));
+    const heatingUsageReg = linearRegression(
+      meterHistory.map((r) => r.heating),
+    );
+
+    const lastMonthParsed = parseGermanMonth(meterHistory[n - 1].month);
+    const lastActualMonth = meterHistory[n - 1].month;
+
+    // Cost projection data
+    const projectionData = meterHistory.map((r) => ({
+      month: r.month,
+      Gesamt: r.powerCost + r.waterCost + r.heatingCost,
+      Strom: r.powerCost,
+      Wasser: r.waterCost,
+      Heizung: r.heatingCost,
+      GesamtPrognose: null as number | null,
+      StromPrognose: null as number | null,
+      WasserPrognose: null as number | null,
+      HeizungPrognose: null as number | null,
+    }));
+
+    // Bridge last actual point → first projection point for line continuity
+    const lastPoint = projectionData[n - 1];
+    lastPoint.GesamtPrognose = lastPoint.Gesamt;
+    lastPoint.StromPrognose = lastPoint.Strom;
+    lastPoint.WasserPrognose = lastPoint.Wasser;
+    lastPoint.HeizungPrognose = lastPoint.Heizung;
+
+    if (lastMonthParsed) {
+      for (let offset = 1; offset <= PROJ_MONTHS; offset++) {
+        const futureDate = new Date(
+          lastMonthParsed.getFullYear(),
+          lastMonthParsed.getMonth() + offset,
+          1,
+        );
+        const idx = n - 1 + offset;
+        const pP = Math.max(
+          0,
+          powerCostReg.slope * idx + powerCostReg.intercept,
+        );
+        const pW = Math.max(
+          0,
+          waterCostReg.slope * idx + waterCostReg.intercept,
+        );
+        const pH = Math.max(
+          0,
+          heatingCostReg.slope * idx + heatingCostReg.intercept,
+        );
+        projectionData.push({
+          month: formatMonthDE(futureDate),
+          Gesamt: null as unknown as number,
+          Strom: null as unknown as number,
+          Wasser: null as unknown as number,
+          Heizung: null as unknown as number,
+          GesamtPrognose: Math.round((pP + pW + pH) * 100) / 100,
+          StromPrognose: Math.round(pP * 100) / 100,
+          WasserPrognose: Math.round(pW * 100) / 100,
+          HeizungPrognose: Math.round(pH * 100) / 100,
+        });
+      }
+    }
+
+    // Consumption projection data
+    const consumptionProjection = meterHistory.map((r) => ({
+      month: r.month,
+      Strom: r.power,
+      Wasser: r.water,
+      Heizung: r.heating,
+      StromPrognose: null as number | null,
+      WasserPrognose: null as number | null,
+      HeizungPrognose: null as number | null,
+    }));
+
+    const lastCons = consumptionProjection[n - 1];
+    lastCons.StromPrognose = lastCons.Strom;
+    lastCons.WasserPrognose = lastCons.Wasser;
+    lastCons.HeizungPrognose = lastCons.Heizung;
+
+    if (lastMonthParsed) {
+      for (let offset = 1; offset <= PROJ_MONTHS; offset++) {
+        const futureDate = new Date(
+          lastMonthParsed.getFullYear(),
+          lastMonthParsed.getMonth() + offset,
+          1,
+        );
+        const idx = n - 1 + offset;
+        consumptionProjection.push({
+          month: formatMonthDE(futureDate),
+          Strom: null as unknown as number,
+          Wasser: null as unknown as number,
+          Heizung: null as unknown as number,
+          StromPrognose: Math.max(
+            0,
+            Math.round(
+              (powerUsageReg.slope * idx + powerUsageReg.intercept) * 10,
+            ) / 10,
+          ),
+          WasserPrognose: Math.max(
+            0,
+            Math.round(
+              (waterUsageReg.slope * idx + waterUsageReg.intercept) * 100,
+            ) / 100,
+          ),
+          HeizungPrognose: Math.max(
+            0,
+            Math.round(
+              (heatingUsageReg.slope * idx + heatingUsageReg.intercept) * 10,
+            ) / 10,
+          ),
+        });
+      }
+    }
+
+    // Projected annual costs (next 12 months via regression)
+    const projAnnualPowerCost = Array.from({ length: 12 }, (_, i) =>
+      Math.max(0, powerCostReg.slope * (n + i) + powerCostReg.intercept),
+    ).reduce((s, v) => s + v, 0);
+    const projAnnualWaterCost = Array.from({ length: 12 }, (_, i) =>
+      Math.max(0, waterCostReg.slope * (n + i) + waterCostReg.intercept),
+    ).reduce((s, v) => s + v, 0);
+    const projAnnualHeatingCost = Array.from({ length: 12 }, (_, i) =>
+      Math.max(0, heatingCostReg.slope * (n + i) + heatingCostReg.intercept),
+    ).reduce((s, v) => s + v, 0);
+    const projAnnualTotal =
+      projAnnualPowerCost + projAnnualWaterCost + projAnnualHeatingCost;
+
+    // Overall trend direction
+    const totalCostReg = linearRegression(
+      meterHistory.map((r) => r.powerCost + r.waterCost + r.heatingCost),
+    );
+    const projTrendDirection: "up" | "down" | "stable" =
+      totalCostReg.slope > 2
+        ? "up"
+        : totalCostReg.slope < -2
+          ? "down"
+          : "stable";
+
     return {
       totalCost,
       totalPowerCost,
@@ -417,6 +605,14 @@ export function UtilityTracker({
       latestPricePerKwh,
       latestPricePerM3,
       latestPricePerKwhHeating,
+      projectionData,
+      consumptionProjection,
+      lastActualMonth,
+      projAnnualPowerCost,
+      projAnnualWaterCost,
+      projAnnualHeatingCost,
+      projAnnualTotal,
+      projTrendDirection,
     };
   }, [meterHistory, latest]);
 
@@ -433,6 +629,7 @@ export function UtilityTracker({
     if (!powerInput && !waterInput && !heatingInput) return;
     setSaving(true);
     const now = new Date();
+    // TODO: Use locale from hook
     const month = now.toLocaleDateString("de-DE", {
       month: "short",
       year: "numeric",
@@ -459,7 +656,7 @@ export function UtilityTracker({
 
   const resources = [
     {
-      label: "Strom",
+      label: t("power"),
       unit: "kWh",
       value: latest.power,
       cost: latest.powerCost,
@@ -469,7 +666,7 @@ export function UtilityTracker({
       avg: analytics.avgPower,
     },
     {
-      label: "Wasser",
+      label: t("water"),
       unit: "m\u00B3",
       value: latest.water,
       cost: latest.waterCost,
@@ -505,7 +702,7 @@ export function UtilityTracker({
               </div>
               <div>
                 <p className="text-[10px] font-medium text-muted-foreground uppercase tracking-wide">
-                  Gesamtkosten
+                  {t("totalCost")}
                 </p>
                 <p className="text-lg font-semibold tabular-nums">
                   {formatCurrency(analytics.totalCost)}
@@ -513,7 +710,7 @@ export function UtilityTracker({
               </div>
             </div>
             <p className="text-[10px] text-muted-foreground mt-2">
-              Über {meterHistory.length} Monate
+              {t("overMonths", { count: meterHistory.length })}
             </p>
           </CardContent>
         </Card>
@@ -526,7 +723,7 @@ export function UtilityTracker({
               </div>
               <div>
                 <p className="text-[10px] font-medium text-muted-foreground uppercase tracking-wide">
-                  Ø Monat
+                  {t("avgMonth")}
                 </p>
                 <p className="text-lg font-semibold tabular-nums">
                   {formatCurrency(analytics.avgMonthlyCost)}
@@ -534,7 +731,7 @@ export function UtilityTracker({
               </div>
             </div>
             <p className="text-[10px] text-muted-foreground mt-2">
-              Hochrechnung: {formatCurrency(analytics.yearProjection)}/Jahr
+              {t("projection", { amount: formatCurrency(analytics.yearProjection) })}
             </p>
           </CardContent>
         </Card>
@@ -547,7 +744,7 @@ export function UtilityTracker({
               </div>
               <div>
                 <p className="text-[10px] font-medium text-muted-foreground uppercase tracking-wide">
-                  Effizienz-Note
+                  {t("efficiencyGrade")}
                 </p>
                 <p
                   className={`text-lg font-bold ${analytics.efficiency.color}`}
@@ -557,7 +754,7 @@ export function UtilityTracker({
               </div>
             </div>
             <p className="text-[10px] text-muted-foreground mt-2">
-              {analytics.efficiency.label} (letzte 3 Monate)
+              {t(analytics.efficiency.label)} (letzte 3 Monate)
             </p>
           </CardContent>
         </Card>
@@ -570,7 +767,7 @@ export function UtilityTracker({
               </div>
               <div>
                 <p className="text-[10px] font-medium text-muted-foreground uppercase tracking-wide">
-                  Letztes Quartal
+                  {t("lastQuarter")}
                 </p>
                 <p className="text-lg font-semibold tabular-nums">
                   {formatCurrency(analytics.qCost)}
@@ -578,7 +775,7 @@ export function UtilityTracker({
               </div>
             </div>
             <p className="text-[10px] text-muted-foreground mt-2">
-              Teuerster: {analytics.peakMonth.month} (
+              {t("mostExpensive")}: {analytics.peakMonth.month} (
               {formatCurrency(analytics.peakMonth.total)})
             </p>
           </CardContent>
@@ -607,7 +804,7 @@ export function UtilityTracker({
                         className={`text-[11px] font-medium ${r.pain.color}`}
                       >
                         {r.pain.delta > 0 ? "+" : ""}
-                        {r.pain.delta.toFixed(1)}% ggü. Vormonat
+                        {t("comparison", { amount: r.pain.delta.toFixed(1) + "%" })}
                       </span>
                     </div>
                   </div>
@@ -620,14 +817,14 @@ export function UtilityTracker({
 
                 <div className="mt-3 pt-3 border-t space-y-2">
                   <div className="flex items-center justify-between text-[11px]">
-                    <span className="text-muted-foreground">Kosten</span>
+                    <span className="text-muted-foreground">{t("cost")}</span>
                     <span className="font-medium tabular-nums">
                       {formatCurrency(r.cost)}
                     </span>
                   </div>
                   <div className="flex items-center justify-between text-[11px]">
                     <span className="text-muted-foreground">
-                      vs. Durchschnitt
+                      {t("vsAverage")}
                     </span>
                     <Badge
                       variant="outline"
@@ -638,9 +835,9 @@ export function UtilityTracker({
                     </Badge>
                   </div>
                   <div className="flex items-center justify-between text-[11px]">
-                    <span className="text-muted-foreground">Schmerzlevel</span>
+                    <span className="text-muted-foreground">{t("painLevel")}</span>
                     <span className={`font-medium ${r.pain.color}`}>
-                      {r.pain.level}
+                      {t(r.pain.level)}
                     </span>
                   </div>
                 </div>
@@ -652,18 +849,21 @@ export function UtilityTracker({
 
       {/* ── Charts Tabs ── */}
       <Tabs defaultValue="costs" className="space-y-4">
-        <TabsList className="grid w-full grid-cols-4">
+        <TabsList className="grid w-full grid-cols-5">
           <TabsTrigger value="costs" className="text-xs">
-            Kosten
+            {t("tabs.costs")}
           </TabsTrigger>
           <TabsTrigger value="consumption" className="text-xs">
-            Verbrauch
+            {t("tabs.consumption")}
           </TabsTrigger>
           <TabsTrigger value="breakdown" className="text-xs">
-            Verteilung
+            {t("tabs.breakdown")}
           </TabsTrigger>
           <TabsTrigger value="trends" className="text-xs">
-            Trends
+            {t("tabs.trends")}
+          </TabsTrigger>
+          <TabsTrigger value="projection" className="text-xs">
+            Hochrechnung
           </TabsTrigger>
         </TabsList>
 
@@ -673,11 +873,10 @@ export function UtilityTracker({
             <Card>
               <CardHeader className="pb-3">
                 <CardTitle className="text-sm font-medium">
-                  Monatliche Kosten
+                  {t("charts.monthlyCosts")}
                 </CardTitle>
                 <p className="text-xs text-muted-foreground">
-                  Aufgeschlüsselt nach Ressource — sieh deinem Geld beim
-                  Verdampfen zu.
+                  {t("charts.monthlyCostsDesc")}
                 </p>
               </CardHeader>
               <CardContent>
@@ -734,10 +933,10 @@ export function UtilityTracker({
             <Card>
               <CardHeader className="pb-3">
                 <CardTitle className="text-sm font-medium">
-                  Gesamtkosten-Verlauf
+                  {t("charts.totalCostTrend")}
                 </CardTitle>
                 <p className="text-xs text-muted-foreground">
-                  Die Kurve deines finanziellen Schmerzes.
+                  {t("charts.totalCostTrendDesc")}
                 </p>
               </CardHeader>
               <CardContent>
@@ -808,10 +1007,10 @@ export function UtilityTracker({
             <Card>
               <CardHeader className="pb-3">
                 <CardTitle className="text-sm font-medium">
-                  Verbrauchshistorie
+                  {t("charts.consumptionHistory")}
                 </CardTitle>
                 <p className="text-xs text-muted-foreground">
-                  {meterHistory.length}-Monats-Überblick. Halt dich fest.
+                  {t("charts.consumptionHistoryDesc", { count: meterHistory.length })}
                 </p>
               </CardHeader>
               <CardContent>
@@ -840,7 +1039,7 @@ export function UtilityTracker({
                       <Legend iconSize={8} wrapperStyle={{ fontSize: 11 }} />
                       <Bar
                         dataKey="power"
-                        name="Strom (kWh)"
+                        name={t("power") + " (kWh)"}
                         fill={CHART_COLORS.power}
                         radius={[3, 3, 0, 0]}
                       />
@@ -853,7 +1052,7 @@ export function UtilityTracker({
                       <Line
                         type="monotone"
                         dataKey="water"
-                        name="Wasser (m³)"
+                        name={t("water") + " (m³)"}
                         stroke={CHART_COLORS.water}
                         strokeWidth={2}
                         dot={{ r: 3 }}
@@ -868,10 +1067,10 @@ export function UtilityTracker({
             <Card>
               <CardHeader className="pb-3">
                 <CardTitle className="text-sm font-medium">
-                  Wasserverbrauch-Trend
+                  {t("charts.waterTrend")}
                 </CardTitle>
                 <p className="text-xs text-muted-foreground">
-                  Jeder Tropfen zählt. Wortwörtlich.
+                  {t("charts.waterTrendDesc")}
                 </p>
               </CardHeader>
               <CardContent>
@@ -923,7 +1122,7 @@ export function UtilityTracker({
                         stroke={CHART_COLORS.water}
                         strokeWidth={2}
                         fill="url(#waterGrad)"
-                        name="Wasser (m³)"
+                        name={t("water") + " (m³)"}
                       />
                     </AreaChart>
                   </ResponsiveContainer>
@@ -939,10 +1138,10 @@ export function UtilityTracker({
             <Card>
               <CardHeader className="pb-3">
                 <CardTitle className="text-sm font-medium">
-                  Kostenverteilung
+                  {t("charts.costDistribution")}
                 </CardTitle>
                 <p className="text-xs text-muted-foreground">
-                  Wo dein Geld wirklich hingeht.
+                  {t("charts.costDistributionDesc")}
                 </p>
               </CardHeader>
               <CardContent>
@@ -992,10 +1191,10 @@ export function UtilityTracker({
             <Card>
               <CardHeader className="pb-3">
                 <CardTitle className="text-sm font-medium">
-                  Stückkosten
+                  {t("charts.unitCosts")}
                 </CardTitle>
                 <p className="text-xs text-muted-foreground">
-                  Was dich jede Einheit tatsächlich kostet.
+                  {t("charts.unitCostsDesc")}
                 </p>
               </CardHeader>
               <CardContent className="space-y-6">
@@ -1004,7 +1203,7 @@ export function UtilityTracker({
                     <div className="flex items-center justify-between text-sm">
                       <div className="flex items-center gap-2">
                         <Zap className="h-3.5 w-3.5 text-chart-1" />
-                        <span>Strom</span>
+                        <span>{t("power")}</span>
                       </div>
                       <span className="font-mono font-medium tabular-nums">
                         {analytics.latestPricePerKwh.toFixed(2)} €/kWh
@@ -1018,7 +1217,7 @@ export function UtilityTracker({
                       className="h-2"
                     />
                     <p className="text-[10px] text-muted-foreground">
-                      Bundesdurchschnitt: ~0,32 €/kWh
+                      {t("averageOf", { amount: "0,32", unit: "kWh" })}
                     </p>
                   </div>
 
@@ -1026,7 +1225,7 @@ export function UtilityTracker({
                     <div className="flex items-center justify-between text-sm">
                       <div className="flex items-center gap-2">
                         <Droplets className="h-3.5 w-3.5 text-primary" />
-                        <span>Wasser</span>
+                        <span>{t("water")}</span>
                       </div>
                       <span className="font-mono font-medium tabular-nums">
                         {analytics.latestPricePerM3.toFixed(2)} €/m³
@@ -1040,7 +1239,7 @@ export function UtilityTracker({
                       className="h-2"
                     />
                     <p className="text-[10px] text-muted-foreground">
-                      Bundesdurchschnitt: ~2,20 €/m³
+                      {t("averageOf", { amount: "2,20", unit: "m³" })}
                     </p>
                   </div>
 
@@ -1048,9 +1247,10 @@ export function UtilityTracker({
                     <div className="flex items-center justify-between text-sm">
                       <div className="flex items-center gap-2">
                         <Flame className="h-3.5 w-3.5 text-chart-4" />
-                        <span>Heizung</span>
+                        <span>{t("heating")}</span>
                       </div>
                       <span className="font-mono font-medium tabular-nums">
+                        {analytics.latestPricePerKwhHeating.toFixed(2)} €/{heatingUnit}
                         {analytics.latestPricePerKwhHeating.toFixed(2)} €/{heatingUnit}
                       </span>
                     </div>
@@ -1229,6 +1429,383 @@ export function UtilityTracker({
               </CardContent>
             </Card>
           </div>
+        </TabsContent>
+
+        {/* Projection Tab */}
+        <TabsContent value="projection">
+          <div className="grid gap-6 lg:grid-cols-3">
+            {/* Cost Projection Chart */}
+            <Card className="lg:col-span-2">
+              <CardHeader className="pb-3">
+                <CardTitle className="text-sm font-medium flex items-center gap-2">
+                  <TrendingUp className="h-4 w-4" />
+                  Kostenprognose
+                </CardTitle>
+                <p className="text-xs text-muted-foreground">
+                  Basierend auf deinem bisherigen Verbrauch — so sieht deine
+                  finanzielle Zukunft aus. Gestrichelt = Prognose.
+                </p>
+              </CardHeader>
+              <CardContent>
+                <div className="h-[340px] w-full">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <ComposedChart
+                      data={analytics.projectionData}
+                      margin={{ top: 5, right: 5, left: -10, bottom: 0 }}
+                    >
+                      <defs>
+                        <linearGradient
+                          id="projGrad"
+                          x1="0"
+                          y1="0"
+                          x2="0"
+                          y2="1"
+                        >
+                          <stop
+                            offset="5%"
+                            stopColor="hsl(260, 60%, 55%)"
+                            stopOpacity={0.15}
+                          />
+                          <stop
+                            offset="95%"
+                            stopColor="hsl(260, 60%, 55%)"
+                            stopOpacity={0}
+                          />
+                        </linearGradient>
+                        <linearGradient
+                          id="projGradDashed"
+                          x1="0"
+                          y1="0"
+                          x2="0"
+                          y2="1"
+                        >
+                          <stop
+                            offset="5%"
+                            stopColor="hsl(260, 60%, 55%)"
+                            stopOpacity={0.08}
+                          />
+                          <stop
+                            offset="95%"
+                            stopColor="hsl(260, 60%, 55%)"
+                            stopOpacity={0}
+                          />
+                        </linearGradient>
+                      </defs>
+                      <CartesianGrid
+                        strokeDasharray="3 3"
+                        stroke="hsl(220, 13%, 91%)"
+                      />
+                      <XAxis
+                        dataKey="month"
+                        tick={{ fontSize: 9, fill: "hsl(220, 8%, 46%)" }}
+                        axisLine={false}
+                        tickLine={false}
+                        angle={-30}
+                        textAnchor="end"
+                        height={45}
+                      />
+                      <YAxis
+                        tick={{ fontSize: 10, fill: "hsl(220, 8%, 46%)" }}
+                        axisLine={false}
+                        tickLine={false}
+                        tickFormatter={(v) => `${v}\u202F€`}
+                      />
+                      <Tooltip
+                        contentStyle={tooltipStyle}
+                        formatter={(v, name) =>
+                          v != null
+                            ? [
+                                formatCurrency(Number(v)),
+                                String(name).replace("Prognose", "(Prognose)"),
+                              ]
+                            : ["-", String(name)]
+                        }
+                      />
+                      <Legend iconSize={8} wrapperStyle={{ fontSize: 10 }} />
+                      <ReferenceLine
+                        x={analytics.lastActualMonth}
+                        stroke="hsl(220, 8%, 70%)"
+                        strokeDasharray="3 3"
+                        label={{
+                          value: "Heute",
+                          fontSize: 10,
+                          fill: "hsl(220, 8%, 46%)",
+                        }}
+                      />
+                      {/* Actual */}
+                      <Area
+                        type="monotone"
+                        dataKey="Gesamt"
+                        stroke="hsl(260, 60%, 55%)"
+                        strokeWidth={2}
+                        fill="url(#projGrad)"
+                        name="Gesamt (Ist)"
+                        connectNulls={false}
+                      />
+                      <Line
+                        type="monotone"
+                        dataKey="Strom"
+                        stroke={CHART_COLORS.power}
+                        strokeWidth={1.5}
+                        dot={false}
+                        name="Strom (Ist)"
+                        connectNulls={false}
+                      />
+                      <Line
+                        type="monotone"
+                        dataKey="Wasser"
+                        stroke={CHART_COLORS.water}
+                        strokeWidth={1.5}
+                        dot={false}
+                        name="Wasser (Ist)"
+                        connectNulls={false}
+                      />
+                      <Line
+                        type="monotone"
+                        dataKey="Heizung"
+                        stroke={CHART_COLORS.heating}
+                        strokeWidth={1.5}
+                        dot={false}
+                        name="Heizung (Ist)"
+                        connectNulls={false}
+                      />
+                      {/* Projected */}
+                      <Line
+                        type="monotone"
+                        dataKey="GesamtPrognose"
+                        stroke="hsl(260, 60%, 55%)"
+                        strokeWidth={2}
+                        strokeDasharray="6 3"
+                        dot={{ r: 2, fill: "hsl(260, 60%, 55%)" }}
+                        name="Gesamt (Prognose)"
+                        connectNulls={false}
+                      />
+                      <Line
+                        type="monotone"
+                        dataKey="StromPrognose"
+                        stroke={CHART_COLORS.power}
+                        strokeWidth={1.5}
+                        strokeDasharray="4 3"
+                        dot={false}
+                        name="Strom (Prognose)"
+                        connectNulls={false}
+                      />
+                      <Line
+                        type="monotone"
+                        dataKey="WasserPrognose"
+                        stroke={CHART_COLORS.water}
+                        strokeWidth={1.5}
+                        strokeDasharray="4 3"
+                        dot={false}
+                        name="Wasser (Prognose)"
+                        connectNulls={false}
+                      />
+                      <Line
+                        type="monotone"
+                        dataKey="HeizungPrognose"
+                        stroke={CHART_COLORS.heating}
+                        strokeWidth={1.5}
+                        strokeDasharray="4 3"
+                        dot={false}
+                        name="Heizung (Prognose)"
+                        connectNulls={false}
+                      />
+                    </ComposedChart>
+                  </ResponsiveContainer>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Projected Annual Summary */}
+            <div className="space-y-4">
+              <Card>
+                <CardHeader className="pb-2">
+                  <CardTitle className="text-sm font-medium">
+                    Jahresprognose
+                  </CardTitle>
+                  <p className="text-xs text-muted-foreground">
+                    Hochgerechnete Kosten für die nächsten 12 Monate
+                  </p>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="text-center py-3 rounded-lg bg-muted/50">
+                    <p className="text-2xl font-bold tabular-nums">
+                      {formatCurrency(analytics.projAnnualTotal)}
+                    </p>
+                    <p className="text-[10px] text-muted-foreground mt-0.5">
+                      Geschätztes Jahrestotal
+                    </p>
+                  </div>
+
+                  <div className="space-y-3">
+                    {[
+                      {
+                        label: "Strom",
+                        value: analytics.projAnnualPowerCost,
+                        icon: Zap,
+                        color: CHART_COLORS.power,
+                        iconClass: "text-chart-1",
+                      },
+                      {
+                        label: "Wasser",
+                        value: analytics.projAnnualWaterCost,
+                        icon: Droplets,
+                        color: CHART_COLORS.water,
+                        iconClass: "text-primary",
+                      },
+                      {
+                        label: "Heizung",
+                        value: analytics.projAnnualHeatingCost,
+                        icon: Flame,
+                        color: CHART_COLORS.heating,
+                        iconClass: "text-chart-4",
+                      },
+                    ].map((r) => (
+                      <div key={r.label} className="space-y-1.5">
+                        <div className="flex items-center justify-between text-xs">
+                          <div className="flex items-center gap-1.5">
+                            <r.icon className={`h-3 w-3 ${r.iconClass}`} />
+                            <span>{r.label}</span>
+                          </div>
+                          <span className="font-medium tabular-nums">
+                            {formatCurrency(r.value)}
+                          </span>
+                        </div>
+                        <Progress
+                          value={
+                            analytics.projAnnualTotal > 0
+                              ? (r.value / analytics.projAnnualTotal) * 100
+                              : 0
+                          }
+                          className="h-1.5"
+                        />
+                        <p className="text-[10px] text-muted-foreground">
+                          ~ {formatCurrency(r.value / 12)}/Monat
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardContent className="p-4">
+                  <div className="flex items-start gap-2">
+                    <TrendingUp className="h-4 w-4 text-muted-foreground mt-0.5 shrink-0" />
+                    <div>
+                      <p className="text-xs font-medium">Trend-Info</p>
+                      <p className="text-[11px] text-muted-foreground mt-1">
+                        {analytics.projTrendDirection === "up"
+                          ? "Deine Kosten zeigen einen steigenden Trend. Zeit für Sparmaßnahmen!"
+                          : analytics.projTrendDirection === "down"
+                            ? "Gute Nachrichten! Deine Kosten sind rückläufig."
+                            : "Deine Kosten sind relativ stabil. Weiter so!"}
+                      </p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+
+          {/* Consumption Projection */}
+          <Card className="mt-6">
+            <CardHeader className="pb-3">
+              <CardTitle className="text-sm font-medium">
+                Verbrauchsprognose
+              </CardTitle>
+              <p className="text-xs text-muted-foreground">
+                So entwickelt sich dein Verbrauch voraussichtlich weiter.
+              </p>
+            </CardHeader>
+            <CardContent>
+              <div className="h-[260px] w-full">
+                <ResponsiveContainer width="100%" height="100%">
+                  <ComposedChart
+                    data={analytics.consumptionProjection}
+                    margin={{ top: 5, right: 5, left: -10, bottom: 0 }}
+                  >
+                    <CartesianGrid
+                      strokeDasharray="3 3"
+                      stroke="hsl(220, 13%, 91%)"
+                    />
+                    <XAxis
+                      dataKey="month"
+                      tick={{ fontSize: 9, fill: "hsl(220, 8%, 46%)" }}
+                      axisLine={false}
+                      tickLine={false}
+                      angle={-30}
+                      textAnchor="end"
+                      height={45}
+                    />
+                    <YAxis
+                      tick={{ fontSize: 10, fill: "hsl(220, 8%, 46%)" }}
+                      axisLine={false}
+                      tickLine={false}
+                    />
+                    <Tooltip contentStyle={tooltipStyle} />
+                    <Legend iconSize={8} wrapperStyle={{ fontSize: 10 }} />
+                    <ReferenceLine
+                      x={analytics.lastActualMonth}
+                      stroke="hsl(220, 8%, 70%)"
+                      strokeDasharray="3 3"
+                    />
+                    <Bar
+                      dataKey="Strom"
+                      name="Strom kWh (Ist)"
+                      fill={CHART_COLORS.power}
+                      radius={[3, 3, 0, 0]}
+                    />
+                    <Bar
+                      dataKey="Heizung"
+                      name="Heizung kWh (Ist)"
+                      fill={CHART_COLORS.heating}
+                      radius={[3, 3, 0, 0]}
+                    />
+                    <Line
+                      type="monotone"
+                      dataKey="Wasser"
+                      name="Wasser m³ (Ist)"
+                      stroke={CHART_COLORS.water}
+                      strokeWidth={2}
+                      dot={{ r: 2 }}
+                      connectNulls={false}
+                    />
+                    <Line
+                      type="monotone"
+                      dataKey="StromPrognose"
+                      name="Strom (Prognose)"
+                      stroke={CHART_COLORS.power}
+                      strokeDasharray="4 3"
+                      strokeWidth={2}
+                      dot={{ r: 2, fill: CHART_COLORS.power }}
+                      connectNulls={false}
+                    />
+                    <Line
+                      type="monotone"
+                      dataKey="HeizungPrognose"
+                      name="Heizung (Prognose)"
+                      stroke={CHART_COLORS.heating}
+                      strokeDasharray="4 3"
+                      strokeWidth={2}
+                      dot={{ r: 2, fill: CHART_COLORS.heating }}
+                      connectNulls={false}
+                    />
+                    <Line
+                      type="monotone"
+                      dataKey="WasserPrognose"
+                      name="Wasser (Prognose)"
+                      stroke={CHART_COLORS.water}
+                      strokeDasharray="4 3"
+                      strokeWidth={2}
+                      dot={{ r: 2, fill: CHART_COLORS.water }}
+                      connectNulls={false}
+                    />
+                  </ComposedChart>
+                </ResponsiveContainer>
+              </div>
+            </CardContent>
+          </Card>
         </TabsContent>
       </Tabs>
 

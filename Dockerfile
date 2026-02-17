@@ -1,9 +1,13 @@
 # Build stage
-FROM node:20.9.0-alpine AS builder
+FROM node:22.14.0-alpine AS builder
 
 RUN npm install -g pnpm
 
 WORKDIR /app
+
+# Accept version as build argument
+ARG APP_VERSION=development
+ENV NEXT_PUBLIC_APP_VERSION=$APP_VERSION
 
 COPY package.json pnpm-lock.yaml ./
 
@@ -19,7 +23,7 @@ COPY . .
 RUN pnpm build
 
 # Production stage
-FROM node:20.9.0-alpine AS runner
+FROM node:22.14.0-alpine AS runner
 
 RUN npm install -g pnpm
 
@@ -27,6 +31,10 @@ WORKDIR /app
 
 # Set production environment
 ENV NODE_ENV=production
+
+# Copy version from builder
+ARG APP_VERSION=development
+ENV NEXT_PUBLIC_APP_VERSION=$APP_VERSION
 
 # Copy dependencies (including generated Prisma Client) from builder
 COPY --from=builder /app/node_modules ./node_modules

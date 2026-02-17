@@ -4,42 +4,48 @@ import {
   DataSettings,
   AboutSettings
 } from "@/components/settings/settings-panel"
-import { WasteTypeSettings } from "@/components/settings/waste-type-settings"
 import { HeatingSettings } from "@/components/settings/heating-settings"
-import { getWasteTypes, getAppConfig } from "@/lib/actions"
+import { LanguageSwitcher } from "@/components/settings/language-switcher"
+import { WasteTypeSettings } from "@/components/settings/waste-type-settings"
+import { getAppConfig, getWasteTypes } from "@/lib/actions"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Bell, Home, Shield } from "lucide-react"
+import { getTranslations } from "next-intl/server"
 
 export const dynamic = "force-dynamic"
 
 export default async function SettingsPage() {
-  const [wasteTypes, appConfig] = await Promise.all([
+  const [appConfig, wasteTypes, t] = await Promise.all([
+    getAppConfig(),
     getWasteTypes(),
-    getAppConfig()
+    getTranslations("Settings")
   ])
 
   return (
     <DashboardLayout
-      title="Einstellungen"
-      subtitle="Konfiguriere deine digitale Festung."
+      title={t("title")}
+      subtitle={t("subtitle")}
     >
       <Tabs defaultValue="general" className="space-y-6">
         <TabsList>
           <TabsTrigger value="general" className="gap-2">
             <Bell className="h-4 w-4" />
-            Allgemein
+            {t("general")}
           </TabsTrigger>
           <TabsTrigger value="household" className="gap-2">
             <Home className="h-4 w-4" />
-            Haushalt
+            {t("household")}
           </TabsTrigger>
           <TabsTrigger value="system" className="gap-2">
             <Shield className="h-4 w-4" />
-            System
+            {t("system")}
           </TabsTrigger>
         </TabsList>
 
         <TabsContent value="general" className="space-y-6 max-w-2xl animate-in fade-in-50 duration-500">
+          <div className="flex items-center justify-between">
+            <LanguageSwitcher />
+          </div>
           <NotificationSettings />
         </TabsContent>
 
@@ -48,8 +54,8 @@ export default async function SettingsPage() {
             <div className="md:col-span-1">
               <HeatingSettings currentType={appConfig.heatingType} />
             </div>
-            <div className="md:col-span-1 lg:col-span-2">
-              <WasteTypeSettings wasteTypes={wasteTypes} />
+            <div className="md:col-span-1">
+              <WasteTypeSettings initialTypes={wasteTypes} />
             </div>
           </div>
         </TabsContent>

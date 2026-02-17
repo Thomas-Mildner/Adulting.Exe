@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useTransition } from "react"
+import { useTranslations } from "next-intl"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -51,32 +52,32 @@ import {
 
 const priorityConfig: Record<
   string,
-  { label: string; style: string; icon: typeof AlertTriangle }
+  { labelKey: string; style: string; icon: typeof AlertTriangle }
 > = {
   high: {
-    label: "Hoch",
+    labelKey: "high",
     style: "bg-destructive/10 text-destructive border-destructive/20",
     icon: AlertTriangle,
   },
   medium: {
-    label: "Mittel",
+    labelKey: "medium",
     style: "bg-chart-3/10 text-chart-3 border-chart-3/20",
     icon: Clock,
   },
   low: {
-    label: "Niedrig",
+    labelKey: "low",
     style: "bg-muted text-muted-foreground border-border",
     icon: ArrowDown,
   },
 }
 
 const recurringOptions = [
-  "Einmalig",
-  "Wöchentlich",
-  "Monatlich",
-  "Vierteljährlich",
-  "Halbjährlich",
-  "Jährlich",
+  "once",
+  "weekly",
+  "monthly",
+  "quarterly",
+  "biannually",
+  "yearly",
 ]
 
 type FormData = {
@@ -90,7 +91,7 @@ type FormData = {
 const emptyForm: FormData = {
   title: "",
   dueDate: new Date().toISOString().split("T")[0],
-  recurring: "Einmalig",
+  recurring: "once",
   priority: "medium",
   completed: false,
 }
@@ -102,13 +103,16 @@ function TaskFormFields({
   form: FormData
   setForm: (fn: (prev: FormData) => FormData) => void
 }) {
+  const t = useTranslations("Maintenance.form")
+  const tRec = useTranslations("Maintenance.recurring")
+
   return (
     <div className="grid gap-4 py-4">
       <div className="grid gap-2">
-        <Label htmlFor="title">Aufgabe</Label>
+        <Label htmlFor="title">{t("task")}</Label>
         <Input
           id="title"
-          placeholder="z.B. Heizung entlüften, Rauchmelder prüfen..."
+          placeholder={t("taskPlaceholder")}
           value={form.title}
           onChange={(e) => setForm((prev) => ({ ...prev, title: e.target.value }))}
           required
@@ -116,7 +120,7 @@ function TaskFormFields({
       </div>
       <div className="grid grid-cols-2 gap-4">
         <div className="grid gap-2">
-          <Label htmlFor="dueDate">Fällig am</Label>
+          <Label htmlFor="dueDate">{t("dueDate")}</Label>
           <Input
             id="dueDate"
             type="date"
@@ -128,7 +132,7 @@ function TaskFormFields({
           />
         </div>
         <div className="grid gap-2">
-          <Label htmlFor="recurring">Wiederholung</Label>
+          <Label htmlFor="recurring">{t("recurring")}</Label>
           <Select
             value={form.recurring}
             onValueChange={(v) =>
@@ -141,7 +145,7 @@ function TaskFormFields({
             <SelectContent>
               {recurringOptions.map((opt) => (
                 <SelectItem key={opt} value={opt}>
-                  {opt}
+                  {tRec(opt)}
                 </SelectItem>
               ))}
             </SelectContent>
@@ -149,7 +153,7 @@ function TaskFormFields({
         </div>
       </div>
       <div className="grid gap-2">
-        <Label>Priorität</Label>
+        <Label>{t("priority")}</Label>
         <div className="flex gap-2">
           {(["high", "medium", "low"] as const).map((p) => {
             const cfg = priorityConfig[p]
@@ -158,14 +162,13 @@ function TaskFormFields({
                 key={p}
                 type="button"
                 onClick={() => setForm((prev) => ({ ...prev, priority: p }))}
-                className={`flex items-center gap-1.5 rounded-md border px-3 py-2 text-xs transition-colors ${
-                  form.priority === p
+                className={`flex items-center gap-1.5 rounded-md border px-3 py-2 text-xs transition-colors ${form.priority === p
                     ? "border-primary bg-primary/10 text-primary"
                     : "border-border bg-background text-muted-foreground hover:border-primary/50"
-                }`}
+                  }`}
               >
                 <cfg.icon className="h-3 w-3" />
-                {cfg.label}
+                {useTranslations("Maintenance.priority")(cfg.labelKey)}
               </button>
             )
           })}
@@ -182,6 +185,7 @@ export function MaintenanceManager({
 }) {
   const [tasks, setTasks] = useState(initialTasks)
   const [isPending, startTransition] = useTransition()
+  const t = useTranslations("Maintenance")
 
   // Create dialog
   const [createOpen, setCreateOpen] = useState(false)
@@ -224,7 +228,7 @@ export function MaintenanceManager({
     setEditForm({
       title: task.title,
       dueDate: task.dueDate,
-      recurring: task.recurring,
+      recurring: task.recurring, // This might need mapping back if stored as localized string in DB? Assuming DB has English keys or identifiers
       priority: task.priority,
       completed: task.completed,
     })
@@ -275,53 +279,53 @@ export function MaintenanceManager({
         <Card>
           <CardContent className="p-5">
             <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
-              Gesamt
+              {t("stats.total")}
             </p>
             <p className="text-2xl font-semibold tabular-nums text-foreground mt-1">
               {tasks.length}
             </p>
-            <p className="text-xs text-muted-foreground">Wartungsaufgaben</p>
+            <p className="text-xs text-muted-foreground">{t("stats.tasks")}</p>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="p-5">
             <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
-              Offen
+              {t("stats.open")}
             </p>
             <p className="text-2xl font-semibold tabular-nums text-chart-3 mt-1">
               {openTasks.length}
             </p>
             <p className="text-xs text-muted-foreground">
               {highPrio.length > 0
-                ? `${highPrio.length} mit hoher Priorität`
-                : "Alles im Griff"}
+                ? t("stats.highPriorityCount", { count: highPrio.length })
+                : t("stats.allGood")}
             </p>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="p-5">
             <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
-              Überfällig
+              {t("stats.overdue")}
             </p>
             <p className="text-2xl font-semibold tabular-nums text-destructive mt-1">
               {overdue.length}
             </p>
             <p className="text-xs text-muted-foreground">
               {overdue.length > 0
-                ? "Besser heute als morgen"
-                : "Alles pünktlich"}
+                ? t("stats.betterToday")
+                : t("stats.onTime")}
             </p>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="p-5">
             <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
-              Erledigt
+              {t("stats.done")}
             </p>
             <p className="text-2xl font-semibold tabular-nums text-success mt-1">
               {completedTasks.length}
             </p>
-            <p className="text-xs text-muted-foreground">Gut gemacht!</p>
+            <p className="text-xs text-muted-foreground">{t("stats.wellDone")}</p>
           </CardContent>
         </Card>
       </div>
@@ -332,10 +336,10 @@ export function MaintenanceManager({
           <div className="flex items-center justify-between">
             <div>
               <CardTitle className="text-sm font-medium">
-                Alle Wartungsaufgaben
+                {t("list.title")}
               </CardTitle>
               <p className="text-xs text-muted-foreground mt-1">
-                Planen, prüfen, abhaken &mdash; das Haus dankt es dir.
+                {t("list.description")}
               </p>
             </div>
 
@@ -350,15 +354,15 @@ export function MaintenanceManager({
               <DialogTrigger asChild>
                 <Button size="sm" className="gap-1.5">
                   <Plus className="h-4 w-4" />
-                  Neue Wartung
+                  {t("create.button")}
                 </Button>
               </DialogTrigger>
               <DialogContent className="sm:max-w-[480px]">
                 <form onSubmit={handleCreate}>
                   <DialogHeader>
-                    <DialogTitle>Neue Wartung erfassen</DialogTitle>
+                    <DialogTitle>{t("create.title")}</DialogTitle>
                     <DialogDescription>
-                      Was muss wann gemacht werden?
+                      {t("create.description")}
                     </DialogDescription>
                   </DialogHeader>
                   <TaskFormFields form={createForm} setForm={setCreateForm} />
@@ -371,10 +375,10 @@ export function MaintenanceManager({
                         setCreateOpen(false)
                       }}
                     >
-                      Abbrechen
+                      {t("form.cancel")}
                     </Button>
                     <Button type="submit" disabled={isPending}>
-                      {isPending ? "Speichert..." : "Speichern"}
+                      {isPending ? t("form.saving") : t("form.save")}
                     </Button>
                   </DialogFooter>
                 </form>
@@ -387,14 +391,14 @@ export function MaintenanceManager({
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead className="text-xs w-10">Status</TableHead>
-                <TableHead className="text-xs">Aufgabe</TableHead>
-                <TableHead className="text-xs">Fällig</TableHead>
+                <TableHead className="text-xs w-10">{t("table.status")}</TableHead>
+                <TableHead className="text-xs">{t("table.task")}</TableHead>
+                <TableHead className="text-xs">{t("table.due")}</TableHead>
                 <TableHead className="text-xs hidden sm:table-cell">
-                  Wiederholung
+                  {t("table.recurring")}
                 </TableHead>
-                <TableHead className="text-xs">Priorität</TableHead>
-                <TableHead className="text-xs text-right">Aktionen</TableHead>
+                <TableHead className="text-xs">{t("table.priority")}</TableHead>
+                <TableHead className="text-xs text-right">{t("table.actions")}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -404,8 +408,7 @@ export function MaintenanceManager({
                     colSpan={6}
                     className="text-center py-12 text-sm text-muted-foreground"
                   >
-                    Keine Wartungen vorhanden. Entweder perfektes Haus oder
-                    perfekte Verleugnung.
+                    {t("list.empty")}
                   </TableCell>
                 </TableRow>
               ) : (
@@ -413,7 +416,7 @@ export function MaintenanceManager({
                   const isOverdue =
                     !task.completed &&
                     new Date(task.dueDate) <
-                      new Date(new Date().toISOString().split("T")[0])
+                    new Date(new Date().toISOString().split("T")[0])
                   const cfg = priorityConfig[task.priority]
 
                   return (
@@ -429,21 +432,19 @@ export function MaintenanceManager({
                         />
                       </TableCell>
                       <TableCell
-                        className={`text-sm font-medium ${
-                          task.completed
+                        className={`text-sm font-medium ${task.completed
                             ? "line-through text-muted-foreground"
                             : "text-foreground"
-                        }`}
+                          }`}
                       >
                         {task.title}
                       </TableCell>
                       <TableCell>
                         <span
-                          className={`text-sm tabular-nums ${
-                            isOverdue
+                          className={`text-sm tabular-nums ${isOverdue
                               ? "text-destructive font-medium"
                               : "text-muted-foreground"
-                          }`}
+                            }`}
                         >
                           {new Date(task.dueDate).toLocaleDateString("de-DE", {
                             day: "2-digit",
@@ -456,19 +457,20 @@ export function MaintenanceManager({
                             variant="outline"
                             className="ml-2 text-[10px] bg-destructive/10 text-destructive border-destructive/20"
                           >
-                            überfällig
+                            {t("list.overdueBadge")}
                           </Badge>
                         )}
                       </TableCell>
                       <TableCell className="text-sm text-muted-foreground hidden sm:table-cell">
-                        {task.recurring}
+                        {/* Try to map legacy german strings to keys if they exist, else just show string */}
+                        {recurringOptions.includes(task.recurring) ? t(`recurring.${task.recurring}`) : task.recurring}
                       </TableCell>
                       <TableCell>
                         <Badge
                           variant="outline"
                           className={`text-[10px] ${cfg.style}`}
                         >
-                          {cfg.label}
+                          {t(`priority.${cfg.labelKey}`)}
                         </Badge>
                       </TableCell>
                       <TableCell className="text-right">
@@ -511,9 +513,9 @@ export function MaintenanceManager({
         <DialogContent className="sm:max-w-[480px]">
           <form onSubmit={handleEdit}>
             <DialogHeader>
-              <DialogTitle>Wartung bearbeiten</DialogTitle>
+              <DialogTitle>{t("edit.title")}</DialogTitle>
               <DialogDescription>
-                Änderungen werden sofort gespeichert.
+                {t("edit.description")}
               </DialogDescription>
             </DialogHeader>
             <TaskFormFields form={editForm} setForm={setEditForm} />
@@ -526,10 +528,10 @@ export function MaintenanceManager({
                   setEditId(null)
                 }}
               >
-                Abbrechen
+                {t("form.cancel")}
               </Button>
               <Button type="submit" disabled={isPending}>
-                {isPending ? "Speichert..." : "Änderungen speichern"}
+                {isPending ? t("form.saving") : t("form.editSave")}
               </Button>
             </DialogFooter>
           </form>
@@ -545,22 +547,21 @@ export function MaintenanceManager({
       >
         <DialogContent className="sm:max-w-[400px]">
           <DialogHeader>
-            <DialogTitle>Wartung löschen?</DialogTitle>
+            <DialogTitle>{t("delete.title")}</DialogTitle>
             <DialogDescription>
-              Diese Aktion kann nicht rückgängig gemacht werden. Die Wartung
-              wird dauerhaft entfernt.
+              {t("delete.description")}
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
             <Button variant="outline" onClick={() => setDeleteId(null)}>
-              Abbrechen
+              {t("delete.cancel")}
             </Button>
             <Button
               variant="destructive"
               disabled={isPending}
               onClick={() => deleteId && handleDelete(deleteId)}
             >
-              {isPending ? "Löscht..." : "Endgültig löschen"}
+              {isPending ? t("delete.deleting") : t("delete.confirm")}
             </Button>
           </DialogFooter>
         </DialogContent>
