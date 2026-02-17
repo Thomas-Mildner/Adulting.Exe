@@ -14,7 +14,8 @@ import { Switch } from "@/components/ui/switch";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Bell, Shield, Terminal } from "lucide-react";
-import { isVersionLessThan, FALLBACK_VERSION, GITHUB_REPO } from "@/lib/utils/version";
+import { GITHUB_REPO } from "@/lib/utils/version";
+import { useVersionCheck } from "@/hooks/use-version-check";
 
 export function NotificationSettings() {
   const t = useTranslations("Settings.notifications");
@@ -131,42 +132,8 @@ export function DataSettings() {
 
 export function AboutSettings() {
   const t = useTranslations("Settings.about");
-  const builtVersion = process.env.NEXT_PUBLIC_APP_VERSION || FALLBACK_VERSION;
-  const [version, setVersion] = React.useState<string>(builtVersion);
-  const [releaseUrl, setReleaseUrl] = React.useState<string>(`https://github.com/${GITHUB_REPO}/releases`);
-  const [isUpdateAvailable, setIsUpdateAvailable] = React.useState<boolean>(false);
-
-  React.useEffect(() => {
-    const abortController = new AbortController();
-
-    // Fetch the latest release version from GitHub
-    fetch('/api/version', { signal: abortController.signal })
-      .then(res => {
-        if (!res.ok) {
-          throw new Error(`HTTP error! status: ${res.status}`);
-        }
-        return res.json();
-      })
-      .then(data => {
-        const latestVersion = data.version || FALLBACK_VERSION;
-        setVersion(latestVersion);
-        setReleaseUrl(data.releaseUrl || `https://github.com/${GITHUB_REPO}/releases/tag/v${latestVersion}`);
-        
-        // Check if update is available using semantic version comparison
-        if (!data.fallback && isVersionLessThan(builtVersion, latestVersion)) {
-          setIsUpdateAvailable(true);
-        }
-      })
-      .catch(err => {
-        // Ignore abort errors
-        if (err.name === 'AbortError') return;
-        console.error("Failed to fetch version:", err);
-      });
-
-    return () => {
-      abortController.abort();
-    };
-  }, [builtVersion]);
+  const { latestVersion, currentVersion: builtVersion, releaseUrl, isUpdateAvailable } = useVersionCheck();
+  const version = latestVersion || builtVersion;
 
   return (
     <Card className="border-dashed">
