@@ -12,3 +12,6 @@ node_modules/
 
 # Lock files (using pnpm)
 package-lock.json
+
+# Build artifacts
+tsconfig.tsbuildinfo
