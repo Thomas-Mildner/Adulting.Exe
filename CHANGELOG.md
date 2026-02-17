@@ -1,3 +1,10 @@
+## [1.7.1](https://github.com/Thomas-Mildner/Adulting.Exe/compare/v1.7.0...v1.7.1) (2026-02-17)
+
+
+### Bug Fixes
+
+* checkout release tag in docker job to sync versions ([d3cbb57](https://github.com/Thomas-Mildner/Adulting.Exe/commit/d3cbb578e25c526fc3a9900dffe9f2ee0ebdcbc8))
+
 # [1.7.0](https://github.com/Thomas-Mildner/Adulting.Exe/compare/v1.6.0...v1.7.0) (2026-02-17)
 
 
