@@ -1,3 +1,13 @@
+# [1.7.0](https://github.com/Thomas-Mildner/Adulting.Exe/compare/v1.6.0...v1.7.0) (2026-02-17)
+
+
+### Features
+
+* add NotificationCenter component and integrate notifications into DashboardLayout ([54c98b3](https://github.com/Thomas-Mildner/Adulting.Exe/commit/54c98b370715f5bd76a269879d80d4f1b468dc37))
+* implement notification center ([5eae1ca](https://github.com/Thomas-Mildner/Adulting.Exe/commit/5eae1ca6635656a1b8f038eea484b684e742b7ef))
+* refactor version checking logic into useVersionCheck hook ([077695c](https://github.com/Thomas-Mildner/Adulting.Exe/commit/077695cd7acab3957b7458e249e2d4b6a24ec92a))
+* update database schema and migrations ([09bde31](https://github.com/Thomas-Mildner/Adulting.Exe/commit/09bde315afd41bd93ba5d8b56d8d6c32eff8b38c))
+
 # [1.6.0](https://github.com/Thomas-Mildner/Adulting.Exe/compare/v1.5.1...v1.6.0) (2026-02-17)
 
 
