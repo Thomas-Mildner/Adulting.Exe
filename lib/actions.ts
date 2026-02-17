@@ -53,6 +53,22 @@ export async function getAppliances(): Promise<Appliance[]> {
   }))
 }
 
+export async function getAppliance(id: string): Promise<Appliance | null> {
+  const r = await prisma.appliance.findUnique({ where: { id } })
+  if (!r) return null
+  return {
+    id: r.id,
+    name: r.name,
+    category: r.category,
+    purchaseDate: dateToStr(r.purchaseDate),
+    warrantyEnd: dateToStr(r.warrantyEnd),
+    boxLocation: r.boxLocation,
+    status: r.status as Appliance["status"],
+    brand: r.brand,
+    price: r.price,
+  }
+}
+
 export async function createAppliance(data: Omit<Appliance, "id">) {
   await prisma.appliance.create({
     data: {
