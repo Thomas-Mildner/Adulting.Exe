@@ -132,6 +132,9 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          # Checkout the newly created release tag when semantic-release published a new version
+          # This ensures package.json has the correct version for Docker metadata
+          ref: ${{ needs.release.outputs.new_release_published == 'true' && format('v{0}', needs.release.outputs.new_release_version) || github.ref }}
 
       - name: Determine Version
         id: version
