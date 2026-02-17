@@ -770,6 +770,32 @@
       "totalMonthly": "Gesamt Monatlich",
       "totalYearly": "Gesamt Jährlich",
       "perPolicy": "Pro Police"
+    },
+    "analysis": {
+      "title": "Kostenanalyse",
+      "monthlyCost": "Monatliche Kosten",
+      "costDistribution": "Kostenverteilung"
+    },
+    "coverage": {
+      "title": "Versicherungs-Check",
+      "covered": "Abgedeckt",
+      "missingEssential": "Fehlt (Wichtig!)",
+      "missingRecommended": "Fehlt (Empfohlen)",
+      "status": {
+        "ok": "OK",
+        "missing": "Fehlt"
+      }
+    },
+    "calendar": {
+      "title": "Kündigungskalender",
+      "empty": "Keine anstehenden Fristen.",
+      "deadline": "Stichtag",
+      "days": "Tage"
+    },
+    "document": {
+      "label": "Dokument (URL)",
+      "placeholder": "https://... oder Pfad",
+      "view": "Dokument öffnen"
     }
   }
 }

@@ -25,7 +25,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
-import { Search, Plus, Pencil, Trash2, Phone, Mail, Shield } from "lucide-react"
+import { Search, Plus, Pencil, Trash2, Phone, Mail, Shield, FileText } from "lucide-react"
 import { getDaysRemaining, formatCurrency, type Insurance } from "@/lib/data"
 import { createInsurance, updateInsurance, deleteInsurance } from "@/lib/actions"
 
@@ -240,6 +240,29 @@ function InsuranceFormFields({
         </div>
       </div>
 
+      <div className="grid gap-2">
+        <Label htmlFor="documentPath">{t("document.label")}</Label>
+        <div className="flex gap-2">
+          <Input
+            id="documentPath"
+            placeholder={t("document.placeholder")}
+            value={form.documentPath || ""}
+            onChange={(e) => setForm((p) => ({ ...p, documentPath: e.target.value }))}
+          />
+          {form.documentPath && (
+            <Button
+              type="button"
+              variant="ghost"
+              size="icon"
+              onClick={() => window.open(form.documentPath, '_blank')}
+              title={t("document.view")}
+            >
+              <FileText className="h-4 w-4" />
+            </Button>
+          )}
+        </div>
+      </div>
+
       <div className="grid grid-cols-2 gap-4">
         <div className="grid gap-2">
           <Label htmlFor="agentEmail">{t("form.agentEmail")}</Label>
@@ -313,7 +336,7 @@ export function InsuranceList({ insurances }: { insurances: Insurance[] }) {
           tab === "all" ||
           (tab === "active" && status === "active") ||
           (tab === "expiring" && status === "expiringSoon")
-        
+
         const matchesSearch =
           ins.providerName.toLowerCase().includes(q) ||
           ins.policyType.toLowerCase().includes(q) ||
@@ -434,7 +457,7 @@ export function InsuranceList({ insurances }: { insurances: Insurance[] }) {
               {t("create.button")}
             </Button>
           </DialogTrigger>
-          <DialogContent className="sm:max-w-[600px]">
+          <DialogContent className="sm:max-w-[800px]">
             <form onSubmit={handleCreate}>
               <DialogHeader>
                 <DialogTitle>{t("create.title")}</DialogTitle>
@@ -574,7 +597,7 @@ export function InsuranceList({ insurances }: { insurances: Insurance[] }) {
           if (!v) setEditId(null)
         }}
       >
-        <DialogContent className="sm:max-w-[600px]">
+        <DialogContent className="sm:max-w-[800px]">
           <form onSubmit={handleEdit}>
             <DialogHeader>
               <DialogTitle>{t("edit.title")}</DialogTitle>

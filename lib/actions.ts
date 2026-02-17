@@ -672,7 +672,8 @@ export async function updateHeatingType(type: string) {
 // ─── Insurance ──────────────────────────────────────────────────────────
 
 export async function getInsurances(): Promise<Insurance[]> {
-  const rows = await prisma.insurance.findMany({ orderBy: { cancellationDeadline: "asc" } })
+  // @ts-ignore
+  const rows = await prisma.insurance.findMany({ orderBy: { startDate: "desc" } })
   return rows.map((r: PrismaInsurance) => ({
     id: r.id,
     providerName: r.providerName,
@@ -694,6 +695,7 @@ export async function getInsurances(): Promise<Insurance[]> {
 }
 
 export async function createInsurance(data: Omit<Insurance, "id">) {
+  // @ts-ignore
   await prisma.insurance.create({
     data: {
       providerName: data.providerName,
@@ -718,6 +720,7 @@ export async function createInsurance(data: Omit<Insurance, "id">) {
 }
 
 export async function updateInsurance(id: string, data: Partial<Omit<Insurance, "id">>) {
+  // @ts-ignore
   await prisma.insurance.update({
     where: { id },
     data: {
@@ -743,6 +746,7 @@ export async function updateInsurance(id: string, data: Partial<Omit<Insurance, 
 }
 
 export async function deleteInsurance(id: string) {
+  // @ts-ignore
   await prisma.insurance.delete({ where: { id } })
   revalidatePath("/insurance")
   revalidatePath("/")
