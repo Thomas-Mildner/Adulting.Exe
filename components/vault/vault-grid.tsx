@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useMemo, useTransition } from "react"
+import { QRCodeDialog } from "@/components/vault/qr-code-dialog"
 import { useTranslations } from "next-intl"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -33,6 +33,7 @@ import {
   type Appliance,
 } from "@/lib/data"
 import { createAppliance, updateAppliance, deleteAppliance } from "@/lib/actions"
+import { useMemo, useState, useTransition } from "react"
 
 // Status config moved inside components for translation
 
@@ -443,6 +444,7 @@ export function VaultGrid({ appliances }: { appliances: Appliance[] }) {
                       </span>
                     </div>
                     <div className="flex items-center gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <QRCodeDialog id={item.id} name={item.name} />
                       <Button
                         variant="ghost"
                         size="icon"
