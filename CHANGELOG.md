@@ -1,3 +1,12 @@
+# [1.6.0](https://github.com/Thomas-Mildner/Adulting.Exe/compare/v1.5.1...v1.6.0) (2026-02-17)
+
+
+### Features
+
+* add initial database migration with multiple tables and relationships ([b748d75](https://github.com/Thomas-Mildner/Adulting.Exe/commit/b748d758b6aa23f6153aaf66c5d36b0cef95d743))
+* add QR code functionality and appliance detail page ([b1579c2](https://github.com/Thomas-Mildner/Adulting.Exe/commit/b1579c2a8ace97592075e6ae00f7d90a001c4032))
+* implement settings page with heating type configuration and enhance utility tracker with dynamic heating unit display ([b440495](https://github.com/Thomas-Mildner/Adulting.Exe/commit/b440495062621b8dc76dfdf116e698405678a560))
+
 ## [1.5.1](https://github.com/Thomas-Mildner/Adulting.Exe/compare/v1.5.0...v1.5.1) (2026-02-17)
 
 
