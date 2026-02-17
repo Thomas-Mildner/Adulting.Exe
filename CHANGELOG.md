@@ -1,3 +1,10 @@
+## [1.5.1](https://github.com/Thomas-Mildner/Adulting.Exe/compare/v1.5.0...v1.5.1) (2026-02-17)
+
+
+### Bug Fixes
+
+* update Docker job dependencies and version determination logic ([3aaebaa](https://github.com/Thomas-Mildner/Adulting.Exe/commit/3aaebaad074339d3e826a427d5a8cec91a4bdfff))
+
 # [1.5.0](https://github.com/Thomas-Mildner/Adulting.Exe/compare/v1.4.0...v1.5.0) (2026-02-16)
 
 
