@@ -133,6 +133,26 @@ export type Notification = {
   date?: string
 }
 
+export type Room = {
+  id: string
+  name: string
+  type: string
+  floor?: string
+  description?: string
+  eventCount?: number
+}
+
+export type RoomEvent = {
+  id: string
+  roomId: string
+  timestamp: string
+  category: "Maintenance" | "Aesthetics" | "Incident" | "Tech" | "Surgery" | "Band-aid" | "Face-lift"
+  description: string
+  metadata?: Record<string, any>
+  attachments?: string[]
+  vibeRating?: number
+}
+
 // ─── Note ────────────────────────────────────────────────────────────────
 // Mock data has been moved to the database. Use server actions from
 // "@/lib/actions" to fetch / mutate data. Seed with `pnpm prisma db seed`.

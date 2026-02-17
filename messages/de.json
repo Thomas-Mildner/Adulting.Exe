@@ -10,6 +10,7 @@
     "maintenance": "Wartungen",
     "wishlist": "Wunschliste",
     "lending": "Verleih",
+    "rooms": "Raum-Chronik",
     "sidebarStatus": "Status: Haus steht (vorerst)"
   },
   "Dashboard": {
@@ -659,5 +660,117 @@
       "legend": "Legende",
       "upcoming": "Anstehend"
     }
+  },
+  "Rooms": {
+    "title": "Raum-Chronik",
+    "subtitle": "Jede Wand hat eine Geschichte. Meistens eine teure.",
+    "emptyState": "Dieser Raum hat keine Geschichte. Entweder ist er brandneu oder du ignorierst seine Hilferufe.",
+    "noRooms": "Noch keine Räume. Füge deinen ersten Raum hinzu, um dessen Geschichte zu verfolgen.",
+    "addRoom": "Raum hinzufügen",
+    "editRoom": "Raum bearbeiten",
+    "deleteRoom": "Raum löschen",
+    "roomName": "Raumname",
+    "roomType": "Raumtyp",
+    "floor": "Etage",
+    "description": "Beschreibung",
+    "createRoom": "Raum erstellen",
+    "updateRoom": "Raum aktualisieren",
+    "deleteConfirm": "Bist du sicher, dass du diesen Raum löschen möchtest? Alle Ereignisse gehen verloren.",
+    "roomTypes": {
+      "kitchen": "Küche",
+      "bedroom": "Schlafzimmer",
+      "bathroom": "Badezimmer",
+      "living": "Wohnzimmer",
+      "dining": "Esszimmer",
+      "office": "Arbeitszimmer",
+      "garage": "Garage",
+      "basement": "Keller",
+      "attic": "Dachboden",
+      "hallway": "Flur",
+      "laundry": "Waschküche",
+      "storage": "Abstellraum",
+      "other": "Sonstiges"
+    },
+    "floors": {
+      "basement": "Keller",
+      "ground": "Erdgeschoss",
+      "first": "1. Obergeschoss",
+      "second": "2. Obergeschoss",
+      "third": "3. Obergeschoss",
+      "attic": "Dachgeschoss"
+    },
+    "timeline": {
+      "title": "Zeitleiste",
+      "addEvent": "Ereignis protokollieren",
+      "editEvent": "Ereignis bearbeiten",
+      "deleteEvent": "Ereignis löschen",
+      "timestamp": "Datum & Uhrzeit",
+      "category": "Kategorie",
+      "description": "Beschreibung",
+      "metadata": "Details",
+      "vibeRating": "Stimmung",
+      "attachments": "Fotos",
+      "createEvent": "Ereignis erstellen",
+      "updateEvent": "Ereignis aktualisieren",
+      "deleteConfirm": "Dieses Ereignis löschen?",
+      "noEvents": "Noch keine Ereignisse. Beginne, die Geschichte dieses Raums zu protokollieren!"
+    },
+    "categories": {
+      "Maintenance": "Wartung",
+      "Aesthetics": "Ästhetik",
+      "Incident": "Zwischenfall",
+      "Tech": "Technik",
+      "Surgery": "Großrenovierung",
+      "Band-aid": "Schnellreparatur",
+      "Face-lift": "Verschönerung"
+    },
+    "categoryDescriptions": {
+      "Maintenance": "Regelmäßige Wartung und Reparaturen",
+      "Aesthetics": "Farbe, Bodenbelag und dekorative Änderungen",
+      "Incident": "Ups-Momente und Unfälle",
+      "Tech": "Smart Home und Elektronik",
+      "Surgery": "Große Renovierung",
+      "Band-aid": "Schnellreparatur",
+      "Face-lift": "Dekorieren und kosmetische Updates"
+    },
+    "swatchLibrary": {
+      "title": "Die Muster-Bibliothek",
+      "subtitle": "Neueste Farben und Bodenbeläge",
+      "noPaint": "Noch keine Farb- oder Bodenbelagsereignisse protokolliert",
+      "paintBrand": "Marke",
+      "paintFinish": "Finish",
+      "paintColor": "Farbcode",
+      "flooringType": "Typ",
+      "flooringBrand": "Marke"
+    },
+    "quickLog": {
+      "title": "Schnellprotokoll",
+      "lightbulb": "Glühbirne gewechselt",
+      "battery": "Batterie ersetzt",
+      "filter": "Filter gewechselt",
+      "paint": "Wand gestrichen",
+      "repair": "Schnellreparatur"
+    },
+    "metadata": {
+      "brand": "Marke",
+      "finish": "Finish",
+      "colorCode": "Farbcode",
+      "bulbType": "Glühbirnentyp",
+      "batteryType": "Batterietyp",
+      "filterType": "Filtertyp",
+      "notes": "Notizen"
+    },
+    "search": {
+      "placeholder": "Alle Raumereignisse durchsuchen...",
+      "noResults": "Keine Ereignisse gefunden"
+    },
+    "stats": {
+      "totalEvents": "Ereignisse gesamt",
+      "lastUpdate": "Letzte Aktualisierung",
+      "incidents": "Zwischenfälle",
+      "maintenance": "Wartungen"
+    }
+  }
+}
   }
 }
