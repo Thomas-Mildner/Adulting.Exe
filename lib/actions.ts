@@ -14,6 +14,7 @@ import type {
   WasteType,
   WastePickup,
   Insurance,
+  Notification,
 } from "@/lib/data"
 import type {
   Appliance as PrismaAppliance,
@@ -746,4 +747,163 @@ export async function deleteInsurance(id: string) {
   await prisma.insurance.delete({ where: { id } })
   revalidatePath("/insurance")
   revalidatePath("/")
+}
+
+export async function generateCancellationLetter(id: string): Promise<string> {
+  const insurance = await prisma.insurance.findUnique({ where: { id } })
+  if (!insurance) throw new Error("Insurance not found")
+
+  const today = new Date().toLocaleDateString("de-DE")
+  const endDate = insurance.cancellationDeadline
+    ? new Date(insurance.cancellationDeadline).toLocaleDateString("de-DE")
+    : "nächstmöglichen Termin"
+
+  return `Max Mustermann
+Musterstraße 1
+12345 Musterstadt
+
+${insurance.providerName}
+${insurance.agentEmail || ""}
+
+${today}
+
+**Betreff: Kündigung der Versicherung Nr. ${insurance.policyNumber}**
+
+Sehr geehrte Damen und Herren,
+
+hiermit kündige ich meine ${insurance.policyType} (Versicherungsschein-Nr.: ${insurance.policyNumber}) fristgerecht zum ${endDate} oder hilfsweise zum nächstmöglichen Termin.
+
+Bitte senden Sie mir eine schriftliche Bestätigung der Kündigung unter Angabe des Beendigungszeitpunktes zu.
+
+Mit freundlichen Grüßen
+
+Max Mustermann`
+}
+
+// ─── Notifications ──────────────────────────────────────────────────────
+
+export async function getNotifications(): Promise<Notification[]> {
+  const notifications: Notification[] = []
+  const today = new Date()
+  today.setHours(0, 0, 0, 0)
+
+  // 1. Waste Pickups (Tomorrow)
+  const tomorrow = new Date(today)
+  tomorrow.setDate(tomorrow.getDate() + 1)
+  const endOfTomorrow = new Date(tomorrow)
+  endOfTomorrow.setHours(23, 59, 59, 999)
+
+  const waste = await prisma.wastePickup.findMany({
+    where: {
+      date: {
+        gte: tomorrow,
+        lte: endOfTomorrow,
+      },
+    },
+    include: { wasteType: true },
+  })
+
+  waste.forEach((w) => {
+    notifications.push({
+      id: `waste-${w.id}`,
+      title: `Müllabfuhr Morgen: ${w.wasteType.name}`,
+      message: "Vergiss nicht, die Tonne rauszustellen!",
+      type: "info",
+      category: "Waste",
+      link: "/waste",
+      date: dateToStr(w.date),
+    })
+  })
+
+  // 2. Appliances (Warranty expiring < 30 days)
+  const warningDate = new Date(today)
+  warningDate.setDate(warningDate.getDate() + 30)
+
+  const appliances = await prisma.appliance.findMany({
+    where: {
+      warrantyEnd: {
+        gte: today,
+        lte: warningDate,
+      },
+      status: { not: "zombie" }, // Only warn for active appliances
+    },
+  })
+
+  appliances.forEach((a) => {
+    notifications.push({
+      id: `appliance-${a.id}`,
+      title: `Garantie läuft ab: ${a.name}`,
+      message: `Die Garantie endet am ${dateToStr(a.warrantyEnd)}.`,
+      type: "warning",
+      category: "Appliance",
+      link: `/vault/${a.id}`,
+      date: dateToStr(a.warrantyEnd),
+    })
+  })
+
+  // 3. Maintenance Tasks (Due or Overdue)
+  const tasks = await prisma.maintenanceTask.findMany({
+    where: {
+      dueDate: { lte: today },
+      completed: false,
+    },
+  })
+
+  tasks.forEach((t) => {
+    notifications.push({
+      id: `maintenance-${t.id}`,
+      title: `Wartung fällig: ${t.title}`,
+      message: "Diese Aufgabe ist heute fällig oder überfällig.",
+      type: "warning",
+      category: "Maintenance",
+      link: "/maintenance",
+      date: dateToStr(t.dueDate),
+    })
+  })
+
+  // 4. Lent Items (Overdue)
+  const lentItems = await prisma.lentItem.findMany({
+    where: {
+      expectedReturn: { lt: today },
+    },
+  })
+
+  lentItems.forEach((l) => {
+    notifications.push({
+      id: `lent-${l.id}`,
+      title: `Überfällig: ${l.item}`,
+      message: `${l.borrower} sollte das eigentlich schon zurückgegeben haben.`,
+      type: "error",
+      category: "Lent",
+      link: "/lending",
+      date: dateToStr(l.expectedReturn),
+    })
+  })
+
+  // 5. Insurance (Cancellation Deadline < 90 days)
+  const insuranceWarningDate = new Date(today)
+  insuranceWarningDate.setDate(insuranceWarningDate.getDate() + 90)
+
+  const insurances = await prisma.insurance.findMany({
+    where: {
+      cancellationDeadline: {
+        gte: today,
+        lte: insuranceWarningDate,
+      },
+    },
+  })
+
+  insurances.forEach((i) => {
+    notifications.push({
+      id: `insurance-${i.id}`,
+      title: `Kündigungsfrist: ${i.providerName}`,
+      message: `Die Frist endet am ${dateToStr(i.cancellationDeadline)}.`,
+      type: "info",
+      category: "Insurance",
+      link: "/insurance",
+      date: dateToStr(i.cancellationDeadline),
+    })
+  })
+
+  return notifications
 }

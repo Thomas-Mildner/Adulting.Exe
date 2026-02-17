@@ -123,6 +123,16 @@ export type Insurance = {
   notes?: string
 }
 
+export type Notification = {
+  id: string
+  title: string
+  message: string
+  type: "warning" | "info" | "error"
+  category: "Waste" | "Appliance" | "Maintenance" | "Lent" | "Insurance"
+  link?: string
+  date?: string
+}
+
 // ─── Note ────────────────────────────────────────────────────────────────
 // Mock data has been moved to the database. Use server actions from
 // "@/lib/actions" to fetch / mutate data. Seed with `pnpm prisma db seed`.
