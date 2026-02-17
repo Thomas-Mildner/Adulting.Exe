@@ -71,7 +71,7 @@ export function PersonDialog({ open, onOpenChange, person }: Props) {
               {person ? t("editPerson") : t("addPerson")}
             </DialogTitle>
             <DialogDescription>
-              Add a family member to track their identity documents.
+              {t("personDialogDescription")}
             </DialogDescription>
           </DialogHeader>
 
@@ -108,10 +108,10 @@ export function PersonDialog({ open, onOpenChange, person }: Props) {
 
           <DialogFooter>
             <Button type="button" variant="outline" onClick={() => handleOpenChange(false)}>
-              Cancel
+              {t("cancel")}
             </Button>
             <Button type="submit" disabled={isPending}>
-              {person ? "Save" : "Add"}
+              {person ? t("save") : t("add")}
             </Button>
           </DialogFooter>
         </form>

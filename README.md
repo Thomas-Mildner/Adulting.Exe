@@ -61,6 +61,20 @@ Built for people who want to know exactly where the blender's original box is lo
 * **Trust Rating:** Rate borrowers' reliability for future reference
 * **Dashboard Visualization:** See all currently lent items at a glance
 
+### 🪪 Identity Guard (Document Tracker)
+* **Multi-Person Tracking:** Monitor identity documents for yourself, spouse, children, and other household members
+* **Document Management:** Track IDs, Passports, Driver's Licenses, Visas, and custom documents
+* **Expiry Monitoring:** Visual status badges showing document validity
+  - 🟢 **Model Citizen:** Valid (>6 months until expiry)
+  - 🟡 **Bureaucratic Anxiety:** Expiring soon (<6 months)
+  - 🔴 **International Fugitive:** Expired documents
+* **Smart Reminders:** Automated notifications at 6, 3, and 1 month before expiry
+* **Physical Location Tracker:** Document where each physical document is stored
+* **Emergency Guide:** One-click access to lost/stolen document procedures and emergency contacts
+* **Countdown Timers:** Real-time expiry countdown for each document
+* **Dashboard Integration:** Critical document status at a glance
+* **Date Validation:** Prevents future issue dates and ensures logical date ranges
+
 ### 🎯 Wishlist & Project Planning
 * **Future Projects:** Plan home improvement projects with descriptions and goals
 * **Budget Tracking:** Set estimated costs and track current savings progress
