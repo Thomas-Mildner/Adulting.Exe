@@ -170,6 +170,30 @@ model WastePickup {
   updatedAt DateTime @updatedAt
 }
 
+// ─── Insurance Management ──────────────────────────────────────────────
+
+model Insurance {
+  id                    String   @id @default(cuid())
+  providerName          String
+  policyType            String   // "Home Contents" | "Residential Building" | "Private Liability" | "Legal Protection" | "Life Insurance" | "Disability" | "Pet Insurance" | "Car Insurance" | "Custom"
+  customPolicyType      String?  // Used when policyType is "Custom"
+  policyNumber          String
+  premiumAmount         Float
+  paymentFrequency      String   // "Monthly" | "Quarterly" | "Annually"
+  deductible            Float    @default(0)
+  startDate             DateTime
+  endDate               DateTime?
+  cancellationDeadline  DateTime
+  documentPath          String?  // Path to uploaded policy document (PDF)
+  claimsHotline         String
+  agentEmail            String
+  beneficiary           String?  // "Who gets the payout?" for Life/Disability insurance
+  notes                 String?  // Additional notes
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
 // ─── App Configuration ────────────────────────────────────────────────
 
 model AppConfig {

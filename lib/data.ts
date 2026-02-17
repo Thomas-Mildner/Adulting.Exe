@@ -104,6 +104,25 @@ export type WastePickup = {
   wasteType?: WasteType
 }
 
+export type Insurance = {
+  id: string
+  providerName: string
+  policyType: "Home Contents" | "Residential Building" | "Private Liability" | "Legal Protection" | "Life Insurance" | "Disability" | "Pet Insurance" | "Car Insurance" | "Custom"
+  customPolicyType?: string
+  policyNumber: string
+  premiumAmount: number
+  paymentFrequency: "Monthly" | "Quarterly" | "Annually"
+  deductible: number
+  startDate: string
+  endDate?: string
+  cancellationDeadline: string
+  documentPath?: string
+  claimsHotline: string
+  agentEmail: string
+  beneficiary?: string
+  notes?: string
+}
+
 // ─── Note ────────────────────────────────────────────────────────────────
 // Mock data has been moved to the database. Use server actions from
 // "@/lib/actions" to fetch / mutate data. Seed with `pnpm prisma db seed`.
