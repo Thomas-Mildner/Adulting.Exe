@@ -823,6 +823,70 @@ export async function getNotifications(): Promise<Notification[]> {
     })
   })
 
+  // 5. Identity Documents (Expired or Expiring Soon)
+  const sixMonthsFromNow = new Date(today)
+  sixMonthsFromNow.setMonth(sixMonthsFromNow.getMonth() + 6)
+  
+  const expiringDocuments = await prisma.identityDocument.findMany({
+    where: {
+      expiryDate: { lte: sixMonthsFromNow }
+    },
+    include: { person: true },
+    orderBy: { expiryDate: "asc" },
+  })
+
+  expiringDocuments.forEach((doc) => {
+    const daysRemaining = Math.ceil(
+      (doc.expiryDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24)
+    )
+    
+    if (daysRemaining < 0) {
+      // Expired
+      notifications.push({
+        id: `doc-${doc.id}`,
+        title: `⚠️ ${doc.documentType} Abgelaufen!`,
+        message: `${doc.person.name}'s ${doc.documentType} ist seit ${Math.abs(daysRemaining)} Tagen abgelaufen. Sofort erneuern!`,
+        type: "error",
+        category: "Maintenance", // Using Maintenance as category since we don't have Documents category
+        link: "/documents",
+        date: dateToStr(doc.expiryDate),
+      })
+    } else if (daysRemaining <= 30) {
+      // 1 month warning
+      notifications.push({
+        id: `doc-${doc.id}`,
+        title: `Dringend: ${doc.documentType} läuft bald ab`,
+        message: `${doc.person.name}'s ${doc.documentType} läuft in ${daysRemaining} Tagen ab.`,
+        type: "error",
+        category: "Maintenance",
+        link: "/documents",
+        date: dateToStr(doc.expiryDate),
+      })
+    } else if (daysRemaining <= 90) {
+      // 3 months warning
+      notifications.push({
+        id: `doc-${doc.id}`,
+        title: `${doc.documentType} läuft in ${Math.floor(daysRemaining / 30)} Monaten ab`,
+        message: `Zeit für ${doc.person.name}, einen Termin beim Bürgeramt zu vereinbaren.`,
+        type: "warning",
+        category: "Maintenance",
+        link: "/documents",
+        date: dateToStr(doc.expiryDate),
+      })
+    } else if (daysRemaining <= 180) {
+      // 6 months warning
+      notifications.push({
+        id: `doc-${doc.id}`,
+        title: `${doc.documentType} läuft in 6 Monaten ab`,
+        message: `${doc.person.name}: Der Staat will bald dein Geld/Aufmerksamkeit. Fang an, für einen Termin zu beten.`,
+        type: "info",
+        category: "Maintenance",
+        link: "/documents",
+        date: dateToStr(doc.expiryDate),
+      })
+    }
+  })
+
   // Filter out read notifications
   const readNotifications = await prisma.notificationRead.findMany({
     select: { id: true },
