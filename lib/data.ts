@@ -133,6 +133,29 @@ export type Notification = {
   date?: string
 }
 
+export type Person = {
+  id: string
+  name: string
+  relation: "Self" | "Spouse" | "Child" | "Other"
+}
+
+export type IdentityDocument = {
+  id: string
+  personId: string
+  personName?: string
+  documentType: "ID" | "Passport" | "Driver's License" | "Visa" | "Other"
+  customDocumentType?: string
+  documentNumber: string
+  issueDate: string
+  expiryDate: string
+  photoFrontPath?: string
+  photoBackPath?: string
+  physicalLocation?: string
+  lostFoundGuide?: string
+  emergencyContact?: string
+  notes?: string
+}
+
 // ─── Note ────────────────────────────────────────────────────────────────
 // Mock data has been moved to the database. Use server actions from
 // "@/lib/actions" to fetch / mutate data. Seed with `pnpm prisma db seed`.
@@ -155,4 +178,26 @@ export function formatCurrency(amount: number): string {
   return new Intl.NumberFormat("de-DE", { style: "currency", currency: "EUR" }).format(amount)
 }
 
+export function getDocumentStatus(expiryDate: string): "valid" | "expiring-soon" | "expired" {
+  const daysRemaining = getDaysRemaining(expiryDate)
+  if (daysRemaining < 0) return "expired"
+  if (daysRemaining < 180) return "expiring-soon" // Less than 6 months
+  return "valid"
+}
+
+export function getDocumentStatusColor(status: "valid" | "expiring-soon" | "expired"): string {
+  switch (status) {
+    case "valid": return "green"
+    case "expiring-soon": return "yellow"
+    case "expired": return "red"
+  }
+}
+
+export function getDocumentStatusLabel(status: "valid" | "expiring-soon" | "expired"): string {
+  switch (status) {
+    case "valid": return "Model Citizen"
+    case "expiring-soon": return "Bureaucratic Anxiety"
+    case "expired": return "International Fugitive"
+  }
+}
 

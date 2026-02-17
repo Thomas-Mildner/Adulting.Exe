@@ -17,6 +17,8 @@ async function main() {
   await prisma.wishlistProject.deleteMany()
   await prisma.wastePickup.deleteMany()
   await prisma.wasteType.deleteMany()
+  await prisma.identityDocument.deleteMany()
+  await prisma.person.deleteMany()
 
   // ─── Appliances ─────────────────────────────────────────────────────────
   await prisma.appliance.createMany({
@@ -201,6 +203,121 @@ async function main() {
     ],
   })
   console.log("  ✅ Waste calendar seeded")
+
+  // ─── Persons & Identity Documents ───────────────────────────────────────
+
+  const sixMonthsFromNow = new Date(today)
+  sixMonthsFromNow.setMonth(sixMonthsFromNow.getMonth() + 6)
+  
+  const oneYearFromNow = new Date(today)
+  oneYearFromNow.setFullYear(oneYearFromNow.getFullYear() + 1)
+  
+  const twoYearsFromNow = new Date(today)
+  twoYearsFromNow.setFullYear(twoYearsFromNow.getFullYear() + 2)
+  
+  const threeMonthsAgo = new Date(today)
+  threeMonthsAgo.setMonth(threeMonthsAgo.getMonth() - 3)
+
+  await prisma.person.create({
+    data: {
+      id: "person-1",
+      name: "Max Mustermann",
+      relation: "Self",
+      documents: {
+        create: [
+          {
+            id: "doc-1",
+            documentType: "Passport",
+            documentNumber: "C01X0000X",
+            issueDate: new Date("2020-01-15"),
+            expiryDate: new Date("2030-01-15"),
+            physicalLocation: "Fireproof safe in bedroom",
+            lostFoundGuide: "Call emergency hotline: 116 116. Report to local police station. Visit embassy if abroad.",
+            emergencyContact: "Bürgeramt Berlin Mitte: +49 30 9018 0",
+            notes: "Valid for 10 years"
+          },
+          {
+            id: "doc-2",
+            documentType: "ID",
+            documentNumber: "T22000000<8",
+            issueDate: new Date("2019-06-20"),
+            expiryDate: sixMonthsFromNow, // Expiring soon!
+            physicalLocation: "Wallet",
+            lostFoundGuide: "Block immediately: Call 116 116. Report to Bürgeramt within 4 weeks.",
+            emergencyContact: "Bürgeramt: +49 30 115",
+            notes: "Needs renewal soon!"
+          },
+          {
+            id: "doc-3",
+            documentType: "Driver's License",
+            documentNumber: "B123456789",
+            issueDate: new Date("2015-03-10"),
+            expiryDate: new Date("2030-03-10"),
+            physicalLocation: "Wallet",
+            lostFoundGuide: "Report to local driver's license authority (Führerscheinstelle). Get temporary driving permit.",
+            emergencyContact: "Führerscheinstelle: +49 30 9018 0"
+          }
+        ]
+      }
+    }
+  })
+
+  await prisma.person.create({
+    data: {
+      id: "person-2",
+      name: "Anna Mustermann",
+      relation: "Spouse",
+      documents: {
+        create: [
+          {
+            id: "doc-4",
+            documentType: "Passport",
+            documentNumber: "C02X0000Y",
+            issueDate: new Date("2021-05-10"),
+            expiryDate: new Date("2031-05-10"),
+            physicalLocation: "Fireproof safe in bedroom",
+            lostFoundGuide: "Call emergency hotline: 116 116. Report to local police station.",
+            emergencyContact: "Bürgeramt: +49 30 115"
+          },
+          {
+            id: "doc-5",
+            documentType: "ID",
+            documentNumber: "T23000000<1",
+            issueDate: new Date("2022-02-14"),
+            expiryDate: twoYearsFromNow,
+            physicalLocation: "Handbag",
+            lostFoundGuide: "Block immediately: Call 116 116",
+            emergencyContact: "Bürgeramt: +49 30 115"
+          }
+        ]
+      }
+    }
+  })
+
+  await prisma.person.create({
+    data: {
+      id: "person-3",
+      name: "Leon Mustermann",
+      relation: "Child",
+      documents: {
+        create: [
+          {
+            id: "doc-6",
+            documentType: "ID",
+            documentNumber: "T24000000<5",
+            issueDate: new Date("2023-08-01"),
+            expiryDate: threeMonthsAgo, // Expired!
+            physicalLocation: "Kid's desk drawer",
+            lostFoundGuide: "Report to Bürgeramt. Parental presence required for minors.",
+            emergencyContact: "Bürgeramt: +49 30 115",
+            notes: "EXPIRED - Needs immediate renewal!"
+          }
+        ]
+      }
+    }
+  })
+
+  console.log("  ✅ Persons & identity documents seeded")
 
   console.log("🎉 Seeding complete!")
 }
