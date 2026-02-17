@@ -17,15 +17,22 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Badge } from "@/components/ui/badge"
-import { getNotifications } from "@/lib/actions"
+import {
+    getNotifications,
+    markNotificationAsRead,
+    markAllNotificationsAsRead,
+} from "@/lib/actions"
 import type { Notification } from "@/lib/data"
 import { cn } from "@/lib/utils"
+// Ensure this path is correct based on greps. I saw `hooks/use-toast.ts` in grep results.
+import { useToast } from "@/hooks/use-toast"
 
 export function NotificationCenter() {
     const router = useRouter()
+    const { toast } = useToast()
     const [notifications, setNotifications] = React.useState<Notification[]>([])
     const [loading, setLoading] = React.useState(true)
-    const [open, setOpen] = React.useState(false)
+    const [open, setOpen] = React.useState(false) // Dropping down menu state
 
     const fetchNotifications = React.useCallback(async () => {
         setLoading(true)
@@ -46,10 +53,55 @@ export function NotificationCenter() {
         return () => clearInterval(interval)
     }, [fetchNotifications])
 
-    const handleNotificationClick = (link?: string) => {
-        if (link) {
-            router.push(link)
+    const handleNotificationClick = async (notification: Notification) => {
+        // Optimistic update
+        setNotifications((prev) => prev.filter((n) => n.id !== notification.id))
+
+        try {
+            await markNotificationAsRead(notification.id)
+        } catch (error) {
+            console.error("Failed to mark notification as read:", error)
+            // Revert on error would be complex here without refetch, so we rely on refetch or error handling
+        }
+
+        if (notification.link) {
+            router.push(notification.link)
             setOpen(false)
+        }
+    }
+
+    const handleMarkAllAsRead = async (e: React.MouseEvent) => {
+        e.preventDefault()
+        e.stopPropagation()
+
+        const ids = notifications.map(n => n.id)
+        // Optimistic update
+        setNotifications([])
+        setOpen(false)
+
+        try {
+            await markAllNotificationsAsRead(ids)
+            toast({
+                title: "Alle markiert",
+                description: "Alle Benachrichtigungen wurden als gelesen markiert.",
+            })
+        } catch (error) {
+            console.error("Failed to mark all as read:", error)
+            fetchNotifications() // Revert/Sync
+        }
+    }
+
+    const handleDismiss = async (e: React.MouseEvent, id: string) => {
+        e.preventDefault()
+        e.stopPropagation()
+
+        // Optimistic update
+        setNotifications((prev) => prev.filter((n) => n.id !== id))
+
+        try {
+            await markNotificationAsRead(id)
+        } catch (error) {
+            console.error("Failed to dismiss notification:", error)
         }
     }
 
@@ -91,7 +143,19 @@ export function NotificationCenter() {
             <DropdownMenuContent align="end" className="w-80">
                 <DropdownMenuLabel className="flex items-center justify-between font-normal">
                     <span className="font-semibold">Benachrichtigungen</span>
-                    {loading && <Loader2 className="h-3 w-3 animate-spin" />}
+                    <div className="flex items-center gap-2">
+                        {loading && <Loader2 className="h-3 w-3 animate-spin" />}
+                        {notifications.length > 0 && (
+                            <Button
+                                variant="ghost"
+                                size="sm"
+                                className="h-6 px-2 text-[10px]"
+                                onClick={handleMarkAllAsRead}
+                            >
+                                Alle gelesen
+                            </Button>
+                        )}
+                    </div>
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <ScrollArea className="h-[300px]">
@@ -107,12 +171,23 @@ export function NotificationCenter() {
                                 <DropdownMenuItem
                                     key={notification.id}
                                     className={cn(
-                                        "flex flex-col items-start gap-1 p-3 cursor-pointer",
+                                        "relative flex flex-col items-start gap-1 p-3 cursor-pointer group pr-8",
                                         notification.type === "error" && "bg-destructive/5",
                                         notification.type === "warning" && "bg-yellow-500/5",
                                     )}
-                                    onClick={() => handleNotificationClick(notification.link)}
+                                    onClick={() => handleNotificationClick(notification)}
                                 >
+                                    <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                        <Button
+                                            variant="ghost"
+                                            size="icon"
+                                            className="h-6 w-6 rounded-full hover:bg-background/80"
+                                            onClick={(e) => handleDismiss(e, notification.id)}
+                                        >
+                                            <Check className="h-3 w-3" />
+                                            <span className="sr-only">Als gelesen markieren</span>
+                                        </Button>
+                                    </div>
                                     <div className="flex w-full items-center gap-2">
                                         {getIcon(notification.type)}
                                         <span className="flex-1 font-medium leading-none">

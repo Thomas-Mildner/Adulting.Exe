@@ -819,7 +819,27 @@ export async function getNotifications(): Promise<Notification[]> {
     })
   })
 
+  // Filter out read notifications
+  const readNotifications = await prisma.notificationRead.findMany({
+    select: { id: true },
+  })
+  const readIds = new Set(readNotifications.map((n) => n.id))
 
+  return notifications.filter((n) => !readIds.has(n.id))
+}
 
-  return notifications
+export async function markNotificationAsRead(id: string) {
+  await prisma.notificationRead.create({
+    data: { id },
+  })
+  revalidatePath("/")
+}
+
+export async function markAllNotificationsAsRead(ids: string[]) {
+  if (ids.length === 0) return
+  await prisma.notificationRead.createMany({
+    data: ids.map((id) => ({ id })),
+    skipDuplicates: true,
+  })
+  revalidatePath("/")
 }
