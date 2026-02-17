@@ -5,6 +5,7 @@ import { SidebarProvider, SidebarInset, SidebarTrigger } from "@/components/ui/s
 import { AppSidebar } from "@/components/app-sidebar"
 import { GlobalSearch } from "@/components/global-search"
 import { Separator } from "@/components/ui/separator"
+import { ThemeToggle } from "@/components/settings/theme-toggle"
 
 export function DashboardLayout({
   children,
@@ -30,6 +31,7 @@ export function DashboardLayout({
           </div>
           <div className="ml-auto flex items-center gap-4">
             <GlobalSearch />
+            <ThemeToggle />
           </div>
         </header>
         <main className="flex-1 overflow-auto p-4 lg:p-6">{children}</main>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
+import { useTranslations } from "next-intl";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -34,22 +35,22 @@ import {
 
 const urgencyConfig: Record<
   WishlistProject["urgency"],
-  { label: string; style: string }
+  { labelKey: string; style: string }
 > = {
   "nice-to-have": {
-    label: "Wäre schön",
+    labelKey: "nice-to-have",
     style: "bg-muted text-muted-foreground",
   },
   "should-do": {
-    label: "Sollte man machen",
+    labelKey: "should-do",
     style: "bg-primary/10 text-primary border-primary/20",
   },
   "need-soon": {
-    label: "Bald nötig",
+    labelKey: "need-soon",
     style: "bg-chart-3/10 text-chart-3 border-chart-3/20",
   },
   "falling-apart": {
-    label: "Haus fällt auseinander",
+    labelKey: "falling-apart",
     style: "bg-destructive/10 text-destructive border-destructive/20",
   },
 };
@@ -100,6 +101,7 @@ export function WishlistBoard({
   const [isPending, startTransition] = useTransition();
   const [createOpen, setCreateOpen] = useState(false);
   const [form, setForm] = useState<WishlistFormData>({ ...emptyWishlistForm });
+  const t = useTranslations("Wishlist");
 
   // Edit dialog
   const [editOpen, setEditOpen] = useState(false);
@@ -168,40 +170,40 @@ export function WishlistBoard({
         <Card>
           <CardContent className="p-5">
             <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
-              Projekte gesamt
+              {t("stats.totalProjects")}
             </p>
             <p className="text-2xl font-semibold tabular-nums text-foreground mt-1">
               {items.length}
             </p>
             <p className="text-xs text-muted-foreground">
               {items.filter((p) => p.urgency === "falling-apart").length}{" "}
-              dringend
+              {t("stats.urgent")}
             </p>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="p-5">
             <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
-              Geschätzte Kosten
+              {t("stats.estimatedCost")}
             </p>
             <p className="text-2xl font-semibold tabular-nums text-foreground mt-1">
               {formatCurrency(totalEstimated)}
             </p>
             <p className="text-xs text-muted-foreground">
-              {"Das sind viele Avocado-Toasts"}
+              {t("stats.avocadoToasts")}
             </p>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="p-5">
             <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
-              Gesamt gespart
+              {t("stats.totalSaved")}
             </p>
             <p className="text-2xl font-semibold tabular-nums text-foreground mt-1">
               {formatCurrency(totalSaved)}
             </p>
             <p className="text-xs text-muted-foreground">
-              {Math.round((totalSaved / totalEstimated) * 100)}% geschafft
+              {Math.round((totalSaved / totalEstimated) * 100)}{t("stats.done")}
             </p>
           </CardContent>
         </Card>
@@ -219,23 +221,23 @@ export function WishlistBoard({
           <DialogTrigger asChild>
             <Button size="sm" className="gap-1.5">
               <Plus className="h-4 w-4" />
-              Neues Projekt
+              {t("create.button")}
             </Button>
           </DialogTrigger>
           <DialogContent className="sm:max-w-[520px]">
             <form onSubmit={handleCreate}>
               <DialogHeader>
-                <DialogTitle>Neues Wunschprojekt</DialogTitle>
+                <DialogTitle>{t("create.title")}</DialogTitle>
                 <DialogDescription>
-                  Noch ein Traum für die Liste &mdash; diesmal wird gespart!
+                  {t("create.description")}
                 </DialogDescription>
               </DialogHeader>
               <div className="grid gap-4 py-4">
                 <div className="grid gap-2">
-                  <Label htmlFor="wp-title">Projektname</Label>
+                  <Label htmlFor="wp-title">{t("form.name")}</Label>
                   <Input
                     id="wp-title"
-                    placeholder="z.B. Neue Terrasse, Dachsanierung..."
+                    placeholder={t("form.namePlaceholder")}
                     value={form.title}
                     onChange={(e) =>
                       setForm((p) => ({ ...p, title: e.target.value }))
@@ -244,10 +246,10 @@ export function WishlistBoard({
                   />
                 </div>
                 <div className="grid gap-2">
-                  <Label htmlFor="wp-desc">Beschreibung</Label>
+                  <Label htmlFor="wp-desc">{t("form.description")}</Label>
                   <Textarea
                     id="wp-desc"
-                    placeholder="Was soll gemacht werden?"
+                    placeholder={t("form.descriptionPlaceholder")}
                     value={form.description}
                     onChange={(e) =>
                       setForm((p) => ({ ...p, description: e.target.value }))
@@ -257,7 +259,7 @@ export function WishlistBoard({
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <div className="grid gap-2">
-                    <Label htmlFor="wp-cost">Geschätzte Kosten (€)</Label>
+                    <Label htmlFor="wp-cost">{t("form.cost")}</Label>
                     <Input
                       id="wp-cost"
                       type="number"
@@ -274,7 +276,7 @@ export function WishlistBoard({
                     />
                   </div>
                   <div className="grid gap-2">
-                    <Label htmlFor="wp-savings">Bereits gespart (€)</Label>
+                    <Label htmlFor="wp-savings">{t("form.savings")}</Label>
                     <Input
                       id="wp-savings"
                       type="number"
@@ -292,7 +294,7 @@ export function WishlistBoard({
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <div className="grid gap-2">
-                    <Label htmlFor="wp-category">Kategorie</Label>
+                    <Label htmlFor="wp-category">{t("form.category")}</Label>
                     <Select
                       value={form.category}
                       onValueChange={(v) =>
@@ -305,14 +307,14 @@ export function WishlistBoard({
                       <SelectContent>
                         {wishlistCategories.map((c) => (
                           <SelectItem key={c} value={c}>
-                            {c}
+                            {t(`categories.${c}`)}
                           </SelectItem>
                         ))}
                       </SelectContent>
                     </Select>
                   </div>
                   <div className="grid gap-2">
-                    <Label>Dringlichkeit</Label>
+                    <Label>{t("form.urgency")}</Label>
                     <Select
                       value={form.urgency}
                       onValueChange={(v) =>
@@ -328,7 +330,7 @@ export function WishlistBoard({
                       <SelectContent>
                         {urgencyOptions.map((u) => (
                           <SelectItem key={u} value={u}>
-                            {urgencyConfig[u].label}
+                            {t(`urgency.${urgencyConfig[u].labelKey}`)}
                           </SelectItem>
                         ))}
                       </SelectContent>
@@ -345,10 +347,10 @@ export function WishlistBoard({
                     setCreateOpen(false);
                   }}
                 >
-                  Abbrechen
+                  {t("form.cancel")}
                 </Button>
                 <Button type="submit" disabled={isPending}>
-                  {isPending ? "Speichert..." : "Speichern"}
+                  {isPending ? t("form.saving") : t("form.save")}
                 </Button>
               </DialogFooter>
             </form>
@@ -373,7 +375,7 @@ export function WishlistBoard({
               (project.currentSavings / project.estimatedCost) * 100,
             );
             const remaining = project.estimatedCost - project.currentSavings;
-            const { label, style } = urgencyConfig[project.urgency];
+            const { labelKey, style } = urgencyConfig[project.urgency];
 
             return (
               <Card key={project.id} className="transition-all hover:shadow-md">
@@ -384,7 +386,10 @@ export function WishlistBoard({
                         {project.title}
                       </CardTitle>
                       <Badge variant="secondary" className="text-[10px] mt-1">
-                        {project.category}
+                        {/* Try to translate category, fallback to original if not found (though keys should exist) */}
+                        {wishlistCategories.includes(project.category)
+                          ? t(`categories.${project.category}`)
+                          : project.category}
                       </Badge>
                     </div>
                     <div className="flex items-center gap-1 shrink-0">
@@ -392,7 +397,7 @@ export function WishlistBoard({
                         variant="outline"
                         className={`text-[10px] ${style}`}
                       >
-                        {label}
+                        {t(`urgency.${labelKey}`)}
                       </Badge>
                       <Button
                         variant="ghost"
@@ -431,10 +436,10 @@ export function WishlistBoard({
                   </div>
                   <p className="text-[10px] text-muted-foreground pt-1 border-t">
                     {pct >= 90
-                      ? `${pct}% geschafft! Fast Zeit zum Loslegen.`
+                      ? t("progress.almost")
                       : pct >= 50
-                        ? `Halbzeit. Weiter sparen!`
-                        : `Noch ${formatCurrency(remaining)} zu gehen. Limonadenstand eröffnen?`}
+                        ? t("progress.halfway")
+                        : t("progress.remote", { amount: formatCurrency(remaining) })}
                   </p>
                 </CardContent>
               </Card>
@@ -453,17 +458,17 @@ export function WishlistBoard({
         <DialogContent className="sm:max-w-[520px]">
           <form onSubmit={handleEdit}>
             <DialogHeader>
-              <DialogTitle>Wunschprojekt bearbeiten</DialogTitle>
+              <DialogTitle>{t("edit.title")}</DialogTitle>
               <DialogDescription>
-                Änderungen werden sofort gespeichert.
+                {t("edit.description")}
               </DialogDescription>
             </DialogHeader>
             <div className="grid gap-4 py-4">
               <div className="grid gap-2">
-                <Label htmlFor="edit-wp-title">Projektname</Label>
+                <Label htmlFor="edit-wp-title">{t("form.name")}</Label>
                 <Input
                   id="edit-wp-title"
-                  placeholder="z.B. Neue Terrasse, Dachsanierung..."
+                  placeholder={t("form.namePlaceholder")}
                   value={editForm.title}
                   onChange={(e) =>
                     setEditForm((p) => ({ ...p, title: e.target.value }))
@@ -472,10 +477,10 @@ export function WishlistBoard({
                 />
               </div>
               <div className="grid gap-2">
-                <Label htmlFor="edit-wp-desc">Beschreibung</Label>
+                <Label htmlFor="edit-wp-desc">{t("form.description")}</Label>
                 <Textarea
                   id="edit-wp-desc"
-                  placeholder="Was soll gemacht werden?"
+                  placeholder={t("form.descriptionPlaceholder")}
                   value={editForm.description}
                   onChange={(e) =>
                     setEditForm((p) => ({ ...p, description: e.target.value }))
@@ -485,7 +490,7 @@ export function WishlistBoard({
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div className="grid gap-2">
-                  <Label htmlFor="edit-wp-cost">Geschätzte Kosten (€)</Label>
+                  <Label htmlFor="edit-wp-cost">{t("form.cost")}</Label>
                   <Input
                     id="edit-wp-cost"
                     type="number"
@@ -502,7 +507,7 @@ export function WishlistBoard({
                   />
                 </div>
                 <div className="grid gap-2">
-                  <Label htmlFor="edit-wp-savings">Bereits gespart (€)</Label>
+                  <Label htmlFor="edit-wp-savings">{t("form.savings")}</Label>
                   <Input
                     id="edit-wp-savings"
                     type="number"
@@ -520,7 +525,7 @@ export function WishlistBoard({
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div className="grid gap-2">
-                  <Label htmlFor="edit-wp-category">Kategorie</Label>
+                  <Label htmlFor="edit-wp-category">{t("form.category")}</Label>
                   <Select
                     value={editForm.category}
                     onValueChange={(v) =>
@@ -533,14 +538,14 @@ export function WishlistBoard({
                     <SelectContent>
                       {wishlistCategories.map((c) => (
                         <SelectItem key={c} value={c}>
-                          {c}
+                          {t(`categories.${c}`)}
                         </SelectItem>
                       ))}
                     </SelectContent>
                   </Select>
                 </div>
                 <div className="grid gap-2">
-                  <Label>Dringlichkeit</Label>
+                  <Label>{t("form.urgency")}</Label>
                   <Select
                     value={editForm.urgency}
                     onValueChange={(v) =>
@@ -556,7 +561,7 @@ export function WishlistBoard({
                     <SelectContent>
                       {urgencyOptions.map((u) => (
                         <SelectItem key={u} value={u}>
-                          {urgencyConfig[u].label}
+                          {t(`urgency.${urgencyConfig[u].labelKey}`)}
                         </SelectItem>
                       ))}
                     </SelectContent>
@@ -573,10 +578,10 @@ export function WishlistBoard({
                   setEditId(null);
                 }}
               >
-                Abbrechen
+                {t("form.cancel")}
               </Button>
               <Button type="submit" disabled={isPending}>
-                {isPending ? "Speichert..." : "Änderungen speichern"}
+                {isPending ? t("form.saving") : t("form.editSave")}
               </Button>
             </DialogFooter>
           </form>
@@ -592,22 +597,21 @@ export function WishlistBoard({
       >
         <DialogContent className="sm:max-w-[400px]">
           <DialogHeader>
-            <DialogTitle>Wunschprojekt löschen?</DialogTitle>
+            <DialogTitle>{t("delete.title")}</DialogTitle>
             <DialogDescription>
-              Diese Aktion kann nicht rückgängig gemacht werden. Das Projekt
-              wird dauerhaft entfernt.
+              {t("delete.description")}
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
             <Button variant="outline" onClick={() => setDeleteId(null)}>
-              Abbrechen
+              {t("delete.cancel")}
             </Button>
             <Button
               variant="destructive"
               disabled={isPending}
               onClick={() => deleteId && handleDelete(deleteId)}
             >
-              {isPending ? "Löscht..." : "Endgültig löschen"}
+              {isPending ? t("delete.deleting") : t("delete.confirm")}
             </Button>
           </DialogFooter>
         </DialogContent>

@@ -1,55 +1,84 @@
 "use client"
 
 import * as React from "react"
+import { useTranslations } from "next-intl"
 import { Calendar } from "@/components/ui/calendar"
 import { type WastePickup } from "@/lib/data"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 
+const colorToHex: Record<string, string> = {
+    "green-500": "#22c55e",
+    "blue-500": "#3b82f6",
+    "yellow-500": "#eab308",
+    "gray-500": "#6b7280",
+    "orange-500": "#f97316",
+    "purple-500": "#a855f7",
+    "red-500": "#ef4444",
+    "amber-800": "#92400e",
+    "black": "#000000"
+}
+
 export function WasteCalendarView({ pickups }: { pickups: WastePickup[] }) {
-    // Create modifiers for each waste type based on their color/name
-    const modifiers: Record<string, Date[]> = {}
-    const modifierStyles: Record<string, React.CSSProperties> = {}
-
-    pickups.forEach((pickup) => {
-        const date = new Date(pickup.date)
-        const typeName = pickup.wasteType?.name || "unknown"
-
-        if (!modifiers[typeName]) {
-            modifiers[typeName] = []
-        }
-        modifiers[typeName].push(date)
-
-        // Attempt to map tailwind-like color names to CSS colors if possible, 
-        // but for now let's just use a default dot/indicator logic 
-        // or better: use the color from the type if it's a hex or known class
-    })
+    const t = useTranslations("Waste.calendar")
 
     return (
         <Card className="h-full">
             <CardHeader>
-                <CardTitle className="text-sm font-medium">Kalenderansicht</CardTitle>
+                <CardTitle className="text-sm font-medium">{t("title")}</CardTitle>
             </CardHeader>
             <CardContent className="flex flex-col md:flex-row gap-8 items-center md:items-start">
                 <Calendar
                     mode="multiple"
                     selected={pickups.map(p => new Date(p.date))}
                     className="rounded-md border shadow"
-                // We can't easily color individual days via standard react-day-picker props 
-                // without deep CSS hackery in this specific UI component, 
-                // so we'll use a legend and simple selection highlighting for now.
+                    modifiers={
+                        pickups.reduce((acc, pickup) => {
+                            const color = pickup.wasteType?.color
+                            if (!color) return acc
+
+                            const hex = colorToHex[color] || color
+
+                            if (!acc[hex]) {
+                                acc[hex] = []
+                            }
+                            acc[hex].push(new Date(pickup.date))
+
+                            return acc
+                        }, {} as Record<string, Date[]>)
+                    }
+                    modifiersStyles={
+                        pickups.reduce((acc, pickup) => {
+                            const color = pickup.wasteType?.color
+                            if (!color) return acc
+
+                            const hex = colorToHex[color] || color
+                            acc[hex] = {
+                                backgroundColor: hex,
+                                color: 'white',
+                                borderRadius: '100%',
+                            }
+                            return acc
+                        }, {} as Record<string, React.CSSProperties>)
+                    }
                 />
 
                 <div className="space-y-4 flex-1">
-                    <h4 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Legend</h4>
+                    <h4 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">{t("legend")}</h4>
                     <div className="grid gap-2">
                         {Array.from(new Set(pickups.map(p => p.wasteType?.name))).map(name => {
                             const pickup = pickups.find(p => p.wasteType?.name === name)
+                            if (!pickup?.wasteType) return null
+
+                            const colorKey = pickup.wasteType.color
+                            const hex = colorToHex[colorKey] || colorKey // Fallback to key if it's a hex or unknown
+                            const isHex = hex.startsWith("#")
+
                             return (
                                 <div key={name} className="flex items-center gap-2">
                                     <div
-                                        className={`w-3 h-3 rounded-full ${!pickup?.wasteType?.color?.startsWith("#") ? `bg-${pickup?.wasteType?.color}` : ""}`}
-                                        style={pickup?.wasteType?.color?.startsWith("#") ? { backgroundColor: pickup.wasteType.color } : {}}
+                                        className={`w-3 h-3 rounded-full ${!isHex ? `bg-${colorKey}` : ""}`}
+                                        style={isHex ? { backgroundColor: hex } : {}}
                                     />
                                     <span className="text-sm">{name}</span>
                                 </div>
@@ -58,7 +87,7 @@ export function WasteCalendarView({ pickups }: { pickups: WastePickup[] }) {
                     </div>
 
                     <div className="pt-4 border-t">
-                        <h4 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">Anstehend</h4>
+                        <h4 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">{t("upcoming")}</h4>
                         <div className="space-y-2">
                             {pickups
                                 .filter(p => new Date(p.date).getTime() >= new Date().setHours(0, 0, 0, 0))

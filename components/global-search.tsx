@@ -1,7 +1,8 @@
 "use client"
 
 import * as React from "react"
-import { useRouter } from "next/navigation"
+import { useRouter } from "@/lib/navigation"
+import { useTranslations } from "next-intl"
 import {
   LayoutDashboard,
   PackageOpen,
@@ -13,6 +14,7 @@ import {
   ClipboardCheck,
   Settings,
   Search,
+  Trash2,
 } from "lucide-react"
 import {
   CommandDialog,
@@ -25,28 +27,31 @@ import {
 } from "@/components/ui/command"
 import { Input } from "@/components/ui/input"
 
-const pages = [
-  { title: "Dashboard", href: "/", icon: LayoutDashboard, keywords: ["start", "übersicht", "home"] },
-  { title: "Der Tresor", href: "/vault", icon: PackageOpen, keywords: ["garantie", "gerät", "quittung", "appliance"] },
-  { title: "Rettungsteam", href: "/services", icon: Wrench, keywords: ["handwerker", "dienstleister", "rechnung", "invoice"] },
-  { title: "Bibliothek", href: "/library", icon: BookOpen, keywords: ["dokument", "pdf", "datei"] },
-  { title: "Wartungen", href: "/maintenance", icon: ClipboardCheck, keywords: ["aufgabe", "fällig", "reparatur", "prüfen"] },
-  { title: "Ressourcenfresser", href: "/utilities", icon: Gauge, keywords: ["strom", "wasser", "heizung", "zählerstand", "verbrauch"] },
-  { title: "Wunschliste", href: "/wishlist", icon: Sparkles, keywords: ["projekt", "sparen", "wunsch", "traum"] },
-  { title: "Verleih-O-Meter", href: "/lending", icon: HandCoins, keywords: ["verliehen", "gegenstand", "rückgabe", "leihen"] },
-  { title: "Einstellungen", href: "/settings", icon: Settings, keywords: ["profil", "benachrichtigung", "daten", "export"] },
-]
-
-const quickActions = [
-  { title: "Neues Gerät erfassen", href: "/vault", keywords: ["erstellen", "hinzufügen", "gerät"] },
-  { title: "Wartung anlegen", href: "/maintenance", keywords: ["erstellen", "neue wartung"] },
-  { title: "Rechnung erfassen", href: "/services", keywords: ["neue rechnung", "invoice"] },
-  { title: "Zählerstände eintragen", href: "/utilities", keywords: ["ablesen", "strom", "wasser"] },
-]
-
 export function GlobalSearch() {
+  const t = useTranslations("GlobalSearch")
+  const tNav = useTranslations("Navigation")
   const [open, setOpen] = React.useState(false)
   const router = useRouter()
+
+  const pages = [
+    { title: tNav("dashboard"), href: "/", icon: LayoutDashboard, keywords: ["start", "home", "dashboard"] },
+    { title: tNav("vault"), href: "/vault", icon: PackageOpen, keywords: ["warranty", "appliance", "garantie", "gerät", "quittung"] },
+    { title: tNav("services"), href: "/services", icon: Wrench, keywords: ["service", "provider", "invoice", "handwerker", "dienstleister", "rechnung"] },
+    { title: tNav("library"), href: "/library", icon: BookOpen, keywords: ["library", "document", "pdf", "bibliothek", "datei"] },
+    { title: tNav("maintenance"), href: "/maintenance", icon: ClipboardCheck, keywords: ["maintenance", "task", "due", "repair", "wartung", "aufgabe", "fällig", "reparatur"] },
+    { title: tNav("utilities"), href: "/utilities", icon: Gauge, keywords: ["utilities", "power", "water", "heating", "consumption", "ressourcen", "strom", "wasser", "heizung", "verbrauch"] },
+    { title: tNav("wishlist"), href: "/wishlist", icon: Sparkles, keywords: ["wishlist", "project", "saving", "dream", "wunschliste", "projekt", "sparen", "traum"] },
+    { title: tNav("lending"), href: "/lending", icon: HandCoins, keywords: ["lending", "borrow", "item", "return", "verleih", "verliehen", "gegenstand", "rückgabe"] },
+    { title: tNav("waste"), href: "/waste", icon: Trash2, keywords: ["waste", "calendar", "garbage", "trash", "pickup", "müll", "kalender", "abfall", "tonne", "leerung"] },
+    { title: tNav("settings"), href: "/settings", icon: Settings, keywords: ["settings", "profile", "notification", "data", "einstellungen", "profil", "benachrichtigung", "daten"] },
+  ]
+
+  const quickActions = [
+    { title: t("actions.newAppliance"), href: "/vault", keywords: ["create", "add", "appliance", "erstellen", "hinzufügen", "gerät"] },
+    { title: t("actions.newMaintenance"), href: "/maintenance", keywords: ["create", "maintenance", "erstellen", "neue wartung"] },
+    { title: t("actions.newInvoice"), href: "/services", keywords: ["create", "invoice", "neue rechnung"] },
+    { title: t("actions.newReading"), href: "/utilities", keywords: ["record", "reading", "meter", "ablesen", "strom", "wasser"] },
+  ]
 
   React.useEffect(() => {
     const down = (e: KeyboardEvent) => {
@@ -73,7 +78,7 @@ export function GlobalSearch() {
         <Search className="absolute left-2.5 h-3.5 w-3.5 text-muted-foreground pointer-events-none" />
         <Input
           readOnly
-          placeholder="Alles durchsuchen..."
+          placeholder={t("placeholder")}
           className="pl-8 h-8 text-xs bg-background cursor-pointer"
           tabIndex={-1}
         />
@@ -83,11 +88,11 @@ export function GlobalSearch() {
       </button>
 
       <CommandDialog open={open} onOpenChange={setOpen}>
-        <CommandInput placeholder="Seite, Aktion oder Stichwort suchen..." />
+        <CommandInput placeholder={t("commandPlaceholder")} />
         <CommandList>
-          <CommandEmpty>Nichts gefunden. Versuch ein anderes Stichwort.</CommandEmpty>
+          <CommandEmpty>{t("empty")}</CommandEmpty>
 
-          <CommandGroup heading="Seiten">
+          <CommandGroup heading={t("sections.pages")}>
             {pages.map((page) => (
               <CommandItem
                 key={page.href}
@@ -102,7 +107,7 @@ export function GlobalSearch() {
 
           <CommandSeparator />
 
-          <CommandGroup heading="Schnellaktionen">
+          <CommandGroup heading={t("sections.actions")}>
             {quickActions.map((action) => (
               <CommandItem
                 key={action.title}

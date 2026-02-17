@@ -30,7 +30,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20.9.0'
+          node-version: '22.14.0'
 
       - name: Install pnpm
         uses: pnpm/action-setup@v4
@@ -69,18 +69,84 @@ jobs:
             public
           retention-days: 1
 
-  docker:
-    name: Build and Push Docker Image
+  release:
+    name: Semantic Release
     runs-on: ubuntu-latest
     needs: build
-    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+    if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
+    outputs:
+      new_release_published: ${{ steps.semantic.outputs.new_release_published }}
+      new_release_version: ${{ steps.semantic.outputs.new_release_version }}
 
     permissions:
-      contents: read
+      contents: write
+      issues: write
+      pull-requests: write
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.14.0'
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 8
+
+      - name: Install dependencies
+        run: pnpm install --no-frozen-lockfile
+
+      - name: Semantic Release
+        id: semantic
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GIT_AUTHOR_NAME: github-actions[bot]
+          GIT_AUTHOR_EMAIL: github-actions[bot]@users.noreply.github.com
+          GIT_COMMITTER_NAME: github-actions[bot]
+          GIT_COMMITTER_EMAIL: github-actions[bot]@users.noreply.github.com
+        run: npx semantic-release
+
+  docker:
+    name: Build and Push Docker Image
+    runs-on: ubuntu-latest
+    needs: [build, release]
+    if: |
+      always() && 
+      needs.build.result == 'success' &&
+      (needs.release.result == 'success' || needs.release.result == 'skipped') &&
+      (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
+
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Determine Version
+        id: version
+        run: |
+          RELEASE_VERSION="${{ needs.release.outputs.new_release_version }}"
+          PUBLISHED="${{ needs.release.outputs.new_release_published }}"
+          
+          if [ "$PUBLISHED" == "true" ] && [ -n "$RELEASE_VERSION" ]; then
+            echo "Using Semantic Release version: $RELEASE_VERSION"
+            echo "version=$RELEASE_VERSION" >> $GITHUB_OUTPUT
+          else
+            PKG_VERSION=$(node -p "require('./package.json').version")
+            echo "Using package.json version: $PKG_VERSION"
+            echo "version=$PKG_VERSION" >> $GITHUB_OUTPUT
+          fi
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -100,6 +166,8 @@ jobs:
             type=ref,event=branch
             type=sha,prefix={{branch}}-
             type=raw,value=latest,enable={{is_default_branch}}
+            type=semver,pattern={{version}},value=${{ steps.version.outputs.version }},enable={{is_default_branch}}
+            type=semver,pattern={{major}}.{{minor}},value=${{ steps.version.outputs.version }},enable={{is_default_branch}}
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v6
@@ -111,3 +179,5 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
           platforms: linux/amd64,linux/arm64
+          build-args: |
+            APP_VERSION=${{ steps.version.outputs.version }}

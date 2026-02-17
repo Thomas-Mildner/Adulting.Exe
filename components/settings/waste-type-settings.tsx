@@ -1,96 +1,189 @@
 "use client"
 
-import { useState } from "react"
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
+import { useTranslations } from "next-intl"
+import { useState, useTransition } from "react"
+import { createWasteType, deleteWasteType } from "@/lib/actions"
+import { type WasteType } from "@/lib/data"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Trash2, Plus, Palette } from "lucide-react"
-import { type WasteType } from "@/lib/data"
-import { createWasteType, deleteWasteType } from "@/lib/actions"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Label } from "@/components/ui/label"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Trash2, Plus, Leaf, FileText, Package, Zap, Armchair, AlertTriangle, Recycle, Apple, GlassWater, Monitor } from "lucide-react"
 import { toast } from "sonner"
 
-export function WasteTypeSettings({ wasteTypes }: { wasteTypes: WasteType[] }) {
-    const [isAdding, setIsAdding] = useState(false)
-    const [newName, setNewName] = useState("")
-    const [newColor, setNewColor] = useState("#000000")
+const iconMap: Record<string, any> = {
+    Trash2,
+    Leaf,
+    Apple,
+    FileText,
+    Package,
+    Recycle,
+    GlassWater,
+    Zap,
+    Monitor,
+    Armchair,
+    AlertTriangle
+}
 
-    const handleCreate = async () => {
-        if (!newName) return
-        try {
-            await createWasteType({ name: newName, color: newColor })
-            setNewName("")
-            setNewColor("#000000")
-            setIsAdding(false)
-            toast.success("Mülltyp erstellt")
-        } catch (e) {
-            toast.error("Fehler beim Erstellen")
-        }
+const colorMap: Record<string, string> = {
+    "green-500": "green",
+    "blue-500": "blue",
+    "yellow-500": "yellow",
+    "gray-500": "gray",
+    "orange-500": "orange",
+    "purple-500": "purple",
+    "red-500": "red",
+    "amber-800": "brown", // Brownish
+    "black": "black"
+}
+
+const colorToHex: Record<string, string> = {
+    "green-500": "#22c55e",
+    "blue-500": "#3b82f6",
+    "yellow-500": "#eab308",
+    "gray-500": "#6b7280",
+    "orange-500": "#f97316",
+    "purple-500": "#a855f7",
+    "red-500": "#ef4444",
+    "amber-800": "#92400e",
+    "black": "#000000"
+}
+
+// Helper to get style safely
+const getBgStyle = (colorKey: string) => {
+    const hex = colorToHex[colorKey] || colorKey
+    if (hex.startsWith("#")) return { backgroundColor: hex }
+    return {}
+}
+
+// Helper to get bg class safely (only for safelisted/fallback)
+const getBgClass = (colorKey: string) => {
+    // If it's a known tailwind color that we might not have safelisted, prefer style
+    if (colorToHex[colorKey] || colorKey.startsWith("#")) return ""
+    return `bg-${colorKey}`
+}
+
+export function WasteTypeSettings({ initialTypes }: { initialTypes: WasteType[] }) {
+    const t = useTranslations("Settings.waste")
+    const [isPending, startTransition] = useTransition()
+    const [name, setName] = useState("")
+    const [color, setColor] = useState("gray-500")
+    const [icon, setIcon] = useState("Trash2")
+
+    const handleCreate = async (e: React.FormEvent) => {
+        e.preventDefault()
+        if (!name) return
+
+        startTransition(async () => {
+            try {
+                await createWasteType({ name, color, icon })
+                setName("")
+                toast.success(t("success"))
+            } catch (error) {
+                toast.error(t("error"))
+            }
+        })
     }
 
-    const handleDelete = async (id: string) => {
-        try {
-            await deleteWasteType(id)
-            toast.success("Mülltyp gelöscht")
-        } catch (e) {
-            toast.error("Fehler beim Löschen")
-        }
+    const handleDelete = (id: string) => {
+        startTransition(async () => {
+            try {
+                await deleteWasteType(id)
+                toast.success("Gelöscht") // Fallback if no translation for generic success
+            } catch (error) {
+                toast.error("Nicht möglich")
+            }
+        })
     }
 
     return (
-        <Card>
+        <Card className="h-full">
             <CardHeader className="pb-3">
-                <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                        <Palette className="h-4 w-4 text-primary" />
-                        <CardTitle className="text-sm font-medium">Mülltypen & Farben</CardTitle>
-                    </div>
-                    <Button size="sm" variant="ghost" onClick={() => setIsAdding(!isAdding)}>
-                        <Plus className="h-4 w-4 mr-1" />
-                        Neu
-                    </Button>
+                <div className="flex items-center gap-2">
+                    <Trash2 className="h-4 w-4 text-primary" />
+                    <CardTitle className="text-sm font-medium">{t("title")}</CardTitle>
                 </div>
                 <CardDescription className="text-xs">
-                    Verwalte hier deine Tonnen. Klicke auf "Neu", um einen eigenen Typ anzulegen.
+                    {t("description")}
                 </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
-                {isAdding && (
-                    <div className="flex items-center gap-2 p-2 border rounded-md bg-muted/50">
+                <form onSubmit={handleCreate} className="space-y-3 p-3 border rounded-md bg-muted/40">
+                    <div className="space-y-1">
+                        <Label htmlFor="type-name" className="text-xs">{t("create")}</Label>
                         <Input
-                            placeholder="Name (z.B. Sondermüll)"
-                            value={newName}
-                            onChange={e => setNewName(e.target.value)}
-                            className="h-8 text-xs"
+                            id="type-name"
+                            placeholder={t("placeholder")}
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                            className="h-8 text-sm"
+                            disabled={isPending}
                         />
-                        <div className="relative w-8 h-8 flex-shrink-0 cursor-pointer overflow-hidden rounded-full border shadow-sm">
-                            <Input
-                                type="color"
-                                value={newColor}
-                                onChange={e => setNewColor(e.target.value)}
-                                className="absolute -top-2 -left-2 w-16 h-16 p-0 border-0 cursor-pointer"
-                            />
-                        </div>
-                        <Button size="sm" onClick={handleCreate} disabled={!newName}>OK</Button>
                     </div>
-                )}
+                    <div className="flex gap-2">
+                        <Select value={color} onValueChange={setColor} disabled={isPending}>
+                            <SelectTrigger className="h-8 flex-1">
+                                <SelectValue />
+                            </SelectTrigger>
+                            <SelectContent>
+                                {Object.entries(colorMap).map(([value, labelKey]) => (
+                                    <SelectItem key={value} value={value}>
+                                        <div className="flex items-center gap-2">
+                                            <div className={`w-3 h-3 rounded-full ${getBgClass(value)}`} style={getBgStyle(value)} />
+                                            {t(`colors.${labelKey}`)}
+                                        </div>
+                                    </SelectItem>
+                                ))}
+                            </SelectContent>
+                        </Select>
+                        <Select value={icon} onValueChange={setIcon} disabled={isPending}>
+                            <SelectTrigger className="h-8 w-[100px]">
+                                <SelectValue />
+                            </SelectTrigger>
+                            <SelectContent>
+                                {Object.keys(iconMap).map((iconKey) => {
+                                    const Icon = iconMap[iconKey]
+                                    return (
+                                        <SelectItem key={iconKey} value={iconKey}>
+                                            <div className="flex items-center gap-2">
+                                                <Icon className="h-3 w-3" />
+                                                <span className="text-xs">{iconKey}</span>
+                                            </div>
+                                        </SelectItem>
+                                    )
+                                })}
+                            </SelectContent>
+                        </Select>
+                    </div>
+                    <Button type="submit" size="sm" className="w-full h-8" disabled={isPending || !name}>
+                        <Plus className="h-3 w-3 mr-1" />
+                        {t("create")}
+                    </Button>
+                </form>
 
-                <div className="space-y-2">
-                    {wasteTypes.map((type) => {
-                        const isHex = type.color.startsWith("#")
+                <div className="space-y-2 max-h-[200px] overflow-y-auto">
+                    <Label className="text-xs text-muted-foreground">{t("list")}</Label>
+                    {initialTypes.map((type) => {
+                        const Icon = iconMap[type.icon] || Trash2
+                        const colorClass = getBgClass(type.color)
+
                         return (
-                            <div key={type.id} className="flex items-center justify-between p-2 rounded-md hover:bg-muted/50 transition-colors group">
-                                <div className="flex items-center gap-3">
+                            <div key={type.id} className="flex items-center justify-between p-2 rounded border bg-card text-xs">
+                                <div className="flex items-center gap-2">
                                     <div
-                                        className={`w-4 h-4 rounded-full border shadow-sm ${!isHex ? `bg-${type.color}` : ""}`}
-                                        style={isHex ? { backgroundColor: type.color } : {}}
+                                        className={`w-2 h-2 rounded-full ${colorClass}`}
+                                        style={getBgStyle(type.color)}
                                     />
-                                    <span className="text-sm font-medium">{type.name}</span>
+                                    <Icon className="h-3 w-3 text-muted-foreground" />
+                                    <span className="font-medium">{type.name}</span>
                                 </div>
                                 <Button
                                     variant="ghost"
                                     size="icon"
-                                    className="h-6 w-6 opacity-0 group-hover:opacity-100 transition-opacity text-destructive"
+                                    className="h-6 w-6 text-muted-foreground hover:text-destructive"
                                     onClick={() => handleDelete(type.id)}
+                                    disabled={isPending}
                                 >
                                     <Trash2 className="h-3 w-3" />
                                 </Button>

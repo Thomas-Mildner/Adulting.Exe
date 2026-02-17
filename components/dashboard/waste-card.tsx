@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Trash2, Leaf, FileText, Package, Calendar } from "lucide-react"
 import { type WastePickup } from "@/lib/data"
-import Link from "next/link"
+import { Link } from "@/lib/navigation"
 
 const iconMap: Record<string, any> = {
     Trash2,
