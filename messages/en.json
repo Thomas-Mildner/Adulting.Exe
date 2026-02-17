@@ -10,6 +10,7 @@
     "maintenance": "Maintenance",
     "wishlist": "Wishlist",
     "lending": "Lending",
+    "insurance": "Insurance",
     "sidebarStatus": "Status: House standing (for now)"
   },
   "Dashboard": {
@@ -658,6 +659,117 @@
       "title": "Calendar View",
       "legend": "Legend",
       "upcoming": "Upcoming"
+    }
+  },
+  "Insurance": {
+    "title": "The Safety Net",
+    "subtitle": "Paying for the 'Just in Case'",
+    "stats": {
+      "totalPolicies": "Total Policies",
+      "activePolicies": "Active",
+      "protected": "You're covered",
+      "expiringPolicies": "Expiring Soon",
+      "checkDeadlines": "Time to review",
+      "premiumPerMonth": "Premium/Month",
+      "premiumPerYear": "Premium/Year",
+      "peaceOfMind": "Peace of mind costs"
+    },
+    "status": {
+      "active": "Protected",
+      "expiringSoon": "Expiring Soon",
+      "canceled": "Yolo",
+      "expired": "Expired"
+    },
+    "policyTypes": {
+      "Home Contents": "Home Contents",
+      "Residential Building": "Residential Building",
+      "Private Liability": "Private Liability",
+      "Legal Protection": "Legal Protection",
+      "Life Insurance": "Life Insurance",
+      "Disability": "Disability",
+      "Pet Insurance": "Pet Insurance",
+      "Car Insurance": "Car Insurance",
+      "Custom": "Custom"
+    },
+    "paymentFrequency": {
+      "Monthly": "Monthly",
+      "Quarterly": "Quarterly",
+      "Annually": "Annually"
+    },
+    "list": {
+      "title": "All Policies",
+      "description": "Your insurance portfolio — adulting at 90%.",
+      "empty": "No insurance? Living life on the edge. I like it, but your wallet won't.",
+      "searchPlaceholder": "Search policies...",
+      "expiringInDays": "Expiring in {days}d",
+      "cancelByDate": "Cancel by: {date}",
+      "tabs": {
+        "all": "All ({count})",
+        "active": "Active ({count})",
+        "expiring": "Expiring ({count})"
+      }
+    },
+    "create": {
+      "button": "New Policy",
+      "title": "Add New Policy",
+      "description": "Document another layer of adult responsibility.",
+      "save": "Save",
+      "saving": "Saving...",
+      "cancel": "Cancel"
+    },
+    "edit": {
+      "title": "Edit Policy",
+      "description": "Update your coverage details.",
+      "save": "Save Changes"
+    },
+    "delete": {
+      "title": "Delete Policy?",
+      "description": "This action cannot be undone. The policy will be permanently removed.",
+      "cancel": "Cancel",
+      "confirm": "Permanently Delete",
+      "deleting": "Deleting..."
+    },
+    "form": {
+      "providerName": "Provider",
+      "providerPlaceholder": "e.g. Allianz, HUK-Coburg...",
+      "policyType": "Policy Type",
+      "policyTypePlaceholder": "Select type...",
+      "customPolicyType": "Custom Type Name",
+      "customPolicyTypePlaceholder": "Enter custom type...",
+      "policyNumber": "Policy Number",
+      "policyNumberPlaceholder": "e.g. POL-123456",
+      "premiumAmount": "Premium Amount (€)",
+      "paymentFrequency": "Payment Frequency",
+      "deductible": "Deductible (€)",
+      "startDate": "Start Date",
+      "endDate": "End Date (Optional)",
+      "cancellationDeadline": "Cancellation Deadline",
+      "claimsHotline": "Claims Hotline",
+      "claimsHotlinePlaceholder": "e.g. +49 800 123 4567",
+      "agentEmail": "Agent Email",
+      "agentEmailPlaceholder": "e.g. agent@insurance.com",
+      "beneficiary": "Beneficiary (Optional)",
+      "beneficiaryPlaceholder": "Who gets the payout?",
+      "notes": "Notes (Optional)",
+      "notesPlaceholder": "Additional information..."
+    },
+    "card": {
+      "premium": "Premium",
+      "deductible": "Deductible",
+      "cancellationBy": "Cancel by",
+      "contact": "Contact",
+      "hotline": "Hotline",
+      "agent": "Agent",
+      "beneficiary": "Beneficiary",
+      "policy": "Policy #",
+      "started": "Started"
+    },
+    "summary": {
+      "title": "Premium Drain Calculator",
+      "description": "How much 'peace of mind' costs you.",
+      "totalMonthly": "Total Monthly",
+      "totalYearly": "Total Yearly",
+      "perPolicy": "Per Policy"
     }
   }
 }

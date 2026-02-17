@@ -15,6 +15,7 @@ import {
   Settings,
   Terminal,
   CalendarDays,
+  Shield,
 } from "lucide-react";
 
 import {
@@ -78,6 +79,7 @@ export function AppSidebar() {
   ];
 
   const toolsNav = [
+    { title: t("insurance"), href: "/insurance", icon: Shield },
     { title: t("waste"), href: "/waste", icon: CalendarDays },
     { title: t("maintenance"), href: "/maintenance", icon: ClipboardCheck }, // "Wartungen"
     { title: t("utilities"), href: "/utilities", icon: Gauge },
