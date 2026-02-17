@@ -10,6 +10,7 @@
     "maintenance": "Wartungen",
     "wishlist": "Wunschliste",
     "lending": "Verleih",
+    "insurance": "Versicherungen",
     "sidebarStatus": "Status: Haus steht (vorerst)"
   },
   "Dashboard": {
@@ -658,6 +659,117 @@
       "title": "Kalenderansicht",
       "legend": "Legende",
       "upcoming": "Anstehend"
+    }
+  },
+  "Insurance": {
+    "title": "Das Sicherheitsnetz",
+    "subtitle": "Bezahlen für das 'Nur für den Fall'",
+    "stats": {
+      "totalPolicies": "Policen Gesamt",
+      "activePolicies": "Aktiv",
+      "protected": "Du bist abgesichert",
+      "expiringPolicies": "Laufen bald aus",
+      "checkDeadlines": "Zeit zum Prüfen",
+      "premiumPerMonth": "Prämie/Monat",
+      "premiumPerYear": "Prämie/Jahr",
+      "peaceOfMind": "Seelenfrieden kostet"
+    },
+    "status": {
+      "active": "Geschützt",
+      "expiringSoon": "Läuft bald aus",
+      "canceled": "Yolo",
+      "expired": "Abgelaufen"
+    },
+    "policyTypes": {
+      "Home Contents": "Hausrat",
+      "Residential Building": "Wohngebäude",
+      "Private Liability": "Haftpflicht",
+      "Legal Protection": "Rechtsschutz",
+      "Life Insurance": "Leben",
+      "Disability": "BU",
+      "Pet Insurance": "Tierkranken",
+      "Car Insurance": "KFZ",
+      "Custom": "Individuell"
+    },
+    "paymentFrequency": {
+      "Monthly": "Monatlich",
+      "Quarterly": "Vierteljährlich",
+      "Annually": "Jährlich"
+    },
+    "list": {
+      "title": "Alle Policen",
+      "description": "Dein Versicherungsportfolio — 90% Erwachsensein.",
+      "empty": "Keine Versicherung? Mutig. Ich mag's, aber dein Geldbeutel nicht.",
+      "searchPlaceholder": "Policen durchsuchen...",
+      "expiringInDays": "Läuft aus in {days}d",
+      "cancelByDate": "Kündigen bis: {date}",
+      "tabs": {
+        "all": "Alle ({count})",
+        "active": "Aktiv ({count})",
+        "expiring": "Auslaufend ({count})"
+      }
+    },
+    "create": {
+      "button": "Neue Police",
+      "title": "Neue Police hinzufügen",
+      "description": "Dokumentiere eine weitere Schicht Erwachsenenverantwortung.",
+      "save": "Speichern",
+      "saving": "Speichert...",
+      "cancel": "Abbrechen"
+    },
+    "edit": {
+      "title": "Police bearbeiten",
+      "description": "Aktualisiere deine Deckungsdetails.",
+      "save": "Änderungen speichern"
+    },
+    "delete": {
+      "title": "Police löschen?",
+      "description": "Diese Aktion kann nicht rückgängig gemacht werden. Die Police wird dauerhaft entfernt.",
+      "cancel": "Abbrechen",
+      "confirm": "Dauerhaft löschen",
+      "deleting": "Lösche..."
+    },
+    "form": {
+      "providerName": "Anbieter",
+      "providerPlaceholder": "z.B. Allianz, HUK-Coburg...",
+      "policyType": "Versicherungsart",
+      "policyTypePlaceholder": "Art wählen...",
+      "customPolicyType": "Individueller Typ",
+      "customPolicyTypePlaceholder": "Individuellen Typ eingeben...",
+      "policyNumber": "Policennummer",
+      "policyNumberPlaceholder": "z.B. POL-123456",
+      "premiumAmount": "Prämienbetrag (€)",
+      "paymentFrequency": "Zahlungsrhythmus",
+      "deductible": "Selbstbeteiligung (€)",
+      "startDate": "Startdatum",
+      "endDate": "Enddatum (Optional)",
+      "cancellationDeadline": "Kündigungsfrist",
+      "claimsHotline": "Schaden-Hotline",
+      "claimsHotlinePlaceholder": "z.B. +49 800 123 4567",
+      "agentEmail": "Vermittler-E-Mail",
+      "agentEmailPlaceholder": "z.B. vermittler@versicherung.de",
+      "beneficiary": "Begünstigter (Optional)",
+      "beneficiaryPlaceholder": "Wer erhält die Auszahlung?",
+      "notes": "Notizen (Optional)",
+      "notesPlaceholder": "Zusätzliche Informationen..."
+    },
+    "card": {
+      "premium": "Prämie",
+      "deductible": "Selbstbeteiligung",
+      "cancellationBy": "Kündigen bis",
+      "contact": "Kontakt",
+      "hotline": "Hotline",
+      "agent": "Vermittler",
+      "beneficiary": "Begünstigter",
+      "policy": "Police #",
+      "started": "Gestartet"
+    },
+    "summary": {
+      "title": "Prämien-Abfluss-Rechner",
+      "description": "Was dich der 'Seelenfrieden' kostet.",
+      "totalMonthly": "Gesamt Monatlich",
+      "totalYearly": "Gesamt Jährlich",
+      "perPolicy": "Pro Police"
     }
   }
 }
