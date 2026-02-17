@@ -39,6 +39,7 @@ import { createContract, updateContract, deleteContract, generateContractCancell
 import { Plus, Pencil, Trash2, AlertTriangle, FileText, TrendingDown, CreditCard } from "lucide-react";
 
 const CATEGORIES = ["Utilities", "Entertainment", "Fitness", "Software", "Guilty Pleasure", "Other"] as const;
+const TRIAL_ALERT_THRESHOLD_DAYS = 2; // Must match notification threshold in lib/actions.ts
 
 function RegretMeter({ contract }: { contract: Contract }) {
   const t = useTranslations("Contracts");
@@ -142,9 +143,8 @@ export function ContractsManager({ contracts: initialContracts }: { contracts: C
       };
 
       await createContract(newContract);
-      setContracts([...contracts, { ...newContract, id: Date.now().toString() }]);
-      resetForm();
-      setOpen(false);
+      // Reload contracts from server to get the actual ID
+      window.location.reload();
     });
   };
 
@@ -455,7 +455,7 @@ export function ContractsManager({ contracts: initialContracts }: { contracts: C
               <TableBody>
                 {sortedContracts.map((contract) => {
                   const daysUntilBilling = getDaysRemaining(contract.nextBillingDate);
-                  const isTrialEndingSoon = contract.isTrial && contract.trialEndDate && getDaysRemaining(contract.trialEndDate) <= 2;
+                  const isTrialEndingSoon = contract.isTrial && contract.trialEndDate && getDaysRemaining(contract.trialEndDate) <= TRIAL_ALERT_THRESHOLD_DAYS;
                   
                   return (
                     <TableRow key={contract.id} className="group">

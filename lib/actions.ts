@@ -822,6 +822,8 @@ export async function generateContractCancellationLetter(id: string): Promise<st
     year: "numeric",
   })
 
+  // NOTE: Replace placeholder personal information with actual user data
+  // This should be made configurable through user settings in a future update
   return `Max Mustermann
 Musterstraße 1
 12345 Musterstadt
