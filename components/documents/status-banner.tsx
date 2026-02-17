@@ -38,9 +38,7 @@ export function StatusBanner({ status }: Props) {
         {t("banner", { status: t(status) })}
       </AlertTitle>
       <AlertDescription>
-        {status === "legalEntity" && "All documents are valid. You may travel freely."}
-        {status === "approachingStatelessness" && "Some documents are expiring soon. Schedule renewals now!"}
-        {status === "stateless" && "URGENT: Expired documents detected. Renew immediately!"}
+        {t(`${status}Description`)}
       </AlertDescription>
     </Alert>
   )

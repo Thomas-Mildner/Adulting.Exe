@@ -87,12 +87,12 @@ export function DocumentCard({ document }: Props) {
         </CardHeader>
         <CardContent className="space-y-3">
           <div>
-            <p className="text-xs text-muted-foreground">Document Number</p>
+            <p className="text-xs text-muted-foreground">{t("documentNumber")}</p>
             <p className="font-mono text-sm">{document.documentNumber}</p>
           </div>
           
           <div>
-            <p className="text-xs text-muted-foreground">Expiry Date</p>
+            <p className="text-xs text-muted-foreground">{t("expiryDate")}</p>
             <p className="text-sm">{new Date(document.expiryDate).toLocaleDateString()}</p>
             <p className={`text-xs ${status === "expired" ? "text-red-600 dark:text-red-400 font-semibold" : "text-muted-foreground"}`}>
               {getCountdownText()}
@@ -115,7 +115,7 @@ export function DocumentCard({ document }: Props) {
               className="flex-1"
             >
               <AlertCircle className="h-4 w-4 mr-2" />
-              Lost?
+              {t("lostButton")}
             </Button>
           )}
           <Button variant="ghost" size="sm" disabled>
@@ -135,15 +135,15 @@ export function DocumentCard({ document }: Props) {
       <AlertDialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Delete Document</AlertDialogTitle>
+            <AlertDialogTitle>{t("deleteDocumentTitle")}</AlertDialogTitle>
             <AlertDialogDescription>
               {t("deleteConfirm.document", { documentType })}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogCancel>{t("cancel")}</AlertDialogCancel>
             <AlertDialogAction onClick={handleDelete} disabled={isPending}>
-              Delete
+              {t("delete")}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

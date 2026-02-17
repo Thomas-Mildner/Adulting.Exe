@@ -36,20 +36,20 @@ export function DocumentsCard({ documents }: Props) {
             <CardTitle className="text-base">{t("title")}</CardTitle>
           </div>
           {hasExpired && (
-            <Badge variant="destructive">Expired!</Badge>
+            <Badge variant="destructive">{t("expiredBadge")}</Badge>
           )}
           {!hasExpired && hasExpiringSoon && (
             <Badge className="bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-100">
-              Expiring Soon
+              {t("expiringSoonBadge")}
             </Badge>
           )}
         </div>
-        <CardDescription>Identity documents status</CardDescription>
+        <CardDescription>{t("identityDocumentsStatus")}</CardDescription>
       </CardHeader>
       <CardContent>
         {criticalDocuments.length === 0 ? (
           <div className="text-sm text-muted-foreground text-center py-4">
-            All documents are valid
+            {t("allDocumentsValid")}
           </div>
         ) : (
           <div className="space-y-3">
@@ -74,11 +74,11 @@ export function DocumentsCard({ documents }: Props) {
                   <div className="text-right">
                     {status === "expired" ? (
                       <p className="text-xs font-semibold text-red-600">
-                        Expired {Math.abs(daysRemaining)}d ago
+                        {t("expiredDaysAgo", { days: Math.abs(daysRemaining) })}
                       </p>
                     ) : (
                       <p className="text-xs text-muted-foreground">
-                        {daysRemaining}d remaining
+                        {t("daysRemaining", { days: daysRemaining })}
                       </p>
                     )}
                   </div>
@@ -91,7 +91,7 @@ export function DocumentsCard({ documents }: Props) {
         <div className="mt-4 pt-3 border-t">
           <Link href="/documents">
             <Button variant="ghost" size="sm" className="w-full">
-              View All Documents
+              {t("viewAllDocuments")}
               <ArrowRight className="h-4 w-4 ml-2" />
             </Button>
           </Link>

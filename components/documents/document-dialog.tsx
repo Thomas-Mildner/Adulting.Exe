@@ -116,7 +116,7 @@ export function DocumentDialog({ open, onOpenChange, persons, document }: Props)
               {document ? t("editDocument") : t("addDocument")}
             </DialogTitle>
             <DialogDescription>
-              Track an identity document with expiry dates and emergency information.
+              {t("documentDialogDescription")}
             </DialogDescription>
           </DialogHeader>
 
@@ -129,7 +129,7 @@ export function DocumentDialog({ open, onOpenChange, persons, document }: Props)
                 required
               >
                 <SelectTrigger>
-                  <SelectValue placeholder="Select person..." />
+                  <SelectValue placeholder={t("selectPerson")} />
                 </SelectTrigger>
                 <SelectContent>
                   {persons.map((person) => (
@@ -253,10 +253,10 @@ export function DocumentDialog({ open, onOpenChange, persons, document }: Props)
 
           <DialogFooter>
             <Button type="button" variant="outline" onClick={() => handleOpenChange(false)}>
-              Cancel
+              {t("cancel")}
             </Button>
             <Button type="submit" disabled={isPending || !form.personId}>
-              {document ? "Save" : "Add"}
+              {document ? t("save") : t("add")}
             </Button>
           </DialogFooter>
         </form>
