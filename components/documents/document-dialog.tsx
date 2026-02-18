@@ -21,8 +21,9 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { type Person, type IdentityDocument } from "@/lib/data"
-import { createIdentityDocument } from "@/lib/actions"
-import { useState, useTransition } from "react"
+import { createIdentityDocument, updateIdentityDocument } from "@/lib/actions"
+import { useState, useTransition, useEffect } from "react"
+// ... (imports remain the same, just adding useEffect and updateIdentityDocument)
 
 type Props = {
   open: boolean
@@ -62,37 +63,71 @@ export function DocumentDialog({ open, onOpenChange, persons, document }: Props)
   const [isPending, startTransition] = useTransition()
   const [form, setForm] = useState<FormData>(emptyForm)
 
+  useEffect(() => {
+    if (document) {
+      setForm({
+        personId: document.personId,
+        documentType: document.documentType,
+        customDocumentType: document.customDocumentType || "",
+        documentNumber: document.documentNumber,
+        issueDate: document.issueDate,
+        expiryDate: document.expiryDate,
+        physicalLocation: document.physicalLocation || "",
+        lostFoundGuide: document.lostFoundGuide || "",
+        emergencyContact: document.emergencyContact || "",
+        notes: document.notes || "",
+      })
+    } else {
+      setForm(emptyForm)
+    }
+  }, [document, open])
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    
+
     // Validate dates
     const issueDate = new Date(form.issueDate)
     const expiryDate = new Date(form.expiryDate)
     const today = new Date()
-    
+
     if (issueDate > today) {
       alert(t("form.validation.issueDateFuture"))
       return
     }
-    
+
     if (expiryDate <= issueDate) {
       alert(t("form.validation.expiryBeforeIssue"))
       return
     }
-    
+
     startTransition(async () => {
-      await createIdentityDocument({
-        personId: form.personId,
-        documentType: form.documentType,
-        customDocumentType: form.documentType === "Other" ? form.customDocumentType : undefined,
-        documentNumber: form.documentNumber,
-        issueDate: form.issueDate,
-        expiryDate: form.expiryDate,
-        physicalLocation: form.physicalLocation || undefined,
-        lostFoundGuide: form.lostFoundGuide || undefined,
-        emergencyContact: form.emergencyContact || undefined,
-        notes: form.notes || undefined,
-      })
+      if (document) {
+        await updateIdentityDocument(document.id, {
+          personId: form.personId,
+          documentType: form.documentType,
+          customDocumentType: form.documentType === "Other" ? form.customDocumentType : undefined,
+          documentNumber: form.documentNumber,
+          issueDate: form.issueDate,
+          expiryDate: form.expiryDate,
+          physicalLocation: form.physicalLocation || undefined,
+          lostFoundGuide: form.lostFoundGuide || undefined,
+          emergencyContact: form.emergencyContact || undefined,
+          notes: form.notes || undefined,
+        })
+      } else {
+        await createIdentityDocument({
+          personId: form.personId,
+          documentType: form.documentType,
+          customDocumentType: form.documentType === "Other" ? form.customDocumentType : undefined,
+          documentNumber: form.documentNumber,
+          issueDate: form.issueDate,
+          expiryDate: form.expiryDate,
+          physicalLocation: form.physicalLocation || undefined,
+          lostFoundGuide: form.lostFoundGuide || undefined,
+          emergencyContact: form.emergencyContact || undefined,
+          notes: form.notes || undefined,
+        })
+      }
       setForm(emptyForm)
       onOpenChange(false)
     })

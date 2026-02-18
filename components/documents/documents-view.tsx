@@ -23,6 +23,17 @@ export function DocumentsView({ persons: initialPersons, documents: initialDocum
   const [selectedPersonId, setSelectedPersonId] = useState<string | "all">("all")
   const [isPersonDialogOpen, setIsPersonDialogOpen] = useState(false)
   const [isDocumentDialogOpen, setIsDocumentDialogOpen] = useState(false)
+  const [editingDocument, setEditingDocument] = useState<IdentityDocument | undefined>(undefined)
+
+  const handleEditDocument = (doc: IdentityDocument) => {
+    setEditingDocument(doc)
+    setIsDocumentDialogOpen(true)
+  }
+
+  const handleAddDocument = () => {
+    setEditingDocument(undefined)
+    setIsDocumentDialogOpen(true)
+  }
 
   const filteredDocuments = useMemo(() => {
     if (selectedPersonId === "all") return initialDocuments
@@ -33,7 +44,7 @@ export function DocumentsView({ persons: initialPersons, documents: initialDocum
   const overallStatus = useMemo(() => {
     const hasExpired = initialDocuments.some(doc => getDocumentStatus(doc.expiryDate) === "expired")
     const hasExpiringSoon = initialDocuments.some(doc => getDocumentStatus(doc.expiryDate) === "expiring-soon")
-    
+
     if (hasExpired) return "stateless"
     if (hasExpiringSoon) return "approachingStatelessness"
     return "legalEntity"
@@ -49,8 +60,8 @@ export function DocumentsView({ persons: initialPersons, documents: initialDocum
             <User className="h-4 w-4 mr-2" />
             {t("addPerson")}
           </Button>
-          <Button 
-            onClick={() => setIsDocumentDialogOpen(true)}
+          <Button
+            onClick={handleAddDocument}
             disabled={initialPersons.length === 0}
           >
             <Plus className="h-4 w-4 mr-2" />
@@ -89,7 +100,7 @@ export function DocumentsView({ persons: initialPersons, documents: initialDocum
             ) : (
               <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                 {initialDocuments.map((doc) => (
-                  <DocumentCard key={doc.id} document={doc} />
+                  <DocumentCard key={doc.id} document={doc} onEdit={handleEditDocument} />
                 ))}
               </div>
             )}
@@ -106,7 +117,7 @@ export function DocumentsView({ persons: initialPersons, documents: initialDocum
               ) : (
                 <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                   {filteredDocuments.map((doc) => (
-                    <DocumentCard key={doc.id} document={doc} />
+                    <DocumentCard key={doc.id} document={doc} onEdit={handleEditDocument} />
                   ))}
                 </div>
               )}
@@ -115,15 +126,16 @@ export function DocumentsView({ persons: initialPersons, documents: initialDocum
         </Tabs>
       )}
 
-      <PersonDialog 
-        open={isPersonDialogOpen} 
+      <PersonDialog
+        open={isPersonDialogOpen}
         onOpenChange={setIsPersonDialogOpen}
       />
-      
-      <DocumentDialog 
-        open={isDocumentDialogOpen} 
+
+      <DocumentDialog
+        open={isDocumentDialogOpen}
         onOpenChange={setIsDocumentDialogOpen}
         persons={initialPersons}
+        document={editingDocument}
       />
     </div>
   )

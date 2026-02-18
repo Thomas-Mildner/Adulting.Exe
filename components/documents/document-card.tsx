@@ -22,9 +22,10 @@ import { LostFoundDialog } from "./lost-found-dialog"
 
 type Props = {
   document: IdentityDocument
+  onEdit: (document: IdentityDocument) => void
 }
 
-export function DocumentCard({ document }: Props) {
+export function DocumentCard({ document, onEdit }: Props) {
   const t = useTranslations("Documents")
   const [isPending, startTransition] = useTransition()
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
@@ -32,7 +33,7 @@ export function DocumentCard({ document }: Props) {
 
   const daysRemaining = getDaysRemaining(document.expiryDate)
   const status = getDocumentStatus(document.expiryDate)
-  
+
   const statusConfig = {
     valid: {
       label: t("statusBadge.modelCitizen"),
@@ -90,7 +91,7 @@ export function DocumentCard({ document }: Props) {
             <p className="text-xs text-muted-foreground">{t("documentNumber")}</p>
             <p className="font-mono text-sm">{document.documentNumber}</p>
           </div>
-          
+
           <div>
             <p className="text-xs text-muted-foreground">{t("expiryDate")}</p>
             <p className="text-sm">{new Date(document.expiryDate).toLocaleDateString()}</p>
@@ -108,8 +109,8 @@ export function DocumentCard({ document }: Props) {
         </CardContent>
         <CardFooter className="flex gap-2">
           {document.lostFoundGuide && (
-            <Button 
-              variant="outline" 
+            <Button
+              variant="outline"
               size="sm"
               onClick={() => setIsLostFoundDialogOpen(true)}
               className="flex-1"
@@ -118,11 +119,15 @@ export function DocumentCard({ document }: Props) {
               {t("lostButton")}
             </Button>
           )}
-          <Button variant="ghost" size="sm" disabled>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => onEdit(document)}
+          >
             <Pencil className="h-4 w-4" />
           </Button>
-          <Button 
-            variant="ghost" 
+          <Button
+            variant="ghost"
             size="sm"
             onClick={() => setIsDeleteDialogOpen(true)}
             disabled={isPending}
@@ -149,7 +154,7 @@ export function DocumentCard({ document }: Props) {
         </AlertDialogContent>
       </AlertDialog>
 
-      <LostFoundDialog 
+      <LostFoundDialog
         open={isLostFoundDialogOpen}
         onOpenChange={setIsLostFoundDialogOpen}
         document={document}
