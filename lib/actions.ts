@@ -15,6 +15,8 @@ import type {
   WastePickup,
 
   Notification,
+  Person,
+  IdentityDocument,
 } from "@/lib/data"
 import type {
   Appliance as PrismaAppliance,
@@ -29,6 +31,8 @@ import type {
   WasteType as PrismaWasteType,
   WastePickup as PrismaWastePickup,
   Insurance as PrismaInsurance,
+  Person as PrismaPerson,
+  IdentityDocument as PrismaIdentityDocument,
 } from "@prisma/client"
 
 type PrismaServiceProvider = PrismaSP & { history: PrismaServiceHistory[] }
@@ -819,6 +823,70 @@ export async function getNotifications(): Promise<Notification[]> {
     })
   })
 
+  // 5. Identity Documents (Expired or Expiring Soon)
+  const sixMonthsFromNow = new Date(today)
+  sixMonthsFromNow.setMonth(sixMonthsFromNow.getMonth() + 6)
+  
+  const expiringDocuments = await prisma.identityDocument.findMany({
+    where: {
+      expiryDate: { lte: sixMonthsFromNow }
+    },
+    include: { person: true },
+    orderBy: { expiryDate: "asc" },
+  })
+
+  expiringDocuments.forEach((doc) => {
+    const daysRemaining = Math.ceil(
+      (doc.expiryDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24)
+    )
+    
+    if (daysRemaining < 0) {
+      // Expired
+      notifications.push({
+        id: `doc-${doc.id}`,
+        title: `⚠️ ${doc.documentType} Abgelaufen!`,
+        message: `${doc.person.name}'s ${doc.documentType} ist seit ${Math.abs(daysRemaining)} Tagen abgelaufen. Sofort erneuern!`,
+        type: "error",
+        category: "Maintenance", // Using Maintenance as category since we don't have Documents category
+        link: "/documents",
+        date: dateToStr(doc.expiryDate),
+      })
+    } else if (daysRemaining <= 30) {
+      // 1 month warning
+      notifications.push({
+        id: `doc-${doc.id}`,
+        title: `Dringend: ${doc.documentType} läuft bald ab`,
+        message: `${doc.person.name}'s ${doc.documentType} läuft in ${daysRemaining} Tagen ab.`,
+        type: "error",
+        category: "Maintenance",
+        link: "/documents",
+        date: dateToStr(doc.expiryDate),
+      })
+    } else if (daysRemaining <= 90) {
+      // 3 months warning
+      notifications.push({
+        id: `doc-${doc.id}`,
+        title: `${doc.documentType} läuft in ${Math.floor(daysRemaining / 30)} Monaten ab`,
+        message: `Zeit für ${doc.person.name}, einen Termin beim Bürgeramt zu vereinbaren.`,
+        type: "warning",
+        category: "Maintenance",
+        link: "/documents",
+        date: dateToStr(doc.expiryDate),
+      })
+    } else if (daysRemaining <= 180) {
+      // 6 months warning
+      notifications.push({
+        id: `doc-${doc.id}`,
+        title: `${doc.documentType} läuft in 6 Monaten ab`,
+        message: `${doc.person.name}: Der Staat will bald dein Geld/Aufmerksamkeit. Fang an, für einen Termin zu beten.`,
+        type: "info",
+        category: "Maintenance",
+        link: "/documents",
+        date: dateToStr(doc.expiryDate),
+      })
+    }
+  })
+
   // Filter out read notifications
   const readNotifications = await prisma.notificationRead.findMany({
     select: { id: true },
@@ -842,4 +910,193 @@ export async function markAllNotificationsAsRead(ids: string[]) {
     skipDuplicates: true,
   })
   revalidatePath("/")
+}
+
+// ─── Person & Identity Documents ────────────────────────────────────────
+
+export async function getPersons(): Promise<(Person & { documentCount: number })[]> {
+  const persons = await prisma.person.findMany({
+    orderBy: { createdAt: "asc" },
+    include: {
+      _count: {
+        select: { documents: true }
+      }
+    }
+  })
+  
+  return persons.map((p) => ({
+    id: p.id,
+    name: p.name,
+    relation: p.relation as Person["relation"],
+    documentCount: p._count.documents,
+  }))
+}
+
+export async function getPerson(id: string): Promise<Person | null> {
+  const p = await prisma.person.findUnique({ where: { id } })
+  if (!p) return null
+  return {
+    id: p.id,
+    name: p.name,
+    relation: p.relation as Person["relation"],
+  }
+}
+
+export async function createPerson(data: Omit<Person, "id">) {
+  await prisma.person.create({
+    data: {
+      name: data.name,
+      relation: data.relation,
+    },
+  })
+  revalidatePath("/documents")
+  revalidatePath("/")
+}
+
+export async function updatePerson(id: string, data: Partial<Omit<Person, "id">>) {
+  await prisma.person.update({
+    where: { id },
+    data: {
+      ...(data.name !== undefined && { name: data.name }),
+      ...(data.relation !== undefined && { relation: data.relation }),
+    },
+  })
+  revalidatePath("/documents")
+  revalidatePath("/")
+}
+
+export async function deletePerson(id: string) {
+  await prisma.person.delete({ where: { id } })
+  revalidatePath("/documents")
+  revalidatePath("/")
+}
+
+export async function getIdentityDocuments(personId?: string): Promise<IdentityDocument[]> {
+  const where = personId ? { personId } : {}
+  const docs = await prisma.identityDocument.findMany({
+    where,
+    include: { person: true },
+    orderBy: { expiryDate: "asc" },
+  })
+  
+  return docs.map((d) => ({
+    id: d.id,
+    personId: d.personId,
+    personName: d.person.name,
+    documentType: d.documentType as IdentityDocument["documentType"],
+    customDocumentType: d.customDocumentType || undefined,
+    documentNumber: d.documentNumber,
+    issueDate: dateToStr(d.issueDate),
+    expiryDate: dateToStr(d.expiryDate),
+    photoFrontPath: d.photoFrontPath || undefined,
+    photoBackPath: d.photoBackPath || undefined,
+    physicalLocation: d.physicalLocation || undefined,
+    lostFoundGuide: d.lostFoundGuide || undefined,
+    emergencyContact: d.emergencyContact || undefined,
+    notes: d.notes || undefined,
+  }))
+}
+
+export async function getIdentityDocument(id: string): Promise<IdentityDocument | null> {
+  const d = await prisma.identityDocument.findUnique({
+    where: { id },
+    include: { person: true },
+  })
+  if (!d) return null
+  
+  return {
+    id: d.id,
+    personId: d.personId,
+    personName: d.person.name,
+    documentType: d.documentType as IdentityDocument["documentType"],
+    customDocumentType: d.customDocumentType || undefined,
+    documentNumber: d.documentNumber,
+    issueDate: dateToStr(d.issueDate),
+    expiryDate: dateToStr(d.expiryDate),
+    photoFrontPath: d.photoFrontPath || undefined,
+    photoBackPath: d.photoBackPath || undefined,
+    physicalLocation: d.physicalLocation || undefined,
+    lostFoundGuide: d.lostFoundGuide || undefined,
+    emergencyContact: d.emergencyContact || undefined,
+    notes: d.notes || undefined,
+  }
+}
+
+export async function createIdentityDocument(data: Omit<IdentityDocument, "id" | "personName">) {
+  await prisma.identityDocument.create({
+    data: {
+      personId: data.personId,
+      documentType: data.documentType,
+      customDocumentType: data.customDocumentType,
+      documentNumber: data.documentNumber,
+      issueDate: new Date(data.issueDate),
+      expiryDate: new Date(data.expiryDate),
+      photoFrontPath: data.photoFrontPath,
+      photoBackPath: data.photoBackPath,
+      physicalLocation: data.physicalLocation,
+      lostFoundGuide: data.lostFoundGuide,
+      emergencyContact: data.emergencyContact,
+      notes: data.notes,
+    },
+  })
+  revalidatePath("/documents")
+  revalidatePath("/")
+}
+
+export async function updateIdentityDocument(id: string, data: Partial<Omit<IdentityDocument, "id" | "personName">>) {
+  await prisma.identityDocument.update({
+    where: { id },
+    data: {
+      ...(data.personId !== undefined && { personId: data.personId }),
+      ...(data.documentType !== undefined && { documentType: data.documentType }),
+      ...(data.customDocumentType !== undefined && { customDocumentType: data.customDocumentType }),
+      ...(data.documentNumber !== undefined && { documentNumber: data.documentNumber }),
+      ...(data.issueDate !== undefined && { issueDate: new Date(data.issueDate) }),
+      ...(data.expiryDate !== undefined && { expiryDate: new Date(data.expiryDate) }),
+      ...(data.photoFrontPath !== undefined && { photoFrontPath: data.photoFrontPath }),
+      ...(data.photoBackPath !== undefined && { photoBackPath: data.photoBackPath }),
+      ...(data.physicalLocation !== undefined && { physicalLocation: data.physicalLocation }),
+      ...(data.lostFoundGuide !== undefined && { lostFoundGuide: data.lostFoundGuide }),
+      ...(data.emergencyContact !== undefined && { emergencyContact: data.emergencyContact }),
+      ...(data.notes !== undefined && { notes: data.notes }),
+    },
+  })
+  revalidatePath("/documents")
+  revalidatePath("/")
+}
+
+export async function deleteIdentityDocument(id: string) {
+  await prisma.identityDocument.delete({ where: { id } })
+  revalidatePath("/documents")
+  revalidatePath("/")
+}
+
+export async function getExpiringDocuments(daysThreshold: number = 180): Promise<IdentityDocument[]> {
+  const thresholdDate = new Date()
+  thresholdDate.setDate(thresholdDate.getDate() + daysThreshold)
+  
+  const docs = await prisma.identityDocument.findMany({
+    where: {
+      expiryDate: { lte: thresholdDate }
+    },
+    include: { person: true },
+    orderBy: { expiryDate: "asc" },
+  })
+  
+  return docs.map((d) => ({
+    id: d.id,
+    personId: d.personId,
+    personName: d.person.name,
+    documentType: d.documentType as IdentityDocument["documentType"],
+    customDocumentType: d.customDocumentType || undefined,
+    documentNumber: d.documentNumber,
+    issueDate: dateToStr(d.issueDate),
+    expiryDate: dateToStr(d.expiryDate),
+    photoFrontPath: d.photoFrontPath || undefined,
+    photoBackPath: d.photoBackPath || undefined,
+    physicalLocation: d.physicalLocation || undefined,
+    lostFoundGuide: d.lostFoundGuide || undefined,
+    emergencyContact: d.emergencyContact || undefined,
+    notes: d.notes || undefined,
+  }))
 }
