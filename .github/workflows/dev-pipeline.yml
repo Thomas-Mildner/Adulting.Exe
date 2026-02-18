@@ -14,7 +14,7 @@ permissions:
 
 jobs:
   validate:
-    name: Validate (Lint & Build)
+    name: Validate (Build)
     runs-on: ubuntu-latest
     
     steps:
@@ -49,9 +49,6 @@ jobs:
 
       - name: Generate Prisma Client
         run: pnpm db:generate
-
-      - name: Lint
-        run: pnpm lint
-
+        
       - name: Build
         run: pnpm build

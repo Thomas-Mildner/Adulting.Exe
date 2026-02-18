@@ -193,7 +193,7 @@ Navigate to [http://localhost:3000](http://localhost:3000) to see your home mana
 | `pnpm dev`   | Start development server with Turbo |
 | `pnpm build` | Build for production                |
 | `pnpm start` | Start production server             |
-| `pnpm lint`  | Run ESLint                          |
+
 
 ---
 
@@ -221,7 +221,6 @@ We welcome contributions to Adulting.Exe! Whether you're fixing bugs, adding fea
    ```bash
    pnpm dev        # Test in development mode
    pnpm build      # Verify production build works
-   pnpm lint       # Check for linting issues
    ```
 3. **Commit your changes** using [Conventional Commits](https://www.conventionalcommits.org/):
    ```bash
