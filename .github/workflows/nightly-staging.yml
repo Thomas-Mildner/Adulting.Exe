@@ -1,0 +1,56 @@
+name: Nightly Staging Sync
+
+on:
+  schedule:
+    - cron: '0 2 * * *' # Run at 2:00 AM daily
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  nightly-merge:
+    name: Nightly Merge & Build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout staging
+        uses: actions/checkout@v4
+        with:
+          ref: staging
+          fetch-depth: 0
+
+      - name: Configure Git
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Fetch branches
+        run: git fetch origin dev
+
+      - name: Merge dev into staging
+        run: |
+          git merge origin/dev --no-edit
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.14.0'
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 8
+
+      - name: Install dependencies
+        run: pnpm install --no-frozen-lockfile
+
+      - name: Generate Prisma Client
+        run: pnpm db:generate
+
+      - name: Build
+        run: pnpm build
+
+      - name: Push changes
+        if: success()
+        run: git push origin staging
