@@ -706,7 +706,7 @@
     "documentType": {
       "ID": "ID Card",
       "Passport": "Passport",
-      "DriverLicense": "Driver's License",
+      "Driver's License": "Driver's License",
       "Visa": "Visa",
       "Other": "Other"
     },

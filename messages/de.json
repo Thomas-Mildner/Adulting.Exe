@@ -706,7 +706,7 @@
     "documentType": {
       "ID": "Personalausweis",
       "Passport": "Reisepass",
-      "DriverLicense": "Führerschein",
+      "Driver's License": "Führerschein",
       "Visa": "Visum",
       "Other": "Sonstiges"
     },

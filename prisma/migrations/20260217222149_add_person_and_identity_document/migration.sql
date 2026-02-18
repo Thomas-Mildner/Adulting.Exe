@@ -1,39 +1,4 @@
-/*
-  Warnings:
 
-  - You are about to drop the `Car` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `CarDocument` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `CarMaintenance` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `FuelEntry` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `TollEntry` table. If the table is not empty, all the data it contains will be lost.
-
-*/
--- DropForeignKey
-ALTER TABLE "CarDocument" DROP CONSTRAINT "CarDocument_carId_fkey";
-
--- DropForeignKey
-ALTER TABLE "CarMaintenance" DROP CONSTRAINT "CarMaintenance_carId_fkey";
-
--- DropForeignKey
-ALTER TABLE "FuelEntry" DROP CONSTRAINT "FuelEntry_carId_fkey";
-
--- DropForeignKey
-ALTER TABLE "TollEntry" DROP CONSTRAINT "TollEntry_carId_fkey";
-
--- DropTable
-DROP TABLE "Car";
-
--- DropTable
-DROP TABLE "CarDocument";
-
--- DropTable
-DROP TABLE "CarMaintenance";
-
--- DropTable
-DROP TABLE "FuelEntry";
-
--- DropTable
-DROP TABLE "TollEntry";
 
 -- CreateTable
 CREATE TABLE "Person" (
