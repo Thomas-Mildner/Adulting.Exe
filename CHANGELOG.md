@@ -1,3 +1,20 @@
+# [1.8.0-rc.1](https://github.com/Thomas-Mildner/Adulting.Exe/compare/v1.7.1...v1.8.0-rc.1) (2026-02-19)
+
+
+### Bug Fixes
+
+* internationalize all user-facing strings in documents components ([b2a2cf4](https://github.com/Thomas-Mildner/Adulting.Exe/commit/b2a2cf419830753fafa23173458c27dedaa19dc0))
+
+
+### Features
+
+* add database schema for Person and IdentityDocument models ([ee57e72](https://github.com/Thomas-Mildner/Adulting.Exe/commit/ee57e7263667fb8356af4f9b8154dd242e4f7f96))
+* add document tracking functionality with editing capabilities ([d34c6be](https://github.com/Thomas-Mildner/Adulting.Exe/commit/d34c6bee0113758108f565822dd74e6399d7bbbe))
+* add documents card to dashboard and expiry notifications ([2c19c22](https://github.com/Thomas-Mildner/Adulting.Exe/commit/2c19c22c514b86cf955445f8ae086af524cd601d))
+* add documents page with UI components and translations ([07d4fc4](https://github.com/Thomas-Mildner/Adulting.Exe/commit/07d4fc4282438a83b08e30a0b037f53952dcd3c4))
+* add proper Prisma migration for Person and IdentityDocument models ([6e26629](https://github.com/Thomas-Mildner/Adulting.Exe/commit/6e26629e8cf388e2c80cc2566b264a1b1e683922))
+* add staging release workflow with build, release, and Docker image steps ([419ff06](https://github.com/Thomas-Mildner/Adulting.Exe/commit/419ff06ab89788b9ac60177bf387fe7f2890837c))
+
 ## [1.7.1](https://github.com/Thomas-Mildner/Adulting.Exe/compare/v1.7.0...v1.7.1) (2026-02-17)
 
 
