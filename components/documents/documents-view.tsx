@@ -52,7 +52,7 @@ export function DocumentsView({ persons: initialPersons, documents: initialDocum
 
   return (
     <div className="space-y-6">
-      <StatusBanner status={overallStatus} />
+      {initialDocuments.length > 0 && <StatusBanner status={overallStatus} />}
 
       <div className="flex justify-between items-center">
         <div className="flex gap-2">
