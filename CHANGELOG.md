@@ -1,3 +1,11 @@
+# [1.8.0-rc.2](https://github.com/Thomas-Mildner/Adulting.Exe/compare/v1.8.0-rc.1...v1.8.0-rc.2) (2026-02-22)
+
+
+### Bug Fixes
+
+* **ci:** changed dockerhub repo ([907910b](https://github.com/Thomas-Mildner/Adulting.Exe/commit/907910b5204eb49770d9bcabfc9b6d1d3fbbcf52))
+* conditionally render StatusBanner based on document length ([6bc2efa](https://github.com/Thomas-Mildner/Adulting.Exe/commit/6bc2efa2002f3d9f5424cdc88e2a273c26e34f7d))
+
 # [1.8.0-rc.1](https://github.com/Thomas-Mildner/Adulting.Exe/compare/v1.7.1...v1.8.0-rc.1) (2026-02-19)
 
 
