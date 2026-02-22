@@ -1,3 +1,10 @@
+# [1.8.0-rc.4](https://github.com/Thomas-Mildner/Adulting.Exe/compare/v1.8.0-rc.3...v1.8.0-rc.4) (2026-02-22)
+
+
+### Bug Fixes
+
+* Trigger a new release version ([9709cef](https://github.com/Thomas-Mildner/Adulting.Exe/commit/9709cef4fe37ad58e16f66eaaab4984b0ef48d74))
+
 # [1.8.0-rc.3](https://github.com/Thomas-Mildner/Adulting.Exe/compare/v1.8.0-rc.2...v1.8.0-rc.3) (2026-02-22)
 
 
