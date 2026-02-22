@@ -1,3 +1,29 @@
+## [1.7.1](https://github.com/Thomas-Mildner/Adulting.Exe/compare/v1.7.0...v1.7.1) (2026-02-17)
+
+
+### Bug Fixes
+
+* checkout release tag in docker job to sync versions ([d3cbb57](https://github.com/Thomas-Mildner/Adulting.Exe/commit/d3cbb578e25c526fc3a9900dffe9f2ee0ebdcbc8))
+
+# [1.7.0](https://github.com/Thomas-Mildner/Adulting.Exe/compare/v1.6.0...v1.7.0) (2026-02-17)
+
+
+### Features
+
+* add NotificationCenter component and integrate notifications into DashboardLayout ([54c98b3](https://github.com/Thomas-Mildner/Adulting.Exe/commit/54c98b370715f5bd76a269879d80d4f1b468dc37))
+* implement notification center ([5eae1ca](https://github.com/Thomas-Mildner/Adulting.Exe/commit/5eae1ca6635656a1b8f038eea484b684e742b7ef))
+* refactor version checking logic into useVersionCheck hook ([077695c](https://github.com/Thomas-Mildner/Adulting.Exe/commit/077695cd7acab3957b7458e249e2d4b6a24ec92a))
+* update database schema and migrations ([09bde31](https://github.com/Thomas-Mildner/Adulting.Exe/commit/09bde315afd41bd93ba5d8b56d8d6c32eff8b38c))
+
+# [1.6.0](https://github.com/Thomas-Mildner/Adulting.Exe/compare/v1.5.1...v1.6.0) (2026-02-17)
+
+
+### Features
+
+* add initial database migration with multiple tables and relationships ([b748d75](https://github.com/Thomas-Mildner/Adulting.Exe/commit/b748d758b6aa23f6153aaf66c5d36b0cef95d743))
+* add QR code functionality and appliance detail page ([b1579c2](https://github.com/Thomas-Mildner/Adulting.Exe/commit/b1579c2a8ace97592075e6ae00f7d90a001c4032))
+* implement settings page with heating type configuration and enhance utility tracker with dynamic heating unit display ([b440495](https://github.com/Thomas-Mildner/Adulting.Exe/commit/b440495062621b8dc76dfdf116e698405678a560))
+
 ## [1.5.1](https://github.com/Thomas-Mildner/Adulting.Exe/compare/v1.5.0...v1.5.1) (2026-02-17)
 
 
