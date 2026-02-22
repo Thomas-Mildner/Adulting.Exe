@@ -1,5 +1,5 @@
 -- CreateTable
-CREATE TABLE "Appliance" (
+CREATE TABLE IF NOT EXISTS "Appliance" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "category" TEXT NOT NULL,
@@ -16,7 +16,7 @@ CREATE TABLE "Appliance" (
 );
 
 -- CreateTable
-CREATE TABLE "ServiceProvider" (
+CREATE TABLE IF NOT EXISTS "ServiceProvider" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "specialty" TEXT NOT NULL,
@@ -31,7 +31,7 @@ CREATE TABLE "ServiceProvider" (
 );
 
 -- CreateTable
-CREATE TABLE "ServiceHistory" (
+CREATE TABLE IF NOT EXISTS "ServiceHistory" (
     "id" TEXT NOT NULL,
     "date" TIMESTAMP(3) NOT NULL,
     "description" TEXT NOT NULL,
@@ -45,7 +45,7 @@ CREATE TABLE "ServiceHistory" (
 );
 
 -- CreateTable
-CREATE TABLE "Invoice" (
+CREATE TABLE IF NOT EXISTS "Invoice" (
     "id" TEXT NOT NULL,
     "date" TIMESTAMP(3) NOT NULL,
     "description" TEXT NOT NULL,
@@ -60,7 +60,7 @@ CREATE TABLE "Invoice" (
 );
 
 -- CreateTable
-CREATE TABLE "Document" (
+CREATE TABLE IF NOT EXISTS "Document" (
     "id" TEXT NOT NULL,
     "title" TEXT NOT NULL,
     "category" TEXT NOT NULL,
@@ -74,7 +74,7 @@ CREATE TABLE "Document" (
 );
 
 -- CreateTable
-CREATE TABLE "MaintenanceTask" (
+CREATE TABLE IF NOT EXISTS "MaintenanceTask" (
     "id" TEXT NOT NULL,
     "title" TEXT NOT NULL,
     "dueDate" TIMESTAMP(3) NOT NULL,
@@ -88,7 +88,7 @@ CREATE TABLE "MaintenanceTask" (
 );
 
 -- CreateTable
-CREATE TABLE "LentItem" (
+CREATE TABLE IF NOT EXISTS "LentItem" (
     "id" TEXT NOT NULL,
     "item" TEXT NOT NULL,
     "borrower" TEXT NOT NULL,
@@ -102,7 +102,7 @@ CREATE TABLE "LentItem" (
 );
 
 -- CreateTable
-CREATE TABLE "MeterReading" (
+CREATE TABLE IF NOT EXISTS "MeterReading" (
     "id" TEXT NOT NULL,
     "month" TEXT NOT NULL,
     "power" DOUBLE PRECISION NOT NULL,
@@ -117,7 +117,7 @@ CREATE TABLE "MeterReading" (
 );
 
 -- CreateTable
-CREATE TABLE "WishlistProject" (
+CREATE TABLE IF NOT EXISTS "WishlistProject" (
     "id" TEXT NOT NULL,
     "title" TEXT NOT NULL,
     "description" TEXT NOT NULL,
@@ -132,7 +132,7 @@ CREATE TABLE "WishlistProject" (
 );
 
 -- CreateTable
-CREATE TABLE "WasteType" (
+CREATE TABLE IF NOT EXISTS "WasteType" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "color" TEXT NOT NULL,
@@ -144,7 +144,7 @@ CREATE TABLE "WasteType" (
 );
 
 -- CreateTable
-CREATE TABLE "WastePickup" (
+CREATE TABLE IF NOT EXISTS "WastePickup" (
     "id" TEXT NOT NULL,
     "date" TIMESTAMP(3) NOT NULL,
     "wasteTypeId" TEXT NOT NULL,
@@ -155,7 +155,7 @@ CREATE TABLE "WastePickup" (
 );
 
 -- CreateTable
-CREATE TABLE "AppConfig" (
+CREATE TABLE IF NOT EXISTS "AppConfig" (
     "id" TEXT NOT NULL DEFAULT 'default',
     "heatingType" TEXT NOT NULL DEFAULT 'Gas',
     "updatedAt" TIMESTAMP(3) NOT NULL,
@@ -164,7 +164,7 @@ CREATE TABLE "AppConfig" (
 );
 
 -- CreateTable
-CREATE TABLE "Car" (
+CREATE TABLE IF NOT EXISTS "Car" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "brand" TEXT NOT NULL,
@@ -183,7 +183,7 @@ CREATE TABLE "Car" (
 );
 
 -- CreateTable
-CREATE TABLE "CarMaintenance" (
+CREATE TABLE IF NOT EXISTS "CarMaintenance" (
     "id" TEXT NOT NULL,
     "date" TIMESTAMP(3) NOT NULL,
     "description" TEXT NOT NULL,
@@ -198,7 +198,7 @@ CREATE TABLE "CarMaintenance" (
 );
 
 -- CreateTable
-CREATE TABLE "FuelEntry" (
+CREATE TABLE IF NOT EXISTS "FuelEntry" (
     "id" TEXT NOT NULL,
     "date" TIMESTAMP(3) NOT NULL,
     "liters" DOUBLE PRECISION NOT NULL,
@@ -213,7 +213,7 @@ CREATE TABLE "FuelEntry" (
 );
 
 -- CreateTable
-CREATE TABLE "TollEntry" (
+CREATE TABLE IF NOT EXISTS "TollEntry" (
     "id" TEXT NOT NULL,
     "date" TIMESTAMP(3) NOT NULL,
     "cost" DOUBLE PRECISION NOT NULL,
@@ -226,7 +226,7 @@ CREATE TABLE "TollEntry" (
 );
 
 -- CreateTable
-CREATE TABLE "CarDocument" (
+CREATE TABLE IF NOT EXISTS "CarDocument" (
     "id" TEXT NOT NULL,
     "title" TEXT NOT NULL,
     "category" TEXT NOT NULL,
@@ -239,7 +239,7 @@ CREATE TABLE "CarDocument" (
 );
 
 -- CreateTable
-CREATE TABLE "Insurance" (
+CREATE TABLE IF NOT EXISTS "Insurance" (
     "id" TEXT NOT NULL,
     "providerName" TEXT NOT NULL,
     "policyType" TEXT NOT NULL,
@@ -263,25 +263,47 @@ CREATE TABLE "Insurance" (
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "MeterReading_month_key" ON "MeterReading"("month");
+CREATE UNIQUE INDEX IF NOT EXISTS "MeterReading_month_key" ON "MeterReading"("month");
 
--- AddForeignKey
-ALTER TABLE "ServiceHistory" ADD CONSTRAINT "ServiceHistory_providerId_fkey" FOREIGN KEY ("providerId") REFERENCES "ServiceProvider"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+-- AddForeignKey (only if not exists)
+DO $$ BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'ServiceHistory_providerId_fkey') THEN
+    ALTER TABLE "ServiceHistory" ADD CONSTRAINT "ServiceHistory_providerId_fkey" FOREIGN KEY ("providerId") REFERENCES "ServiceProvider"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+  END IF;
+END $$;
 
--- AddForeignKey
-ALTER TABLE "Invoice" ADD CONSTRAINT "Invoice_providerId_fkey" FOREIGN KEY ("providerId") REFERENCES "ServiceProvider"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+DO $$ BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'Invoice_providerId_fkey') THEN
+    ALTER TABLE "Invoice" ADD CONSTRAINT "Invoice_providerId_fkey" FOREIGN KEY ("providerId") REFERENCES "ServiceProvider"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+  END IF;
+END $$;
 
--- AddForeignKey
-ALTER TABLE "WastePickup" ADD CONSTRAINT "WastePickup_wasteTypeId_fkey" FOREIGN KEY ("wasteTypeId") REFERENCES "WasteType"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+DO $$ BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'WastePickup_wasteTypeId_fkey') THEN
+    ALTER TABLE "WastePickup" ADD CONSTRAINT "WastePickup_wasteTypeId_fkey" FOREIGN KEY ("wasteTypeId") REFERENCES "WasteType"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+  END IF;
+END $$;
 
--- AddForeignKey
-ALTER TABLE "CarMaintenance" ADD CONSTRAINT "CarMaintenance_carId_fkey" FOREIGN KEY ("carId") REFERENCES "Car"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+DO $$ BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'CarMaintenance_carId_fkey') THEN
+    ALTER TABLE "CarMaintenance" ADD CONSTRAINT "CarMaintenance_carId_fkey" FOREIGN KEY ("carId") REFERENCES "Car"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+  END IF;
+END $$;
 
--- AddForeignKey
-ALTER TABLE "FuelEntry" ADD CONSTRAINT "FuelEntry_carId_fkey" FOREIGN KEY ("carId") REFERENCES "Car"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+DO $$ BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'FuelEntry_carId_fkey') THEN
+    ALTER TABLE "FuelEntry" ADD CONSTRAINT "FuelEntry_carId_fkey" FOREIGN KEY ("carId") REFERENCES "Car"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+  END IF;
+END $$;
 
--- AddForeignKey
-ALTER TABLE "TollEntry" ADD CONSTRAINT "TollEntry_carId_fkey" FOREIGN KEY ("carId") REFERENCES "Car"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+DO $$ BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'TollEntry_carId_fkey') THEN
+    ALTER TABLE "TollEntry" ADD CONSTRAINT "TollEntry_carId_fkey" FOREIGN KEY ("carId") REFERENCES "Car"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+  END IF;
+END $$;
 
--- AddForeignKey
-ALTER TABLE "CarDocument" ADD CONSTRAINT "CarDocument_carId_fkey" FOREIGN KEY ("carId") REFERENCES "Car"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+DO $$ BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'CarDocument_carId_fkey') THEN
+    ALTER TABLE "CarDocument" ADD CONSTRAINT "CarDocument_carId_fkey" FOREIGN KEY ("carId") REFERENCES "Car"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+  END IF;
+END $$;
