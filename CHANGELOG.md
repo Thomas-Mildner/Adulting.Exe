@@ -1,3 +1,10 @@
+# [1.8.0-rc.5](https://github.com/Thomas-Mildner/Adulting.Exe/compare/v1.8.0-rc.4...v1.8.0-rc.5) (2026-02-22)
+
+
+### Bug Fixes
+
+* **release:** add check for new release detection in semantic release step ([3ebc2e6](https://github.com/Thomas-Mildner/Adulting.Exe/commit/3ebc2e666d0f15fe2b9acb1a9818830beab71285))
+
 # [1.8.0-rc.4](https://github.com/Thomas-Mildner/Adulting.Exe/compare/v1.8.0-rc.3...v1.8.0-rc.4) (2026-02-22)
 
 
