@@ -196,6 +196,82 @@ Navigate to [http://localhost:3000](http://localhost:3000) to see your home mana
 
 ---
 
+## 🚢 Deployment
+
+### Docker Compose (Recommended)
+
+The easiest way to deploy Adulting.exe is with Docker Compose. Create a `docker-compose.yml` on your server:
+
+```yaml
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: adulting-exe-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: adulting
+      POSTGRES_PASSWORD: <your-secure-password>
+      POSTGRES_DB: adulting_exe
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U adulting -d adulting_exe"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  app:
+    image: thomasmildner/adulting-exe:latest
+    container_name: adulting-exe-app
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: postgresql://adulting:<your-secure-password>@postgres:5432/adulting_exe
+    ports:
+      - "3000:3000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+volumes:
+  pgdata:
+```
+
+> **Note:** Replace `<your-secure-password>` with a strong password. Make sure the password matches in both `POSTGRES_PASSWORD` and `DATABASE_URL`.
+
+### Available Image Tags
+
+| Tag | Description |
+| --- | --- |
+| `latest` | Latest stable production release |
+| `main-latest` | Latest build from the main branch |
+| `1.2.3` | Specific semantic version |
+| `beta-latest` | Latest staging/beta build |
+| `1.8.0-rc.1` | Release candidate version |
+
+### Start the Stack
+
+```bash
+docker compose up -d
+```
+
+The app will be available at [http://localhost:3000](http://localhost:3000). On first startup, the database schema is applied automatically via Prisma migrations.
+
+### Updating
+
+Pull the latest image and restart:
+
+```bash
+docker compose pull app
+docker compose up -d
+```
+
+
+---
+
 ## 🤝 Contributing
 
 We welcome contributions to Adulting.Exe! Whether you're fixing bugs, adding features, or improving documentation, your help is appreciated.
