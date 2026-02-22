@@ -310,10 +310,8 @@ async function main() {
 
   // ─── Persons & Identity Documents ───────────────────────────────────────
 
-  const sixMonthsFromNow = new Date(today)
   sixMonthsFromNow.setMonth(sixMonthsFromNow.getMonth() + 6)
   
-  const oneYearFromNow = new Date(today)
   oneYearFromNow.setFullYear(oneYearFromNow.getFullYear() + 1)
   
   const twoYearsFromNow = new Date(today)
