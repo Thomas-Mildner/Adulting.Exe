@@ -770,6 +770,32 @@
       "totalMonthly": "Total Monthly",
       "totalYearly": "Total Yearly",
       "perPolicy": "Per Policy"
+    },
+    "analysis": {
+      "title": "Cost Analysis",
+      "monthlyCost": "Monthly Cost",
+      "costDistribution": "Cost Distribution"
+    },
+    "coverage": {
+      "title": "Coverage Check",
+      "covered": "Covered",
+      "missingEssential": "Missing (Essential!)",
+      "missingRecommended": "Missing (Recommended)",
+      "status": {
+        "ok": "OK",
+        "missing": "Missing"
+      }
+    },
+    "calendar": {
+      "title": "Cancellation Calendar",
+      "empty": "No upcoming deadlines.",
+      "deadline": "Deadline",
+      "days": "Days"
+    },
+    "document": {
+      "label": "Document (URL)",
+      "placeholder": "https://... or path",
+      "view": "Open Document"
     }
   }
 }
