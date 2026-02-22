@@ -6,6 +6,7 @@ import { AppSidebar } from "@/components/app-sidebar"
 import { GlobalSearch } from "@/components/global-search"
 import { Separator } from "@/components/ui/separator"
 import { ThemeToggle } from "@/components/settings/theme-toggle"
+import { NotificationCenter } from "@/components/notifications/notification-center"
 
 export function DashboardLayout({
   children,
@@ -31,6 +32,7 @@ export function DashboardLayout({
           </div>
           <div className="ml-auto flex items-center gap-4">
             <GlobalSearch />
+            <NotificationCenter />
             <ThemeToggle />
           </div>
         </header>

@@ -157,6 +157,58 @@ export type CarDocument = {
   uploadDate: string
 }
 
+export type Insurance = {
+  id: string
+  providerName: string
+  policyType: "Home Contents" | "Residential Building" | "Private Liability" | "Legal Protection" | "Life Insurance" | "Disability" | "Pet Insurance" | "Car Insurance" | "Custom"
+  customPolicyType?: string
+  policyNumber: string
+  premiumAmount: number
+  paymentFrequency: "Monthly" | "Quarterly" | "Annually"
+  deductible: number
+  startDate: string
+  endDate?: string
+  cancellationDeadline: string
+  documentPath?: string
+  claimsHotline: string
+  agentEmail: string
+  beneficiary?: string
+  notes?: string
+}
+
+export type Notification = {
+  id: string
+  title: string
+  message: string
+  type: "warning" | "info" | "error"
+  category: "Waste" | "Appliance" | "Maintenance" | "Lent" | "Insurance"
+  link?: string
+  date?: string
+}
+
+export type Person = {
+  id: string
+  name: string
+  relation: "Self" | "Spouse" | "Child" | "Other"
+}
+
+export type IdentityDocument = {
+  id: string
+  personId: string
+  personName?: string
+  documentType: "ID" | "Passport" | "Driver's License" | "Visa" | "Other"
+  customDocumentType?: string
+  documentNumber: string
+  issueDate: string
+  expiryDate: string
+  photoFrontPath?: string
+  photoBackPath?: string
+  physicalLocation?: string
+  lostFoundGuide?: string
+  emergencyContact?: string
+  notes?: string
+}
+
 // ─── Note ────────────────────────────────────────────────────────────────
 // Mock data has been moved to the database. Use server actions from
 // "@/lib/actions" to fetch / mutate data. Seed with `pnpm prisma db seed`.
@@ -179,4 +231,26 @@ export function formatCurrency(amount: number): string {
   return new Intl.NumberFormat("de-DE", { style: "currency", currency: "EUR" }).format(amount)
 }
 
+export function getDocumentStatus(expiryDate: string): "valid" | "expiring-soon" | "expired" {
+  const daysRemaining = getDaysRemaining(expiryDate)
+  if (daysRemaining < 0) return "expired"
+  if (daysRemaining < 180) return "expiring-soon" // Less than 6 months
+  return "valid"
+}
+
+export function getDocumentStatusColor(status: "valid" | "expiring-soon" | "expired"): string {
+  switch (status) {
+    case "valid": return "green"
+    case "expiring-soon": return "yellow"
+    case "expired": return "red"
+  }
+}
+
+export function getDocumentStatusLabel(status: "valid" | "expiring-soon" | "expired"): string {
+  switch (status) {
+    case "valid": return "Model Citizen"
+    case "expiring-soon": return "Bureaucratic Anxiety"
+    case "expired": return "International Fugitive"
+  }
+}
 

@@ -289,11 +289,11 @@ export function UtilityTracker({
             <div className="grid gap-2">
               <div className="flex items-center gap-1.5">
                 <Flame className="h-3.5 w-3.5 text-chart-4" />
-                <Label className="text-xs font-medium">{t("heating")} ({heatingUnit})</Label>
+                <Label className="text-xs font-medium">Heizung ({heatingUnit})</Label>
               </div>
               <Input
                 type="number"
-                placeholder={t("placeholders.consumption", { unit: heatingUnit })}
+                placeholder={`Verbrauch ${heatingUnit}`}
                 value={dlgHeating}
                 onChange={(e) => setDlgHeating(e.target.value)}
                 className="h-9 text-sm"
@@ -676,7 +676,7 @@ export function UtilityTracker({
       avg: analytics.avgWater,
     },
     {
-      label: t("heating"),
+      label: "Heizung",
       unit: heatingUnit,
       value: latest.heating,
       cost: latest.heatingCost,
@@ -1045,7 +1045,7 @@ export function UtilityTracker({
                       />
                       <Bar
                         dataKey="heating"
-                        name={`${t("heating")} (${heatingUnit})`}
+                        name={`Heizung (${heatingUnit})`}
                         fill={CHART_COLORS.heating}
                         radius={[3, 3, 0, 0]}
                       />
@@ -1251,6 +1251,7 @@ export function UtilityTracker({
                       </div>
                       <span className="font-mono font-medium tabular-nums">
                         {analytics.latestPricePerKwhHeating.toFixed(2)} €/{heatingUnit}
+                        {analytics.latestPricePerKwhHeating.toFixed(2)} €/{heatingUnit}
                       </span>
                     </div>
                     <Progress
@@ -1261,7 +1262,7 @@ export function UtilityTracker({
                       className="h-2"
                     />
                     <p className="text-[10px] text-muted-foreground">
-                      {t("averageOf", { amount: "0,11", unit: heatingUnit })}
+                      Bundesdurchschnitt: ~0,11 €/{heatingUnit}
                     </p>
                   </div>
                 </div>

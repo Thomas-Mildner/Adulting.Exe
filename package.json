@@ -1,12 +1,16 @@
 {
-  "name": "my-project",
-  "version": "1.5.1",
+  "name": "adulting-exe",
+  "version": "1.7.1",
   "private": true,
+  "author": {
+    "name": "Thomas Mildner",
+    "email": "kontakt@mildner-thomas.de",
+    "url": "https://mildner-thomas.de"
+  },
   "scripts": {
     "dev": "next dev --turbo",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
     "db:push": "prisma db push",
     "db:seed": "prisma db seed",
     "db:studio": "prisma studio",
@@ -63,6 +67,7 @@
     "react-day-picker": "8.10.1",
     "react-dom": "19.2.3",
     "react-hook-form": "^7.54.1",
+    "react-qr-code": "^2.0.18",
     "react-resizable-panels": "^2.1.7",
     "recharts": "2.15.0",
     "sonner": "^1.7.1",
