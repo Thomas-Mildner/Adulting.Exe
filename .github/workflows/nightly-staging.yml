@@ -153,30 +153,6 @@ jobs:
           GIT_COMMITTER_EMAIL: github-actions[bot]@users.noreply.github.com
         run: npx semantic-release
 
-      - name: Check release result
-        id: check
-        run: |
-          git fetch --tags
-          LATEST_TAG=$(git tag --sort=-v:refname | head -n 1)
-          if [ -n "$LATEST_TAG" ]; then
-            VERSION="${LATEST_TAG#v}"
-            echo "Latest tag: $LATEST_TAG (version: $VERSION)"
-            BEFORE="${{ steps.before.outputs.version }}"
-            if [ "$VERSION" != "$BEFORE" ]; then
-              echo "New release detected: $VERSION"
-              echo "released=true" >> $GITHUB_OUTPUT
-              echo "version=$VERSION" >> $GITHUB_OUTPUT
-            else
-              echo "No new release (version unchanged: $BEFORE)"
-              echo "released=false" >> $GITHUB_OUTPUT
-              echo "version=$BEFORE" >> $GITHUB_OUTPUT
-            fi
-          else
-            echo "No tags found"
-            echo "released=false" >> $GITHUB_OUTPUT
-            echo "version=${{ steps.before.outputs.version }}" >> $GITHUB_OUTPUT
-          fi
-
   docker:
     name: Push Beta Image
     runs-on: ubuntu-latest
