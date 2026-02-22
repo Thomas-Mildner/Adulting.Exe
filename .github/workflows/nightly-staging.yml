@@ -147,10 +147,10 @@ jobs:
         run: |
           VERSION=$(npx semantic-release --dry-run --branches staging 2>&1 | grep -oP 'The next release version is \K[0-9]+\.[0-9]+\.[0-9]+' || true)
           if [ -n "$VERSION" ]; then
-            echo "version=${VERSION}-rc" >> $GITHUB_OUTPUT
+            echo "version=${VERSION}" >> $GITHUB_OUTPUT
           else
             PKG_VERSION=$(node -p "require('./package.json').version")
-            echo "version=${PKG_VERSION}-rc" >> $GITHUB_OUTPUT
+            echo "version=${PKG_VERSION}" >> $GITHUB_OUTPUT
           fi
 
       - name: Output version
