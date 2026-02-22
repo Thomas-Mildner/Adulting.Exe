@@ -17,13 +17,10 @@ async function main() {
   await prisma.wishlistProject.deleteMany()
   await prisma.wastePickup.deleteMany()
   await prisma.wasteType.deleteMany()
-<<<<<<< HEAD
   await prisma.roomEvent.deleteMany()
   await prisma.room.deleteMany()
-=======
   await prisma.identityDocument.deleteMany()
   await prisma.person.deleteMany()
->>>>>>> dev
 
   // ─── Appliances ─────────────────────────────────────────────────────────
   await prisma.appliance.createMany({
@@ -209,7 +206,7 @@ async function main() {
   })
   console.log("  ✅ Waste calendar seeded")
 
-<<<<<<< HEAD
+
   // ─── Room Chronicles ────────────────────────────────────────────────────
 
   await prisma.room.create({
@@ -401,7 +398,7 @@ async function main() {
   })
 
   console.log("  ✅ Room Chronicles seeded")
-=======
+
   // ─── Persons & Identity Documents ───────────────────────────────────────
 
   const sixMonthsFromNow = new Date(today)
@@ -516,7 +513,6 @@ async function main() {
   })
 
   console.log("  ✅ Persons & identity documents seeded")
->>>>>>> dev
 
   console.log("🎉 Seeding complete!")
 }
