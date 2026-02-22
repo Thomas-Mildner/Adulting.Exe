@@ -1,3 +1,12 @@
+# [1.8.0-rc.3](https://github.com/Thomas-Mildner/Adulting.Exe/compare/v1.8.0-rc.2...v1.8.0-rc.3) (2026-02-22)
+
+
+### Bug Fixes
+
+* Fixed Database Schema while startup and add agents.md file ([789cb7d](https://github.com/Thomas-Mildner/Adulting.Exe/commit/789cb7de9715822a555dc5b1d568202eb299de7e))
+* **release:** enhance conditions for semantic release and beta image push ([21fe045](https://github.com/Thomas-Mildner/Adulting.Exe/commit/21fe0455047249368396fb3b330a2a9ace288c00))
+* **release:** update release output variables and add version check for semantic release ([b089690](https://github.com/Thomas-Mildner/Adulting.Exe/commit/b089690a90df685f9d9f6185e45108700cd54dd4))
+
 # [1.8.0-rc.2](https://github.com/Thomas-Mildner/Adulting.Exe/compare/v1.8.0-rc.1...v1.8.0-rc.2) (2026-02-22)
 
 
