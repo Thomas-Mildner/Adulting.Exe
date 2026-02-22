@@ -7,6 +7,7 @@ import { EnergyCard } from "@/components/dashboard/energy-card"
 import { WarrantyOverview } from "@/components/dashboard/warranty-overview"
 import { WasteCard } from "@/components/dashboard/waste-card"
 import { InsuranceCard } from "@/components/dashboard/insurance-card"
+import { DocumentsCard } from "@/components/dashboard/documents-card"
 import {
   getAppliances,
   getMaintenanceTasks,
@@ -15,6 +16,7 @@ import {
   getTotalTaxDeductible,
   getNextWastePickup,
   getInsurances,
+  getIdentityDocuments,
 } from "@/lib/actions"
 
 export const dynamic = "force-dynamic"
@@ -22,7 +24,7 @@ export const dynamic = "force-dynamic"
 import { getTranslations } from "next-intl/server"
 
 export default async function DashboardPage() {
-  const [appliances, maintenanceTasks, lentItems, meterHistory, taxDeductible, t, nextWastePickup, insurances] =
+  const [appliances, maintenanceTasks, lentItems, meterHistory, taxDeductible, t, nextWastePickup, insurances, documents] =
     await Promise.all([
       getAppliances(),
       getMaintenanceTasks(),
@@ -32,6 +34,7 @@ export default async function DashboardPage() {
       getTranslations("Dashboard"),
       getNextWastePickup(),
       getInsurances(),
+      getIdentityDocuments(),
     ])
 
   return (
@@ -42,10 +45,13 @@ export default async function DashboardPage() {
         <div className="grid gap-6 lg:grid-cols-3">
           <WasteCard nextPickup={nextWastePickup} />
           <MaintenanceCard initialTasks={maintenanceTasks} />
-          <WarrantyOverview appliances={appliances} />
+          <DocumentsCard documents={documents} />
         </div>
         <div className="grid gap-6 lg:grid-cols-2">
+          <WarrantyOverview appliances={appliances} />
           <EnergyCard meterHistory={meterHistory} />
+        </div>
+        <div className="grid gap-6 lg:grid-cols-2">
           <LendingCard lentItems={lentItems} />
         </div>
         <div className="grid gap-6 lg:grid-cols-2">
