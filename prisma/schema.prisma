@@ -240,3 +240,37 @@ model RoomEvent {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
+// ─── Identity Guard / Document Tracker ─────────────────────────────────
+
+model Person {
+  id        String   @id @default(cuid())
+  name      String
+  relation  String   // "Self", "Spouse", "Child", "Other"
+  
+  documents IdentityDocument[]
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model IdentityDocument {
+  id                  String   @id @default(cuid())
+  documentType        String   // "ID", "Passport", "Driver's License", "Visa", "Other"
+  customDocumentType  String?  // For "Other" type
+  documentNumber      String
+  issueDate           DateTime
+  expiryDate          DateTime
+  photoFrontPath      String?
+  photoBackPath       String?
+  physicalLocation    String?  // Where the physical document is stored
+  lostFoundGuide      String?  // Emergency steps if lost
+  emergencyContact    String?  // Contact info for reporting lost/stolen
+  notes               String?
+  
+  person   Person @relation(fields: [personId], references: [id], onDelete: Cascade)
+  personId String
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

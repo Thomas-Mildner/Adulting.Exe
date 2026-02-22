@@ -61,6 +61,20 @@ Built for people who want to know exactly where the blender's original box is lo
 * **Trust Rating:** Rate borrowers' reliability for future reference
 * **Dashboard Visualization:** See all currently lent items at a glance
 
+### 🪪 Identity Guard (Document Tracker)
+* **Multi-Person Tracking:** Monitor identity documents for yourself, spouse, children, and other household members
+* **Document Management:** Track IDs, Passports, Driver's Licenses, Visas, and custom documents
+* **Expiry Monitoring:** Visual status badges showing document validity
+  - 🟢 **Model Citizen:** Valid (>6 months until expiry)
+  - 🟡 **Bureaucratic Anxiety:** Expiring soon (<6 months)
+  - 🔴 **International Fugitive:** Expired documents
+* **Smart Reminders:** Automated notifications at 6, 3, and 1 month before expiry
+* **Physical Location Tracker:** Document where each physical document is stored
+* **Emergency Guide:** One-click access to lost/stolen document procedures and emergency contacts
+* **Countdown Timers:** Real-time expiry countdown for each document
+* **Dashboard Integration:** Critical document status at a glance
+* **Date Validation:** Prevents future issue dates and ensures logical date ranges
+
 ### 🎯 Wishlist & Project Planning
 * **Future Projects:** Plan home improvement projects with descriptions and goals
 * **Budget Tracking:** Set estimated costs and track current savings progress
@@ -97,6 +111,42 @@ Built for people who want to know exactly where the blender's original box is lo
 * **Quick Access Tiles:** Jump directly to waste calendar, maintenance, warranties, energy, and lending
 * **Responsive Design:** Optimized for desktop and mobile devices
 * **Global Search:** Find anything across all modules quickly
+
+---
+
+## 📸 Screenshots
+
+All screenshots were taken using the seeded demo data (`pnpm db:seed`).
+
+### 🏡 Dashboard
+![Dashboard](docs/images/01-dashboard.png)
+
+### 📦 Vault (Appliance & Warranty Management)
+![Vault](docs/images/02-vault.png)
+
+### 🛠️ Service Team
+![Service Team](docs/images/03-services.png)
+
+### 🪪 Identity Guard
+![Identity Guard](docs/images/04-identity-guard.png)
+
+### 🔧 Maintenance
+![Maintenance](docs/images/05-maintenance.png)
+
+### 📉 Utilities
+![Utilities](docs/images/06-utilities.png)
+
+### 🎯 Wishlist
+![Wishlist](docs/images/07-wishlist.png)
+
+### 💸 Lending (Lend-O-Meter)
+![Lending](docs/images/08-lending.png)
+
+### 📚 Library
+![Library](docs/images/09-library.png)
+
+### ⚙️ Settings
+![Settings](docs/images/10-settings.png)
 
 ---
 
@@ -188,7 +238,7 @@ Navigate to [http://localhost:3000](http://localhost:3000) to see your home mana
 | `pnpm dev`   | Start development server with Turbo |
 | `pnpm build` | Build for production                |
 | `pnpm start` | Start production server             |
-| `pnpm lint`  | Run ESLint                          |
+
 
 ---
 
@@ -216,7 +266,6 @@ We welcome contributions to Adulting.Exe! Whether you're fixing bugs, adding fea
    ```bash
    pnpm dev        # Test in development mode
    pnpm build      # Verify production build works
-   pnpm lint       # Check for linting issues
    ```
 3. **Commit your changes** using [Conventional Commits](https://www.conventionalcommits.org/):
    ```bash
