@@ -1,7 +1,6 @@
 # 🏠 Adulting.exe
 
 **Because your house didn't come with a manual.**
-
 ---
 
 ## 📖 Overview
