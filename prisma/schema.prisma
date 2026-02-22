@@ -209,3 +209,68 @@ model CarDocument {
   createdAt  DateTime @default(now())
   car        Car      @relation(fields: [carId], references: [id], onDelete: Cascade)
 }
+
+// ─── Insurance ──────────────────────────────────────────────────────────
+
+model Insurance {
+  id                   String   @id @default(cuid())
+  providerName         String
+  policyType           String
+  customPolicyType     String?
+  policyNumber         String
+  premiumAmount        Float
+  paymentFrequency     String
+  deductible           Float
+  startDate            DateTime
+  endDate              DateTime?
+  cancellationDeadline DateTime
+  documentPath         String?
+  claimsHotline        String
+  agentEmail           String
+  beneficiary          String?
+  notes                String?
+
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+}
+
+// ─── Notification History ──────────────────────────────────────────────
+
+model NotificationRead {
+  id        String   @id
+  createdAt DateTime @default(now())
+}
+
+// ─── Identity Guard / Document Tracker ─────────────────────────────────
+
+model Person {
+  id        String   @id @default(cuid())
+  name      String
+  relation  String   // "Self", "Spouse", "Child", "Other"
+  
+  documents IdentityDocument[]
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model IdentityDocument {
+  id                  String   @id @default(cuid())
+  documentType        String   // "ID", "Passport", "Driver's License", "Visa", "Other"
+  customDocumentType  String?  // For "Other" type
+  documentNumber      String
+  issueDate           DateTime
+  expiryDate          DateTime
+  photoFrontPath      String?
+  photoBackPath       String?
+  physicalLocation    String?  // Where the physical document is stored
+  lostFoundGuide      String?  // Emergency steps if lost
+  emergencyContact    String?  // Contact info for reporting lost/stolen
+  notes               String?
+  
+  person   Person @relation(fields: [personId], references: [id], onDelete: Cascade)
+  personId String
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
