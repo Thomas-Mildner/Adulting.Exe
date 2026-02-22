@@ -46,8 +46,8 @@ COPY --from=builder /app/next.config.mjs ./
 COPY --from=builder /app/package.json ./
 COPY --from=builder /app/prisma ./prisma
 
-# Create entrypoint script that pushes the schema then starts the app
-RUN printf '#!/bin/sh\nset -e\necho "Pushing database schema..."\npnpm db:push\necho "Starting application..."\nexec pnpm start\n' > /app/entrypoint.sh \
+# Create entrypoint script that deploys migrations then starts the app
+RUN printf '#!/bin/sh\nset -e\necho "Deploying database migrations..."\npnpm exec prisma migrate deploy\necho "Starting application..."\nexec pnpm start\n' > /app/entrypoint.sh \
     && chmod +x /app/entrypoint.sh
 
 EXPOSE 3000
