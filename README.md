@@ -127,20 +127,17 @@ All screenshots were taken using the seeded demo data (`pnpm db:seed`).
 ### 📉 Utilities
 ![Utilities](docs/images/06-utilities.png)
 
-### 🗑️ Waste Calendar
-![Waste Calendar](docs/images/07-waste-calendar.png)
-
 ### 🎯 Wishlist
-![Wishlist](docs/images/08-wishlist.png)
+![Wishlist](docs/images/07-wishlist.png)
 
 ### 💸 Lending (Lend-O-Meter)
-![Lending](docs/images/09-lending.png)
+![Lending](docs/images/08-lending.png)
 
 ### 📚 Library
-![Library](docs/images/10-library.png)
+![Library](docs/images/09-library.png)
 
 ### ⚙️ Settings
-![Settings](docs/images/11-settings.png)
+![Settings](docs/images/10-settings.png)
 
 ---
 
