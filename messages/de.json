@@ -11,6 +11,7 @@
     "wishlist": "Wunschliste",
     "lending": "Verleih",
     "rooms": "Raum-Chronik",
+    "documents": "Ausweiskontrolle",
     "sidebarStatus": "Status: Haus steht (vorerst)"
   },
   "Dashboard": {
@@ -772,5 +773,124 @@
     }
   }
 }
+  },
+  "Documents": {
+    "title": "Ausweiskontrolle",
+    "subtitle": "Dein bürokratischer Wächter - für eine gültige Existenz",
+    "addPerson": "Person hinzufügen",
+    "addDocument": "Dokument hinzufügen",
+    "editPerson": "Person bearbeiten",
+    "editDocument": "Dokument bearbeiten",
+    "deletePerson": "Person löschen",
+    "deleteDocument": "Dokument löschen",
+    "deleteDocumentTitle": "Dokument löschen",
+    "noPeople": "Noch keine Personen hinzugefügt",
+    "noDocuments": "Noch keine Dokumente erfasst",
+    "person": "Person",
+    "persons": "Personen",
+    "relation": "Beziehung",
+    "documentCount": "Dokumente",
+    "documentNumber": "Dokumentennummer",
+    "expiryDate": "Ablaufdatum",
+    "allDocumentsValid": "Alle Dokumente sind gültig",
+    "identityDocumentsStatus": "Status der Ausweisdokumente",
+    "expiredDaysAgo": "Abgelaufen vor {days} Tagen",
+    "daysRemaining": "{days} Tage verbleibend",
+    "viewAllDocuments": "Alle Dokumente anzeigen",
+    "expiredBadge": "Abgelaufen!",
+    "expiringSoonBadge": "Läuft bald ab",
+    "lostButton": "Verloren?",
+    "cancel": "Abbrechen",
+    "save": "Speichern",
+    "add": "Hinzufügen",
+    "delete": "Löschen",
+    "selectPerson": "Person auswählen...",
+    "personDialogDescription": "Füge ein Familienmitglied hinzu, um dessen Ausweisdokumente zu verfolgen.",
+    "documentDialogDescription": "Erfasse ein Ausweisdokument mit Ablaufdatum und Notfallinformationen.",
+    "status": {
+      "banner": "Status: {status}",
+      "legalEntity": "Derzeit eine juristische Person",
+      "approachingStatelessness": "Annäherung an Staatenlosigkeit",
+      "stateless": "Alarm: Internationaler Flüchtling",
+      "legalEntityDescription": "Alle Dokumente sind gültig. Du kannst frei reisen.",
+      "approachingStatelessnessDescription": "Einige Dokumente laufen bald ab. Vereinbare jetzt Verlängerungstermine!",
+      "statelessDescription": "DRINGEND: Abgelaufene Dokumente erkannt. Sofort erneuern!"
+    },
+    "documentType": {
+      "ID": "Personalausweis",
+      "Passport": "Reisepass",
+      "Driver's License": "Führerschein",
+      "Visa": "Visum",
+      "Other": "Sonstiges"
+    },
+    "relationTypes": {
+      "Self": "Ich",
+      "Spouse": "Ehepartner/in",
+      "Child": "Kind",
+      "Other": "Sonstiges"
+    },
+    "form": {
+      "name": "Name",
+      "relation": "Beziehung",
+      "documentType": "Dokumenttyp",
+      "customDocumentType": "Benutzerdefinierter Typ",
+      "documentNumber": "Dokumentennummer",
+      "issueDate": "Ausstellungsdatum",
+      "expiryDate": "Ablaufdatum",
+      "physicalLocation": "Physischer Standort",
+      "physicalLocationPlaceholder": "z.B. Feuerfester Tresor im Schlafzimmer",
+      "lostFoundGuide": "Verlust-Leitfaden",
+      "lostFoundGuidePlaceholder": "Schritte bei Verlust oder Diebstahl",
+      "emergencyContact": "Notfallkontakt",
+      "emergencyContactPlaceholder": "Kontaktinfo für Meldung bei Verlust/Diebstahl",
+      "notes": "Notizen",
+      "photoFront": "Vorderseite Foto",
+      "photoBack": "Rückseite Foto",
+      "uploadPhoto": "Foto hochladen",
+      "removePhoto": "Foto entfernen",
+      "validation": {
+        "nameRequired": "Name ist erforderlich",
+        "relationRequired": "Beziehung ist erforderlich",
+        "documentTypeRequired": "Dokumenttyp ist erforderlich",
+        "documentNumberRequired": "Dokumentennummer ist erforderlich",
+        "issueDateRequired": "Ausstellungsdatum ist erforderlich",
+        "expiryDateRequired": "Ablaufdatum ist erforderlich",
+        "issueDateFuture": "Ausstellungsdatum darf nicht in der Zukunft liegen",
+        "expiryBeforeIssue": "Ablaufdatum muss nach Ausstellungsdatum liegen"
+      }
+    },
+    "countdown": {
+      "expired": "Abgelaufen vor {days} Tagen",
+      "expiresIn": "Läuft ab in {days} Tagen",
+      "expiresInMonths": "Läuft ab in {months} Monaten",
+      "expiresInYears": "Läuft ab in {years} Jahren"
+    },
+    "statusBadge": {
+      "modelCitizen": "Musterbürger",
+      "bureaucraticAnxiety": "Bürokratische Angst",
+      "internationalFugitive": "Internationaler Flüchtling"
+    },
+    "reminder": {
+      "title": "Verlängerungserinnerung",
+      "6months": "Der Staat will dein Geld/Aufmerksamkeit in 180 Tagen. Fang an, für einen freien Termin zu beten.",
+      "3months": "Die Zeit läuft ab! Nur noch 90 Tage bis zum bürokratischen Limbo.",
+      "1month": "Kritisch! 30 Tage bis du ein staatenloser Wanderer wirst."
+    },
+    "lostFoundModal": {
+      "title": "Verlust-Leitfaden",
+      "forDocument": "Für {documentType}",
+      "emergencySteps": "Notfallschritte",
+      "contact": "Notfallkontakt"
+    },
+    "photoModal": {
+      "title": "Dokumentenfotos",
+      "front": "Vorderseite",
+      "back": "Rückseite",
+      "encrypted": "Verschlüsselt & Sicher"
+    },
+    "deleteConfirm": {
+      "person": "Möchtest du {name} wirklich löschen? Alle zugehörigen Dokumente werden gelöscht.",
+      "document": "Möchtest du dieses {documentType} wirklich löschen?"
+    }
   }
 }
