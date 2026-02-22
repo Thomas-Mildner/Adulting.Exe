@@ -105,6 +105,45 @@ Built for people who want to know exactly where the blender's original box is lo
 
 ---
 
+## 📸 Screenshots
+
+All screenshots were taken using the seeded demo data (`pnpm db:seed`).
+
+### 🏡 Dashboard
+![Dashboard](docs/images/01-dashboard.png)
+
+### 📦 Vault (Appliance & Warranty Management)
+![Vault](docs/images/02-vault.png)
+
+### 🛠️ Service Team
+![Service Team](docs/images/03-services.png)
+
+### 🪪 Identity Guard
+![Identity Guard](docs/images/04-identity-guard.png)
+
+### 🔧 Maintenance
+![Maintenance](docs/images/05-maintenance.png)
+
+### 📉 Utilities
+![Utilities](docs/images/06-utilities.png)
+
+### 🗑️ Waste Calendar
+![Waste Calendar](docs/images/07-waste-calendar.png)
+
+### 🎯 Wishlist
+![Wishlist](docs/images/08-wishlist.png)
+
+### 💸 Lending (Lend-O-Meter)
+![Lending](docs/images/09-lending.png)
+
+### 📚 Library
+![Library](docs/images/10-library.png)
+
+### ⚙️ Settings
+![Settings](docs/images/11-settings.png)
+
+---
+
 ## 🚀 Development
 
 ### Prerequisites
