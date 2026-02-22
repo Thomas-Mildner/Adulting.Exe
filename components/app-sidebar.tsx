@@ -16,6 +16,7 @@ import {
   Terminal,
   CalendarDays,
   CreditCard,
+  FileCheck,
 } from "lucide-react";
 
 import {
@@ -42,6 +43,7 @@ export function AppSidebar() {
     { title: t("dashboard"), href: "/", icon: LayoutDashboard },
     { title: t("vault"), href: "/vault", icon: PackageOpen },
     { title: t("services"), href: "/services", icon: Wrench }, // "Rettungsteam" needs translation key if not present, assume "services"
+    { title: t("documents"), href: "/documents", icon: FileCheck },
     { title: t("library"), href: "/library", icon: BookOpen },
   ];
 

@@ -11,6 +11,7 @@
     "wishlist": "Wishlist",
     "lending": "Lending",
     "contracts": "Contracts",
+    "documents": "Identity Guard",
     "sidebarStatus": "Status: House standing (for now)"
   },
   "Dashboard": {
@@ -739,6 +740,125 @@
     "emptyState": {
       "title": "No subscriptions?",
       "message": "Are you living in a cave or just borrowing everyone's passwords?"
+    }
+  },
+  "Documents": {
+    "title": "Identity Guard",
+    "subtitle": "Your bureaucratic sentinel - ensuring your legal existence remains valid",
+    "addPerson": "Add Person",
+    "addDocument": "Add Document",
+    "editPerson": "Edit Person",
+    "editDocument": "Edit Document",
+    "deletePerson": "Delete Person",
+    "deleteDocument": "Delete Document",
+    "deleteDocumentTitle": "Delete Document",
+    "noPeople": "No people added yet",
+    "noDocuments": "No documents tracked yet",
+    "person": "Person",
+    "persons": "Persons",
+    "relation": "Relation",
+    "documentCount": "Documents",
+    "documentNumber": "Document Number",
+    "expiryDate": "Expiry Date",
+    "allDocumentsValid": "All documents are valid",
+    "identityDocumentsStatus": "Identity documents status",
+    "expiredDaysAgo": "Expired {days}d ago",
+    "daysRemaining": "{days}d remaining",
+    "viewAllDocuments": "View All Documents",
+    "expiredBadge": "Expired!",
+    "expiringSoonBadge": "Expiring Soon",
+    "lostButton": "Lost?",
+    "cancel": "Cancel",
+    "save": "Save",
+    "add": "Add",
+    "delete": "Delete",
+    "selectPerson": "Select person...",
+    "personDialogDescription": "Add a family member to track their identity documents.",
+    "documentDialogDescription": "Track an identity document with expiry dates and emergency information.",
+    "status": {
+      "banner": "Status: {status}",
+      "legalEntity": "Currently a Legal Entity",
+      "approachingStatelessness": "Approaching Statelessness",
+      "stateless": "International Fugitive Alert",
+      "legalEntityDescription": "All documents are valid. You may travel freely.",
+      "approachingStatelessnessDescription": "Some documents are expiring soon. Schedule renewals now!",
+      "statelessDescription": "URGENT: Expired documents detected. Renew immediately!"
+    },
+    "documentType": {
+      "ID": "ID Card",
+      "Passport": "Passport",
+      "Driver's License": "Driver's License",
+      "Visa": "Visa",
+      "Other": "Other"
+    },
+    "relationTypes": {
+      "Self": "Self",
+      "Spouse": "Spouse",
+      "Child": "Child",
+      "Other": "Other"
+    },
+    "form": {
+      "name": "Name",
+      "relation": "Relation",
+      "documentType": "Document Type",
+      "customDocumentType": "Custom Type",
+      "documentNumber": "Document Number",
+      "issueDate": "Issue Date",
+      "expiryDate": "Expiry Date",
+      "physicalLocation": "Physical Location",
+      "physicalLocationPlaceholder": "e.g., Fireproof safe in bedroom",
+      "lostFoundGuide": "Lost/Found Guide",
+      "lostFoundGuidePlaceholder": "Steps to take if lost or stolen",
+      "emergencyContact": "Emergency Contact",
+      "emergencyContactPlaceholder": "Contact info for reporting lost/stolen",
+      "notes": "Notes",
+      "photoFront": "Front Photo",
+      "photoBack": "Back Photo",
+      "uploadPhoto": "Upload Photo",
+      "removePhoto": "Remove Photo",
+      "validation": {
+        "nameRequired": "Name is required",
+        "relationRequired": "Relation is required",
+        "documentTypeRequired": "Document type is required",
+        "documentNumberRequired": "Document number is required",
+        "issueDateRequired": "Issue date is required",
+        "expiryDateRequired": "Expiry date is required",
+        "issueDateFuture": "Issue date cannot be in the future",
+        "expiryBeforeIssue": "Expiry date must be after issue date"
+      }
+    },
+    "countdown": {
+      "expired": "Expired {days} days ago",
+      "expiresIn": "Expires in {days} days",
+      "expiresInMonths": "Expires in {months} months",
+      "expiresInYears": "Expires in {years} years"
+    },
+    "statusBadge": {
+      "modelCitizen": "Model Citizen",
+      "bureaucraticAnxiety": "Bureaucratic Anxiety",
+      "internationalFugitive": "International Fugitive"
+    },
+    "reminder": {
+      "title": "Renewal Reminder",
+      "6months": "The government wants your money/attention in 180 days. Start praying for an open appointment now.",
+      "3months": "Time is running out! Only 90 days until bureaucratic limbo.",
+      "1month": "Critical! 30 days until you become a stateless wanderer."
+    },
+    "lostFoundModal": {
+      "title": "Lost & Found Guide",
+      "forDocument": "For {documentType}",
+      "emergencySteps": "Emergency Steps",
+      "contact": "Emergency Contact"
+    },
+    "photoModal": {
+      "title": "Document Photos",
+      "front": "Front",
+      "back": "Back",
+      "encrypted": "Encrypted & Secure"
+    },
+    "deleteConfirm": {
+      "person": "Are you sure you want to delete {name}? All associated documents will be deleted.",
+      "document": "Are you sure you want to delete this {documentType}?"
     }
   }
 }
