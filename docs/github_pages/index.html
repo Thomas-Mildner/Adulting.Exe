@@ -678,6 +678,126 @@
             </p>
           </div>
         </div>
+
+        <!-- Docker Compose Deployment -->
+        <div class="mt-16">
+          <div class="text-center mb-8">
+            <h3 class="text-2xl font-bold tracking-tight mb-3">
+              <i data-lucide="container" class="w-6 h-6 inline-block mr-2 text-green-400"></i>
+              Deploy with Docker Compose
+            </h3>
+            <p class="text-zinc-400 text-sm">
+              No build tools needed — just Docker. Create a <code class="text-green-400 bg-white/[0.06] px-1.5 py-0.5 rounded text-xs">docker-compose.yml</code> and go.
+            </p>
+          </div>
+
+          <div class="code-block rounded-xl overflow-hidden font-mono text-sm">
+            <div class="flex items-center gap-2 px-4 py-3 border-b border-[#30363d] bg-[#161b22]">
+              <span class="w-3 h-3 rounded-full bg-[#ff5f56]"></span>
+              <span class="w-3 h-3 rounded-full bg-[#ffbd2e]"></span>
+              <span class="w-3 h-3 rounded-full bg-[#27c93f]"></span>
+              <span class="ml-2 text-xs text-zinc-500">docker-compose.yml</span>
+            </div>
+
+            <div class="p-6 text-[#e6edf3] leading-relaxed">
+<pre class="whitespace-pre"><span class="text-[#7ee787]">version:</span> <span class="text-[#a5d6ff]">"3.9"</span>
+
+<span class="text-[#7ee787]">services:</span>
+  <span class="text-[#7ee787]">postgres:</span>
+    <span class="text-[#7ee787]">image:</span> <span class="text-[#a5d6ff]">postgres:16-alpine</span>
+    <span class="text-[#7ee787]">container_name:</span> <span class="text-[#a5d6ff]">adulting-exe-db</span>
+    <span class="text-[#7ee787]">restart:</span> <span class="text-[#a5d6ff]">unless-stopped</span>
+    <span class="text-[#7ee787]">environment:</span>
+      <span class="text-[#7ee787]">POSTGRES_USER:</span> <span class="text-[#a5d6ff]">adulting</span>
+      <span class="text-[#7ee787]">POSTGRES_PASSWORD:</span> <span class="text-[#ffa657]">&lt;your-secure-password&gt;</span>
+      <span class="text-[#7ee787]">POSTGRES_DB:</span> <span class="text-[#a5d6ff]">adulting_exe</span>
+    <span class="text-[#7ee787]">ports:</span>
+      - <span class="text-[#a5d6ff]">"5432:5432"</span>
+    <span class="text-[#7ee787]">volumes:</span>
+      - <span class="text-[#a5d6ff]">pgdata:/var/lib/postgresql/data</span>
+    <span class="text-[#7ee787]">healthcheck:</span>
+      <span class="text-[#7ee787]">test:</span> <span class="text-[#a5d6ff]">["CMD-SHELL", "pg_isready -U adulting -d adulting_exe"]</span>
+      <span class="text-[#7ee787]">interval:</span> <span class="text-[#a5d6ff]">5s</span>
+      <span class="text-[#7ee787]">timeout:</span> <span class="text-[#a5d6ff]">5s</span>
+      <span class="text-[#7ee787]">retries:</span> <span class="text-[#a5d6ff]">10</span>
+
+  <span class="text-[#7ee787]">app:</span>
+    <span class="text-[#7ee787]">image:</span> <span class="text-[#a5d6ff]">mildnerthomas/adulting-exe:latest</span>
+    <span class="text-[#7ee787]">container_name:</span> <span class="text-[#a5d6ff]">adulting-exe-app</span>
+    <span class="text-[#7ee787]">restart:</span> <span class="text-[#a5d6ff]">unless-stopped</span>
+    <span class="text-[#7ee787]">environment:</span>
+      <span class="text-[#7ee787]">DATABASE_URL:</span> <span class="text-[#a5d6ff]">postgresql://adulting:</span><span class="text-[#ffa657]">&lt;your-secure-password&gt;</span><span class="text-[#a5d6ff]">@postgres:5432/adulting_exe</span>
+    <span class="text-[#7ee787]">ports:</span>
+      - <span class="text-[#a5d6ff]">"3000:3000"</span>
+    <span class="text-[#7ee787]">depends_on:</span>
+      <span class="text-[#7ee787]">postgres:</span>
+        <span class="text-[#7ee787]">condition:</span> <span class="text-[#a5d6ff]">service_healthy</span>
+
+<span class="text-[#7ee787]">volumes:</span>
+  <span class="text-[#7ee787]">pgdata:</span></pre>
+            </div>
+          </div>
+
+          <div class="code-block rounded-xl overflow-hidden font-mono text-sm mt-4">
+            <div class="flex items-center gap-2 px-4 py-3 border-b border-[#30363d] bg-[#161b22]">
+              <span class="w-3 h-3 rounded-full bg-[#ff5f56]"></span>
+              <span class="w-3 h-3 rounded-full bg-[#ffbd2e]"></span>
+              <span class="w-3 h-3 rounded-full bg-[#27c93f]"></span>
+              <span class="ml-2 text-xs text-zinc-500">terminal</span>
+            </div>
+            <div class="p-6 space-y-1 text-[#e6edf3]">
+              <p>
+                <span class="text-zinc-500 select-none"># Start the stack</span>
+              </p>
+              <p>
+                <span class="text-green-400">$</span>
+                docker compose up -d
+              </p>
+              <br />
+              <p>
+                <span class="text-zinc-500 select-none"># → Open http://localhost:3000</span>
+              </p>
+            </div>
+          </div>
+
+          <!-- Image Tags Table -->
+          <div class="mt-8 overflow-hidden rounded-xl border border-white/[0.06]">
+            <table class="w-full text-sm">
+              <thead class="bg-white/[0.04] border-b border-white/[0.06]">
+                <tr>
+                  <th class="text-left px-4 py-3 text-zinc-400 font-medium">Tag</th>
+                  <th class="text-left px-4 py-3 text-zinc-400 font-medium">Description</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-white/[0.04]">
+                <tr>
+                  <td class="px-4 py-2.5"><code class="text-green-400 text-xs">latest</code></td>
+                  <td class="px-4 py-2.5 text-zinc-400">Latest stable production release</td>
+                </tr>
+                <tr>
+                  <td class="px-4 py-2.5"><code class="text-green-400 text-xs">main-latest</code></td>
+                  <td class="px-4 py-2.5 text-zinc-400">Latest build from the main branch</td>
+                </tr>
+                <tr>
+                  <td class="px-4 py-2.5"><code class="text-green-400 text-xs">1.2.3</code></td>
+                  <td class="px-4 py-2.5 text-zinc-400">Specific semantic version</td>
+                </tr>
+                <tr>
+                  <td class="px-4 py-2.5"><code class="text-green-400 text-xs">beta-latest</code></td>
+                  <td class="px-4 py-2.5 text-zinc-400">Latest staging/beta build</td>
+                </tr>
+                <tr>
+                  <td class="px-4 py-2.5"><code class="text-green-400 text-xs">1.8.0-rc.1</code></td>
+                  <td class="px-4 py-2.5 text-zinc-400">Release candidate version</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p class="mt-4 text-xs text-zinc-500 text-center">
+            Replace <code class="text-[#ffa657] bg-white/[0.06] px-1.5 py-0.5 rounded">&lt;your-secure-password&gt;</code> with a strong password in both places.
+          </p>
+        </div>
       </div>
     </section>
 
