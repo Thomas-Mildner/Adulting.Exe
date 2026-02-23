@@ -210,6 +210,37 @@ model NotificationRead {
   createdAt DateTime @default(now())
 }
 
+// ─── Room Chronicles ────────────────────────────────────────────────────
+
+model Room {
+  id          String   @id @default(cuid())
+  name        String
+  type        String   // "Kitchen", "Bedroom", "Bathroom", "Living Room", etc.
+  floor       String?  // "Ground Floor", "1st Floor", "Basement", etc.
+  description String?
+
+  events RoomEvent[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model RoomEvent {
+  id          String   @id @default(cuid())
+  timestamp   DateTime
+  category    String   // "Maintenance", "Aesthetics", "Incident", "Tech", "Surgery", "Band-aid", "Face-lift"
+  description String
+  metadata    String?  // JSON string for generic key-value data (paint brand, bulb specs, etc.)
+  attachments String?  // JSON array of attachment paths/URLs
+  vibeRating  Int?     // 1-5 stars rating
+
+  room   Room   @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  roomId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
 // ─── Identity Guard / Document Tracker ─────────────────────────────────
 
 model Person {

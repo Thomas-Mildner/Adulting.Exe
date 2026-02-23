@@ -15,6 +15,8 @@ import type {
   WastePickup,
 
   Notification,
+  Room,
+  RoomEvent,
   Person,
   IdentityDocument,
 } from "@/lib/data"
@@ -31,6 +33,8 @@ import type {
   WasteType as PrismaWasteType,
   WastePickup as PrismaWastePickup,
   Insurance as PrismaInsurance,
+  Room as PrismaRoom,
+  RoomEvent as PrismaRoomEvent,
   Person as PrismaPerson,
   IdentityDocument as PrismaIdentityDocument,
 } from "@prisma/client"
@@ -910,6 +914,177 @@ export async function markAllNotificationsAsRead(ids: string[]) {
     skipDuplicates: true,
   })
   revalidatePath("/")
+}
+
+// ─── Room Chronicles ────────────────────────────────────────────────────
+
+export async function getRooms(): Promise<Room[]> {
+  const rooms = await prisma.room.findMany({
+    orderBy: { name: "asc" },
+    include: {
+      _count: {
+        select: { events: true }
+      }
+    }
+  })
+  return rooms.map((r) => ({
+    id: r.id,
+    name: r.name,
+    type: r.type,
+    floor: r.floor ?? undefined,
+    description: r.description ?? undefined,
+    eventCount: r._count.events,
+  }))
+}
+
+export async function getRoom(id: string): Promise<Room | null> {
+  const r = await prisma.room.findUnique({
+    where: { id },
+    include: {
+      _count: {
+        select: { events: true }
+      }
+    }
+  })
+  if (!r) return null
+  return {
+    id: r.id,
+    name: r.name,
+    type: r.type,
+    floor: r.floor ?? undefined,
+    description: r.description ?? undefined,
+    eventCount: r._count.events,
+  }
+}
+
+export async function createRoom(data: Omit<Room, "id" | "eventCount">) {
+  await prisma.room.create({
+    data: {
+      name: data.name,
+      type: data.type,
+      floor: data.floor ?? null,
+      description: data.description ?? null,
+    },
+  })
+  revalidatePath("/rooms")
+  revalidatePath("/")
+}
+
+export async function updateRoom(id: string, data: Partial<Omit<Room, "id" | "eventCount">>) {
+  await prisma.room.update({
+    where: { id },
+    data: {
+      ...(data.name !== undefined && { name: data.name }),
+      ...(data.type !== undefined && { type: data.type }),
+      ...(data.floor !== undefined && { floor: data.floor }),
+      ...(data.description !== undefined && { description: data.description }),
+    },
+  })
+  revalidatePath("/rooms")
+  revalidatePath("/")
+}
+
+export async function deleteRoom(id: string) {
+  await prisma.room.delete({ where: { id } })
+  revalidatePath("/rooms")
+  revalidatePath("/")
+}
+
+export async function getRoomEvents(roomId: string): Promise<RoomEvent[]> {
+  const events = await prisma.roomEvent.findMany({
+    where: { roomId },
+    orderBy: { timestamp: "desc" },
+  })
+  return events.map((e) => ({
+    id: e.id,
+    roomId: e.roomId,
+    timestamp: dateToStr(e.timestamp),
+    category: e.category as RoomEvent["category"],
+    description: e.description,
+    metadata: e.metadata ? JSON.parse(e.metadata) : undefined,
+    attachments: e.attachments ? JSON.parse(e.attachments) : undefined,
+    vibeRating: e.vibeRating ?? undefined,
+  }))
+}
+
+export async function getRoomEvent(id: string): Promise<RoomEvent | null> {
+  const e = await prisma.roomEvent.findUnique({ where: { id } })
+  if (!e) return null
+  return {
+    id: e.id,
+    roomId: e.roomId,
+    timestamp: dateToStr(e.timestamp),
+    category: e.category as RoomEvent["category"],
+    description: e.description,
+    metadata: e.metadata ? JSON.parse(e.metadata) : undefined,
+    attachments: e.attachments ? JSON.parse(e.attachments) : undefined,
+    vibeRating: e.vibeRating ?? undefined,
+  }
+}
+
+export async function createRoomEvent(data: Omit<RoomEvent, "id">) {
+  await prisma.roomEvent.create({
+    data: {
+      roomId: data.roomId,
+      timestamp: new Date(data.timestamp),
+      category: data.category,
+      description: data.description,
+      metadata: data.metadata ? JSON.stringify(data.metadata) : null,
+      attachments: data.attachments ? JSON.stringify(data.attachments) : null,
+      vibeRating: data.vibeRating ?? null,
+    },
+  })
+  revalidatePath("/rooms")
+  revalidatePath("/")
+}
+
+export async function updateRoomEvent(id: string, data: Partial<Omit<RoomEvent, "id" | "roomId">>) {
+  await prisma.roomEvent.update({
+    where: { id },
+    data: {
+      ...(data.timestamp !== undefined && { timestamp: new Date(data.timestamp) }),
+      ...(data.category !== undefined && { category: data.category }),
+      ...(data.description !== undefined && { description: data.description }),
+      ...(data.metadata !== undefined && { metadata: JSON.stringify(data.metadata) }),
+      ...(data.attachments !== undefined && { attachments: JSON.stringify(data.attachments) }),
+      ...(data.vibeRating !== undefined && { vibeRating: data.vibeRating }),
+    },
+  })
+  revalidatePath("/rooms")
+  revalidatePath("/")
+}
+
+export async function deleteRoomEvent(id: string) {
+  await prisma.roomEvent.delete({ where: { id } })
+  revalidatePath("/rooms")
+  revalidatePath("/")
+}
+
+export async function searchRoomEvents(query: string): Promise<(RoomEvent & { roomName: string })[]> {
+  const events = await prisma.roomEvent.findMany({
+    where: {
+      OR: [
+        { description: { contains: query, mode: "insensitive" } },
+        { category: { contains: query, mode: "insensitive" } },
+        { metadata: { contains: query, mode: "insensitive" } },
+      ],
+    },
+    include: {
+      room: true,
+    },
+    orderBy: { timestamp: "desc" },
+  })
+  return events.map((e) => ({
+    id: e.id,
+    roomId: e.roomId,
+    timestamp: dateToStr(e.timestamp),
+    category: e.category as RoomEvent["category"],
+    description: e.description,
+    metadata: e.metadata ? JSON.parse(e.metadata) : undefined,
+    attachments: e.attachments ? JSON.parse(e.attachments) : undefined,
+    vibeRating: e.vibeRating ?? undefined,
+    roomName: e.room.name,
+  }))
 }
 
 // ─── Person & Identity Documents ────────────────────────────────────────

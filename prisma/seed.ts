@@ -17,6 +17,8 @@ async function main() {
   await prisma.wishlistProject.deleteMany()
   await prisma.wastePickup.deleteMany()
   await prisma.wasteType.deleteMany()
+  await prisma.roomEvent.deleteMany()
+  await prisma.room.deleteMany()
   await prisma.identityDocument.deleteMany()
   await prisma.person.deleteMany()
 
@@ -203,6 +205,199 @@ async function main() {
     ],
   })
   console.log("  ✅ Waste calendar seeded")
+
+
+  // ─── Room Chronicles ────────────────────────────────────────────────────
+
+  await prisma.room.create({
+    data: {
+      id: "room-1",
+      name: "Living Room",
+      type: "living",
+      floor: "ground",
+      description: "Main living space with large windows",
+      events: {
+        create: [
+          {
+            timestamp: new Date("2024-10-15"),
+            category: "Aesthetics",
+            description: "Painted walls in Depression Gray (Sherwin Williams SW 7019)",
+            metadata: JSON.stringify({
+              brand: "Sherwin Williams",
+              finish: "Matte",
+              colorCode: "#9C9C9C",
+            }),
+            vibeRating: 4,
+          },
+          {
+            timestamp: new Date("2024-11-20"),
+            category: "Maintenance",
+            description: "Changed ceiling light bulb",
+            metadata: JSON.stringify({
+              bulbType: "E27, 4000K, 800 lumen",
+            }),
+            vibeRating: 3,
+          },
+          {
+            timestamp: new Date("2024-12-01"),
+            category: "Tech",
+            description: "Installed smart light switch",
+            metadata: JSON.stringify({
+              brand: "Philips Hue",
+              notes: "Connected to home automation",
+            }),
+            vibeRating: 5,
+          },
+        ],
+      },
+    },
+  })
+
+  await prisma.room.create({
+    data: {
+      id: "room-2",
+      name: "Kitchen",
+      type: "kitchen",
+      floor: "ground",
+      description: "Galley kitchen with modern appliances",
+      events: {
+        create: [
+          {
+            timestamp: new Date("2024-09-05"),
+            category: "Incident",
+            description: "Coffee maker flooded the counter. Again.",
+            metadata: JSON.stringify({
+              notes: "Need to buy a new coffee maker",
+            }),
+            vibeRating: 1,
+          },
+          {
+            timestamp: new Date("2024-09-10"),
+            category: "Band-aid",
+            description: "Fixed leaky faucet with duct tape (temporary)",
+            metadata: JSON.stringify({
+              notes: "Call plumber for permanent fix",
+            }),
+            vibeRating: 2,
+          },
+          {
+            timestamp: new Date("2024-10-01"),
+            category: "Surgery",
+            description: "Installed new faucet and replaced countertop",
+            metadata: JSON.stringify({
+              brand: "Grohe Eurosmart",
+              notes: "Professional installation",
+            }),
+            vibeRating: 5,
+          },
+        ],
+      },
+    },
+  })
+
+  await prisma.room.create({
+    data: {
+      id: "room-3",
+      name: "Master Bedroom",
+      type: "bedroom",
+      floor: "first",
+      description: "Spacious bedroom with walk-in closet",
+      events: {
+        create: [
+          {
+            timestamp: new Date("2024-08-15"),
+            category: "Aesthetics",
+            description: "Painted accent wall in Forest Green",
+            metadata: JSON.stringify({
+              brand: "Benjamin Moore",
+              finish: "Eggshell",
+              colorCode: "#2C5F2D",
+            }),
+            vibeRating: 5,
+          },
+          {
+            timestamp: new Date("2024-09-20"),
+            category: "Maintenance",
+            description: "Replaced smoke detector battery",
+            metadata: JSON.stringify({
+              batteryType: "9V",
+            }),
+            vibeRating: 3,
+          },
+        ],
+      },
+    },
+  })
+
+  await prisma.room.create({
+    data: {
+      id: "room-4",
+      name: "Bathroom",
+      type: "bathroom",
+      floor: "ground",
+      description: "Main bathroom with shower and tub",
+      events: {
+        create: [
+          {
+            timestamp: new Date("2024-07-10"),
+            category: "Face-lift",
+            description: "Installed new vanity mirror with LED lighting",
+            metadata: JSON.stringify({
+              brand: "IKEA Storjorm",
+              notes: "Integrated LED, looks fantastic",
+            }),
+            vibeRating: 5,
+          },
+          {
+            timestamp: new Date("2024-11-01"),
+            category: "Maintenance",
+            description: "Re-caulked bathtub edges",
+            metadata: JSON.stringify({
+              notes: "Used mold-resistant silicone",
+            }),
+            vibeRating: 3,
+          },
+        ],
+      },
+    },
+  })
+
+  await prisma.room.create({
+    data: {
+      id: "room-5",
+      name: "Home Office",
+      type: "office",
+      floor: "first",
+      description: "Quiet workspace with good natural light",
+      events: {
+        create: [
+          {
+            timestamp: new Date("2024-06-01"),
+            category: "Aesthetics",
+            description: "Painted walls in Agreeable Gray",
+            metadata: JSON.stringify({
+              brand: "Sherwin Williams",
+              finish: "Satin",
+              colorCode: "#D1CBC1",
+            }),
+            vibeRating: 4,
+          },
+          {
+            timestamp: new Date("2024-10-10"),
+            category: "Tech",
+            description: "Installed smart thermostat",
+            metadata: JSON.stringify({
+              brand: "Nest Learning Thermostat",
+              notes: "Programmed for energy efficiency",
+            }),
+            vibeRating: 5,
+          },
+        ],
+      },
+    },
+  })
+
+  console.log("  ✅ Room Chronicles seeded")
 
   // ─── Persons & Identity Documents ───────────────────────────────────────
 

@@ -10,6 +10,7 @@
     "maintenance": "Maintenance",
     "wishlist": "Wishlist",
     "lending": "Lending",
+    "rooms": "Room Chronicles",
     "documents": "Identity Guard",
     "sidebarStatus": "Status: House standing (for now)"
   },
@@ -659,6 +660,116 @@
       "title": "Calendar View",
       "legend": "Legend",
       "upcoming": "Upcoming"
+    }
+  },
+  "Rooms": {
+    "title": "Room Chronicles",
+    "subtitle": "Every wall has a story. Usually an expensive one.",
+    "emptyState": "This room has no history. It's either brand new or you're ignoring its cries for help.",
+    "noRooms": "No rooms yet. Add your first room to start tracking its history.",
+    "addRoom": "Add Room",
+    "editRoom": "Edit Room",
+    "deleteRoom": "Delete Room",
+    "roomName": "Room Name",
+    "roomType": "Room Type",
+    "floor": "Floor",
+    "description": "Description",
+    "createRoom": "Create Room",
+    "updateRoom": "Update Room",
+    "deleteConfirm": "Are you sure you want to delete this room? All its events will be lost.",
+    "roomTypes": {
+      "kitchen": "Kitchen",
+      "bedroom": "Bedroom",
+      "bathroom": "Bathroom",
+      "living": "Living Room",
+      "dining": "Dining Room",
+      "office": "Office",
+      "garage": "Garage",
+      "basement": "Basement",
+      "attic": "Attic",
+      "hallway": "Hallway",
+      "laundry": "Laundry Room",
+      "storage": "Storage",
+      "other": "Other"
+    },
+    "floors": {
+      "basement": "Basement",
+      "ground": "Ground Floor",
+      "first": "1st Floor",
+      "second": "2nd Floor",
+      "third": "3rd Floor",
+      "attic": "Attic"
+    },
+    "timeline": {
+      "title": "Timeline",
+      "addEvent": "Log Event",
+      "editEvent": "Edit Event",
+      "deleteEvent": "Delete Event",
+      "timestamp": "Date & Time",
+      "category": "Category",
+      "description": "Description",
+      "metadata": "Details",
+      "vibeRating": "Vibe Rating",
+      "attachments": "Photos",
+      "createEvent": "Create Event",
+      "updateEvent": "Update Event",
+      "deleteConfirm": "Delete this event?",
+      "noEvents": "No events yet. Start logging this room's history!"
+    },
+    "categories": {
+      "Maintenance": "Maintenance",
+      "Aesthetics": "Aesthetics",
+      "Incident": "Incident",
+      "Tech": "Tech",
+      "Surgery": "Surgery",
+      "Band-aid": "Band-aid",
+      "Face-lift": "Face-lift"
+    },
+    "categoryDescriptions": {
+      "Maintenance": "Regular upkeep and repairs",
+      "Aesthetics": "Paint, flooring, and decorative changes",
+      "Incident": "Oops moments and accidents",
+      "Tech": "Smart home and electronics",
+      "Surgery": "Major renovation",
+      "Band-aid": "Quick fix",
+      "Face-lift": "Decorating and cosmetic updates"
+    },
+    "swatchLibrary": {
+      "title": "The Swatch Library",
+      "subtitle": "Most recent paint and flooring",
+      "noPaint": "No paint or flooring events logged yet",
+      "paintBrand": "Brand",
+      "paintFinish": "Finish",
+      "paintColor": "Color Code",
+      "flooringType": "Type",
+      "flooringBrand": "Brand"
+    },
+    "quickLog": {
+      "title": "Quick Log",
+      "lightbulb": "Changed Lightbulb",
+      "battery": "Replaced Battery",
+      "filter": "Changed Filter",
+      "paint": "Painted Wall",
+      "repair": "Quick Repair"
+    },
+    "metadata": {
+      "brand": "Brand",
+      "finish": "Finish",
+      "colorCode": "Color Code",
+      "bulbType": "Bulb Type",
+      "batteryType": "Battery Type",
+      "filterType": "Filter Type",
+      "notes": "Notes"
+    },
+    "search": {
+      "placeholder": "Search all room events...",
+      "noResults": "No events found"
+    },
+    "stats": {
+      "totalEvents": "Total Events",
+      "lastUpdate": "Last Update",
+      "incidents": "Incidents",
+      "maintenance": "Maintenance"
     }
   },
   "Documents": {

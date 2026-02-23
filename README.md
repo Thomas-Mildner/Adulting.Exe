@@ -89,6 +89,15 @@ Built for people who want to know exactly where the blender's original box is lo
 * **Searchable Content:** Quickly find the information you need
 * **Custom Entries:** Write and save your own how-to guides and notes
 
+### 🏠 Room Chronicles
+* **Room Management:** Track maintenance and aesthetic history for every room in your house
+* **Event Timeline:** Vertical, scrollable feed showing events in reverse chronological order
+* **Event Categories:** Maintenance, Aesthetics, Incident, Tech, Surgery, Band-aid, Face-lift
+* **Generic Metadata:** Store paint brands, color codes, bulb specs, battery types, and more
+* **Swatch Library:** Quick reference for recent paint and flooring choices
+* **Vibe Rating:** Rate each event from 1-5 stars to remember what worked (and what didn't)
+* **Searchable History:** Global search to find which room used that specific paint color
+* **Humorous Touchpoints:** Empty states and category labels with personality
 
 ### ⚙️ Settings & Customization
 * **Multi-Language Support:** Switch between multiple languages

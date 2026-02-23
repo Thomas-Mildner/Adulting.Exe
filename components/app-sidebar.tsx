@@ -15,6 +15,7 @@ import {
   Settings,
   Terminal,
   CalendarDays,
+  Home,
   FileCheck,
 } from "lucide-react";
 
@@ -52,6 +53,7 @@ export function AppSidebar() {
     { title: t("utilities"), href: "/utilities", icon: Gauge },
     { title: t("wishlist"), href: "/wishlist", icon: Sparkles },
     { title: t("lending"), href: "/lending", icon: HandCoins }, // "Verleih-O-Meter"
+    { title: t("rooms"), href: "/rooms", icon: Home }, // "Room Chronicles"
   ];
 
   const systemNav = [
