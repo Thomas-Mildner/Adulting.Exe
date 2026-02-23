@@ -1,3 +1,18 @@
+# [1.8.0-rc.7](https://github.com/Thomas-Mildner/Adulting.Exe/compare/v1.8.0-rc.6...v1.8.0-rc.7) (2026-02-23)
+
+
+### Bug Fixes
+
+* **ci:** Remove '-rc' suffix from version output in beta releases ([0de0221](https://github.com/Thomas-Mildner/Adulting.Exe/commit/0de0221cd82bea5b147cd5016aaa62a92f07fdbb))
+* update Dockerfile to use lts-alpine node version for consistency ([cf2d781](https://github.com/Thomas-Mildner/Adulting.Exe/commit/cf2d781bedac923d2cf0b58bc3c65dcd557df10f))
+* update entrypoint script to deploy database migrations instead of pushing schema ([201c18c](https://github.com/Thomas-Mildner/Adulting.Exe/commit/201c18c23f143ee8a2192d72680eb4d79326719a))
+
+
+### Features
+
+* add GitHub Pages site (index.html) ([#33](https://github.com/Thomas-Mildner/Adulting.Exe/issues/33)) ([3d070c0](https://github.com/Thomas-Mildner/Adulting.Exe/commit/3d070c09b3a4fba173d3bb83895cb312a1c81908))
+* add index.html for home management dashboard ([65f5717](https://github.com/Thomas-Mildner/Adulting.Exe/commit/65f571775eed630735f2e472e27fc871eb556aee))
+
 # [1.8.0-rc.6](https://github.com/Thomas-Mildner/Adulting.Exe/compare/v1.8.0-rc.5...v1.8.0-rc.6) (2026-02-22)
 
 
