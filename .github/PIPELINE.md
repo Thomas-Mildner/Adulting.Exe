@@ -15,7 +15,6 @@ The workflow is triggered on:
    - Sets up Node.js and pnpm
    - Installs dependencies
    - Generates Prisma Client
-   - Runs linting
    - Builds the Next.js application
    - Uploads build artifacts
 
