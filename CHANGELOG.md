@@ -1,3 +1,15 @@
+# [1.8.0-rc.8](https://github.com/Thomas-Mildner/Adulting.Exe/compare/v1.8.0-rc.7...v1.8.0-rc.8) (2026-02-24)
+
+
+### Bug Fixes
+
+* Persist credentials during checkout in the build-and-deploy workflow ([515135c](https://github.com/Thomas-Mildner/Adulting.Exe/commit/515135c42194e014e4050be00bd394f9df597602))
+
+
+### Features
+
+* Add recurring contracts tracking module ([#26](https://github.com/Thomas-Mildner/Adulting.Exe/issues/26)) ([a53b600](https://github.com/Thomas-Mildner/Adulting.Exe/commit/a53b6007f6dbab850d028ddd34ce84b52fc7b391))
+
 # [1.8.0-rc.7](https://github.com/Thomas-Mildner/Adulting.Exe/compare/v1.8.0-rc.6...v1.8.0-rc.7) (2026-02-23)
 
 
