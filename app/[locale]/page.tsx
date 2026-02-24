@@ -7,6 +7,7 @@ import { EnergyCard } from "@/components/dashboard/energy-card"
 import { WarrantyOverview } from "@/components/dashboard/warranty-overview"
 import { WasteCard } from "@/components/dashboard/waste-card"
 import { DocumentsCard } from "@/components/dashboard/documents-card"
+import { NextTreatmentWidget } from "@/components/dashboard/next-treatment-widget"
 import {
   getAppliances,
   getMaintenanceTasks,
@@ -50,6 +51,7 @@ export default async function DashboardPage() {
         </div>
         <div className="grid gap-6 lg:grid-cols-2">
           <LendingCard lentItems={lentItems} />
+          <NextTreatmentWidget locale={t("locale_code") || "en"} />
         </div>
       </div>
     </DashboardLayout>

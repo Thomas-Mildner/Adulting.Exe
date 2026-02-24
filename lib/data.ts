@@ -170,11 +170,58 @@ export type IdentityDocument = {
   notes?: string
 }
 
+// ─── Outdoor & Garden ───────────────────────────────────────────────────
+
+export type Plant = {
+  id: string
+  name: string
+  species: string
+  purchaseDate: string
+  sunlight: "Full Sun" | "Partial Sun" | "Shade" | string
+  waterFrequency: "Daily" | "Weekly" | "Monthly" | "As Needed" | string
+  notes?: string
+  imagePath?: string
+  createdAt: string
+  updatedAt: string
+}
+
+export type SoilTreatment = {
+  id: string
+  type: "Fertilizer" | "Aeration" | "Pest Control" | "Weed Control" | string
+  date: string
+  appliedTo: string
+  notes?: string
+  createdAt: string
+}
+
+export type IrrigationZone = {
+  id: string
+  name: string
+  schedule: string
+  seasonalStart: string
+  seasonalEnd: string
+  notes?: string
+  createdAt: string
+  updatedAt: string
+}
+
+export type LandscapingProject = {
+  id: string
+  title: string
+  date: string
+  description?: string
+  beforeImagePath?: string
+  afterImagePath?: string
+  createdAt: string
+  updatedAt: string
+}
+
 // ─── Note ────────────────────────────────────────────────────────────────
 // Mock data has been moved to the database. Use server actions from
 // "@/lib/actions" to fetch / mutate data. Seed with `pnpm prisma db seed`.
 
 // ─── Utility functions ──────────────────────────────────────────────────
+
 
 export function getDaysRemaining(dateStr: string): number {
   return Math.ceil(

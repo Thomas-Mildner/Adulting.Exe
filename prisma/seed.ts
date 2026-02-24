@@ -20,6 +20,10 @@ async function main() {
   await prisma.contract.deleteMany()
   await prisma.identityDocument.deleteMany()
   await prisma.person.deleteMany()
+  await prisma.landscapingProject.deleteMany()
+  await prisma.irrigationZone.deleteMany()
+  await prisma.soilTreatment.deleteMany()
+  await prisma.plant.deleteMany()
 
   // ─── Appliances ─────────────────────────────────────────────────────────
   await prisma.appliance.createMany({
@@ -209,7 +213,7 @@ async function main() {
   const now = new Date()
   const trialEndingSoon = new Date(now)
   trialEndingSoon.setHours(now.getHours() + 36) // Within 48 hours for trial-trap alert
-  
+
   await prisma.contract.createMany({
     data: [
       {
@@ -305,13 +309,13 @@ async function main() {
 
   const sixMonthsFromNow = new Date(today)
   sixMonthsFromNow.setMonth(sixMonthsFromNow.getMonth() + 6)
-  
+
   const oneYearFromNow = new Date(today)
   oneYearFromNow.setFullYear(oneYearFromNow.getFullYear() + 1)
-  
+
   const twoYearsFromNow = new Date(today)
   twoYearsFromNow.setFullYear(twoYearsFromNow.getFullYear() + 2)
-  
+
   const threeMonthsAgo = new Date(today)
   threeMonthsAgo.setMonth(threeMonthsAgo.getMonth() - 3)
 
@@ -415,6 +419,40 @@ async function main() {
   })
 
   console.log("  ✅ Persons & identity documents seeded")
+
+  // ─── Outdoor & Garden ───────────────────────────────────────────────────
+  await prisma.plant.createMany({
+    data: [
+      { id: "pl-1", name: "Monstera Deliciosa", species: "Monstera", purchaseDate: new Date("2022-05-10"), sunlight: "Partial Sun", waterFrequency: "Weekly", notes: "Living room corner" },
+      { id: "pl-2", name: "Ficus Lyrata", species: "Fiddle Leaf Fig", purchaseDate: new Date("2023-08-15"), sunlight: "Full Sun", waterFrequency: "Weekly", notes: "Needs dusting regularly" },
+      { id: "pl-3", name: "Hydrangea Macrophylla", species: "Hydrangea", purchaseDate: new Date("2024-04-20"), sunlight: "Partial Sun", waterFrequency: "Weekly", notes: "Front yard, needs acidic soil for blue color" },
+      { id: "pl-4", name: "Acer Palmatum", species: "Japanese Maple", purchaseDate: new Date("2021-10-05"), sunlight: "Shade", waterFrequency: "As Needed", notes: "Backyard focal point" },
+    ]
+  })
+
+  await prisma.soilTreatment.createMany({
+    data: [
+      { id: "st-1", type: "Fertilizer", date: new Date("2025-04-15"), appliedTo: "Front Lawn", notes: "Spring feeding, nitrogen rich" },
+      { id: "st-2", type: "Weed Control", date: new Date("2025-05-10"), appliedTo: "Backyard borders", notes: "Spot treatment" },
+      { id: "st-3", type: "Aeration", date: new Date("2024-09-20"), appliedTo: "All Lawns", notes: "Core aeration before overseeding" },
+    ]
+  })
+
+  await prisma.irrigationZone.createMany({
+    data: [
+      { id: "iz-1", name: "Front Lawn Sprinklers", schedule: "Mon/Wed/Fri 5:00 AM 15m", seasonalStart: "April 15", seasonalEnd: "October 30", notes: "Valve box near driveway" },
+      { id: "iz-2", name: "Backyard Drip Line", schedule: "Tue/Thu 6:00 AM 30m", seasonalStart: "May 1", seasonalEnd: "October 15", notes: "For garden beds" },
+    ]
+  })
+
+  await prisma.landscapingProject.createMany({
+    data: [
+      { id: "lp-1", title: "New Raised Beds", date: new Date("2024-05-10"), description: "Built three 4x8 cedar raised beds for vegetables." },
+      { id: "lp-2", title: "Patio Extension", date: new Date("2023-08-20"), description: "Added 100 sq ft of pavers to extend outdoor dining area." },
+    ]
+  })
+
+  console.log("  ✅ Outdoor & Garden seeded")
 
   console.log("🎉 Seeding complete!")
 }

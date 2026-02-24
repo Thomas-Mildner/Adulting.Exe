@@ -17,6 +17,10 @@ import type {
   Notification,
   Person,
   IdentityDocument,
+  Plant,
+  SoilTreatment,
+  IrrigationZone,
+  LandscapingProject,
 } from "@/lib/data"
 import type {
   Appliance as PrismaAppliance,
@@ -29,9 +33,6 @@ import type {
   MeterReading as PrismaMeterReading,
   WishlistProject as PrismaWishlistProject,
   WasteType as PrismaWasteType,
-  WastePickup as PrismaWastePickup,
-  Insurance as PrismaInsurance,
-  Contract as PrismaContract,
   Person as PrismaPerson,
   IdentityDocument as PrismaIdentityDocument,
 } from "@prisma/client"
@@ -728,7 +729,7 @@ Max Mustermann`
 
 export async function getContracts(): Promise<Contract[]> {
   const rows = await prisma.contract.findMany({ orderBy: { nextBillingDate: "asc" } })
-  return rows.map((r: PrismaContract) => ({
+  return rows.map((r: any) => ({
     id: r.id,
     providerName: r.providerName,
     accountId: r.accountId || undefined,
@@ -953,7 +954,7 @@ export async function getNotifications(): Promise<Notification[]> {
   // 5. Contracts (Trial ending in 48 hours)
   const in48Hours = new Date(today)
   in48Hours.setHours(today.getHours() + 48)
-  
+
   const trials = await prisma.contract.findMany({
     where: {
       isTrial: true,
@@ -979,7 +980,7 @@ export async function getNotifications(): Promise<Notification[]> {
   // 5. Identity Documents (Expired or Expiring Soon)
   const sixMonthsFromNow = new Date(today)
   sixMonthsFromNow.setMonth(sixMonthsFromNow.getMonth() + 6)
-  
+
   const expiringDocuments = await prisma.identityDocument.findMany({
     where: {
       expiryDate: { lte: sixMonthsFromNow }
@@ -992,7 +993,7 @@ export async function getNotifications(): Promise<Notification[]> {
     const daysRemaining = Math.ceil(
       (doc.expiryDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24)
     )
-    
+
     if (daysRemaining < 0) {
       // Expired
       notifications.push({
@@ -1076,7 +1077,7 @@ export async function getPersons(): Promise<(Person & { documentCount: number })
       }
     }
   })
-  
+
   return persons.map((p) => ({
     id: p.id,
     name: p.name,
@@ -1131,7 +1132,7 @@ export async function getIdentityDocuments(personId?: string): Promise<IdentityD
     include: { person: true },
     orderBy: { expiryDate: "asc" },
   })
-  
+
   return docs.map((d) => ({
     id: d.id,
     personId: d.personId,
@@ -1156,7 +1157,7 @@ export async function getIdentityDocument(id: string): Promise<IdentityDocument 
     include: { person: true },
   })
   if (!d) return null
-  
+
   return {
     id: d.id,
     personId: d.personId,
@@ -1227,7 +1228,7 @@ export async function deleteIdentityDocument(id: string) {
 export async function getExpiringDocuments(daysThreshold: number = 180): Promise<IdentityDocument[]> {
   const thresholdDate = new Date()
   thresholdDate.setDate(thresholdDate.getDate() + daysThreshold)
-  
+
   const docs = await prisma.identityDocument.findMany({
     where: {
       expiryDate: { lte: thresholdDate }
@@ -1235,7 +1236,7 @@ export async function getExpiringDocuments(daysThreshold: number = 180): Promise
     include: { person: true },
     orderBy: { expiryDate: "asc" },
   })
-  
+
   return docs.map((d) => ({
     id: d.id,
     personId: d.personId,
@@ -1252,4 +1253,192 @@ export async function getExpiringDocuments(daysThreshold: number = 180): Promise
     emergencyContact: d.emergencyContact || undefined,
     notes: d.notes || undefined,
   }))
+}
+
+// ─── Outdoor & Garden ───────────────────────────────────────────────────
+
+export async function getPlants(): Promise<Plant[]> {
+  const rows = await prisma.plant.findMany({ orderBy: { name: "asc" } })
+  return rows.map((r: any) => ({
+    id: r.id,
+    name: r.name,
+    species: r.species,
+    purchaseDate: dateToStr(r.purchaseDate),
+    sunlight: r.sunlight as Plant["sunlight"],
+    waterFrequency: r.waterFrequency as Plant["waterFrequency"],
+    notes: r.notes || undefined,
+    imagePath: r.imagePath || undefined,
+    createdAt: dateToStr(r.createdAt),
+    updatedAt: dateToStr(r.updatedAt),
+  }))
+}
+
+export async function createPlant(data: Omit<Plant, "id" | "createdAt" | "updatedAt">) {
+  await prisma.plant.create({
+    data: {
+      name: data.name,
+      species: data.species,
+      purchaseDate: new Date(data.purchaseDate),
+      sunlight: data.sunlight,
+      waterFrequency: data.waterFrequency,
+      notes: data.notes,
+      imagePath: data.imagePath,
+    },
+  })
+  revalidatePath("/outdoor")
+}
+
+export async function updatePlant(id: string, data: Partial<Omit<Plant, "id" | "createdAt" | "updatedAt">>) {
+  await prisma.plant.update({
+    where: { id },
+    data: {
+      ...(data.name !== undefined && { name: data.name }),
+      ...(data.species !== undefined && { species: data.species }),
+      ...(data.purchaseDate !== undefined && { purchaseDate: new Date(data.purchaseDate) }),
+      ...(data.sunlight !== undefined && { sunlight: data.sunlight }),
+      ...(data.waterFrequency !== undefined && { waterFrequency: data.waterFrequency }),
+      ...(data.notes !== undefined && { notes: data.notes }),
+      ...(data.imagePath !== undefined && { imagePath: data.imagePath }),
+    },
+  })
+  revalidatePath("/outdoor")
+}
+
+export async function deletePlant(id: string) {
+  await prisma.plant.delete({ where: { id } })
+  revalidatePath("/outdoor")
+}
+
+export async function getSoilTreatments(): Promise<SoilTreatment[]> {
+  const rows = await prisma.soilTreatment.findMany({ orderBy: { date: "desc" } })
+  return rows.map((r: any) => ({
+    id: r.id,
+    type: r.type as SoilTreatment["type"],
+    date: dateToStr(r.date),
+    appliedTo: r.appliedTo,
+    notes: r.notes || undefined,
+    createdAt: dateToStr(r.createdAt),
+  }))
+}
+
+export async function createSoilTreatment(data: Omit<SoilTreatment, "id" | "createdAt">) {
+  await prisma.soilTreatment.create({
+    data: {
+      type: data.type,
+      date: new Date(data.date),
+      appliedTo: data.appliedTo,
+      notes: data.notes,
+    },
+  })
+  revalidatePath("/outdoor")
+}
+
+export async function updateSoilTreatment(id: string, data: Partial<Omit<SoilTreatment, "id" | "createdAt">>) {
+  await prisma.soilTreatment.update({
+    where: { id },
+    data: {
+      ...(data.type !== undefined && { type: data.type }),
+      ...(data.date !== undefined && { date: new Date(data.date) }),
+      ...(data.appliedTo !== undefined && { appliedTo: data.appliedTo }),
+      ...(data.notes !== undefined && { notes: data.notes }),
+    },
+  })
+  revalidatePath("/outdoor")
+}
+
+export async function deleteSoilTreatment(id: string) {
+  await prisma.soilTreatment.delete({ where: { id } })
+  revalidatePath("/outdoor")
+}
+
+export async function getIrrigationZones(): Promise<IrrigationZone[]> {
+  const rows = await prisma.irrigationZone.findMany({ orderBy: { name: "asc" } })
+  return rows.map((r: any) => ({
+    id: r.id,
+    name: r.name,
+    schedule: r.schedule,
+    seasonalStart: r.seasonalStart,
+    seasonalEnd: r.seasonalEnd,
+    notes: r.notes || undefined,
+    createdAt: dateToStr(r.createdAt),
+    updatedAt: dateToStr(r.updatedAt),
+  }))
+}
+
+export async function createIrrigationZone(data: Omit<IrrigationZone, "id" | "createdAt" | "updatedAt">) {
+  await prisma.irrigationZone.create({
+    data: {
+      name: data.name,
+      schedule: data.schedule,
+      seasonalStart: data.seasonalStart,
+      seasonalEnd: data.seasonalEnd,
+      notes: data.notes,
+    },
+  })
+  revalidatePath("/outdoor")
+}
+
+export async function updateIrrigationZone(id: string, data: Partial<Omit<IrrigationZone, "id" | "createdAt" | "updatedAt">>) {
+  await prisma.irrigationZone.update({
+    where: { id },
+    data: {
+      ...(data.name !== undefined && { name: data.name }),
+      ...(data.schedule !== undefined && { schedule: data.schedule }),
+      ...(data.seasonalStart !== undefined && { seasonalStart: data.seasonalStart }),
+      ...(data.seasonalEnd !== undefined && { seasonalEnd: data.seasonalEnd }),
+      ...(data.notes !== undefined && { notes: data.notes }),
+    },
+  })
+  revalidatePath("/outdoor")
+}
+
+export async function deleteIrrigationZone(id: string) {
+  await prisma.irrigationZone.delete({ where: { id } })
+  revalidatePath("/outdoor")
+}
+
+export async function getLandscapingProjects(): Promise<LandscapingProject[]> {
+  const rows = await prisma.landscapingProject.findMany({ orderBy: { date: "desc" } })
+  return rows.map((r: any) => ({
+    id: r.id,
+    title: r.title,
+    date: dateToStr(r.date),
+    description: r.description || undefined,
+    beforeImagePath: r.beforeImagePath || undefined,
+    afterImagePath: r.afterImagePath || undefined,
+    createdAt: dateToStr(r.createdAt),
+    updatedAt: dateToStr(r.updatedAt),
+  }))
+}
+
+export async function createLandscapingProject(data: Omit<LandscapingProject, "id" | "createdAt" | "updatedAt">) {
+  await prisma.landscapingProject.create({
+    data: {
+      title: data.title,
+      date: new Date(data.date),
+      description: data.description,
+      beforeImagePath: data.beforeImagePath,
+      afterImagePath: data.afterImagePath,
+    },
+  })
+  revalidatePath("/outdoor")
+}
+
+export async function updateLandscapingProject(id: string, data: Partial<Omit<LandscapingProject, "id" | "createdAt" | "updatedAt">>) {
+  await prisma.landscapingProject.update({
+    where: { id },
+    data: {
+      ...(data.title !== undefined && { title: data.title }),
+      ...(data.date !== undefined && { date: new Date(data.date) }),
+      ...(data.description !== undefined && { description: data.description }),
+      ...(data.beforeImagePath !== undefined && { beforeImagePath: data.beforeImagePath }),
+      ...(data.afterImagePath !== undefined && { afterImagePath: data.afterImagePath }),
+    },
+  })
+  revalidatePath("/outdoor")
+}
+
+export async function deleteLandscapingProject(id: string) {
+  await prisma.landscapingProject.delete({ where: { id } })
+  revalidatePath("/outdoor")
 }
