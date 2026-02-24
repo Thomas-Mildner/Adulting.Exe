@@ -128,9 +128,23 @@ export type Notification = {
   title: string
   message: string
   type: "warning" | "info" | "error"
-  category: "Waste" | "Appliance" | "Maintenance" | "Lent" | "Insurance"
+  category: "Waste" | "Appliance" | "Maintenance" | "Lent" | "Insurance" | "Contract"
   link?: string
   date?: string
+}
+
+export type Contract = {
+  id: string
+  providerName: string
+  accountId?: string
+  monthlyCost: number
+  yearlyCost?: number
+  category: "Utilities" | "Entertainment" | "Fitness" | "Software" | "Guilty Pleasure" | "Other"
+  lastUsedDate?: string
+  isTrial: boolean
+  trialEndDate?: string
+  nextBillingDate: string
+  notes?: string
 }
 
 export type Person = {
