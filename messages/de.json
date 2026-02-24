@@ -12,6 +12,7 @@
     "lending": "Verleih",
     "contracts": "Verträge",
     "documents": "Ausweiskontrolle",
+    "outdoor": "Garten & Außenbereich",
     "sidebarStatus": "Status: Haus steht (vorerst)"
   },
   "Dashboard": {
@@ -859,6 +860,16 @@
     "deleteConfirm": {
       "person": "Möchtest du {name} wirklich löschen? Alle zugehörigen Dokumente werden gelöscht.",
       "document": "Möchtest du dieses {documentType} wirklich löschen?"
+    }
+  },
+  "Outdoor": {
+    "title": "Garten & Außenbereich",
+    "subtitle": "Wo Pflanzen zum Überleben (oder Sterben) hingehen.",
+    "tabs": {
+      "plants": "Pflanzen",
+      "soil": "Boden & Pflege",
+      "irrigation": "Bewässerung",
+      "gallery": "Galerie"
     }
   }
 }
