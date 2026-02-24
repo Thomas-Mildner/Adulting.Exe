@@ -10,6 +10,7 @@
     "maintenance": "Maintenance",
     "wishlist": "Wishlist",
     "lending": "Lending",
+    "contracts": "Contracts",
     "documents": "Identity Guard",
     "sidebarStatus": "Status: House standing (for now)"
   },
@@ -659,6 +660,86 @@
       "title": "Calendar View",
       "legend": "Legend",
       "upcoming": "Upcoming"
+    }
+  },
+  "Contracts": {
+    "title": "Recurring Contracts",
+    "subtitle": "Modern life is just a series of monthly payments until you die",
+    "burnRate": "Monthly Bleed",
+    "burnRateNote": "Your subscriptions cost more than a 1990s mortgage. Just saying.",
+    "totalContracts": "Active Contracts",
+    "activeTrials": "trials",
+    "cumulativeDonation": "Cumulative Donation",
+    "regretMeter": "Regret-Meter",
+    "regretMeterSubtitle": "Money sent to providers without actually using the service",
+    "wasted": "wasted",
+    "lastUsed": "Last used",
+    "monthsAgo": "months ago",
+    "allCategories": "All",
+    "tableTitle": "All Contracts",
+    "tableSubtitle": "Sorted by next billing date",
+    "trialTrapAlert": "Trial ending!",
+    "trial": "Trial",
+    "active": "Active",
+    "killSwitch": "Generate cancellation letter",
+    "cancel": "Cancel",
+    "close": "Close",
+    "categories": {
+      "Utilities": "Utilities",
+      "Entertainment": "Entertainment",
+      "Fitness": "Fitness",
+      "Software": "Software",
+      "Guilty Pleasure": "Guilty Pleasure",
+      "Other": "Other"
+    },
+    "table": {
+      "provider": "Provider",
+      "category": "Category",
+      "monthlyCost": "Monthly Cost",
+      "nextBilling": "Next Billing",
+      "status": "Status",
+      "actions": "Actions"
+    },
+    "fields": {
+      "providerName": "Provider Name",
+      "accountId": "Account/Customer ID",
+      "monthlyCost": "Monthly Cost (€)",
+      "yearlyCost": "Yearly Cost (€)",
+      "category": "Category",
+      "lastUsedDate": "Last Date of Real Use",
+      "isTrial": "Free Trial",
+      "trialEndDate": "Trial End Date",
+      "nextBillingDate": "Next Billing Date",
+      "notes": "Notes"
+    },
+    "placeholders": {
+      "providerName": "e.g., Netflix, Spotify",
+      "accountId": "Optional customer/account number",
+      "notes": "Optional notes or reminders"
+    },
+    "create": {
+      "title": "Add Contract",
+      "description": "Track a new recurring payment",
+      "action": "Add Contract"
+    },
+    "edit": {
+      "title": "Edit Contract",
+      "description": "Update contract details",
+      "action": "Save Changes"
+    },
+    "delete": {
+      "title": "Delete Contract",
+      "description": "Are you sure? This action cannot be undone.",
+      "action": "Delete"
+    },
+    "cancellation": {
+      "title": "Cancellation Letter (Kündigungsschreiben)",
+      "description": "Generated cancellation letter ready to send",
+      "copy": "Copy to Clipboard"
+    },
+    "emptyState": {
+      "title": "No subscriptions?",
+      "message": "Are you living in a cave or just borrowing everyone's passwords?"
     }
   },
   "Documents": {
