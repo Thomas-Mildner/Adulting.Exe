@@ -170,6 +170,20 @@ export type IdentityDocument = {
   notes?: string
 }
 
+export type PackageReturn = {
+  id: string
+  trackingId: string
+  carrier: string
+  targetVendor: string
+  status: string
+  amountExpected: number
+  refundReceived: boolean
+  dateSent: string
+  returnWindow: string
+  receiptPhoto?: string
+  updatedAt: string
+}
+
 // ─── Note ────────────────────────────────────────────────────────────────
 // Mock data has been moved to the database. Use server actions from
 // "@/lib/actions" to fetch / mutate data. Seed with `pnpm prisma db seed`.

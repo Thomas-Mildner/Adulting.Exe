@@ -17,6 +17,7 @@ import {
   CalendarDays,
   CreditCard,
   FileCheck,
+  Undo2,
 } from "lucide-react";
 
 import {
@@ -54,6 +55,7 @@ export function AppSidebar() {
     { title: t("contracts"), href: "/contracts", icon: CreditCard },
     { title: t("wishlist"), href: "/wishlist", icon: Sparkles },
     { title: t("lending"), href: "/lending", icon: HandCoins }, // "Verleih-O-Meter"
+    { title: t("returns"), href: "/returns", icon: Undo2 },
   ];
 
   const systemNav = [
