@@ -12,6 +12,7 @@
     "lending": "Lending",
     "contracts": "Contracts",
     "documents": "Identity Guard",
+    "outdoor": "Outdoor & Garden",
     "sidebarStatus": "Status: House standing (for now)"
   },
   "Dashboard": {
@@ -859,6 +860,16 @@
     "deleteConfirm": {
       "person": "Are you sure you want to delete {name}? All associated documents will be deleted.",
       "document": "Are you sure you want to delete this {documentType}?"
+    }
+  },
+  "Outdoor": {
+    "title": "Outdoor & Garden",
+    "subtitle": "Track your plants, landscaping, and irrigation.",
+    "tabs": {
+      "plants": "Plants",
+      "soil": "Soil & Treatments",
+      "irrigation": "Irrigation",
+      "gallery": "Gallery"
     }
   }
 }

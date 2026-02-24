@@ -262,3 +262,54 @@ model IdentityDocument {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
+// ─── Outdoor & Garden ───────────────────────────────────────────────────
+
+model Plant {
+  id             String   @id @default(cuid())
+  name           String
+  species        String
+  purchaseDate   DateTime
+  sunlight       String   // "Full Sun" | "Partial Sun" | "Shade"
+  waterFrequency String   // "Daily" | "Weekly" | "Monthly" | "As Needed"
+  notes          String?
+  imagePath      String?
+  
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model SoilTreatment {
+  id        String   @id @default(cuid())
+  type      String   // "Fertilizer" | "Aeration" | "Pest Control" | "Weed Control"
+  date      DateTime
+  appliedTo String
+  notes     String?
+
+  createdAt DateTime @default(now())
+}
+
+model IrrigationZone {
+  id            String   @id @default(cuid())
+  name          String
+  schedule      String
+  seasonalStart String
+  seasonalEnd   String
+  notes         String?
+
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model LandscapingProject {
+  id              String   @id @default(cuid())
+  title           String
+  date            DateTime
+  description     String?
+  beforeImagePath String?
+  afterImagePath  String?
+
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
