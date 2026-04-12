@@ -7,9 +7,10 @@ import {
 import { HeatingSettings } from "@/components/settings/heating-settings"
 import { LanguageSwitcher } from "@/components/settings/language-switcher"
 import { WasteTypeSettings } from "@/components/settings/waste-type-settings"
+import { ModuleSettings } from "@/components/settings/module-settings"
 import { getAppConfig, getWasteTypes } from "@/lib/actions"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Bell, Home, Shield } from "lucide-react"
+import { Bell, Home, Layers, Shield } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 
 export const dynamic = "force-dynamic"
@@ -36,6 +37,10 @@ export default async function SettingsPage() {
             <Home className="h-4 w-4" />
             {t("household")}
           </TabsTrigger>
+          <TabsTrigger value="modules" className="gap-2">
+            <Layers className="h-4 w-4" />
+            {t("modulesTab")}
+          </TabsTrigger>
           <TabsTrigger value="system" className="gap-2">
             <Shield className="h-4 w-4" />
             {t("system")}
@@ -58,6 +63,10 @@ export default async function SettingsPage() {
               <WasteTypeSettings initialTypes={wasteTypes} />
             </div>
           </div>
+        </TabsContent>
+
+        <TabsContent value="modules" className="space-y-6 max-w-2xl animate-in fade-in-50 duration-500">
+          <ModuleSettings disabledModules={appConfig.disabledModules} />
         </TabsContent>
 
         <TabsContent value="system" className="space-y-6 max-w-2xl animate-in fade-in-50 duration-500">
