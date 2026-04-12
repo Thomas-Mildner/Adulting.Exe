@@ -1,3 +1,16 @@
+# [1.8.0-rc.9](https://github.com/Thomas-Mildner/Adulting.Exe/compare/v1.8.0-rc.8...v1.8.0-rc.9) (2026-04-12)
+
+
+### Bug Fixes
+
+* Add language toggle to webpage in docs ([5b6020d](https://github.com/Thomas-Mildner/Adulting.Exe/commit/5b6020d242858fb856ffeeae4a9752e52bdac0d1))
+* use captured previous state for error rollback in ModuleSettings ([ebbd3f1](https://github.com/Thomas-Mildner/Adulting.Exe/commit/ebbd3f12281bbbe8d388eb58533107920930e878))
+
+
+### Features
+
+* add module selection - enable/disable sidebar modules in settings ([5d1a01a](https://github.com/Thomas-Mildner/Adulting.Exe/commit/5d1a01ae457627336ccc4366ef317e6d942f3a57))
+
 # [1.8.0-rc.8](https://github.com/Thomas-Mildner/Adulting.Exe/compare/v1.8.0-rc.7...v1.8.0-rc.8) (2026-02-24)
 
 
