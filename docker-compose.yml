@@ -1,20 +1,18 @@
-version: "3.9"
-
 services:
   postgres:
     image: postgres:16-alpine
     container_name: adulting-exe-db
     restart: unless-stopped
     environment:
-      POSTGRES_USER: adulting
-      POSTGRES_PASSWORD: adulting_secret
-      POSTGRES_DB: adulting_exe
+      POSTGRES_USER: ${POSTGRES_USER:-adulting}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD is required}
+      POSTGRES_DB: ${POSTGRES_DB:-adulting_exe}
     ports:
       - "5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U adulting -d adulting_exe"]
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-adulting} -d ${POSTGRES_DB:-adulting_exe}"]
       interval: 5s
       timeout: 5s
       retries: 10
@@ -24,20 +22,26 @@ services:
     container_name: adulting-exe-app
     restart: unless-stopped
     environment:
-      DATABASE_URL: postgresql://adulting:adulting_secret@postgres:5432/adulting_exe
+      DATABASE_URL: postgresql://${POSTGRES_USER:-adulting}:${POSTGRES_PASSWORD:?POSTGRES_PASSWORD is required}@postgres:5432/${POSTGRES_DB:-adulting_exe}
     ports:
       - "3000:3000"
     depends_on:
       postgres:
         condition: service_healthy
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:3000', r => process.exit(r.statusCode < 400 ? 0 : 1)).on('error', _ => process.exit(1))"]
+      interval: 30s
+      timeout: 10s
+      start_period: 60s
+      retries: 3
 
   pgadmin:
     image: dpage/pgadmin4:latest
     container_name: adulting-exe-pgadmin
     restart: unless-stopped
     environment:
-      PGADMIN_DEFAULT_EMAIL: admin@test.de
-      PGADMIN_DEFAULT_PASSWORD: admin
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-admin@example.com}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:?PGADMIN_DEFAULT_PASSWORD is required}
       PGADMIN_SERVER_JSON_FILE: /pgadmin4/servers.json
     ports:
       - "5050:80"
