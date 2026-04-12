@@ -354,11 +354,8 @@ export function OnboardingWizard({
                           }))
                         }
                         className="h-8 text-sm"
-                        required
                       />
                     </div>
-                  </div>
-                  <div className="grid grid-cols-2 gap-3">
                     <div className="space-y-1">
                       <Label htmlFor="onb-category" className="text-xs">
                         Category
@@ -454,7 +451,6 @@ export function OnboardingWizard({
                         }))
                       }
                       className="h-8 text-sm"
-                      required
                     />
                   </div>
                 </form>
@@ -544,7 +540,7 @@ export function OnboardingWizard({
               >
                 <div className="space-y-1">
                   <Label htmlFor="onb-waste-name" className="text-xs">
-                    {t("step4.namePlaceholder")}
+                    {t("step4.nameLabel")}
                   </Label>
                   <Input
                     id="onb-waste-name"

@@ -900,6 +900,7 @@
       "description": "Füge deine lokalen Müllarten hinzu (z.B. Wertstoff, Bio, Papier). Du kannst in den Einstellungen weitere hinzufügen.",
       "skip": "Vorerst überspringen",
       "addButton": "Art hinzufügen",
+      "nameLabel": "Müllart-Name",
       "namePlaceholder": "z.B. Wertstoff, Biomüll...",
       "toastSuccess": "Müllart hinzugefügt!",
       "toastError": "Fehler beim Hinzufügen der Müllart"
