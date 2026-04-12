@@ -173,8 +173,9 @@ model WastePickup {
 // ─── App Configuration ────────────────────────────────────────────────
 
 model AppConfig {
-  id          String   @id @default("default") // Only one row
-  heatingType String   @default("Gas") // "Gas", "Oil", "Fernwärme", "Wärmepumpe", "Pellets"
+  id                   String   @id @default("default") // Only one row
+  heatingType          String   @default("Gas") // "Gas", "Oil", "Fernwärme", "Wärmepumpe", "Pellets"
+  onboardingCompleted  Boolean  @default(false)
 
   updatedAt DateTime @updatedAt
 }

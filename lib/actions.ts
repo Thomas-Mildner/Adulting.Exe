@@ -691,6 +691,15 @@ export async function updateHeatingType(type: string) {
   revalidatePath("/utilities")
 }
 
+export async function completeOnboarding() {
+  await prisma.appConfig.upsert({
+    where: { id: "default" },
+    update: { onboardingCompleted: true },
+    create: { id: "default", heatingType: "Gas", onboardingCompleted: true },
+  })
+  revalidatePath("/")
+}
+
 
 
 export async function generateCancellationLetter(id: string): Promise<string> {
