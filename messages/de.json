@@ -90,6 +90,53 @@
         "brown": "Braun (Bio)",
         "black": "Schwarz"
       }
+    },
+    "modulesTab": "Module",
+    "modules": {
+      "title": "Modulauswahl",
+      "description": "Module in der Navigation ein- oder ausblenden. Deaktivierte Module werden in der Seitenleiste nicht angezeigt.",
+      "saved": "Moduleinstellungen gespeichert",
+      "error": "Fehler beim Speichern der Moduleinstellungen",
+      "vault": {
+        "title": "Tresor",
+        "desc": "Geräteverwaltung und Garantieverfolgung."
+      },
+      "services": {
+        "title": "Rettungsteam",
+        "desc": "Dienstleister und Reparaturhistorie."
+      },
+      "documents": {
+        "title": "Ausweiskontrolle",
+        "desc": "Ausweisdokumente und Ablaufüberwachung."
+      },
+      "library": {
+        "title": "Bibliothek",
+        "desc": "Wissensdatenbank und Haushaltsdokumente."
+      },
+      "waste": {
+        "title": "Müllkalender",
+        "desc": "Müllabfuhrtermine und Erinnerungen."
+      },
+      "maintenance": {
+        "title": "Wartungen",
+        "desc": "Wiederkehrende Wartungsaufgaben und Zeitpläne."
+      },
+      "utilities": {
+        "title": "Ressourcen",
+        "desc": "Zählerstände und Energiekostenverfolgung."
+      },
+      "contracts": {
+        "title": "Verträge",
+        "desc": "Abonnements und wiederkehrende Verträge."
+      },
+      "wishlist": {
+        "title": "Wunschliste",
+        "desc": "Projektplanung und Sparziele."
+      },
+      "lending": {
+        "title": "Verleih",
+        "desc": "Verliehene Gegenstände und Entleiher verfolgen."
+      }
     }
   },
   "HouseHealth": {
