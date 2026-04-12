@@ -367,7 +367,10 @@
       "editDesc": "Änderungen werden sofort gespeichert.",
       "deleteTitle": "Rechnung löschen?",
       "deleteDesc": "Der Rechnungseintrag wird unwiderruflich gelöscht.",
-      "empty": "Keine Rechnungen gefunden. Ein gutes Zeichen oder Quittung verloren?"
+      "empty": "Keine Rechnungen gefunden. Ein gutes Zeichen oder Quittung verloren?",
+      "exportZip": "Steuerexport (ZIP)",
+      "exportZipTooltip": "Alle steuerlich absetzbaren Rechnungen als ZIP-Archiv herunterladen",
+      "exportZipEmpty": "Keine steuerlich absetzbaren Rechnungen zum Exportieren."
     },
     "form": {
       "name": "Name",

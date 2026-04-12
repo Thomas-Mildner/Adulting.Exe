@@ -158,11 +158,11 @@ jobs:
         id: check
         run: |
           git fetch --tags
-          LATEST_TAG=$(git tag --sort=-v:refname | head -n 1)
+          LATEST_TAG=$(git tag --sort=-v:refname | grep -m1 'rc\.')
           BEFORE="${{ steps.before.outputs.version }}"
           if [ -n "$LATEST_TAG" ]; then
             VERSION="${LATEST_TAG#v}"
-            echo "Latest tag: $LATEST_TAG (version: $VERSION), before: $BEFORE"
+            echo "Latest RC tag: $LATEST_TAG (version: $VERSION), before: $BEFORE"
             if [ "$VERSION" != "$BEFORE" ]; then
               echo "New release detected: $VERSION"
               echo "released=true" >> $GITHUB_OUTPUT
@@ -173,7 +173,7 @@ jobs:
               echo "version=$BEFORE" >> $GITHUB_OUTPUT
             fi
           else
-            echo "No tags found"
+            echo "No RC tags found"
             echo "released=false" >> $GITHUB_OUTPUT
             echo "version=$BEFORE" >> $GITHUB_OUTPUT
           fi
