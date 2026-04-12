@@ -90,6 +90,53 @@
         "brown": "Brown (Bio)",
         "black": "Black"
       }
+    },
+    "modulesTab": "Modules",
+    "modules": {
+      "title": "Module Selection",
+      "description": "Show or hide modules in the sidebar. Disabled modules are hidden from the navigation.",
+      "saved": "Module settings saved",
+      "error": "Failed to save module settings",
+      "vault": {
+        "title": "Vault",
+        "desc": "Appliance tracking and warranty management."
+      },
+      "services": {
+        "title": "Service Team",
+        "desc": "Service providers and repair history."
+      },
+      "documents": {
+        "title": "Identity Guard",
+        "desc": "Identity documents and expiry monitoring."
+      },
+      "library": {
+        "title": "Library",
+        "desc": "Knowledge base and household documents."
+      },
+      "waste": {
+        "title": "Waste Calendar",
+        "desc": "Waste pickup schedule and reminders."
+      },
+      "maintenance": {
+        "title": "Maintenance",
+        "desc": "Recurring maintenance tasks and schedules."
+      },
+      "utilities": {
+        "title": "Utilities",
+        "desc": "Meter readings and energy cost tracking."
+      },
+      "contracts": {
+        "title": "Contracts",
+        "desc": "Subscriptions and recurring contracts."
+      },
+      "wishlist": {
+        "title": "Wishlist",
+        "desc": "Project planning and savings goals."
+      },
+      "lending": {
+        "title": "Lending",
+        "desc": "Track borrowed items and who has them."
+      }
     }
   },
   "HouseHealth": {
