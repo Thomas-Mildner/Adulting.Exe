@@ -1,3 +1,16 @@
+# [1.8.0-rc.10](https://github.com/Thomas-Mildner/Adulting.Exe/compare/v1.8.0-rc.9...v1.8.0-rc.10) (2026-04-12)
+
+
+### Bug Fixes
+
+* remove required from optional fields in onboarding, fix label translation key ([9279a99](https://github.com/Thomas-Mildner/Adulting.Exe/commit/9279a9976b81112245b8a9ab6c3b4c7069c7c46f))
+* use i18n translations for all hardcoded strings in onboarding wizard ([ee1c5c9](https://github.com/Thomas-Mildner/Adulting.Exe/commit/ee1c5c97ada56a1e5e795ccde367e10581ea3a9c))
+
+
+### Features
+
+* add onboarding wizard for new household setup ([f96d402](https://github.com/Thomas-Mildner/Adulting.Exe/commit/f96d40277f322eeb7ee365eadb39c36b3ef1544c))
+
 # [1.8.0-rc.9](https://github.com/Thomas-Mildner/Adulting.Exe/compare/v1.8.0-rc.8...v1.8.0-rc.9) (2026-04-12)
 
 
