@@ -700,6 +700,16 @@ export async function completeOnboarding() {
   revalidatePath("/")
 }
 
+export async function updateDisabledModules(modules: string[]) {
+  await prisma.appConfig.upsert({
+    where: { id: "default" },
+    create: { id: "default", heatingType: "Gas", disabledModules: modules },
+    update: { disabledModules: modules },
+  })
+  revalidatePath("/settings")
+  revalidatePath("/")
+}
+
 
 
 export async function generateCancellationLetter(id: string): Promise<string> {
