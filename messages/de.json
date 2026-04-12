@@ -860,5 +860,52 @@
       "person": "Möchtest du {name} wirklich löschen? Alle zugehörigen Dokumente werden gelöscht.",
       "document": "Möchtest du dieses {documentType} wirklich löschen?"
     }
+  },
+  "Onboarding": {
+    "title": "Willkommen bei Adulting.Exe",
+    "subtitle": "Lass uns deinen Haushalt einrichten. Das dauert nur eine Minute.",
+    "steps": {
+      "welcome": "Willkommen",
+      "appliance": "Erstes Gerät",
+      "heating": "Heizungstyp",
+      "waste": "Müllkategorien",
+      "done": "Fertig"
+    },
+    "step1": {
+      "title": "Willkommen, Hausbesitzer! 🏠",
+      "description": "Adulting.Exe hilft dir, Garantien, Wartungen, Nebenkosten und mehr zu verwalten. Lass uns deinen Haushalt in ein paar schnellen Schritten einrichten.",
+      "features": {
+        "vault": "Garantien & Geräte verfolgen",
+        "maintenance": "Wartungsaufgaben planen",
+        "utilities": "Energie- & Wasserverbrauch überwachen",
+        "waste": "Keine Müllabholung mehr verpassen"
+      }
+    },
+    "step2": {
+      "title": "Erstes Gerät hinzufügen",
+      "description": "Starte mit der Garantieverfolgung, indem du dein erstes Gerät hinzufügst. Du kannst diesen Schritt überspringen und Geräte später hinzufügen.",
+      "skip": "Vorerst überspringen"
+    },
+    "step3": {
+      "title": "Was ist dein Heizungstyp?",
+      "description": "Wähle deine Wärmequelle, damit die Einheiten im Bereich Ressourcen korrekt angezeigt werden.",
+      "select": "Heizungstyp auswählen"
+    },
+    "step4": {
+      "title": "Müllkategorien konfigurieren",
+      "description": "Füge deine lokalen Müllarten hinzu (z.B. Wertstoff, Bio, Papier). Du kannst in den Einstellungen weitere hinzufügen.",
+      "skip": "Vorerst überspringen",
+      "addButton": "Art hinzufügen",
+      "namePlaceholder": "z.B. Wertstoff, Biomüll..."
+    },
+    "step5": {
+      "title": "Alles ist eingerichtet! 🎉",
+      "description": "Dein Haushalt ist konfiguriert und bereit. Du kannst diese Einstellungen jederzeit ändern.",
+      "goToDashboard": "Zum Dashboard"
+    },
+    "next": "Weiter",
+    "back": "Zurück",
+    "skip": "Überspringen",
+    "stepOf": "Schritt {current} von {total}"
   }
 }
