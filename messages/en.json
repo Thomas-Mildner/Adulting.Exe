@@ -90,6 +90,21 @@
         "brown": "Brown (Bio)",
         "black": "Black"
       }
+    },
+    "webhook": {
+      "title": "External Notifications (Webhook)",
+      "description": "Push notifications to an external system via HTTP webhook whenever new alerts appear.",
+      "urlLabel": "Webhook URL",
+      "urlPlaceholder": "https://hooks.example.com/notify",
+      "urlDesc": "POST requests with a JSON payload will be sent to this URL.",
+      "enabledLabel": "Enable Webhook",
+      "enabledDesc": "Automatically send new notifications to the configured URL.",
+      "saveBtn": "Save",
+      "testBtn": "Test",
+      "success": "Webhook settings saved",
+      "error": "Error saving webhook settings",
+      "testSuccess": "Test payload delivered successfully",
+      "testError": "Webhook test failed"
     }
   },
   "HouseHealth": {
