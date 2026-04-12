@@ -884,28 +884,39 @@
     "step2": {
       "title": "Add Your First Appliance",
       "description": "Start tracking warranties by adding your first appliance. You can skip this and add appliances later.",
-      "skip": "Skip for now"
+      "skip": "Skip for now",
+      "addedSuccess": "Appliance added successfully!",
+      "toastSuccess": "Appliance added!",
+      "toastError": "Failed to add appliance"
     },
     "step3": {
       "title": "What's Your Heating Type?",
       "description": "Select your heating source so the units in the Utilities section are displayed correctly.",
-      "select": "Select heating type"
+      "select": "Select heating type",
+      "toastError": "Failed to save heating type"
     },
     "step4": {
       "title": "Configure Waste Categories",
       "description": "Add your local waste pickup types (e.g. Recycling, Organic, Paper). You can add more later in Settings.",
       "skip": "Skip for now",
       "addButton": "Add Type",
-      "namePlaceholder": "e.g. Recycling, Organic Waste..."
+      "namePlaceholder": "e.g. Recycling, Organic Waste...",
+      "toastSuccess": "Waste type added!",
+      "toastError": "Failed to add waste type"
     },
     "step5": {
       "title": "You're All Set! 🎉",
       "description": "Your household is configured and ready to go. You can always change these settings later.",
-      "goToDashboard": "Go to Dashboard"
+      "goToDashboard": "Go to Dashboard",
+      "toastError": "Failed to complete setup",
+      "summaryAppliance": "First appliance tracked ✓",
+      "summaryHeating": "Heating type configured ✓",
+      "summaryWaste": "{count} waste type(s) added ✓"
     },
     "next": "Next",
     "back": "Back",
     "skip": "Skip",
+    "saving": "Saving...",
     "stepOf": "Step {current} of {total}"
   }
 }
