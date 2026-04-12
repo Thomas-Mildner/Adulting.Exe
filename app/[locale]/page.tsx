@@ -7,6 +7,7 @@ import { EnergyCard } from "@/components/dashboard/energy-card"
 import { WarrantyOverview } from "@/components/dashboard/warranty-overview"
 import { WasteCard } from "@/components/dashboard/waste-card"
 import { DocumentsCard } from "@/components/dashboard/documents-card"
+import { OnboardingWizard } from "@/components/onboarding/onboarding-wizard"
 import {
   getAppliances,
   getMaintenanceTasks,
@@ -15,6 +16,7 @@ import {
   getTotalTaxDeductible,
   getNextWastePickup,
   getIdentityDocuments,
+  getAppConfig,
 } from "@/lib/actions"
 
 export const dynamic = "force-dynamic"
@@ -22,7 +24,7 @@ export const dynamic = "force-dynamic"
 import { getTranslations } from "next-intl/server"
 
 export default async function DashboardPage() {
-  const [appliances, maintenanceTasks, lentItems, meterHistory, taxDeductible, t, nextWastePickup, documents] =
+  const [appliances, maintenanceTasks, lentItems, meterHistory, taxDeductible, t, nextWastePickup, documents, appConfig] =
     await Promise.all([
       getAppliances(),
       getMaintenanceTasks(),
@@ -32,10 +34,14 @@ export default async function DashboardPage() {
       getTranslations("Dashboard"),
       getNextWastePickup(),
       getIdentityDocuments(),
+      getAppConfig(),
     ])
 
   return (
     <DashboardLayout title={t("welcome")} subtitle={t("subtitle")}>
+      {!appConfig.onboardingCompleted && (
+        <OnboardingWizard initialHeatingType={appConfig.heatingType} />
+      )}
       <div className="space-y-6">
         <HouseHealth appliances={appliances} maintenanceTasks={maintenanceTasks} lentItems={lentItems} />
         <StatsCards appliances={appliances} maintenanceTasks={maintenanceTasks} taxDeductible={taxDeductible} />
@@ -55,3 +61,4 @@ export default async function DashboardPage() {
     </DashboardLayout>
   )
 }
+
