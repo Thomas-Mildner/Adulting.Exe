@@ -173,8 +173,9 @@ model WastePickup {
 // ─── App Configuration ────────────────────────────────────────────────
 
 model AppConfig {
-  id          String   @id @default("default") // Only one row
-  heatingType String   @default("Gas") // "Gas", "Oil", "Fernwärme", "Wärmepumpe", "Pellets"
+  id              String   @id @default("default") // Only one row
+  heatingType     String   @default("Gas") // "Gas", "Oil", "Fernwärme", "Wärmepumpe", "Pellets"
+  disabledModules String[] @default([]) // Module keys that are hidden from the sidebar
 
   updatedAt DateTime @updatedAt
 }
