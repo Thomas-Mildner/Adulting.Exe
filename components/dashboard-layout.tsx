@@ -1,5 +1,3 @@
-"use client"
-
 import React from "react"
 import { SidebarProvider, SidebarInset, SidebarTrigger } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/app-sidebar"
@@ -7,8 +5,9 @@ import { GlobalSearch } from "@/components/global-search"
 import { Separator } from "@/components/ui/separator"
 import { ThemeToggle } from "@/components/settings/theme-toggle"
 import { NotificationCenter } from "@/components/notifications/notification-center"
+import { getAppConfig } from "@/lib/actions"
 
-export function DashboardLayout({
+export async function DashboardLayout({
   children,
   title,
   subtitle,
@@ -17,9 +16,11 @@ export function DashboardLayout({
   title: string
   subtitle?: string
 }) {
+  const appConfig = await getAppConfig()
+
   return (
     <SidebarProvider>
-      <AppSidebar />
+      <AppSidebar disabledModules={appConfig.disabledModules} />
       <SidebarInset>
         <header className="sticky top-0 z-10 flex h-14 items-center gap-4 border-b bg-card/80 backdrop-blur-sm px-4 lg:px-6">
           <SidebarTrigger className="-ml-1" />
