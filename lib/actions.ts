@@ -691,6 +691,84 @@ export async function updateHeatingType(type: string) {
   revalidatePath("/utilities")
 }
 
+// ─── Webhook Config ───────────────────────────────────────────────────
+
+export async function getWebhookConfig(): Promise<{ webhookUrl: string | null; webhookEnabled: boolean }> {
+  const config = await getAppConfig()
+  return { webhookUrl: config.webhookUrl, webhookEnabled: config.webhookEnabled }
+}
+
+export async function updateWebhookConfig(webhookUrl: string | null, webhookEnabled: boolean) {
+  await prisma.appConfig.upsert({
+    where: { id: "default" },
+    create: { id: "default", heatingType: "Gas", webhookUrl, webhookEnabled },
+    update: { webhookUrl, webhookEnabled },
+  })
+  revalidatePath("/settings")
+}
+
+export async function testWebhook(): Promise<{ success: boolean; error?: string }> {
+  const config = await getWebhookConfig()
+  if (!config.webhookUrl) {
+    return { success: false, error: "No webhook URL configured" }
+  }
+  try {
+    const response = await fetch(config.webhookUrl, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        event: "test",
+        source: "Adulting.exe",
+        timestamp: new Date().toISOString(),
+        notifications: [],
+      }),
+    })
+    if (!response.ok) {
+      return { success: false, error: `HTTP ${response.status}: ${response.statusText}` }
+    }
+    return { success: true }
+  } catch (err) {
+    return { success: false, error: err instanceof Error ? err.message : "Unknown error" }
+  }
+}
+
+async function dispatchNotificationsToWebhook(notifications: Notification[]) {
+  if (notifications.length === 0) return
+  try {
+    const config = await getWebhookConfig()
+    if (!config.webhookEnabled || !config.webhookUrl) return
+
+    // Find which notifications have already been dispatched
+    const dispatched = await prisma.webhookDispatched.findMany({
+      where: { id: { in: notifications.map((n) => n.id) } },
+      select: { id: true },
+    })
+    const dispatchedIds = new Set(dispatched.map((d) => d.id))
+    const newNotifications = notifications.filter((n) => !dispatchedIds.has(n.id))
+    if (newNotifications.length === 0) return
+
+    const response = await fetch(config.webhookUrl, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        event: "notifications",
+        source: "Adulting.exe",
+        timestamp: new Date().toISOString(),
+        notifications: newNotifications,
+      }),
+    })
+
+    if (response.ok) {
+      await prisma.webhookDispatched.createMany({
+        data: newNotifications.map((n) => ({ id: n.id })),
+        skipDuplicates: true,
+      })
+    }
+  } catch {
+    // Webhook errors should not interrupt normal app flow
+  }
+}
+
 export async function completeOnboarding() {
   await prisma.appConfig.upsert({
     where: { id: "default" },
@@ -1065,7 +1143,12 @@ export async function getNotifications(): Promise<Notification[]> {
   })
   const readIds = new Set(readNotifications.map((n) => n.id))
 
-  return notifications.filter((n) => !readIds.has(n.id))
+  const unread = notifications.filter((n) => !readIds.has(n.id))
+
+  // Fire-and-forget: dispatch new notifications to webhook (non-blocking)
+  dispatchNotificationsToWebhook(unread).catch(() => {})
+
+  return unread
 }
 
 export async function markNotificationAsRead(id: string) {

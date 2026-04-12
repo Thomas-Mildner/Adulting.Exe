@@ -7,8 +7,9 @@ import {
 import { HeatingSettings } from "@/components/settings/heating-settings"
 import { LanguageSwitcher } from "@/components/settings/language-switcher"
 import { WasteTypeSettings } from "@/components/settings/waste-type-settings"
+import { WebhookSettings } from "@/components/settings/webhook-settings"
 import { ModuleSettings } from "@/components/settings/module-settings"
-import { getAppConfig, getWasteTypes } from "@/lib/actions"
+import { getAppConfig, getWasteTypes, getWebhookConfig } from "@/lib/actions"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Bell, Home, Layers, Shield } from "lucide-react"
 import { getTranslations } from "next-intl/server"
@@ -16,9 +17,10 @@ import { getTranslations } from "next-intl/server"
 export const dynamic = "force-dynamic"
 
 export default async function SettingsPage() {
-  const [appConfig, wasteTypes, t] = await Promise.all([
+  const [appConfig, wasteTypes, webhookConfig, t] = await Promise.all([
     getAppConfig(),
     getWasteTypes(),
+    getWebhookConfig(),
     getTranslations("Settings")
   ])
 
@@ -52,6 +54,10 @@ export default async function SettingsPage() {
             <LanguageSwitcher />
           </div>
           <NotificationSettings />
+          <WebhookSettings
+            initialUrl={webhookConfig.webhookUrl}
+            initialEnabled={webhookConfig.webhookEnabled}
+          />
         </TabsContent>
 
         <TabsContent value="household" className="space-y-6 animate-in fade-in-50 duration-500">

@@ -91,6 +91,21 @@
         "black": "Schwarz"
       }
     },
+    "webhook": {
+      "title": "Externe Benachrichtigungen (Webhook)",
+      "description": "Sende Benachrichtigungen an ein externes System per HTTP-Webhook, sobald neue Meldungen erscheinen.",
+      "urlLabel": "Webhook-URL",
+      "urlPlaceholder": "https://hooks.example.com/benachrichtigung",
+      "urlDesc": "An diese URL werden POST-Anfragen mit einer JSON-Nutzlast gesendet.",
+      "enabledLabel": "Webhook aktivieren",
+      "enabledDesc": "Neue Benachrichtigungen automatisch an die konfigurierte URL senden.",
+      "saveBtn": "Speichern",
+      "testBtn": "Testen",
+      "success": "Webhook-Einstellungen gespeichert",
+      "error": "Fehler beim Speichern der Webhook-Einstellungen",
+      "testSuccess": "Test-Payload erfolgreich übermittelt",
+      "testError": "Webhook-Test fehlgeschlagen"
+    },
     "modulesTab": "Module",
     "modules": {
       "title": "Modulauswahl",

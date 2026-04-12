@@ -173,12 +173,21 @@ model WastePickup {
 // ─── App Configuration ────────────────────────────────────────────────
 
 model AppConfig {
-  id                       String   @id @default("default") // Only one row
-  heatingType              String   @default("Gas") // "Gas", "Oil", "Fernwärme", "Wärmepumpe", "Pellets"
+  id                          String   @id @default("default") // Only one row
+  heatingType                 String   @default("Gas") // "Gas", "Oil", "Fernwärme", "Wärmepumpe", "Pellets"
+  webhookUrl     String?
+  webhookEnabled Boolean  @default(false)
   onboardingCompleted  Boolean  @default(false)
   disabledModules String[] @default([]) // Module keys that are hidden from the sidebar
 
   updatedAt DateTime @updatedAt
+}
+
+// ─── Webhook Dispatch History ──────────────────────────────────────────
+
+model WebhookDispatched {
+  id        String   @id // notification id
+  createdAt DateTime @default(now())
 }
 
 // ─── Insurance ──────────────────────────────────────────────────────────
