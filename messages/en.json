@@ -900,6 +900,7 @@
       "description": "Add your local waste pickup types (e.g. Recycling, Organic, Paper). You can add more later in Settings.",
       "skip": "Skip for now",
       "addButton": "Add Type",
+      "nameLabel": "Waste Type Name",
       "namePlaceholder": "e.g. Recycling, Organic Waste...",
       "toastSuccess": "Waste type added!",
       "toastError": "Failed to add waste type"
