@@ -1,3 +1,10 @@
+# [1.8.0-rc.11](https://github.com/Thomas-Mildner/Adulting.Exe/compare/v1.8.0-rc.10...v1.8.0-rc.11) (2026-04-12)
+
+
+### Bug Fixes
+
+* update packages to address security vulnerabilities ([4781a98](https://github.com/Thomas-Mildner/Adulting.Exe/commit/4781a98c5d87e33d29c6833f5e0b40215a9d6e8f))
+
 # [1.8.0-rc.10](https://github.com/Thomas-Mildner/Adulting.Exe/compare/v1.8.0-rc.9...v1.8.0-rc.10) (2026-04-12)
 
 
