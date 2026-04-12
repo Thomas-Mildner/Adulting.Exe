@@ -367,7 +367,10 @@
       "editDesc": "Changes are saved immediately.",
       "deleteTitle": "Delete Invoice?",
       "deleteDesc": "This will permanently remove the invoice record.",
-      "empty": "No invoices found. A good sign or a lost receipt?"
+      "empty": "No invoices found. A good sign or a lost receipt?",
+      "exportZip": "Export Tax ZIP",
+      "exportZipTooltip": "Download all tax-deductible invoices as a ZIP archive",
+      "exportZipEmpty": "No tax-deductible invoices to export."
     },
     "form": {
       "name": "Name",
