@@ -1,3 +1,15 @@
+# [1.8.0-rc.12](https://github.com/Thomas-Mildner/Adulting.Exe/compare/v1.8.0-rc.11...v1.8.0-rc.12) (2026-04-12)
+
+
+### Bug Fixes
+
+* update tag fetching logic to only consider RC tags ([3f0b9b0](https://github.com/Thomas-Mildner/Adulting.Exe/commit/3f0b9b024da8c5ab345440b7863adcb0fdc6eafd))
+
+
+### Features
+
+* add Tax Preparation Export – bundle tax-deductible invoices into ZIP ([52f74c2](https://github.com/Thomas-Mildner/Adulting.Exe/commit/52f74c21b3370de8e7c00054f7568cc7a57965d1))
+
 # [1.8.0-rc.11](https://github.com/Thomas-Mildner/Adulting.Exe/compare/v1.8.0-rc.10...v1.8.0-rc.11) (2026-04-12)
 
 
