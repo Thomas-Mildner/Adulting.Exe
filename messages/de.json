@@ -90,6 +90,53 @@
         "brown": "Braun (Bio)",
         "black": "Schwarz"
       }
+    },
+    "modulesTab": "Module",
+    "modules": {
+      "title": "Modulauswahl",
+      "description": "Module in der Navigation ein- oder ausblenden. Deaktivierte Module werden in der Seitenleiste nicht angezeigt.",
+      "saved": "Moduleinstellungen gespeichert",
+      "error": "Fehler beim Speichern der Moduleinstellungen",
+      "vault": {
+        "title": "Tresor",
+        "desc": "Geräteverwaltung und Garantieverfolgung."
+      },
+      "services": {
+        "title": "Rettungsteam",
+        "desc": "Dienstleister und Reparaturhistorie."
+      },
+      "documents": {
+        "title": "Ausweiskontrolle",
+        "desc": "Ausweisdokumente und Ablaufüberwachung."
+      },
+      "library": {
+        "title": "Bibliothek",
+        "desc": "Wissensdatenbank und Haushaltsdokumente."
+      },
+      "waste": {
+        "title": "Müllkalender",
+        "desc": "Müllabfuhrtermine und Erinnerungen."
+      },
+      "maintenance": {
+        "title": "Wartungen",
+        "desc": "Wiederkehrende Wartungsaufgaben und Zeitpläne."
+      },
+      "utilities": {
+        "title": "Ressourcen",
+        "desc": "Zählerstände und Energiekostenverfolgung."
+      },
+      "contracts": {
+        "title": "Verträge",
+        "desc": "Abonnements und wiederkehrende Verträge."
+      },
+      "wishlist": {
+        "title": "Wunschliste",
+        "desc": "Projektplanung und Sparziele."
+      },
+      "lending": {
+        "title": "Verleih",
+        "desc": "Verliehene Gegenstände und Entleiher verfolgen."
+      }
     }
   },
   "HouseHealth": {
@@ -860,5 +907,64 @@
       "person": "Möchtest du {name} wirklich löschen? Alle zugehörigen Dokumente werden gelöscht.",
       "document": "Möchtest du dieses {documentType} wirklich löschen?"
     }
+  },
+  "Onboarding": {
+    "title": "Willkommen bei Adulting.Exe",
+    "subtitle": "Lass uns deinen Haushalt einrichten. Das dauert nur eine Minute.",
+    "steps": {
+      "welcome": "Willkommen",
+      "appliance": "Erstes Gerät",
+      "heating": "Heizungstyp",
+      "waste": "Müllkategorien",
+      "done": "Fertig"
+    },
+    "step1": {
+      "title": "Willkommen, Hausbesitzer! 🏠",
+      "description": "Adulting.Exe hilft dir, Garantien, Wartungen, Nebenkosten und mehr zu verwalten. Lass uns deinen Haushalt in ein paar schnellen Schritten einrichten.",
+      "features": {
+        "vault": "Garantien & Geräte verfolgen",
+        "maintenance": "Wartungsaufgaben planen",
+        "utilities": "Energie- & Wasserverbrauch überwachen",
+        "waste": "Keine Müllabholung mehr verpassen"
+      }
+    },
+    "step2": {
+      "title": "Erstes Gerät hinzufügen",
+      "description": "Starte mit der Garantieverfolgung, indem du dein erstes Gerät hinzufügst. Du kannst diesen Schritt überspringen und Geräte später hinzufügen.",
+      "skip": "Vorerst überspringen",
+      "addedSuccess": "Gerät erfolgreich hinzugefügt!",
+      "toastSuccess": "Gerät hinzugefügt!",
+      "toastError": "Fehler beim Hinzufügen des Geräts"
+    },
+    "step3": {
+      "title": "Was ist dein Heizungstyp?",
+      "description": "Wähle deine Wärmequelle, damit die Einheiten im Bereich Ressourcen korrekt angezeigt werden.",
+      "select": "Heizungstyp auswählen",
+      "toastError": "Fehler beim Speichern des Heizungstyps"
+    },
+    "step4": {
+      "title": "Müllkategorien konfigurieren",
+      "description": "Füge deine lokalen Müllarten hinzu (z.B. Wertstoff, Bio, Papier). Du kannst in den Einstellungen weitere hinzufügen.",
+      "skip": "Vorerst überspringen",
+      "addButton": "Art hinzufügen",
+      "nameLabel": "Müllart-Name",
+      "namePlaceholder": "z.B. Wertstoff, Biomüll...",
+      "toastSuccess": "Müllart hinzugefügt!",
+      "toastError": "Fehler beim Hinzufügen der Müllart"
+    },
+    "step5": {
+      "title": "Alles ist eingerichtet! 🎉",
+      "description": "Dein Haushalt ist konfiguriert und bereit. Du kannst diese Einstellungen jederzeit ändern.",
+      "goToDashboard": "Zum Dashboard",
+      "toastError": "Fehler beim Abschließen der Einrichtung",
+      "summaryAppliance": "Erstes Gerät erfasst ✓",
+      "summaryHeating": "Heizungstyp konfiguriert ✓",
+      "summaryWaste": "{count} Müllart(en) hinzugefügt ✓"
+    },
+    "next": "Weiter",
+    "back": "Zurück",
+    "skip": "Überspringen",
+    "saving": "Speichert...",
+    "stepOf": "Schritt {current} von {total}"
   }
 }
