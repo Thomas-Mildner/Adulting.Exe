@@ -43,6 +43,7 @@ export function ModuleSettings({ disabledModules }: ModuleSettingsProps) {
   const [pending, setPending] = React.useState<string | null>(null);
 
   async function handleToggle(key: ModuleKey, enabled: boolean) {
+    const previous = new Set(disabled);
     const next = new Set(disabled);
     if (enabled) {
       next.delete(key);
@@ -55,8 +56,7 @@ export function ModuleSettings({ disabledModules }: ModuleSettingsProps) {
       await updateDisabledModules(Array.from(next));
       toast.success(t("saved"));
     } catch {
-      // revert
-      setDisabled(disabled);
+      setDisabled(previous);
       toast.error(t("error"));
     } finally {
       setPending(null);
