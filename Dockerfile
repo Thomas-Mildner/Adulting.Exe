@@ -1,5 +1,5 @@
 # Build stage
-FROM node:22-alpine AS builder
+FROM node:22-alpine@sha256:4d64b49e6c891c8fc821007cb1cdc6c0db7773110ac2c34bf2e6960adef62ed3 AS builder
 
 RUN npm install -g pnpm@8
 
@@ -22,7 +22,7 @@ COPY . .
 RUN pnpm build
 
 # Production stage
-FROM node:22-alpine AS runner
+FROM node:22-alpine@sha256:4d64b49e6c891c8fc821007cb1cdc6c0db7773110ac2c34bf2e6960adef62ed3 AS runner
 
 RUN npm install -g pnpm@8
 
