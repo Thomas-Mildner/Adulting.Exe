@@ -884,28 +884,39 @@
     "step2": {
       "title": "Erstes Gerät hinzufügen",
       "description": "Starte mit der Garantieverfolgung, indem du dein erstes Gerät hinzufügst. Du kannst diesen Schritt überspringen und Geräte später hinzufügen.",
-      "skip": "Vorerst überspringen"
+      "skip": "Vorerst überspringen",
+      "addedSuccess": "Gerät erfolgreich hinzugefügt!",
+      "toastSuccess": "Gerät hinzugefügt!",
+      "toastError": "Fehler beim Hinzufügen des Geräts"
     },
     "step3": {
       "title": "Was ist dein Heizungstyp?",
       "description": "Wähle deine Wärmequelle, damit die Einheiten im Bereich Ressourcen korrekt angezeigt werden.",
-      "select": "Heizungstyp auswählen"
+      "select": "Heizungstyp auswählen",
+      "toastError": "Fehler beim Speichern des Heizungstyps"
     },
     "step4": {
       "title": "Müllkategorien konfigurieren",
       "description": "Füge deine lokalen Müllarten hinzu (z.B. Wertstoff, Bio, Papier). Du kannst in den Einstellungen weitere hinzufügen.",
       "skip": "Vorerst überspringen",
       "addButton": "Art hinzufügen",
-      "namePlaceholder": "z.B. Wertstoff, Biomüll..."
+      "namePlaceholder": "z.B. Wertstoff, Biomüll...",
+      "toastSuccess": "Müllart hinzugefügt!",
+      "toastError": "Fehler beim Hinzufügen der Müllart"
     },
     "step5": {
       "title": "Alles ist eingerichtet! 🎉",
       "description": "Dein Haushalt ist konfiguriert und bereit. Du kannst diese Einstellungen jederzeit ändern.",
-      "goToDashboard": "Zum Dashboard"
+      "goToDashboard": "Zum Dashboard",
+      "toastError": "Fehler beim Abschließen der Einrichtung",
+      "summaryAppliance": "Erstes Gerät erfasst ✓",
+      "summaryHeating": "Heizungstyp konfiguriert ✓",
+      "summaryWaste": "{count} Müllart(en) hinzugefügt ✓"
     },
     "next": "Weiter",
     "back": "Zurück",
     "skip": "Überspringen",
+    "saving": "Speichert...",
     "stepOf": "Schritt {current} von {total}"
   }
 }

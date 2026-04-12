@@ -181,10 +181,10 @@ export function OnboardingWizard({
           status: "protected",
         })
         setApplianceAdded(true)
-        toast.success("Appliance added!")
+        toast.success(t("step2.toastSuccess"))
         handleNext()
       } catch {
-        toast.error("Failed to add appliance")
+        toast.error(t("step2.toastError"))
       }
     })
   }
@@ -196,7 +196,7 @@ export function OnboardingWizard({
         setHeatingSaved(true)
         handleNext()
       } catch {
-        toast.error("Failed to save heating type")
+        toast.error(t("step3.toastError"))
       }
     })
   }
@@ -213,9 +213,9 @@ export function OnboardingWizard({
           { ...wasteForm, id: `wt-${Date.now()}` },
         ])
         setWasteForm({ name: "", color: "gray-500", icon: "Trash2" })
-        toast.success("Waste type added!")
+        toast.success(t("step4.toastSuccess"))
       } catch {
-        toast.error("Failed to add waste type")
+        toast.error(t("step4.toastError"))
       }
     })
   }
@@ -226,7 +226,7 @@ export function OnboardingWizard({
         await completeOnboarding()
         setVisible(false)
       } catch {
-        toast.error("Failed to complete setup")
+        toast.error(t("step5.toastError"))
       }
     })
   }
@@ -311,7 +311,7 @@ export function OnboardingWizard({
                 <div className="flex flex-col items-center justify-center py-8 gap-3">
                   <CheckCircle2 className="h-12 w-12 text-green-500" />
                   <p className="text-sm font-medium text-green-600">
-                    Appliance added successfully!
+                    {t("step2.addedSuccess")}
                   </p>
                 </div>
               ) : (
@@ -637,10 +637,10 @@ export function OnboardingWizard({
               </div>
               <div className="flex flex-col gap-1.5 w-full max-w-xs text-left">
                 {[
-                  applianceAdded && "First appliance tracked ✓",
-                  heatingSaved && "Heating type configured ✓",
+                  applianceAdded && t("step5.summaryAppliance"),
+                  heatingSaved && t("step5.summaryHeating"),
                   addedWasteTypes.length > 0 &&
-                    `${addedWasteTypes.length} waste type(s) added ✓`,
+                    t("step5.summaryWaste", { count: addedWasteTypes.length }),
                 ]
                   .filter(Boolean)
                   .map((item) => (
@@ -714,7 +714,7 @@ export function OnboardingWizard({
                   !applianceForm.warrantyEnd
                 }
               >
-                {isPending ? "Saving..." : t("next")}
+                {isPending ? t("saving") : t("next")}
                 <ChevronRight className="h-4 w-4 ml-1" />
               </Button>
             )}
@@ -730,7 +730,7 @@ export function OnboardingWizard({
                 onClick={handleSaveHeating}
                 disabled={isPending}
               >
-                {isPending ? "Saving..." : t("next")}
+                {isPending ? t("saving") : t("next")}
                 <ChevronRight className="h-4 w-4 ml-1" />
               </Button>
             )}
@@ -742,7 +742,7 @@ export function OnboardingWizard({
             )}
             {step === 5 && (
               <Button size="sm" onClick={handleFinish} disabled={isPending}>
-                {isPending ? "Saving..." : t("step5.goToDashboard")}
+                {isPending ? t("saving") : t("step5.goToDashboard")}
               </Button>
             )}
           </div>
