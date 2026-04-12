@@ -969,5 +969,174 @@
     "skip": "Skip",
     "saving": "Saving...",
     "stepOf": "Step {current} of {total}"
+  },
+  "Tutorial": {
+    "back": "Back",
+    "next": "Next",
+    "skip": "Skip tutorial",
+    "gotIt": "Got it!",
+    "stepOf": "{current} of {total}",
+    "vault": {
+      "step1": {
+        "title": "The Warranty & Box Vault",
+        "description": "Keep track of every appliance you own — from the dishwasher to the coffee machine.",
+        "feature1": "Record purchase dates and warranty expiry",
+        "feature2": "Store where you keep the original box",
+        "feature3": "Track appliance brand, category, and price"
+      },
+      "step2": {
+        "title": "Warranty Status at a Glance",
+        "description": "See instantly which appliances are still covered, which have run out, and which are in the danger zone.",
+        "feature1": "Protected: warranty still active",
+        "feature2": "Zombie: appliance past its warranty date"
+      },
+      "step3": {
+        "title": "Add Your First Appliance",
+        "description": "Hit 'New Entry' to add an appliance. Fill in the name, brand, purchase date, and warranty end date — and you're set."
+      }
+    },
+    "services": {
+      "step1": {
+        "title": "Your Service Provider Rolodex",
+        "description": "Store contact details for every plumber, electrician, or handyman you've ever worked with.",
+        "feature1": "Add phone, email, and website for each provider",
+        "feature2": "Rate providers by reliability",
+        "feature3": "Link invoices directly to providers"
+      },
+      "step2": {
+        "title": "Service History Log",
+        "description": "Log every repair and service call so you always know what was done and when.",
+        "feature1": "Record date, description, and cost",
+        "feature2": "Mark expenses as tax-deductible"
+      },
+      "step3": {
+        "title": "Invoice Management",
+        "description": "Upload and attach invoices to specific service calls. No more hunting through email for receipts."
+      }
+    },
+    "library": {
+      "step1": {
+        "title": "Your Home Knowledge Base",
+        "description": "Store important home documents, guides, and manuals in one searchable place.",
+        "feature1": "Upload PDFs and write Markdown notes",
+        "feature2": "Categorize by topic (Heating, Plumbing, etc.)",
+        "feature3": "Full-text search across all documents"
+      },
+      "step2": {
+        "title": "Find Any Document Instantly",
+        "description": "Search by title or filter by category to find exactly what you need when you need it.",
+        "feature1": "Filter by document type: PDF or note",
+        "feature2": "Preview documents without leaving the app"
+      }
+    },
+    "waste": {
+      "step1": {
+        "title": "Never Miss a Pickup",
+        "description": "Configure your local waste pickup schedule and always know what goes out this week.",
+        "feature1": "Add custom waste types (recycling, organic, etc.)",
+        "feature2": "Schedule recurring pickup dates",
+        "feature3": "See upcoming pickups on the calendar"
+      },
+      "step2": {
+        "title": "Dashboard Reminders",
+        "description": "The dashboard shows your next scheduled pickup so you never forget to take out the trash.",
+        "feature1": "Upcoming pickup shown on the dashboard",
+        "feature2": "Color-coded waste types for quick recognition"
+      }
+    },
+    "maintenance": {
+      "step1": {
+        "title": "Stay on Top of Home Maintenance",
+        "description": "Schedule and track all the recurring maintenance tasks your home needs to stay in shape.",
+        "feature1": "Set due dates and priority levels",
+        "feature2": "Mark tasks as complete when done",
+        "feature3": "Sort by date or priority"
+      },
+      "step2": {
+        "title": "Recurring Tasks Made Easy",
+        "description": "Set a recurring schedule (monthly, yearly, etc.) and the task will reappear automatically.",
+        "feature1": "Supports daily, weekly, monthly, and yearly schedules",
+        "feature2": "Never forget annual checks like smoke detectors or filter changes"
+      }
+    },
+    "utilities": {
+      "step1": {
+        "title": "Track Your Energy Usage",
+        "description": "Log monthly meter readings for electricity, water, and heating to monitor your household consumption.",
+        "feature1": "Enter readings for power, water, and heating",
+        "feature2": "Add cost per unit for accurate billing estimates",
+        "feature3": "Supports all major heating types"
+      },
+      "step2": {
+        "title": "Visualize Your Consumption",
+        "description": "Charts and history let you spot trends, compare months, and catch unusual spikes in usage.",
+        "feature1": "Monthly comparison charts",
+        "feature2": "Total cost summary per period"
+      }
+    },
+    "contracts": {
+      "step1": {
+        "title": "Subscription & Contract Central",
+        "description": "Keep an eye on every subscription, contract, and recurring cost so nothing slips through the cracks.",
+        "feature1": "Track monthly and yearly costs",
+        "feature2": "Mark trials to avoid auto-renewing unexpectedly",
+        "feature3": "Organize by category (utilities, entertainment, etc.)"
+      },
+      "step2": {
+        "title": "Spot the Dead Weight",
+        "description": "Subscriptions you haven't used in a while are highlighted so you can decide whether to cancel them.",
+        "feature1": "Log when you last used each service",
+        "feature2": "See next billing date to plan cancellations"
+      }
+    },
+    "wishlist": {
+      "step1": {
+        "title": "Plan Your Home Improvements",
+        "description": "Create projects for everything you want to do or buy for your home, and track your savings toward each goal.",
+        "feature1": "Set an estimated cost and track current savings",
+        "feature2": "Assign urgency levels from nice-to-have to emergency",
+        "feature3": "Categorize projects by type"
+      },
+      "step2": {
+        "title": "Watch Your Savings Grow",
+        "description": "Each project shows a progress bar so you can see at a glance how close you are to your goal.",
+        "feature1": "Visual progress bar per project",
+        "feature2": "Update savings whenever you set money aside"
+      }
+    },
+    "lending": {
+      "step1": {
+        "title": "The Lend-O-Meter",
+        "description": "Track everything you've lent to friends and family so you actually get it back.",
+        "feature1": "Record what you lent, to whom, and when",
+        "feature2": "Set an expected return date",
+        "feature3": "Assign a trust level to each borrower"
+      },
+      "step2": {
+        "title": "Know Who to Trust",
+        "description": "The trust level system helps you remember which borrowers reliably return things — and which don't.",
+        "feature1": "Trust levels from 1 (risky) to 5 (very reliable)",
+        "feature2": "Dashboard shows overdue items at a glance"
+      }
+    },
+    "documents": {
+      "step1": {
+        "title": "Identity Guard",
+        "description": "Keep all important personal documents organized so you always know when they expire and where they are.",
+        "feature1": "Store passports, IDs, and driver's licenses",
+        "feature2": "Track issue and expiry dates",
+        "feature3": "Record where the physical document is kept"
+      },
+      "step2": {
+        "title": "Expiry Alerts",
+        "description": "Documents nearing their expiry date are flagged automatically, giving you time to renew before it's too late.",
+        "feature1": "Color-coded expiry status (valid, expiring soon, expired)",
+        "feature2": "Manage documents for your whole household"
+      },
+      "step3": {
+        "title": "Emergency Preparedness",
+        "description": "Add emergency contacts and a lost/stolen guide for each document so you know exactly what to do if something goes missing."
+      }
+    }
   }
 }
