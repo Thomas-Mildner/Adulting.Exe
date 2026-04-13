@@ -969,5 +969,174 @@
     "skip": "Überspringen",
     "saving": "Speichert...",
     "stepOf": "Schritt {current} von {total}"
+  },
+  "Tutorial": {
+    "back": "Zurück",
+    "next": "Weiter",
+    "skip": "Tutorial überspringen",
+    "gotIt": "Verstanden!",
+    "stepOf": "{current} von {total}",
+    "vault": {
+      "step1": {
+        "title": "Der Garantie- & Box-Tresor",
+        "description": "Behalte den Überblick über alle deine Geräte – vom Geschirrspüler bis zur Kaffeemaschine.",
+        "feature1": "Kaufdatum und Garantieablauf erfassen",
+        "feature2": "Aufbewahrungsort der Originalverpackung speichern",
+        "feature3": "Marke, Kategorie und Preis des Geräts verfolgen"
+      },
+      "step2": {
+        "title": "Garantiestatus auf einen Blick",
+        "description": "Sieh sofort, welche Geräte noch abgesichert sind, welche abgelaufen sind und welche kurz davor stehen.",
+        "feature1": "Geschützt: Garantie noch aktiv",
+        "feature2": "Zombie: Gerät außerhalb der Garantiezeit"
+      },
+      "step3": {
+        "title": "Dein erstes Gerät hinzufügen",
+        "description": "Klicke auf 'Neuer Eintrag', fülle Name, Marke, Kaufdatum und Garantieende aus – fertig."
+      }
+    },
+    "services": {
+      "step1": {
+        "title": "Dein Dienstleister-Notizbuch",
+        "description": "Speichere Kontaktdaten für jeden Klempner, Elektriker oder Handwerker, mit dem du je zusammengearbeitet hast.",
+        "feature1": "Telefon, E-Mail und Website für jeden Anbieter",
+        "feature2": "Anbieter nach Zuverlässigkeit bewerten",
+        "feature3": "Rechnungen direkt mit Anbietern verknüpfen"
+      },
+      "step2": {
+        "title": "Servicehistorie",
+        "description": "Protokolliere jeden Reparatur- und Serviceeinsatz, damit du immer weißt, was wann gemacht wurde.",
+        "feature1": "Datum, Beschreibung und Kosten erfassen",
+        "feature2": "Ausgaben als steuerlich absetzbar markieren"
+      },
+      "step3": {
+        "title": "Rechnungsverwaltung",
+        "description": "Lade Rechnungen hoch und verknüpfe sie mit bestimmten Serviceeinsätzen. Kein langes Suchen in E-Mails mehr."
+      }
+    },
+    "library": {
+      "step1": {
+        "title": "Deine Heim-Wissensdatenbank",
+        "description": "Bewahre wichtige Hausdokumente, Anleitungen und Handbücher an einem durchsuchbaren Ort auf.",
+        "feature1": "PDFs hochladen und Markdown-Notizen erstellen",
+        "feature2": "Nach Thema kategorisieren (Heizung, Sanitär usw.)",
+        "feature3": "Volltextsuche über alle Dokumente"
+      },
+      "step2": {
+        "title": "Dokumente sofort finden",
+        "description": "Suche nach Titel oder filtere nach Kategorie, um genau das zu finden, was du brauchst.",
+        "feature1": "Nach Dokumenttyp filtern: PDF oder Notiz",
+        "feature2": "Vorschau von Dokumenten direkt in der App"
+      }
+    },
+    "waste": {
+      "step1": {
+        "title": "Keine Abholung mehr verpassen",
+        "description": "Konfiguriere deinen lokalen Abfallkalender und weiß immer, was diese Woche rausgestellt werden muss.",
+        "feature1": "Eigene Mülltypen hinzufügen (Wertstoff, Bio usw.)",
+        "feature2": "Wiederkehrende Abholtermine eintragen",
+        "feature3": "Bevorstehende Abholungen im Kalender sehen"
+      },
+      "step2": {
+        "title": "Erinnerungen im Dashboard",
+        "description": "Das Dashboard zeigt die nächste geplante Abholung an, damit du den Müll nie vergisst.",
+        "feature1": "Nächste Abholung direkt im Dashboard sichtbar",
+        "feature2": "Farbcodierte Mülltypen für schnelle Erkennung"
+      }
+    },
+    "maintenance": {
+      "step1": {
+        "title": "Wartung im Griff behalten",
+        "description": "Plane und verfolge alle wiederkehrenden Wartungsaufgaben, die dein Zuhause in Schuss halten.",
+        "feature1": "Fälligkeitsdaten und Prioritäten festlegen",
+        "feature2": "Aufgaben als erledigt markieren",
+        "feature3": "Nach Datum oder Priorität sortieren"
+      },
+      "step2": {
+        "title": "Wiederkehrende Aufgaben leicht gemacht",
+        "description": "Lege einen Wiederholungsrhythmus fest (monatlich, jährlich usw.) und die Aufgabe erscheint automatisch wieder.",
+        "feature1": "Täglich, wöchentlich, monatlich und jährlich möglich",
+        "feature2": "Vergiss nie wieder Jahresprüfungen wie Rauchmelder oder Filterwechsel"
+      }
+    },
+    "utilities": {
+      "step1": {
+        "title": "Energieverbrauch verfolgen",
+        "description": "Trage monatliche Zählerstände für Strom, Wasser und Heizung ein, um deinen Verbrauch zu überwachen.",
+        "feature1": "Werte für Strom, Wasser und Heizung eingeben",
+        "feature2": "Preis pro Einheit für genaue Kostenschätzung hinzufügen",
+        "feature3": "Unterstützt alle gängigen Heizungstypen"
+      },
+      "step2": {
+        "title": "Verbrauch visualisieren",
+        "description": "Diagramme und Verlaufsdaten helfen dir, Trends zu erkennen, Monate zu vergleichen und ungewöhnliche Spitzen zu entdecken.",
+        "feature1": "Monatliche Vergleichsdiagramme",
+        "feature2": "Gesamtkostenübersicht pro Zeitraum"
+      }
+    },
+    "contracts": {
+      "step1": {
+        "title": "Abos & Verträge im Überblick",
+        "description": "Behalte alle Abonnements, Verträge und laufenden Kosten im Blick, damit nichts durch die Maschen fällt.",
+        "feature1": "Monatliche und jährliche Kosten verfolgen",
+        "feature2": "Testphasen markieren, um unerwartete Verlängerungen zu vermeiden",
+        "feature3": "Nach Kategorie organisieren (Utilities, Entertainment usw.)"
+      },
+      "step2": {
+        "title": "Unnötige Ausgaben erkennen",
+        "description": "Abonnements, die du lange nicht genutzt hast, werden hervorgehoben, damit du entscheidest, ob du sie kündigen möchtest.",
+        "feature1": "Letztes Nutzungsdatum für jeden Dienst eintragen",
+        "feature2": "Nächstes Abrechnungsdatum für gezielte Kündigung sehen"
+      }
+    },
+    "wishlist": {
+      "step1": {
+        "title": "Heimverbesserungen planen",
+        "description": "Erstelle Projekte für alles, was du für dein Zuhause kaufen oder umsetzen möchtest, und verfolge deine Ersparnisse.",
+        "feature1": "Geschätzte Kosten und aktuelle Ersparnisse eintragen",
+        "feature2": "Dringlichkeitsstufen von nett-zu-haben bis Notfall",
+        "feature3": "Projekte nach Typ kategorisieren"
+      },
+      "step2": {
+        "title": "Beobachte, wie deine Ersparnisse wachsen",
+        "description": "Jedes Projekt zeigt einen Fortschrittsbalken, damit du auf einen Blick siehst, wie nah du deinem Ziel bist.",
+        "feature1": "Visueller Fortschrittsbalken pro Projekt",
+        "feature2": "Ersparnisse aktualisieren, wann immer du Geld zurücklegst"
+      }
+    },
+    "lending": {
+      "step1": {
+        "title": "Der Lend-O-Meter",
+        "description": "Behalte alles im Blick, was du Freunden und Familie geliehen hast, damit du es auch zurückbekommst.",
+        "feature1": "Was, an wen und wann verliehen erfassen",
+        "feature2": "Erwartetes Rückgabedatum festlegen",
+        "feature3": "Jedem Ausleiher ein Vertrauensniveau zuweisen"
+      },
+      "step2": {
+        "title": "Wem du vertraust",
+        "description": "Das Vertrauensniveau-System hilft dir, sich zu merken, welche Ausleiher zuverlässig zurückgeben – und welche nicht.",
+        "feature1": "Vertrauensstufen von 1 (riskant) bis 5 (sehr zuverlässig)",
+        "feature2": "Überfällige Gegenstände auf einen Blick im Dashboard"
+      }
+    },
+    "documents": {
+      "step1": {
+        "title": "Identitätsschutz",
+        "description": "Halte alle wichtigen persönlichen Dokumente organisiert, damit du immer weißt, wann sie ablaufen und wo sie sind.",
+        "feature1": "Reisepässe, Ausweise und Führerscheine speichern",
+        "feature2": "Ausstellungs- und Ablaufdaten verfolgen",
+        "feature3": "Aufbewahrungsort des physischen Dokuments vermerken"
+      },
+      "step2": {
+        "title": "Ablaufwarnungen",
+        "description": "Dokumente, die bald ablaufen, werden automatisch markiert, damit du rechtzeitig verlängern kannst.",
+        "feature1": "Farbcodierter Ablaufstatus (gültig, läuft bald ab, abgelaufen)",
+        "feature2": "Dokumente für den gesamten Haushalt verwalten"
+      },
+      "step3": {
+        "title": "Notfallvorbereitung",
+        "description": "Füge Notfallkontakte und einen Verlust-/Diebstahlleitfaden für jedes Dokument hinzu, damit du weißt, was im Ernstfall zu tun ist."
+      }
+    }
   }
 }

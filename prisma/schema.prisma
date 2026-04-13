@@ -177,6 +177,7 @@ model AppConfig {
   heatingType              String   @default("Gas") // "Gas", "Oil", "Fernwärme", "Wärmepumpe", "Pellets"
   onboardingCompleted  Boolean  @default(false)
   disabledModules String[] @default([]) // Module keys that are hidden from the sidebar
+  tutorialCompletedModules String[] @default([]) // Module keys whose tutorial has been seen
 
   updatedAt DateTime @updatedAt
 }
