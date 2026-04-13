@@ -710,6 +710,15 @@ export async function updateDisabledModules(modules: string[]) {
   revalidatePath("/")
 }
 
+export async function completeTutorial(moduleKey: string) {
+  const config = await getAppConfig()
+  const updated = Array.from(new Set([...config.tutorialCompletedModules, moduleKey]))
+  await prisma.appConfig.update({
+    where: { id: "default" },
+    data: { tutorialCompletedModules: updated },
+  })
+}
+
 
 
 export async function generateCancellationLetter(id: string): Promise<string> {
