@@ -1,3 +1,10 @@
+# [1.8.0-rc.13](https://github.com/Thomas-Mildner/Adulting.Exe/compare/v1.8.0-rc.12...v1.8.0-rc.13) (2026-04-13)
+
+
+### Features
+
+* add tutorial wizard for each module shown on first visit ([83c2c97](https://github.com/Thomas-Mildner/Adulting.Exe/commit/83c2c97c8cd2001004db9a210f804406876da251))
+
 # [1.8.0-rc.12](https://github.com/Thomas-Mildner/Adulting.Exe/compare/v1.8.0-rc.11...v1.8.0-rc.12) (2026-04-12)
 
 
