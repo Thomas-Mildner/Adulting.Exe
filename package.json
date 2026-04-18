@@ -1,6 +1,6 @@
 {
   "name": "adulting-exe",
-  "version": "1.8.0-rc.14",
+  "version": "1.8.0-rc.15",
   "packageManager": "pnpm@9.15.9",
   "private": true,
   "author": {
