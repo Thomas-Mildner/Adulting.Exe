@@ -1,3 +1,11 @@
+# [1.8.0-rc.15](https://github.com/Thomas-Mildner/Adulting.Exe/compare/v1.8.0-rc.14...v1.8.0-rc.15) (2026-04-18)
+
+
+### Bug Fixes
+
+* **ci:** remove packageManager field from package.json ([da9373e](https://github.com/Thomas-Mildner/Adulting.Exe/commit/da9373e35c1e4bc4e8e13d4c0910f96d125f8533))
+* pin pnpm version to 9.15.9 to prevent lockfile compatibility issues ([c0e3cd3](https://github.com/Thomas-Mildner/Adulting.Exe/commit/c0e3cd3ff7e88d95cee876824cd57d38adb8d4c7))
+
 # [1.8.0-rc.14](https://github.com/Thomas-Mildner/Adulting.Exe/compare/v1.8.0-rc.13...v1.8.0-rc.14) (2026-04-18)
 
 
