@@ -1,55 +1,70 @@
-# Build stage
-FROM node:lts-alpine AS builder
+# ---- Base ----
+FROM node:22-alpine AS base
 
-RUN npm install -g pnpm
+# Use corepack (built into Node) instead of global npm install
+RUN corepack enable
 
+# ---- Dependencies ----
+FROM base AS deps
 WORKDIR /app
-
-# Accept version as build argument
-ARG APP_VERSION=development
-ENV NEXT_PUBLIC_APP_VERSION=$APP_VERSION
 
 COPY package.json pnpm-lock.yaml ./
 
-# Install dependencies (ignore scripts to avoid premature prisma generate)
-RUN pnpm install --no-frozen-lockfile --ignore-scripts
-
+# Frozen lockfile ensures reproducible builds
+RUN pnpm install --frozen-lockfile --ignore-scripts
 
 COPY prisma ./prisma
 RUN pnpm db:generate
 
+# ---- Builder ----
+FROM base AS builder
+WORKDIR /app
+
+ARG APP_VERSION=development
+ENV NEXT_PUBLIC_APP_VERSION=$APP_VERSION
+
+COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
 RUN pnpm build
 
-# Production stage
-FROM node:lts-alpine AS runner
-
-RUN npm install -g pnpm
-
+# ---- Runner ----
+FROM node:22-alpine AS runner
 WORKDIR /app
 
-# Set production environment
 ENV NODE_ENV=production
 
-# Copy version from builder
 ARG APP_VERSION=development
 ENV NEXT_PUBLIC_APP_VERSION=$APP_VERSION
 
-# Copy dependencies (including generated Prisma Client) from builder
-COPY --from=builder /app/node_modules ./node_modules
+# Non-root user for security
+RUN addgroup --system --gid 1001 nodejs && \
+    adduser --system --uid 1001 nextjs
 
-# Copy built application, config, and prisma schema from builder
-COPY --from=builder /app/.next ./.next
+# Public assets (cacheable, no sensitive data)
 COPY --from=builder /app/public ./public
-COPY --from=builder /app/next.config.mjs ./
-COPY --from=builder /app/package.json ./
-COPY --from=builder /app/prisma ./prisma
 
-# Create entrypoint script that deploys migrations then starts the app
-RUN printf '#!/bin/sh\nset -e\necho "Deploying database migrations..."\npnpm exec prisma migrate deploy\necho "Starting application..."\nexec pnpm start\n' > /app/entrypoint.sh \
+# Standalone server + static files
+COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+
+# Prisma schema + CLI for migrations
+COPY --from=builder /app/prisma ./prisma
+COPY --from=builder /app/node_modules/prisma ./node_modules/prisma
+COPY --from=builder /app/node_modules/@prisma ./node_modules/@prisma
+
+# Entrypoint: run migrations then start
+RUN printf '#!/bin/sh\nset -e\necho "Deploying database migrations..."\nnode ./node_modules/prisma/build/index.js migrate deploy\necho "Starting application..."\nexec node server.js\n' > /app/entrypoint.sh \
     && chmod +x /app/entrypoint.sh
 
+# Drop privileges
+USER nextjs
+
 EXPOSE 3000
+ENV PORT=3000
+ENV HOSTNAME="0.0.0.0"
+
+HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
+    CMD wget --no-verbose --tries=1 --spider http://localhost:3000/ || exit 1
 
 ENTRYPOINT ["/app/entrypoint.sh"]
