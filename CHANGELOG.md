@@ -1,3 +1,10 @@
+# [1.8.0-rc.14](https://github.com/Thomas-Mildner/Adulting.Exe/compare/v1.8.0-rc.13...v1.8.0-rc.14) (2026-04-18)
+
+
+### Features
+
+* update Dockerfile for standalone output and adjust .dockerignore; fix import path in next-env.d.ts ([14048bf](https://github.com/Thomas-Mildner/Adulting.Exe/commit/14048bf4e834c0300676f8c01b107f898abe2a9a))
+
 # [1.8.0-rc.13](https://github.com/Thomas-Mildner/Adulting.Exe/compare/v1.8.0-rc.12...v1.8.0-rc.13) (2026-04-13)
 
 
