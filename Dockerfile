@@ -8,7 +8,7 @@ RUN corepack enable
 FROM base AS deps
 WORKDIR /app
 
-COPY package.json pnpm-lock.yaml ./
+COPY package.json pnpm-lock.yaml .npmrc ./
 
 # Frozen lockfile ensures reproducible builds
 RUN pnpm install --frozen-lockfile --ignore-scripts
@@ -49,12 +49,15 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
 # Prisma schema + CLI for migrations
-COPY --from=builder /app/prisma ./prisma
-COPY --from=builder /app/node_modules/prisma ./node_modules/prisma
-COPY --from=builder /app/node_modules/@prisma ./node_modules/@prisma
+COPY --from=deps /app/prisma ./prisma
+COPY --from=deps /app/node_modules/.pnpm ./node_modules/.pnpm
+COPY --from=deps /app/node_modules/.bin ./node_modules/.bin
+COPY --from=deps /app/node_modules/.modules.yaml ./node_modules/.modules.yaml
+COPY --from=deps /app/node_modules/prisma ./node_modules/prisma
+COPY --from=deps /app/node_modules/@prisma ./node_modules/@prisma
 
 # Entrypoint: run migrations then start
-RUN printf '#!/bin/sh\nset -e\necho "Deploying database migrations..."\nnode ./node_modules/prisma/build/index.js migrate deploy\necho "Starting application..."\nexec node server.js\n' > /app/entrypoint.sh \
+RUN printf '#!/bin/sh\nset -e\necho "Deploying database migrations..."\n./node_modules/.bin/prisma migrate deploy\necho "Starting application..."\nexec node server.js\n' > /app/entrypoint.sh \
     && chmod +x /app/entrypoint.sh
 
 # Drop privileges
