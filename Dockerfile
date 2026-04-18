@@ -2,7 +2,7 @@
 FROM node:22-alpine AS base
 
 # Use corepack (built into Node) instead of global npm install
-RUN corepack enable
+RUN corepack enable && corepack prepare pnpm@9.15.9 --activate
 
 # ---- Dependencies ----
 FROM base AS deps
