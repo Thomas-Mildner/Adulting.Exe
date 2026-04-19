@@ -28,6 +28,13 @@ COPY . .
 
 RUN pnpm build
 
+# ---- Prisma CLI ----
+FROM base AS prisma-cli
+WORKDIR /prisma-cli
+
+RUN printf '{"name":"prisma-cli","private":true}' > package.json \
+    && pnpm add prisma@6.19.3
+
 # ---- Runner ----
 FROM node:22-alpine AS runner
 WORKDIR /app
@@ -49,15 +56,11 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
 # Prisma schema + CLI for migrations
-COPY --from=deps /app/prisma ./prisma
-COPY --from=deps /app/node_modules/.pnpm ./node_modules/.pnpm
-COPY --from=deps /app/node_modules/.bin ./node_modules/.bin
-COPY --from=deps /app/node_modules/.modules.yaml ./node_modules/.modules.yaml
-COPY --from=deps /app/node_modules/prisma ./node_modules/prisma
-COPY --from=deps /app/node_modules/@prisma ./node_modules/@prisma
+COPY --from=builder --chown=nextjs:nodejs /app/prisma ./prisma
+COPY --from=prisma-cli --chown=nextjs:nodejs /prisma-cli/node_modules /prisma-cli/node_modules
 
 # Entrypoint: run migrations then start
-RUN printf '#!/bin/sh\nset -e\necho "Deploying database migrations..."\n./node_modules/.bin/prisma migrate deploy\necho "Starting application..."\nexec node server.js\n' > /app/entrypoint.sh \
+RUN printf '#!/bin/sh\nset -e\necho "Deploying database migrations..."\nnode /prisma-cli/node_modules/prisma/build/index.js migrate deploy\necho "Starting application..."\nexec node server.js\n' > /app/entrypoint.sh \
     && chmod +x /app/entrypoint.sh
 
 # Drop privileges
