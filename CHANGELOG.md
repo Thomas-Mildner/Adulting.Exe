@@ -1,3 +1,10 @@
+# [1.8.0-rc.17](https://github.com/Thomas-Mildner/Adulting.Exe/compare/v1.8.0-rc.16...v1.8.0-rc.17) (2026-04-19)
+
+
+### Bug Fixes
+
+* **docker:** improved dockerfile size ([b40da2a](https://github.com/Thomas-Mildner/Adulting.Exe/commit/b40da2acc042b9f25f97df5f21c849f559713b1c))
+
 # [1.8.0-rc.16](https://github.com/Thomas-Mildner/Adulting.Exe/compare/v1.8.0-rc.15...v1.8.0-rc.16) (2026-04-18)
 
 
