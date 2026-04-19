@@ -1,3 +1,11 @@
+# [1.8.0-rc.16](https://github.com/Thomas-Mildner/Adulting.Exe/compare/v1.8.0-rc.15...v1.8.0-rc.16) (2026-04-18)
+
+
+### Bug Fixes
+
+* **docker:** enable corepack and prepare pnpm in Dockerfile ([6ac2fc3](https://github.com/Thomas-Mildner/Adulting.Exe/commit/6ac2fc3195378b5fa0701a2b91bcc164ffbb71fd))
+* **workflows:** remove version specification for pnpm installation ([9f230d2](https://github.com/Thomas-Mildner/Adulting.Exe/commit/9f230d284b200fa48c71cda4cc463c24b3953db2))
+
 # [1.8.0-rc.15](https://github.com/Thomas-Mildner/Adulting.Exe/compare/v1.8.0-rc.14...v1.8.0-rc.15) (2026-04-18)
 
 
