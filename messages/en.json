@@ -317,7 +317,16 @@
       "warrantyEnd": "Warranty Until",
       "boxLocation": "Box Location",
       "boxLocationPlaceholder": "e.g. Shelf A3, Basement Box 2...",
-      "status": "Status"
+      "status": "Status",
+      "receipt": "Receipt / Image",
+      "receiptUpload": "Upload file or take photo",
+      "receiptDragDrop": "Drag & drop a file, or click to browse",
+      "receiptCamera": "Take Photo",
+      "receiptFile": "Upload File",
+      "receiptPreview": "Receipt preview",
+      "receiptRemove": "Remove",
+      "receiptUploading": "Uploading...",
+      "receiptError": "Upload failed. Please try again."
     },
     "card": {
       "warranty": "Warranty",

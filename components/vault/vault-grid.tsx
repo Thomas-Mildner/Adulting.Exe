@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Progress } from "@/components/ui/progress"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import {
   Dialog,
   DialogContent,
@@ -25,7 +25,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { Search, MapPin, Plus, Pencil, Trash2 } from "lucide-react"
+import { Search, MapPin, Plus, Pencil, Trash2, Upload, Camera, X, FileText, Image as ImageIcon } from "lucide-react"
 import {
   getDaysRemaining,
   getWarrantyPercent,
@@ -33,7 +33,7 @@ import {
   type Appliance,
 } from "@/lib/data"
 import { createAppliance, updateAppliance, deleteAppliance } from "@/lib/actions"
-import { useMemo, useState, useTransition } from "react"
+import { useMemo, useState, useTransition, useRef } from "react"
 
 // Status config moved inside components for translation
 
@@ -57,6 +57,7 @@ type FormData = {
   status: Appliance["status"]
   brand: string
   price: number
+  receiptPath?: string
 }
 
 const emptyForm: FormData = {
@@ -68,6 +69,149 @@ const emptyForm: FormData = {
   status: "protected",
   brand: "",
   price: 0,
+  receiptPath: undefined,
+}
+
+function ReceiptUpload({
+  value,
+  onChange,
+}: {
+  value?: string
+  onChange: (path: string | undefined) => void
+}) {
+  const t = useTranslations("Vault")
+  const fileInputRef = useRef<HTMLInputElement>(null)
+  const cameraInputRef = useRef<HTMLInputElement>(null)
+  const [isUploading, setIsUploading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+
+  async function handleFile(file: File) {
+    setIsUploading(true)
+    setError(null)
+    try {
+      const fd = new FormData()
+      fd.append("file", file)
+      const res = await fetch("/api/upload", { method: "POST", body: fd })
+      if (!res.ok) {
+        const body = await res.json()
+        setError(body.error ?? t("fields.receiptError"))
+        return
+      }
+      const { path } = await res.json()
+      onChange(path)
+    } catch {
+      setError(t("fields.receiptError"))
+    } finally {
+      setIsUploading(false)
+    }
+  }
+
+  function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0]
+    if (file) handleFile(file)
+    // reset so same file can be re-selected
+    e.target.value = ""
+  }
+
+  const isPdf = value?.toLowerCase().endsWith(".pdf")
+  const isImage = value && !isPdf
+
+  return (
+    <div className="grid gap-2">
+      <Label>{t("fields.receipt")}</Label>
+
+      {value ? (
+        <div className="relative rounded-md border bg-muted/30 p-2">
+          {isImage ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={value}
+              alt={t("fields.receiptPreview")}
+              className="max-h-40 w-full rounded object-contain"
+            />
+          ) : (
+            <div className="flex items-center gap-2 py-2 px-1 text-sm text-muted-foreground">
+              <FileText className="h-5 w-5 shrink-0" />
+              <span className="truncate">{value.split("/").pop()}</span>
+            </div>
+          )}
+          <Button
+            type="button"
+            variant="ghost"
+            size="icon"
+            className="absolute right-1 top-1 h-6 w-6 rounded-full bg-background/80 hover:bg-destructive/10 hover:text-destructive"
+            onClick={() => onChange(undefined)}
+            aria-label={t("fields.receiptRemove")}
+          >
+            <X className="h-3.5 w-3.5" />
+          </Button>
+        </div>
+      ) : (
+        <div
+          className="flex flex-col items-center justify-center gap-3 rounded-md border-2 border-dashed border-border bg-muted/20 px-4 py-5 text-center transition-colors hover:border-primary/50 hover:bg-muted/40 cursor-pointer"
+          onClick={() => fileInputRef.current?.click()}
+          onDragOver={(e) => e.preventDefault()}
+          onDrop={(e) => {
+            e.preventDefault()
+            const file = e.dataTransfer.files?.[0]
+            if (file) handleFile(file)
+          }}
+        >
+          {isUploading ? (
+            <p className="text-xs text-muted-foreground">{t("fields.receiptUploading")}</p>
+          ) : (
+            <>
+              <Upload className="h-6 w-6 text-muted-foreground" />
+              <p className="text-xs text-muted-foreground">
+                {t("fields.receiptDragDrop")}
+              </p>
+              <div className="flex gap-2">
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  className="gap-1.5 text-xs"
+                  onClick={(e) => { e.stopPropagation(); fileInputRef.current?.click() }}
+                >
+                  <ImageIcon className="h-3.5 w-3.5" />
+                  {t("fields.receiptFile")}
+                </Button>
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  className="gap-1.5 text-xs"
+                  onClick={(e) => { e.stopPropagation(); cameraInputRef.current?.click() }}
+                >
+                  <Camera className="h-3.5 w-3.5" />
+                  {t("fields.receiptCamera")}
+                </Button>
+              </div>
+            </>
+          )}
+        </div>
+      )}
+
+      {error && <p className="text-xs text-destructive">{error}</p>}
+
+      {/* Hidden file inputs */}
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept="image/jpeg,image/png,image/webp,image/gif,application/pdf"
+        className="hidden"
+        onChange={handleInputChange}
+      />
+      <input
+        ref={cameraInputRef}
+        type="file"
+        accept="image/*"
+        capture="environment"
+        className="hidden"
+        onChange={handleInputChange}
+      />
+    </div>
+  )
 }
 
 function ApplianceFormFields({
@@ -202,6 +346,10 @@ function ApplianceFormFields({
           </div>
         </div>
       </div>
+      <ReceiptUpload
+        value={form.receiptPath}
+        onChange={(path) => setForm((p) => ({ ...p, receiptPath: path }))}
+      />
     </div>
   )
 }
@@ -273,6 +421,7 @@ export function VaultGrid({ appliances }: { appliances: Appliance[] }) {
       status: item.status,
       brand: item.brand,
       price: item.price,
+      receiptPath: item.receiptPath,
     })
     setEditOpen(true)
   }
@@ -339,7 +488,7 @@ export function VaultGrid({ appliances }: { appliances: Appliance[] }) {
               {t("create.button")}
             </Button>
           </DialogTrigger>
-          <DialogContent className="sm:max-w-[520px]">
+          <DialogContent className="sm:max-w-[540px] max-h-[90vh] overflow-y-auto">
             <form onSubmit={handleCreate}>
               <DialogHeader>
                 <DialogTitle>{t("create.title")}</DialogTitle>
@@ -444,6 +593,17 @@ export function VaultGrid({ appliances }: { appliances: Appliance[] }) {
                       </span>
                     </div>
                     <div className="flex items-center gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity">
+                      {item.receiptPath && (
+                        <a
+                          href={item.receiptPath}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center justify-center h-6 w-6 rounded-sm text-muted-foreground hover:text-foreground transition-colors"
+                          title={t("fields.receiptPreview")}
+                        >
+                          <FileText className="h-3 w-3" />
+                        </a>
+                      )}
                       <QRCodeDialog id={item.id} name={item.name} />
                       <Button
                         variant="ghost"
@@ -478,7 +638,7 @@ export function VaultGrid({ appliances }: { appliances: Appliance[] }) {
           if (!v) setEditId(null)
         }}
       >
-        <DialogContent className="sm:max-w-[520px]">
+        <DialogContent className="sm:max-w-[540px] max-h-[90vh] overflow-y-auto">
           <form onSubmit={handleEdit}>
             <DialogHeader>
               <DialogTitle>{t("edit.title")}</DialogTitle>
