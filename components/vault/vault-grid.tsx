@@ -115,24 +115,27 @@ function ReceiptUpload({
 
   const isPdf = value?.toLowerCase().endsWith(".pdf")
   const isImage = value && !isPdf
+  // Only allow paths from our own uploads directory to prevent XSS
+  const isSafePath = (v: string) => /^\/uploads\/vault\/[a-zA-Z0-9_-]+\.[a-zA-Z]{3,4}$/.test(v)
+  const safeSrc = value && isSafePath(value) ? value : undefined
 
   return (
     <div className="grid gap-2">
       <Label>{t("fields.receipt")}</Label>
 
-      {value ? (
+      {safeSrc ? (
         <div className="relative rounded-md border bg-muted/30 p-2">
           {isImage ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img
-              src={value}
+              src={safeSrc}
               alt={t("fields.receiptPreview")}
               className="max-h-40 w-full rounded object-contain"
             />
           ) : (
             <div className="flex items-center gap-2 py-2 px-1 text-sm text-muted-foreground">
               <FileText className="h-5 w-5 shrink-0" />
-              <span className="truncate">{value.split("/").pop()}</span>
+              <span className="truncate">{safeSrc.split("/").pop()}</span>
             </div>
           )}
           <Button
@@ -593,7 +596,7 @@ export function VaultGrid({ appliances }: { appliances: Appliance[] }) {
                       </span>
                     </div>
                     <div className="flex items-center gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity">
-                      {item.receiptPath && (
+                      {item.receiptPath && /^\/uploads\/vault\/[a-zA-Z0-9_-]+\.[a-zA-Z]{3,4}$/.test(item.receiptPath) && (
                         <a
                           href={item.receiptPath}
                           target="_blank"
