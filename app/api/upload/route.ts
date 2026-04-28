@@ -1,16 +1,23 @@
 import { NextRequest, NextResponse } from "next/server"
 import { writeFile, mkdir } from "fs/promises"
 import path from "path"
+import { randomUUID } from "crypto"
 
-const ALLOWED_TYPES = [
-  "image/jpeg",
-  "image/png",
-  "image/webp",
-  "image/gif",
-  "application/pdf",
-]
+const ALLOWED_TYPES: Record<string, { ext: string; magic: number[][] }> = {
+  "image/jpeg": { ext: ".jpg", magic: [[0xff, 0xd8, 0xff]] },
+  "image/png": { ext: ".png", magic: [[0x89, 0x50, 0x4e, 0x47]] },
+  "image/webp": { ext: ".webp", magic: [[0x52, 0x49, 0x46, 0x46]] },
+  "image/gif": { ext: ".gif", magic: [[0x47, 0x49, 0x46, 0x38]] },
+  "application/pdf": { ext: ".pdf", magic: [[0x25, 0x50, 0x44, 0x46]] },
+}
 
 const MAX_SIZE_BYTES = 10 * 1024 * 1024 // 10 MB
+
+function matchesMagicBytes(buffer: Buffer, signatures: number[][]): boolean {
+  return signatures.some((sig) =>
+    sig.every((byte, i) => buffer[i] === byte)
+  )
+}
 
 export async function POST(request: NextRequest) {
   try {
@@ -21,7 +28,8 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "No file provided" }, { status: 400 })
     }
 
-    if (!ALLOWED_TYPES.includes(file.type)) {
+    const typeConfig = ALLOWED_TYPES[file.type]
+    if (!typeConfig) {
       return NextResponse.json(
         { error: "Invalid file type. Only images (JPEG, PNG, WebP, GIF) and PDFs are allowed." },
         { status: 400 }
@@ -38,11 +46,16 @@ export async function POST(request: NextRequest) {
     const bytes = await file.arrayBuffer()
     const buffer = Buffer.from(bytes)
 
-    // Sanitize filename to avoid path traversal
-    const originalName = file.name.replace(/[^a-zA-Z0-9._-]/g, "_")
-    const ext = path.extname(originalName)
-    const baseName = path.basename(originalName, ext)
-    const uniqueName = `${baseName}_${Date.now()}${ext}`
+    // Verify file contents match declared MIME type via magic bytes
+    if (!matchesMagicBytes(buffer, typeConfig.magic)) {
+      return NextResponse.json(
+        { error: "File content does not match declared type." },
+        { status: 400 }
+      )
+    }
+
+    // Use UUID for filename to avoid collisions and path traversal
+    const uniqueName = `${randomUUID()}${typeConfig.ext}`
 
     const uploadDir = path.join(process.cwd(), "public", "uploads", "vault")
     await mkdir(uploadDir, { recursive: true })
