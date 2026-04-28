@@ -35,6 +35,13 @@ import {
 import { createAppliance, updateAppliance, deleteAppliance } from "@/lib/actions"
 import { useMemo, useState, useTransition, useRef } from "react"
 
+// Only allow paths from our own uploads directory to prevent XSS
+const SAFE_RECEIPT_PATH = /^\/uploads\/vault\/[a-zA-Z0-9_-]+\.[a-zA-Z]{3,4}$/
+
+function isSafeReceiptPath(v: string): boolean {
+  return SAFE_RECEIPT_PATH.test(v)
+}
+
 // Status config moved inside components for translation
 
 const categories = [
@@ -115,9 +122,7 @@ function ReceiptUpload({
 
   const isPdf = value?.toLowerCase().endsWith(".pdf")
   const isImage = value && !isPdf
-  // Only allow paths from our own uploads directory to prevent XSS
-  const isSafePath = (v: string) => /^\/uploads\/vault\/[a-zA-Z0-9_-]+\.[a-zA-Z]{3,4}$/.test(v)
-  const safeSrc = value && isSafePath(value) ? value : undefined
+  const safeSrc = value && isSafeReceiptPath(value) ? value : undefined
 
   return (
     <div className="grid gap-2">
@@ -133,7 +138,7 @@ function ReceiptUpload({
               className="max-h-40 w-full rounded object-contain"
             />
           ) : (
-            <div className="flex items-center gap-2 py-2 px-1 text-sm text-muted-foreground">
+            <div className="flex items-center gap-2 py-2 px-2 text-sm text-muted-foreground">
               <FileText className="h-5 w-5 shrink-0" />
               <span className="truncate">{safeSrc.split("/").pop()}</span>
             </div>
@@ -596,7 +601,7 @@ export function VaultGrid({ appliances }: { appliances: Appliance[] }) {
                       </span>
                     </div>
                     <div className="flex items-center gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity">
-                      {item.receiptPath && /^\/uploads\/vault\/[a-zA-Z0-9_-]+\.[a-zA-Z]{3,4}$/.test(item.receiptPath) && (
+                      {item.receiptPath && isSafeReceiptPath(item.receiptPath) && (
                         <a
                           href={item.receiptPath}
                           target="_blank"
