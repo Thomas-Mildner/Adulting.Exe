@@ -1,3 +1,15 @@
+# [1.8.0-rc.18](https://github.com/Thomas-Mildner/Adulting.Exe/compare/v1.8.0-rc.17...v1.8.0-rc.18) (2026-04-28)
+
+
+### Bug Fixes
+
+* address security review - UUID filenames, magic byte validation, safe path checks ([9bac703](https://github.com/Thomas-Mildner/Adulting.Exe/commit/9bac7032c2fe250e56dd13e3e75713a460614a14))
+
+
+### Features
+
+* **vault:** add file upload and camera capture for vault entries ([4bf98e6](https://github.com/Thomas-Mildner/Adulting.Exe/commit/4bf98e617e59a5aee4ea2f75257a0f4172db6b88))
+
 # [1.8.0-rc.17](https://github.com/Thomas-Mildner/Adulting.Exe/compare/v1.8.0-rc.16...v1.8.0-rc.17) (2026-04-19)
 
 
