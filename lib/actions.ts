@@ -58,6 +58,7 @@ export async function getAppliances(): Promise<Appliance[]> {
     status: r.status as Appliance["status"],
     brand: r.brand,
     price: r.price,
+    receiptPath: r.receiptPath || undefined,
   }))
 }
 
@@ -74,6 +75,7 @@ export async function getAppliance(id: string): Promise<Appliance | null> {
     status: r.status as Appliance["status"],
     brand: r.brand,
     price: r.price,
+    receiptPath: r.receiptPath || undefined,
   }
 }
 
@@ -88,6 +90,7 @@ export async function createAppliance(data: Omit<Appliance, "id">) {
       status: data.status,
       brand: data.brand,
       price: data.price,
+      receiptPath: data.receiptPath ?? null,
     },
   })
   revalidatePath("/vault")
@@ -106,6 +109,7 @@ export async function updateAppliance(id: string, data: Partial<Omit<Appliance, 
       ...(data.status !== undefined && { status: data.status }),
       ...(data.brand !== undefined && { brand: data.brand }),
       ...(data.price !== undefined && { price: data.price }),
+      ...("receiptPath" in data && { receiptPath: data.receiptPath ?? null }),
     },
   })
   revalidatePath("/vault")
