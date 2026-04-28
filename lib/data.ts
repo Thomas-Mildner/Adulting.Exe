@@ -10,6 +10,7 @@ export type Appliance = {
   status: "protected" | "solo" | "zombie"
   brand: string
   price: number
+  receiptPath?: string
 }
 
 export type ServiceHistory = {

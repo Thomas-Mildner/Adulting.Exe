@@ -317,7 +317,16 @@
       "warrantyEnd": "Garantie bis",
       "boxLocation": "Aufbewahrungsort",
       "boxLocationPlaceholder": "z.B. Regal A3, Keller Box 2...",
-      "status": "Status"
+      "status": "Status",
+      "receipt": "Quittung / Bild",
+      "receiptUpload": "Datei hochladen oder Foto aufnehmen",
+      "receiptDragDrop": "Datei hierher ziehen oder klicken zum Durchsuchen",
+      "receiptCamera": "Foto aufnehmen",
+      "receiptFile": "Datei hochladen",
+      "receiptPreview": "Quittungsvorschau",
+      "receiptRemove": "Entfernen",
+      "receiptUploading": "Wird hochgeladen...",
+      "receiptError": "Upload fehlgeschlagen. Bitte erneut versuchen."
     },
     "card": {
       "warranty": "Garantie",

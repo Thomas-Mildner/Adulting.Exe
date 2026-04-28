@@ -19,6 +19,7 @@ model Appliance {
   status       String   // "protected" | "solo" | "zombie"
   brand        String
   price        Float
+  receiptPath  String?  // optional path to uploaded receipt/image
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
