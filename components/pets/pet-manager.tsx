@@ -63,6 +63,14 @@ import {
 
 const SPECIES = ["Dog", "Cat", "Bird", "Rabbit", "Fish", "Other"] as const
 
+// ─── Overdue helper ──────────────────────────────────────────────────────
+function isVaccinationOverdue(nextDueDate: string | undefined): boolean {
+  if (!nextDueDate) return false
+  const today = new Date()
+  today.setHours(0, 0, 0, 0)
+  return new Date(nextDueDate) < today
+}
+
 // ─── Species emoji helper ────────────────────────────────────────────────
 function speciesEmoji(species: string) {
   switch (species) {
@@ -133,9 +141,9 @@ function PetFormFields({
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              {SPECIES.map((s) => (
-                <SelectItem key={s} value={s}>
-                  {speciesEmoji(s)} {t(`species.${s.toLowerCase()}`)}
+              {SPECIES.map((species) => (
+                <SelectItem key={species} value={species}>
+                  {speciesEmoji(species)} {t(`species.${species.toLowerCase()}`)}
                 </SelectItem>
               ))}
             </SelectContent>
@@ -958,7 +966,7 @@ function PetDetail({
                     </TableRow>
                   ) : (
                     petVaccinations.map((vacc) => {
-                      const isDue = vacc.nextDueDate && new Date(vacc.nextDueDate) < new Date(new Date().setHours(0, 0, 0, 0))
+                      const isDue = isVaccinationOverdue(vacc.nextDueDate)
                       return (
                         <TableRow key={vacc.id}>
                           <TableCell className="text-sm font-medium">{vacc.name}</TableCell>
@@ -1231,7 +1239,7 @@ export function PetManager({
   const totalVetRecords = vetRecords.length
   const totalVaccinations = vaccinations.length
   const overdueVaccinations = vaccinations.filter(
-    (v) => v.nextDueDate && new Date(v.nextDueDate) < new Date(new Date().setHours(0, 0, 0, 0))
+    (v) => isVaccinationOverdue(v.nextDueDate)
   ).length
 
   return (
@@ -1325,7 +1333,7 @@ export function PetManager({
                 const petVetCount = vetRecords.filter((r) => r.petId === pet.id).length
                 const petVaccCount = vaccinations.filter((v) => v.petId === pet.id).length
                 const overdueVacc = vaccinations.filter(
-                  (v) => v.petId === pet.id && v.nextDueDate && new Date(v.nextDueDate) < new Date(new Date().setHours(0, 0, 0, 0))
+                  (v) => v.petId === pet.id && isVaccinationOverdue(v.nextDueDate)
                 ).length
 
                 return (
