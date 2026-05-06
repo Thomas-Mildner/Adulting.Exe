@@ -698,7 +698,7 @@ function PetDetail({
             <p className="text-xs text-muted-foreground">
               {pet.breed ? `${pet.breed} · ` : ""}
               {t(`species.${pet.species.toLowerCase()}`)}
-              {pet.dateOfBirth ? ` · ${t("detail.bornOn")} ${new Date(pet.dateOfBirth).toLocaleDateString("de-DE", { day: "2-digit", month: "short", year: "numeric" })}` : ""}
+              {pet.dateOfBirth ? ` · ${t("detail.bornOn")} ${new Date(pet.dateOfBirth).toLocaleDateString(undefined, { day: "2-digit", month: "short", year: "numeric" })}` : ""}
             </p>
           </div>
         </div>
@@ -725,7 +725,7 @@ function PetDetail({
                 <p className="text-xs text-muted-foreground">{t("detail.nextVaccination")}</p>
                 <p className="text-sm font-medium mt-0.5">{nextVaccination.name}</p>
                 <p className="text-xs text-muted-foreground">
-                  {new Date(nextVaccination.nextDueDate!).toLocaleDateString("de-DE", { day: "2-digit", month: "short", year: "numeric" })}
+                  {new Date(nextVaccination.nextDueDate!).toLocaleDateString(undefined, { day: "2-digit", month: "short", year: "numeric" })}
                 </p>
               </div>
             </CardContent>
@@ -739,7 +739,7 @@ function PetDetail({
                 <p className="text-xs text-muted-foreground">{t("detail.nextVetVisit")}</p>
                 <p className="text-sm font-medium mt-0.5">{upcomingVetVisit.vetName}</p>
                 <p className="text-xs text-muted-foreground">
-                  {new Date(upcomingVetVisit.nextVisit!).toLocaleDateString("de-DE", { day: "2-digit", month: "short", year: "numeric" })}
+                  {new Date(upcomingVetVisit.nextVisit!).toLocaleDateString(undefined, { day: "2-digit", month: "short", year: "numeric" })}
                 </p>
               </div>
             </CardContent>
@@ -860,7 +860,7 @@ function PetDetail({
                     petVetRecords.map((record) => (
                       <TableRow key={record.id}>
                         <TableCell className="text-sm tabular-nums">
-                          {new Date(record.date).toLocaleDateString("de-DE", { day: "2-digit", month: "short", year: "numeric" })}
+                          {new Date(record.date).toLocaleDateString(undefined, { day: "2-digit", month: "short", year: "numeric" })}
                         </TableCell>
                         <TableCell className="text-sm font-medium">{record.vetName}</TableCell>
                         <TableCell className="text-sm text-muted-foreground hidden sm:table-cell max-w-[200px] truncate">
@@ -871,7 +871,7 @@ function PetDetail({
                         </TableCell>
                         <TableCell className="text-sm hidden sm:table-cell">
                           {record.nextVisit
-                            ? new Date(record.nextVisit).toLocaleDateString("de-DE", { day: "2-digit", month: "short", year: "numeric" })
+                            ? new Date(record.nextVisit).toLocaleDateString(undefined, { day: "2-digit", month: "short", year: "numeric" })
                             : "—"}
                         </TableCell>
                         <TableCell className="text-right">
@@ -958,18 +958,18 @@ function PetDetail({
                     </TableRow>
                   ) : (
                     petVaccinations.map((vacc) => {
-                      const isDue = vacc.nextDueDate && new Date(vacc.nextDueDate) <= new Date()
+                      const isDue = vacc.nextDueDate && new Date(vacc.nextDueDate) < new Date(new Date().setHours(0, 0, 0, 0))
                       return (
                         <TableRow key={vacc.id}>
                           <TableCell className="text-sm font-medium">{vacc.name}</TableCell>
                           <TableCell className="text-sm tabular-nums">
-                            {new Date(vacc.date).toLocaleDateString("de-DE", { day: "2-digit", month: "short", year: "numeric" })}
+                            {new Date(vacc.date).toLocaleDateString(undefined, { day: "2-digit", month: "short", year: "numeric" })}
                           </TableCell>
                           <TableCell className="hidden sm:table-cell">
                             {vacc.nextDueDate ? (
                               <div className="flex items-center gap-1.5">
                                 <span className="text-sm tabular-nums">
-                                  {new Date(vacc.nextDueDate).toLocaleDateString("de-DE", { day: "2-digit", month: "short", year: "numeric" })}
+                                  {new Date(vacc.nextDueDate).toLocaleDateString(undefined, { day: "2-digit", month: "short", year: "numeric" })}
                                 </span>
                                 {isDue && (
                                   <Badge variant="outline" className="text-[10px] bg-destructive/10 text-destructive border-destructive/20">
@@ -1231,7 +1231,7 @@ export function PetManager({
   const totalVetRecords = vetRecords.length
   const totalVaccinations = vaccinations.length
   const overdueVaccinations = vaccinations.filter(
-    (v) => v.nextDueDate && new Date(v.nextDueDate) <= new Date()
+    (v) => v.nextDueDate && new Date(v.nextDueDate) < new Date(new Date().setHours(0, 0, 0, 0))
   ).length
 
   return (
@@ -1325,7 +1325,7 @@ export function PetManager({
                 const petVetCount = vetRecords.filter((r) => r.petId === pet.id).length
                 const petVaccCount = vaccinations.filter((v) => v.petId === pet.id).length
                 const overdueVacc = vaccinations.filter(
-                  (v) => v.petId === pet.id && v.nextDueDate && new Date(v.nextDueDate) <= new Date()
+                  (v) => v.petId === pet.id && v.nextDueDate && new Date(v.nextDueDate) < new Date(new Date().setHours(0, 0, 0, 0))
                 ).length
 
                 return (
