@@ -12,6 +12,7 @@
     "lending": "Verleih",
     "contracts": "Verträge",
     "documents": "Ausweiskontrolle",
+    "pets": "Tier-Hub",
     "sidebarStatus": "Status: Haus steht (vorerst)"
   },
   "Dashboard": {
@@ -136,6 +137,10 @@
       "lending": {
         "title": "Verleih",
         "desc": "Verliehene Gegenstände und Entleiher verfolgen."
+      },
+      "pets": {
+        "title": "Tier-Hub",
+        "desc": "Tierprofile, Tierarztbesuche und Impfpläne verwalten."
       }
     }
   },
@@ -1146,6 +1151,166 @@
         "title": "Notfallvorbereitung",
         "description": "Füge Notfallkontakte und einen Verlust-/Diebstahlleitfaden für jedes Dokument hinzu, damit du weißt, was im Ernstfall zu tun ist."
       }
+    },
+    "pets": {
+      "step1": {
+        "title": "Dein Tier-Management-Hub",
+        "description": "Halte alle Informationen deiner Tiere an einem Ort – von Chip-Nummern bis zu Ernährungshinweisen für Tiersitter.",
+        "feature1": "Profile für jedes Tier mit Art, Rasse und Geburtstag",
+        "feature2": "Chip-Nummern und Notfallpflegeanweisungen speichern",
+        "feature3": "Ernährungsbedarf und Medikamente für Tiersitter-Übergaben"
+      },
+      "step2": {
+        "title": "Tierarztbesuch-Tracking",
+        "description": "Protokolliere jeden Tierarztbesuch mit Datum, Beschreibung und Kosten. Plane die nächsten Termine.",
+        "feature1": "Besuchsdaten, Tierarzt und Behandlungsbeschreibung erfassen",
+        "feature2": "Kosten und nächste Termine planen"
+      },
+      "step3": {
+        "title": "Impfkalender",
+        "description": "Kein Auffrischungsimpfstoff mehr vergessen. Verfolge jede Impfung mit Fälligkeitsdatum und erhalte Erinnerungen."
+      }
+    }
+  },
+  "Pets": {
+    "title": "Tier-Management-Hub",
+    "subtitle": "Weil deine Fellnasen auch eine digitale Akte verdienen.",
+    "tabs": {
+      "vet": "Tierarzt",
+      "vaccinations": "Impfungen"
+    },
+    "stats": {
+      "pets": "Tiere",
+      "registered": "registriert",
+      "vetVisits": "Tierarztbesuche",
+      "recorded": "erfasst",
+      "vaccinations": "Impfungen",
+      "administered": "verabreicht",
+      "overdueVacc": "Überfällige Impfungen",
+      "needsAttention": "braucht Aufmerksamkeit",
+      "allUpToDate": "alles aktuell"
+    },
+    "list": {
+      "title": "Deine Tiere",
+      "description": "Klicke auf ein Tier, um Tierarztbesuche und Impfungen zu sehen.",
+      "empty": "Noch keine Tiere registriert. Füge deinen ersten Gefährten hinzu."
+    },
+    "create": {
+      "button": "Tier hinzufügen",
+      "title": "Neues Tier hinzufügen",
+      "description": "Registriere ein neues Tier in deinem Haushalt."
+    },
+    "edit": {
+      "title": "Tier bearbeiten",
+      "description": "Aktualisiere die Informationen deines Tieres."
+    },
+    "delete": {
+      "title": "Tier entfernen?",
+      "description": "Dies entfernt das Tier dauerhaft mitsamt aller Tierarztbesuche und Impfungen.",
+      "confirm": "Tier entfernen",
+      "deleting": "Entferne...",
+      "cancel": "Abbrechen"
+    },
+    "detail": {
+      "microchip": "Microchip",
+      "nextVaccination": "Nächste Impfung",
+      "nextVetVisit": "Nächster Tierarzt",
+      "sitterInstructions": "Tiersitter-Anweisungen",
+      "bornOn": "geboren"
+    },
+    "species": {
+      "dog": "Hund",
+      "cat": "Katze",
+      "bird": "Vogel",
+      "rabbit": "Hase",
+      "fish": "Fisch",
+      "other": "Sonstiges"
+    },
+    "form": {
+      "name": "Name",
+      "namePlaceholder": "z.B. Buddy, Luna, Nemo...",
+      "species": "Art",
+      "breed": "Rasse",
+      "breedPlaceholder": "z.B. Labrador, Perser...",
+      "color": "Farbe / Zeichnung",
+      "colorPlaceholder": "z.B. Braun mit weißen Flecken",
+      "dateOfBirth": "Geburtsdatum",
+      "microchipNumber": "Chip-Nummer",
+      "microchipPlaceholder": "15-stellige Chip-Nummer",
+      "dietaryNeeds": "Ernährungsbedarf",
+      "dietaryNeedsPlaceholder": "z.B. Getreidefreies Futter, 2x täglich, je 200g...",
+      "medications": "Aktuelle Medikamente",
+      "medicationsPlaceholder": "z.B. Apoquel 16mg, 1 Tablette täglich mit Futter...",
+      "notes": "Hinweise",
+      "notesPlaceholder": "Weitere wichtige Informationen für Tiersitter...",
+      "cancel": "Abbrechen",
+      "save": "Speichern",
+      "saving": "Speichert...",
+      "editSave": "Änderungen speichern"
+    },
+    "vet": {
+      "title": "Tierarztbesuch-Verlauf",
+      "add": "Besuch hinzufügen",
+      "createTitle": "Tierarztbesuch erfassen",
+      "createDesc": "Neuen Tierarzttermin protokollieren.",
+      "editTitle": "Eintrag bearbeiten",
+      "editDesc": "Details dieses Besuchs aktualisieren.",
+      "deleteTitle": "Eintrag löschen?",
+      "deleteDesc": "Dieser Tierarztbesuch wird dauerhaft entfernt.",
+      "empty": "Noch keine Tierarztbesuche erfasst. Füge den ersten hinzu!",
+      "table": {
+        "date": "Datum",
+        "vet": "Tierarzt",
+        "description": "Beschreibung",
+        "cost": "Kosten",
+        "nextVisit": "Nächster Termin",
+        "actions": "Aktionen"
+      }
+    },
+    "vacc": {
+      "title": "Impfkalender",
+      "add": "Impfung hinzufügen",
+      "createTitle": "Impfung erfassen",
+      "createDesc": "Neue Impfung für dieses Tier eintragen.",
+      "editTitle": "Impfung bearbeiten",
+      "editDesc": "Diesen Impfeintrag aktualisieren.",
+      "deleteTitle": "Impfung löschen?",
+      "deleteDesc": "Dieser Impfeintrag wird dauerhaft entfernt.",
+      "empty": "Noch keine Impfungen erfasst.",
+      "overdue": "Überfällig",
+      "table": {
+        "name": "Impfstoff",
+        "date": "Gegeben am",
+        "nextDue": "Nächste Fälligkeit",
+        "vet": "Tierarzt",
+        "batch": "Chargen-Nr.",
+        "actions": "Aktionen"
+      }
+    },
+    "vetForm": {
+      "pet": "Tier",
+      "date": "Besuchsdatum",
+      "vetName": "Tierarzt",
+      "vetNamePlaceholder": "Dr. Müller / Tierklinik Stadtmitte",
+      "description": "Beschreibung",
+      "descriptionPlaceholder": "z.B. Jahresuntersuchung, Auffrischungsimpfung...",
+      "cost": "Kosten (EUR)",
+      "nextVisit": "Nächster Besuch",
+      "notes": "Hinweise",
+      "notesPlaceholder": "Weitere Hinweise..."
+    },
+    "vaccForm": {
+      "pet": "Tier",
+      "name": "Impfstoffname",
+      "namePlaceholder": "z.B. Tollwut, Staupe, DHPP...",
+      "date": "Verabreicht am",
+      "nextDueDate": "Nächste Fälligkeit",
+      "vetName": "Tierarzt",
+      "vetNamePlaceholder": "Dr. Müller / Tierklinik Stadtmitte",
+      "batchNumber": "Chargen-/Losnummer",
+      "batchPlaceholder": "z.B. 4A2B9C",
+      "notes": "Hinweise",
+      "notesPlaceholder": "Weitere Hinweise..."
     }
   }
 }
