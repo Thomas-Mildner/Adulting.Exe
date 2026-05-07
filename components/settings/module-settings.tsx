@@ -27,6 +27,7 @@ const ALL_MODULES = [
   "contracts",
   "wishlist",
   "lending",
+  "pets",
 ] as const;
 
 type ModuleKey = (typeof ALL_MODULES)[number];
