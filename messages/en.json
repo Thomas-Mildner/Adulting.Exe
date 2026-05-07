@@ -12,6 +12,7 @@
     "lending": "Lending",
     "contracts": "Contracts",
     "documents": "Identity Guard",
+    "pets": "Pet Hub",
     "sidebarStatus": "Status: House standing (for now)"
   },
   "Dashboard": {
@@ -136,6 +137,10 @@
       "lending": {
         "title": "Lending",
         "desc": "Track borrowed items and who has them."
+      },
+      "pets": {
+        "title": "Pet Hub",
+        "desc": "Manage pet profiles, vet records, and vaccination schedules."
       }
     }
   },
@@ -1146,6 +1151,166 @@
         "title": "Emergency Preparedness",
         "description": "Add emergency contacts and a lost/stolen guide for each document so you know exactly what to do if something goes missing."
       }
+    },
+    "pets": {
+      "step1": {
+        "title": "Your Pet Management Hub",
+        "description": "Keep all your pet's information in one place — from microchip numbers to dietary needs for pet sitters.",
+        "feature1": "Create profiles for each pet with species, breed, and birthday",
+        "feature2": "Store microchip numbers and emergency care instructions",
+        "feature3": "Add dietary needs and medications for pet-sitter handoffs"
+      },
+      "step2": {
+        "title": "Vet Record Tracking",
+        "description": "Log every vet visit with date, description, and cost. Set reminders for upcoming check-ups.",
+        "feature1": "Track visit dates, vet names, and treatment descriptions",
+        "feature2": "Record costs and schedule next appointments"
+      },
+      "step3": {
+        "title": "Vaccination Schedule",
+        "description": "Never miss a booster shot. Track every vaccination with its due date and get notified when it's time to renew."
+      }
+    }
+  },
+  "Pets": {
+    "title": "Pet Management Hub",
+    "subtitle": "Because your fur babies deserve a digital file too.",
+    "tabs": {
+      "vet": "Vet Records",
+      "vaccinations": "Vaccinations"
+    },
+    "stats": {
+      "pets": "Pets",
+      "registered": "registered",
+      "vetVisits": "Vet Visits",
+      "recorded": "recorded",
+      "vaccinations": "Vaccinations",
+      "administered": "administered",
+      "overdueVacc": "Overdue Vaccines",
+      "needsAttention": "needs attention",
+      "allUpToDate": "all up to date"
+    },
+    "list": {
+      "title": "Your Pets",
+      "description": "Click a pet to view their vet records and vaccinations.",
+      "empty": "No pets registered yet. Add your first furry (or scaly) companion."
+    },
+    "create": {
+      "button": "Add Pet",
+      "title": "Add New Pet",
+      "description": "Register a new pet in your household."
+    },
+    "edit": {
+      "title": "Edit Pet",
+      "description": "Update your pet's information."
+    },
+    "delete": {
+      "title": "Remove Pet?",
+      "description": "This will permanently remove the pet and all associated vet records and vaccinations.",
+      "confirm": "Remove Pet",
+      "deleting": "Removing...",
+      "cancel": "Cancel"
+    },
+    "detail": {
+      "microchip": "Microchip",
+      "nextVaccination": "Next Vaccination",
+      "nextVetVisit": "Next Vet Visit",
+      "sitterInstructions": "Pet-Sitter Instructions",
+      "bornOn": "born"
+    },
+    "species": {
+      "dog": "Dog",
+      "cat": "Cat",
+      "bird": "Bird",
+      "rabbit": "Rabbit",
+      "fish": "Fish",
+      "other": "Other"
+    },
+    "form": {
+      "name": "Name",
+      "namePlaceholder": "e.g. Buddy, Luna, Nemo...",
+      "species": "Species",
+      "breed": "Breed",
+      "breedPlaceholder": "e.g. Labrador, Persian...",
+      "color": "Color / Markings",
+      "colorPlaceholder": "e.g. Brown with white patches",
+      "dateOfBirth": "Date of Birth",
+      "microchipNumber": "Microchip Number",
+      "microchipPlaceholder": "15-digit chip number",
+      "dietaryNeeds": "Dietary Needs",
+      "dietaryNeedsPlaceholder": "e.g. Grain-free food, 2x daily, 200g each...",
+      "medications": "Current Medications",
+      "medicationsPlaceholder": "e.g. Apoquel 16mg, 1 tablet daily with food...",
+      "notes": "Notes",
+      "notesPlaceholder": "Other important information for pet sitters...",
+      "cancel": "Cancel",
+      "save": "Save",
+      "saving": "Saving...",
+      "editSave": "Save Changes"
+    },
+    "vet": {
+      "title": "Vet Visit History",
+      "add": "Add Visit",
+      "createTitle": "Record Vet Visit",
+      "createDesc": "Log a new veterinary appointment.",
+      "editTitle": "Edit Vet Record",
+      "editDesc": "Update the details of this visit.",
+      "deleteTitle": "Delete Vet Record?",
+      "deleteDesc": "This will permanently remove this vet record.",
+      "empty": "No vet visits recorded yet. Add the first one!",
+      "table": {
+        "date": "Date",
+        "vet": "Veterinarian",
+        "description": "Description",
+        "cost": "Cost",
+        "nextVisit": "Next Visit",
+        "actions": "Actions"
+      }
+    },
+    "vacc": {
+      "title": "Vaccination Schedule",
+      "add": "Add Vaccination",
+      "createTitle": "Record Vaccination",
+      "createDesc": "Log a new vaccination for this pet.",
+      "editTitle": "Edit Vaccination",
+      "editDesc": "Update this vaccination record.",
+      "deleteTitle": "Delete Vaccination?",
+      "deleteDesc": "This will permanently remove this vaccination record.",
+      "empty": "No vaccinations recorded yet.",
+      "overdue": "Overdue",
+      "table": {
+        "name": "Vaccine",
+        "date": "Given",
+        "nextDue": "Next Due",
+        "vet": "Veterinarian",
+        "batch": "Batch No.",
+        "actions": "Actions"
+      }
+    },
+    "vetForm": {
+      "pet": "Pet",
+      "date": "Visit Date",
+      "vetName": "Veterinarian",
+      "vetNamePlaceholder": "Dr. Smith / City Vet Clinic",
+      "description": "Description",
+      "descriptionPlaceholder": "e.g. Annual checkup, vaccination booster...",
+      "cost": "Cost (EUR)",
+      "nextVisit": "Next Visit Date",
+      "notes": "Notes",
+      "notesPlaceholder": "Additional notes..."
+    },
+    "vaccForm": {
+      "pet": "Pet",
+      "name": "Vaccine Name",
+      "namePlaceholder": "e.g. Rabies, Distemper, DHPP...",
+      "date": "Date Given",
+      "nextDueDate": "Next Due Date",
+      "vetName": "Veterinarian",
+      "vetNamePlaceholder": "Dr. Smith / City Vet Clinic",
+      "batchNumber": "Batch / Lot Number",
+      "batchPlaceholder": "e.g. 4A2B9C",
+      "notes": "Notes",
+      "notesPlaceholder": "Additional notes..."
     }
   }
 }
