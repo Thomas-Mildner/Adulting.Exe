@@ -1,3 +1,10 @@
+# [1.8.0-rc.19](https://github.com/Thomas-Mildner/Adulting.Exe/compare/v1.8.0-rc.18...v1.8.0-rc.19) (2026-05-07)
+
+
+### Features
+
+* add lightbox to landing page screenshots ([d1dd7ba](https://github.com/Thomas-Mildner/Adulting.Exe/commit/d1dd7ba44f9e3052ba5817a47128a3f849d2c23b))
+
 # [1.8.0-rc.18](https://github.com/Thomas-Mildner/Adulting.Exe/compare/v1.8.0-rc.17...v1.8.0-rc.18) (2026-04-28)
 
 
