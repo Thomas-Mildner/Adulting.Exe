@@ -171,6 +171,44 @@ export type IdentityDocument = {
   notes?: string
 }
 
+export type Pet = {
+  id: string
+  name: string
+  species: "Dog" | "Cat" | "Bird" | "Rabbit" | "Fish" | "Other"
+  breed?: string
+  dateOfBirth?: string
+  microchipNumber?: string
+  color?: string
+  photoPath?: string
+  dietaryNeeds?: string
+  medications?: string
+  notes?: string
+}
+
+export type VetRecord = {
+  id: string
+  petId: string
+  petName?: string
+  date: string
+  vetName: string
+  description: string
+  cost?: number
+  nextVisit?: string
+  notes?: string
+}
+
+export type Vaccination = {
+  id: string
+  petId: string
+  petName?: string
+  name: string
+  date: string
+  nextDueDate?: string
+  vetName?: string
+  batchNumber?: string
+  notes?: string
+}
+
 // ─── Note ────────────────────────────────────────────────────────────────
 // Mock data has been moved to the database. Use server actions from
 // "@/lib/actions" to fetch / mutate data. Seed with `pnpm prisma db seed`.

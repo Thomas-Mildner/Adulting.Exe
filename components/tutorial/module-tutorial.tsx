@@ -37,6 +37,9 @@ import {
   UserCheck,
   AlertCircle,
   ScanLine,
+  PawPrint,
+  Stethoscope,
+  Syringe,
 } from "lucide-react"
 
 type TutorialStep = {
@@ -200,6 +203,25 @@ const MODULE_STEPS: Record<string, TutorialStep[]> = {
       icon: ScanLine,
       titleKey: "documents.step3.title",
       descriptionKey: "documents.step3.description",
+    },
+  ],
+  pets: [
+    {
+      icon: PawPrint,
+      titleKey: "pets.step1.title",
+      descriptionKey: "pets.step1.description",
+      featuresKeys: ["pets.step1.feature1", "pets.step1.feature2", "pets.step1.feature3"],
+    },
+    {
+      icon: Stethoscope,
+      titleKey: "pets.step2.title",
+      descriptionKey: "pets.step2.description",
+      featuresKeys: ["pets.step2.feature1", "pets.step2.feature2"],
+    },
+    {
+      icon: Syringe,
+      titleKey: "pets.step3.title",
+      descriptionKey: "pets.step3.description",
     },
   ],
 }
