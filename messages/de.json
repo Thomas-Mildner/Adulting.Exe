@@ -142,6 +142,10 @@
       "pets": {
         "title": "Tier-Hub",
         "desc": "Tierprofile, Tierarztbesuche und Impfpläne verwalten."
+      },
+      "garage": {
+        "title": "Car Pit",
+        "desc": "Fahrzeugverwaltung, Reifenwechsel und KFZ-Kosten."
       }
     }
   },
