@@ -117,6 +117,7 @@ function PetFormFields({
   setForm: (fn: (prev: PetFormData) => PetFormData) => void
 }) {
   const t = useTranslations("Pets.form")
+  const tPets = useTranslations("Pets")
 
   return (
     <div className="grid gap-4 py-4 max-h-[60vh] overflow-y-auto pr-1">
@@ -143,7 +144,7 @@ function PetFormFields({
             <SelectContent>
               {SPECIES.map((species) => (
                 <SelectItem key={species} value={species}>
-                  {speciesEmoji(species)} {t(`species.${species.toLowerCase()}`)}
+                  {speciesEmoji(species)} {tPets(`species.${species.toLowerCase()}`)}
                 </SelectItem>
               ))}
             </SelectContent>
