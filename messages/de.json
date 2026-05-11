@@ -142,6 +142,10 @@
       "pets": {
         "title": "Tier-Hub",
         "desc": "Tierprofile, Tierarztbesuche und Impfpläne verwalten."
+      },
+      "returns": {
+        "title": "Retouren",
+        "desc": "Pakete und Rücksendungen verfolgen."
       }
     }
   },
@@ -991,7 +995,8 @@
       "cancel": "Abbrechen"
     },
     "save": "Speichern",
-    "cancel": "Abbrechen"
+    "cancel": "Abbrechen",
+    "saveError": "Fehler beim Speichern der Retoure."
   },
   "Onboarding": {
     "title": "Willkommen bei Adulting.Exe",
