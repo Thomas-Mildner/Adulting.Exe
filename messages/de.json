@@ -1081,7 +1081,7 @@
     "delete": {
       "title": "Auto löschen?",
       "description": "Dies löscht das Auto permanent und alle zugehörigen Wartungseinträge, Tankeinträge und Dokumente.",
-      "confirm": "Permanent löschen"
+      "confirm": "Permanent löschen"}},
   "Onboarding": {
     "title": "Willkommen bei Adulting.Exe",
     "steps": {
