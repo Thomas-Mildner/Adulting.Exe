@@ -1,19 +1,27 @@
 import { DashboardLayout } from "@/components/dashboard-layout"
 import { Library } from "@/components/library/library"
-import { getDocuments } from "@/lib/actions"
+import { ModuleTutorial } from "@/components/tutorial/module-tutorial"
+import { getDocuments, getAppConfig } from "@/lib/actions"
 import { getTranslations } from "next-intl/server"
 
 export const dynamic = "force-dynamic"
 
 export default async function LibraryPage() {
-  const t = await getTranslations("Library")
-  const documents = await getDocuments()
+  const [documents, appConfig, t] = await Promise.all([
+    getDocuments(),
+    getAppConfig(),
+    getTranslations("Library"),
+  ])
 
   return (
     <DashboardLayout
       title={t("title")}
       subtitle={t("subtitle")}
     >
+      <ModuleTutorial
+        moduleKey="library"
+        isFirstVisit={!appConfig.tutorialCompletedModules.includes("library")}
+      />
       <Library documents={documents} />
     </DashboardLayout>
   )

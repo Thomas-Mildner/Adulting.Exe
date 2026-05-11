@@ -16,7 +16,9 @@ import {
   Terminal,
   CalendarDays,
   Car,
+  CreditCard,
   FileCheck,
+  PawPrint,
 } from "lucide-react"
 
 import {
@@ -34,33 +36,45 @@ import {
 } from "@/components/ui/sidebar";
 import { useVersionCheck } from "@/hooks/use-version-check";
 
-export function AppSidebar() {
+interface AppSidebarProps {
+  disabledModules?: string[];
+}
+
+export function AppSidebar({ disabledModules = [] }: AppSidebarProps) {
   const pathname = usePathname();
   const t = useTranslations("Navigation");
   const { isUpdateAvailable, latestVersion, currentVersion: builtVersion } = useVersionCheck();
 
-  const mainNav = [
-    { title: t("dashboard"), href: "/", icon: LayoutDashboard },
-    { title: t("vault"), href: "/vault", icon: PackageOpen },
-    { title: t("services"), href: "/services", icon: Wrench }, // "Rettungsteam" needs translation key if not present, assume "services"
-    { title: t("documents"), href: "/documents", icon: FileCheck },
-    { title: t("library"), href: "/library", icon: BookOpen },
+  const allMainNav = [
+    { key: "dashboard", title: t("dashboard"), href: "/", icon: LayoutDashboard },
+    { key: "vault", title: t("vault"), href: "/vault", icon: PackageOpen },
+    { key: "services", title: t("services"), href: "/services", icon: Wrench },
+    { key: "documents", title: t("documents"), href: "/documents", icon: FileCheck },
+    { key: "library", title: t("library"), href: "/library", icon: BookOpen },
   ];
 
-  const toolsNav = [
-    { title: t("waste"), href: "/waste", icon: CalendarDays },
-    { title: t("maintenance"), href: "/maintenance", icon: ClipboardCheck }, // "Wartungen"
-    { title: t("utilities"), href: "/utilities", icon: Gauge },
-    { title: t("garage"), href: "/garage", icon: Car },
-    { title: t("wishlist"), href: "/wishlist", icon: Sparkles },
-    { title: t("lending"), href: "/lending", icon: HandCoins }, // "Verleih-O-Meter"
+  const allToolsNav = [
+    { key: "waste", title: t("waste"), href: "/waste", icon: CalendarDays },
+    { key: "maintenance", title: t("maintenance"), href: "/maintenance", icon: ClipboardCheck },
+    { key: "utilities", title: t("utilities"), href: "/utilities", icon: Gauge },
+    { key: "garage", title: t("garage"), href: "/garage", icon: Car },
+    { key: "contracts", title: t("contracts"), href: "/contracts", icon: CreditCard },
+    { key: "wishlist", title: t("wishlist"), href: "/wishlist", icon: Sparkles },
+    { key: "lending", title: t("lending"), href: "/lending", icon: HandCoins },
+    { key: "pets", title: t("pets"), href: "/pets", icon: PawPrint },
   ];
+
+  const mainNav = allMainNav.filter((item) => !disabledModules.includes(item.key));
+  const toolsNav = allToolsNav.filter((item) => !disabledModules.includes(item.key));
 
   const systemNav = [
     { title: t("settings"), href: "/settings", icon: Settings },
   ];
 
-  const renderNavGroup = (items: typeof mainNav, label: string) => (
+  const renderNavGroup = (
+    items: { title: string; href: string; icon: React.ElementType }[],
+    label: string
+  ) => (
     <SidebarGroup>
       <SidebarGroupLabel className="text-sidebar-foreground/40 text-[10px] uppercase tracking-widest font-medium">
         {label}
@@ -120,8 +134,8 @@ export function AppSidebar() {
       </SidebarHeader>
       <SidebarSeparator />
       <SidebarContent>
-        {renderNavGroup(mainNav, "Hauptmenü")}
-        {renderNavGroup(toolsNav, "Werkzeuge")}
+        {mainNav.length > 0 && renderNavGroup(mainNav, "Hauptmenü")}
+        {toolsNav.length > 0 && renderNavGroup(toolsNav, "Werkzeuge")}
         {renderNavGroup(systemNav, "System")}
       </SidebarContent>
       <SidebarFooter className="p-4 group-data-[collapsible=icon]:hidden">

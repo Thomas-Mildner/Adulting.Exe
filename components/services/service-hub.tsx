@@ -2,6 +2,7 @@
 
 import {
   ChevronsUpDown,
+  Download,
   FileText,
   Globe,
   Mail,
@@ -18,6 +19,7 @@ import {
 } from "lucide-react"
 import { useMemo, useState, useTransition } from "react"
 import { useTranslations } from "next-intl"
+import { toast } from "sonner"
 
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -704,6 +706,33 @@ function InvoicesTab({ invoices, serviceProviders }: { invoices: Invoice[]; serv
   // Delete confirm
   const [deleteId, setDeleteId] = useState<string | null>(null)
 
+  // Export state
+  const [isExporting, setIsExporting] = useState(false)
+
+  const hasTaxInvoices = items.some((i) => i.taxRelevant)
+
+  async function handleExportZip() {
+    setIsExporting(true)
+    try {
+      const res = await fetch("/api/tax-export")
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}))
+        toast.error(err.error ?? t("invoices.exportZipEmpty"))
+        return
+      }
+      const blob = await res.blob()
+      const url = URL.createObjectURL(blob)
+      const a = document.createElement("a")
+      a.href = url
+      const year = new Date().getFullYear()
+      a.download = `tax-export-${year}.zip`
+      a.click()
+      URL.revokeObjectURL(url)
+    } finally {
+      setIsExporting(false)
+    }
+  }
+
   const filtered = useMemo(() => {
     const q = search.toLowerCase()
     return items.filter(
@@ -790,6 +819,17 @@ function InvoicesTab({ invoices, serviceProviders }: { invoices: Invoice[]; serv
             <Receipt className="h-3 w-3 mr-1" />
             {t("invoices.taxDeductible", { amount: formatCurrency(taxTotal) })}
           </Badge>
+          <Button
+            size="sm"
+            variant="outline"
+            className="gap-1.5"
+            onClick={handleExportZip}
+            disabled={isExporting || !hasTaxInvoices}
+            title={t("invoices.exportZipTooltip")}
+          >
+            <Download className="h-4 w-4" />
+            {isExporting ? "…" : t("invoices.exportZip")}
+          </Button>
           <Dialog
             open={createOpen}
             onOpenChange={(v) => {
