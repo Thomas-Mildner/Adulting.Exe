@@ -11,7 +11,9 @@
     "wishlist": "Wunschliste",
     "lending": "Verleih",
     "garage": "Die Geldgrube",
+    "contracts": "Verträge",
     "documents": "Ausweiskontrolle",
+    "pets": "Tier-Hub",
     "sidebarStatus": "Status: Haus steht (vorerst)"
   },
   "Dashboard": {
@@ -89,6 +91,57 @@
         "red": "Rot (Gefahrgut)",
         "brown": "Braun (Bio)",
         "black": "Schwarz"
+      }
+    },
+    "modulesTab": "Module",
+    "modules": {
+      "title": "Modulauswahl",
+      "description": "Module in der Navigation ein- oder ausblenden. Deaktivierte Module werden in der Seitenleiste nicht angezeigt.",
+      "saved": "Moduleinstellungen gespeichert",
+      "error": "Fehler beim Speichern der Moduleinstellungen",
+      "vault": {
+        "title": "Tresor",
+        "desc": "Geräteverwaltung und Garantieverfolgung."
+      },
+      "services": {
+        "title": "Rettungsteam",
+        "desc": "Dienstleister und Reparaturhistorie."
+      },
+      "documents": {
+        "title": "Ausweiskontrolle",
+        "desc": "Ausweisdokumente und Ablaufüberwachung."
+      },
+      "library": {
+        "title": "Bibliothek",
+        "desc": "Wissensdatenbank und Haushaltsdokumente."
+      },
+      "waste": {
+        "title": "Müllkalender",
+        "desc": "Müllabfuhrtermine und Erinnerungen."
+      },
+      "maintenance": {
+        "title": "Wartungen",
+        "desc": "Wiederkehrende Wartungsaufgaben und Zeitpläne."
+      },
+      "utilities": {
+        "title": "Ressourcen",
+        "desc": "Zählerstände und Energiekostenverfolgung."
+      },
+      "contracts": {
+        "title": "Verträge",
+        "desc": "Abonnements und wiederkehrende Verträge."
+      },
+      "wishlist": {
+        "title": "Wunschliste",
+        "desc": "Projektplanung und Sparziele."
+      },
+      "lending": {
+        "title": "Verleih",
+        "desc": "Verliehene Gegenstände und Entleiher verfolgen."
+      },
+      "pets": {
+        "title": "Tier-Hub",
+        "desc": "Tierprofile, Tierarztbesuche und Impfpläne verwalten."
       }
     }
   },
@@ -270,7 +323,16 @@
       "warrantyEnd": "Garantie bis",
       "boxLocation": "Aufbewahrungsort",
       "boxLocationPlaceholder": "z.B. Regal A3, Keller Box 2...",
-      "status": "Status"
+      "status": "Status",
+      "receipt": "Quittung / Bild",
+      "receiptUpload": "Datei hochladen oder Foto aufnehmen",
+      "receiptDragDrop": "Datei hierher ziehen oder klicken zum Durchsuchen",
+      "receiptCamera": "Foto aufnehmen",
+      "receiptFile": "Datei hochladen",
+      "receiptPreview": "Quittungsvorschau",
+      "receiptRemove": "Entfernen",
+      "receiptUploading": "Wird hochgeladen...",
+      "receiptError": "Upload fehlgeschlagen. Bitte erneut versuchen."
     },
     "card": {
       "warranty": "Garantie",
@@ -320,7 +382,10 @@
       "editDesc": "Änderungen werden sofort gespeichert.",
       "deleteTitle": "Rechnung löschen?",
       "deleteDesc": "Der Rechnungseintrag wird unwiderruflich gelöscht.",
-      "empty": "Keine Rechnungen gefunden. Ein gutes Zeichen oder Quittung verloren?"
+      "empty": "Keine Rechnungen gefunden. Ein gutes Zeichen oder Quittung verloren?",
+      "exportZip": "Steuerexport (ZIP)",
+      "exportZipTooltip": "Alle steuerlich absetzbaren Rechnungen als ZIP-Archiv herunterladen",
+      "exportZipEmpty": "Keine steuerlich absetzbaren Rechnungen zum Exportieren."
     },
     "form": {
       "name": "Name",
@@ -662,6 +727,86 @@
       "upcoming": "Anstehend"
     }
   },
+  "Contracts": {
+    "title": "Wiederkehrende Verträge",
+    "subtitle": "Das moderne Leben ist eine Serie monatlicher Zahlungen bis zum Tod",
+    "burnRate": "Monatlicher Abfluss",
+    "burnRateNote": "Deine Abos kosten mehr als eine Hypothek aus den 90ern. Nur so nebenbei.",
+    "totalContracts": "Aktive Verträge",
+    "activeTrials": "Testversionen",
+    "cumulativeDonation": "Kumulative Spende",
+    "regretMeter": "Reue-Meter",
+    "regretMeterSubtitle": "Geld an Anbieter gesendet, ohne den Service tatsächlich zu nutzen",
+    "wasted": "verschwendet",
+    "lastUsed": "Zuletzt verwendet",
+    "monthsAgo": "Monate her",
+    "allCategories": "Alle",
+    "tableTitle": "Alle Verträge",
+    "tableSubtitle": "Sortiert nach nächstem Abrechnungsdatum",
+    "trialTrapAlert": "Testversion läuft ab!",
+    "trial": "Testversion",
+    "active": "Aktiv",
+    "killSwitch": "Kündigungsschreiben generieren",
+    "cancel": "Abbrechen",
+    "close": "Schließen",
+    "categories": {
+      "Utilities": "Versorgung",
+      "Entertainment": "Unterhaltung",
+      "Fitness": "Fitness",
+      "Software": "Software",
+      "Guilty Pleasure": "Schlechtes Gewissen",
+      "Other": "Andere"
+    },
+    "table": {
+      "provider": "Anbieter",
+      "category": "Kategorie",
+      "monthlyCost": "Monatliche Kosten",
+      "nextBilling": "Nächste Abrechnung",
+      "status": "Status",
+      "actions": "Aktionen"
+    },
+    "fields": {
+      "providerName": "Anbieter",
+      "accountId": "Konto-/Kundennummer",
+      "monthlyCost": "Monatliche Kosten (€)",
+      "yearlyCost": "Jährliche Kosten (€)",
+      "category": "Kategorie",
+      "lastUsedDate": "Letztes echtes Nutzungsdatum",
+      "isTrial": "Kostenlose Testversion",
+      "trialEndDate": "Ende der Testversion",
+      "nextBillingDate": "Nächstes Abrechnungsdatum",
+      "notes": "Notizen"
+    },
+    "placeholders": {
+      "providerName": "z.B. Netflix, Spotify",
+      "accountId": "Optional: Kunden-/Kontonummer",
+      "notes": "Optionale Notizen oder Erinnerungen"
+    },
+    "create": {
+      "title": "Vertrag hinzufügen",
+      "description": "Eine neue wiederkehrende Zahlung erfassen",
+      "action": "Vertrag hinzufügen"
+    },
+    "edit": {
+      "title": "Vertrag bearbeiten",
+      "description": "Vertragsdetails aktualisieren",
+      "action": "Änderungen speichern"
+    },
+    "delete": {
+      "title": "Vertrag löschen",
+      "description": "Bist du sicher? Diese Aktion kann nicht rückgängig gemacht werden.",
+      "action": "Löschen"
+    },
+    "cancellation": {
+      "title": "Kündigungsschreiben",
+      "description": "Generiertes Kündigungsschreiben versandbereit",
+      "copy": "In Zwischenablage kopieren"
+    },
+    "emptyState": {
+      "title": "Keine Abonnements?",
+      "message": "Lebst du in einer Höhle oder leihst du dir einfach alle Passwörter?"
+    }
+  },
   "Documents": {
     "title": "Ausweiskontrolle",
     "subtitle": "Dein bürokratischer Wächter - für eine gültige Existenz",
@@ -937,6 +1082,390 @@
       "title": "Auto löschen?",
       "description": "Dies löscht das Auto permanent und alle zugehörigen Wartungseinträge, Tankeinträge und Dokumente.",
       "confirm": "Permanent löschen"
+  "Onboarding": {
+    "title": "Willkommen bei Adulting.Exe",
+    "steps": {
+      "welcome": "Willkommen",
+      "appliance": "Erstes Gerät",
+      "heating": "Heizungstyp",
+      "waste": "Müllkategorien",
+      "done": "Fertig"
+    },
+    "step1": {
+      "title": "Willkommen, Hausbesitzer! 🏠",
+      "description": "Adulting.Exe hilft dir, Garantien, Wartungen, Nebenkosten und mehr zu verwalten. Lass uns deinen Haushalt in ein paar schnellen Schritten einrichten.",
+      "features": {
+        "vault": "Garantien & Geräte verfolgen",
+        "maintenance": "Wartungsaufgaben planen",
+        "utilities": "Energie- & Wasserverbrauch überwachen",
+        "waste": "Keine Müllabholung mehr verpassen"
+      }
+    },
+    "step2": {
+      "title": "Erstes Gerät hinzufügen",
+      "description": "Starte mit der Garantieverfolgung, indem du dein erstes Gerät hinzufügst. Du kannst diesen Schritt überspringen und Geräte später hinzufügen.",
+      "skip": "Vorerst überspringen",
+      "addedSuccess": "Gerät erfolgreich hinzugefügt!",
+      "toastSuccess": "Gerät hinzugefügt!",
+      "toastError": "Fehler beim Hinzufügen des Geräts"
+    },
+    "step3": {
+      "title": "Was ist dein Heizungstyp?",
+      "description": "Wähle deine Wärmequelle, damit die Einheiten im Bereich Ressourcen korrekt angezeigt werden.",
+      "select": "Heizungstyp auswählen",
+      "toastError": "Fehler beim Speichern des Heizungstyps"
+    },
+    "step4": {
+      "title": "Müllkategorien konfigurieren",
+      "description": "Füge deine lokalen Müllarten hinzu (z.B. Wertstoff, Bio, Papier). Du kannst in den Einstellungen weitere hinzufügen.",
+      "skip": "Vorerst überspringen",
+      "addButton": "Art hinzufügen",
+      "nameLabel": "Müllart-Name",
+      "namePlaceholder": "z.B. Wertstoff, Biomüll...",
+      "toastSuccess": "Müllart hinzugefügt!",
+      "toastError": "Fehler beim Hinzufügen der Müllart"
+    },
+    "step5": {
+      "title": "Alles ist eingerichtet! 🎉",
+      "description": "Dein Haushalt ist konfiguriert und bereit. Du kannst diese Einstellungen jederzeit ändern.",
+      "goToDashboard": "Zum Dashboard",
+      "toastError": "Fehler beim Abschließen der Einrichtung",
+      "summaryAppliance": "Erstes Gerät erfasst ✓",
+      "summaryHeating": "Heizungstyp konfiguriert ✓",
+      "summaryWaste": "{count} Müllart(en) hinzugefügt ✓"
+    },
+    "next": "Weiter",
+    "back": "Zurück",
+    "skip": "Überspringen",
+    "saving": "Speichert...",
+    "stepOf": "Schritt {current} von {total}"
+  },
+  "Tutorial": {
+    "back": "Zurück",
+    "next": "Weiter",
+    "skip": "Tutorial überspringen",
+    "gotIt": "Verstanden!",
+    "stepOf": "{current} von {total}",
+    "vault": {
+      "step1": {
+        "title": "Der Garantie- & Box-Tresor",
+        "description": "Behalte den Überblick über alle deine Geräte – vom Geschirrspüler bis zur Kaffeemaschine.",
+        "feature1": "Kaufdatum und Garantieablauf erfassen",
+        "feature2": "Aufbewahrungsort der Originalverpackung speichern",
+        "feature3": "Marke, Kategorie und Preis des Geräts verfolgen"
+      },
+      "step2": {
+        "title": "Garantiestatus auf einen Blick",
+        "description": "Sieh sofort, welche Geräte noch abgesichert sind, welche abgelaufen sind und welche kurz davor stehen.",
+        "feature1": "Geschützt: Garantie noch aktiv",
+        "feature2": "Zombie: Gerät außerhalb der Garantiezeit"
+      },
+      "step3": {
+        "title": "Dein erstes Gerät hinzufügen",
+        "description": "Klicke auf 'Neuer Eintrag', fülle Name, Marke, Kaufdatum und Garantieende aus – fertig."
+      }
+    },
+    "services": {
+      "step1": {
+        "title": "Dein Dienstleister-Notizbuch",
+        "description": "Speichere Kontaktdaten für jeden Klempner, Elektriker oder Handwerker, mit dem du je zusammengearbeitet hast.",
+        "feature1": "Telefon, E-Mail und Website für jeden Anbieter",
+        "feature2": "Anbieter nach Zuverlässigkeit bewerten",
+        "feature3": "Rechnungen direkt mit Anbietern verknüpfen"
+      },
+      "step2": {
+        "title": "Servicehistorie",
+        "description": "Protokolliere jeden Reparatur- und Serviceeinsatz, damit du immer weißt, was wann gemacht wurde.",
+        "feature1": "Datum, Beschreibung und Kosten erfassen",
+        "feature2": "Ausgaben als steuerlich absetzbar markieren"
+      },
+      "step3": {
+        "title": "Rechnungsverwaltung",
+        "description": "Lade Rechnungen hoch und verknüpfe sie mit bestimmten Serviceeinsätzen. Kein langes Suchen in E-Mails mehr."
+      }
+    },
+    "library": {
+      "step1": {
+        "title": "Deine Heim-Wissensdatenbank",
+        "description": "Bewahre wichtige Hausdokumente, Anleitungen und Handbücher an einem durchsuchbaren Ort auf.",
+        "feature1": "PDFs hochladen und Markdown-Notizen erstellen",
+        "feature2": "Nach Thema kategorisieren (Heizung, Sanitär usw.)",
+        "feature3": "Volltextsuche über alle Dokumente"
+      },
+      "step2": {
+        "title": "Dokumente sofort finden",
+        "description": "Suche nach Titel oder filtere nach Kategorie, um genau das zu finden, was du brauchst.",
+        "feature1": "Nach Dokumenttyp filtern: PDF oder Notiz",
+        "feature2": "Vorschau von Dokumenten direkt in der App"
+      }
+    },
+    "waste": {
+      "step1": {
+        "title": "Keine Abholung mehr verpassen",
+        "description": "Konfiguriere deinen lokalen Abfallkalender und weiß immer, was diese Woche rausgestellt werden muss.",
+        "feature1": "Eigene Mülltypen hinzufügen (Wertstoff, Bio usw.)",
+        "feature2": "Wiederkehrende Abholtermine eintragen",
+        "feature3": "Bevorstehende Abholungen im Kalender sehen"
+      },
+      "step2": {
+        "title": "Erinnerungen im Dashboard",
+        "description": "Das Dashboard zeigt die nächste geplante Abholung an, damit du den Müll nie vergisst.",
+        "feature1": "Nächste Abholung direkt im Dashboard sichtbar",
+        "feature2": "Farbcodierte Mülltypen für schnelle Erkennung"
+      }
+    },
+    "maintenance": {
+      "step1": {
+        "title": "Wartung im Griff behalten",
+        "description": "Plane und verfolge alle wiederkehrenden Wartungsaufgaben, die dein Zuhause in Schuss halten.",
+        "feature1": "Fälligkeitsdaten und Prioritäten festlegen",
+        "feature2": "Aufgaben als erledigt markieren",
+        "feature3": "Nach Datum oder Priorität sortieren"
+      },
+      "step2": {
+        "title": "Wiederkehrende Aufgaben leicht gemacht",
+        "description": "Lege einen Wiederholungsrhythmus fest (monatlich, jährlich usw.) und die Aufgabe erscheint automatisch wieder.",
+        "feature1": "Täglich, wöchentlich, monatlich und jährlich möglich",
+        "feature2": "Vergiss nie wieder Jahresprüfungen wie Rauchmelder oder Filterwechsel"
+      }
+    },
+    "utilities": {
+      "step1": {
+        "title": "Energieverbrauch verfolgen",
+        "description": "Trage monatliche Zählerstände für Strom, Wasser und Heizung ein, um deinen Verbrauch zu überwachen.",
+        "feature1": "Werte für Strom, Wasser und Heizung eingeben",
+        "feature2": "Preis pro Einheit für genaue Kostenschätzung hinzufügen",
+        "feature3": "Unterstützt alle gängigen Heizungstypen"
+      },
+      "step2": {
+        "title": "Verbrauch visualisieren",
+        "description": "Diagramme und Verlaufsdaten helfen dir, Trends zu erkennen, Monate zu vergleichen und ungewöhnliche Spitzen zu entdecken.",
+        "feature1": "Monatliche Vergleichsdiagramme",
+        "feature2": "Gesamtkostenübersicht pro Zeitraum"
+      }
+    },
+    "contracts": {
+      "step1": {
+        "title": "Abos & Verträge im Überblick",
+        "description": "Behalte alle Abonnements, Verträge und laufenden Kosten im Blick, damit nichts durch die Maschen fällt.",
+        "feature1": "Monatliche und jährliche Kosten verfolgen",
+        "feature2": "Testphasen markieren, um unerwartete Verlängerungen zu vermeiden",
+        "feature3": "Nach Kategorie organisieren (Utilities, Entertainment usw.)"
+      },
+      "step2": {
+        "title": "Unnötige Ausgaben erkennen",
+        "description": "Abonnements, die du lange nicht genutzt hast, werden hervorgehoben, damit du entscheidest, ob du sie kündigen möchtest.",
+        "feature1": "Letztes Nutzungsdatum für jeden Dienst eintragen",
+        "feature2": "Nächstes Abrechnungsdatum für gezielte Kündigung sehen"
+      }
+    },
+    "wishlist": {
+      "step1": {
+        "title": "Heimverbesserungen planen",
+        "description": "Erstelle Projekte für alles, was du für dein Zuhause kaufen oder umsetzen möchtest, und verfolge deine Ersparnisse.",
+        "feature1": "Geschätzte Kosten und aktuelle Ersparnisse eintragen",
+        "feature2": "Dringlichkeitsstufen von nett-zu-haben bis Notfall",
+        "feature3": "Projekte nach Typ kategorisieren"
+      },
+      "step2": {
+        "title": "Beobachte, wie deine Ersparnisse wachsen",
+        "description": "Jedes Projekt zeigt einen Fortschrittsbalken, damit du auf einen Blick siehst, wie nah du deinem Ziel bist.",
+        "feature1": "Visueller Fortschrittsbalken pro Projekt",
+        "feature2": "Ersparnisse aktualisieren, wann immer du Geld zurücklegst"
+      }
+    },
+    "lending": {
+      "step1": {
+        "title": "Der Lend-O-Meter",
+        "description": "Behalte alles im Blick, was du Freunden und Familie geliehen hast, damit du es auch zurückbekommst.",
+        "feature1": "Was, an wen und wann verliehen erfassen",
+        "feature2": "Erwartetes Rückgabedatum festlegen",
+        "feature3": "Jedem Ausleiher ein Vertrauensniveau zuweisen"
+      },
+      "step2": {
+        "title": "Wem du vertraust",
+        "description": "Das Vertrauensniveau-System hilft dir, sich zu merken, welche Ausleiher zuverlässig zurückgeben – und welche nicht.",
+        "feature1": "Vertrauensstufen von 1 (riskant) bis 5 (sehr zuverlässig)",
+        "feature2": "Überfällige Gegenstände auf einen Blick im Dashboard"
+      }
+    },
+    "documents": {
+      "step1": {
+        "title": "Identitätsschutz",
+        "description": "Halte alle wichtigen persönlichen Dokumente organisiert, damit du immer weißt, wann sie ablaufen und wo sie sind.",
+        "feature1": "Reisepässe, Ausweise und Führerscheine speichern",
+        "feature2": "Ausstellungs- und Ablaufdaten verfolgen",
+        "feature3": "Aufbewahrungsort des physischen Dokuments vermerken"
+      },
+      "step2": {
+        "title": "Ablaufwarnungen",
+        "description": "Dokumente, die bald ablaufen, werden automatisch markiert, damit du rechtzeitig verlängern kannst.",
+        "feature1": "Farbcodierter Ablaufstatus (gültig, läuft bald ab, abgelaufen)",
+        "feature2": "Dokumente für den gesamten Haushalt verwalten"
+      },
+      "step3": {
+        "title": "Notfallvorbereitung",
+        "description": "Füge Notfallkontakte und einen Verlust-/Diebstahlleitfaden für jedes Dokument hinzu, damit du weißt, was im Ernstfall zu tun ist."
+      }
+    },
+    "pets": {
+      "step1": {
+        "title": "Dein Tier-Management-Hub",
+        "description": "Halte alle Informationen deiner Tiere an einem Ort – von Chip-Nummern bis zu Ernährungshinweisen für Tiersitter.",
+        "feature1": "Profile für jedes Tier mit Art, Rasse und Geburtstag",
+        "feature2": "Chip-Nummern und Notfallpflegeanweisungen speichern",
+        "feature3": "Ernährungsbedarf und Medikamente für Tiersitter-Übergaben"
+      },
+      "step2": {
+        "title": "Tierarztbesuch-Tracking",
+        "description": "Protokolliere jeden Tierarztbesuch mit Datum, Beschreibung und Kosten. Plane die nächsten Termine.",
+        "feature1": "Besuchsdaten, Tierarzt und Behandlungsbeschreibung erfassen",
+        "feature2": "Kosten und nächste Termine planen"
+      },
+      "step3": {
+        "title": "Impfkalender",
+        "description": "Kein Auffrischungsimpfstoff mehr vergessen. Verfolge jede Impfung mit Fälligkeitsdatum und erhalte Erinnerungen."
+      }
+    }
+  },
+  "Pets": {
+    "title": "Tier-Management-Hub",
+    "subtitle": "Weil deine Fellnasen auch eine digitale Akte verdienen.",
+    "tabs": {
+      "vet": "Tierarzt",
+      "vaccinations": "Impfungen"
+    },
+    "stats": {
+      "pets": "Tiere",
+      "registered": "registriert",
+      "vetVisits": "Tierarztbesuche",
+      "recorded": "erfasst",
+      "vaccinations": "Impfungen",
+      "administered": "verabreicht",
+      "overdueVacc": "Überfällige Impfungen",
+      "needsAttention": "braucht Aufmerksamkeit",
+      "allUpToDate": "alles aktuell"
+    },
+    "list": {
+      "title": "Deine Tiere",
+      "description": "Klicke auf ein Tier, um Tierarztbesuche und Impfungen zu sehen.",
+      "empty": "Noch keine Tiere registriert. Füge deinen ersten Gefährten hinzu."
+    },
+    "create": {
+      "button": "Tier hinzufügen",
+      "title": "Neues Tier hinzufügen",
+      "description": "Registriere ein neues Tier in deinem Haushalt."
+    },
+    "edit": {
+      "title": "Tier bearbeiten",
+      "description": "Aktualisiere die Informationen deines Tieres."
+    },
+    "delete": {
+      "title": "Tier entfernen?",
+      "description": "Dies entfernt das Tier dauerhaft mitsamt aller Tierarztbesuche und Impfungen.",
+      "confirm": "Tier entfernen",
+      "deleting": "Entferne...",
+      "cancel": "Abbrechen"
+    },
+    "detail": {
+      "microchip": "Microchip",
+      "nextVaccination": "Nächste Impfung",
+      "nextVetVisit": "Nächster Tierarzt",
+      "sitterInstructions": "Tiersitter-Anweisungen",
+      "bornOn": "geboren"
+    },
+    "species": {
+      "dog": "Hund",
+      "cat": "Katze",
+      "bird": "Vogel",
+      "rabbit": "Hase",
+      "fish": "Fisch",
+      "other": "Sonstiges"
+    },
+    "form": {
+      "name": "Name",
+      "namePlaceholder": "z.B. Buddy, Luna, Nemo...",
+      "species": "Art",
+      "breed": "Rasse",
+      "breedPlaceholder": "z.B. Labrador, Perser...",
+      "color": "Farbe / Zeichnung",
+      "colorPlaceholder": "z.B. Braun mit weißen Flecken",
+      "dateOfBirth": "Geburtsdatum",
+      "microchipNumber": "Chip-Nummer",
+      "microchipPlaceholder": "15-stellige Chip-Nummer",
+      "dietaryNeeds": "Ernährungsbedarf",
+      "dietaryNeedsPlaceholder": "z.B. Getreidefreies Futter, 2x täglich, je 200g...",
+      "medications": "Aktuelle Medikamente",
+      "medicationsPlaceholder": "z.B. Apoquel 16mg, 1 Tablette täglich mit Futter...",
+      "notes": "Hinweise",
+      "notesPlaceholder": "Weitere wichtige Informationen für Tiersitter...",
+      "cancel": "Abbrechen",
+      "save": "Speichern",
+      "saving": "Speichert...",
+      "editSave": "Änderungen speichern"
+    },
+    "vet": {
+      "title": "Tierarztbesuch-Verlauf",
+      "add": "Besuch hinzufügen",
+      "createTitle": "Tierarztbesuch erfassen",
+      "createDesc": "Neuen Tierarzttermin protokollieren.",
+      "editTitle": "Eintrag bearbeiten",
+      "editDesc": "Details dieses Besuchs aktualisieren.",
+      "deleteTitle": "Eintrag löschen?",
+      "deleteDesc": "Dieser Tierarztbesuch wird dauerhaft entfernt.",
+      "empty": "Noch keine Tierarztbesuche erfasst. Füge den ersten hinzu!",
+      "table": {
+        "date": "Datum",
+        "vet": "Tierarzt",
+        "description": "Beschreibung",
+        "cost": "Kosten",
+        "nextVisit": "Nächster Termin",
+        "actions": "Aktionen"
+      }
+    },
+    "vacc": {
+      "title": "Impfkalender",
+      "add": "Impfung hinzufügen",
+      "createTitle": "Impfung erfassen",
+      "createDesc": "Neue Impfung für dieses Tier eintragen.",
+      "editTitle": "Impfung bearbeiten",
+      "editDesc": "Diesen Impfeintrag aktualisieren.",
+      "deleteTitle": "Impfung löschen?",
+      "deleteDesc": "Dieser Impfeintrag wird dauerhaft entfernt.",
+      "empty": "Noch keine Impfungen erfasst.",
+      "overdue": "Überfällig",
+      "table": {
+        "name": "Impfstoff",
+        "date": "Gegeben am",
+        "nextDue": "Nächste Fälligkeit",
+        "vet": "Tierarzt",
+        "batch": "Chargen-Nr.",
+        "actions": "Aktionen"
+      }
+    },
+    "vetForm": {
+      "pet": "Tier",
+      "date": "Besuchsdatum",
+      "vetName": "Tierarzt",
+      "vetNamePlaceholder": "Dr. Müller / Tierklinik Stadtmitte",
+      "description": "Beschreibung",
+      "descriptionPlaceholder": "z.B. Jahresuntersuchung, Auffrischungsimpfung...",
+      "cost": "Kosten (EUR)",
+      "nextVisit": "Nächster Besuch",
+      "notes": "Hinweise",
+      "notesPlaceholder": "Weitere Hinweise..."
+    },
+    "vaccForm": {
+      "pet": "Tier",
+      "name": "Impfstoffname",
+      "namePlaceholder": "z.B. Tollwut, Staupe, DHPP...",
+      "date": "Verabreicht am",
+      "nextDueDate": "Nächste Fälligkeit",
+      "vetName": "Tierarzt",
+      "vetNamePlaceholder": "Dr. Müller / Tierklinik Stadtmitte",
+      "batchNumber": "Chargen-/Losnummer",
+      "batchPlaceholder": "z.B. 4A2B9C",
+      "notes": "Hinweise",
+      "notesPlaceholder": "Weitere Hinweise..."
     }
   }
-}

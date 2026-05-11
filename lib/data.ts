@@ -10,6 +10,7 @@ export type Appliance = {
   status: "protected" | "solo" | "zombie"
   brand: string
   price: number
+  receiptPath?: string
 }
 
 export type ServiceHistory = {
@@ -181,9 +182,23 @@ export type Notification = {
   title: string
   message: string
   type: "warning" | "info" | "error"
-  category: "Waste" | "Appliance" | "Maintenance" | "Lent" | "Insurance"
+  category: "Waste" | "Appliance" | "Maintenance" | "Lent" | "Insurance" | "Contract"
   link?: string
   date?: string
+}
+
+export type Contract = {
+  id: string
+  providerName: string
+  accountId?: string
+  monthlyCost: number
+  yearlyCost?: number
+  category: "Utilities" | "Entertainment" | "Fitness" | "Software" | "Guilty Pleasure" | "Other"
+  lastUsedDate?: string
+  isTrial: boolean
+  trialEndDate?: string
+  nextBillingDate: string
+  notes?: string
 }
 
 export type Person = {
@@ -206,6 +221,44 @@ export type IdentityDocument = {
   physicalLocation?: string
   lostFoundGuide?: string
   emergencyContact?: string
+  notes?: string
+}
+
+export type Pet = {
+  id: string
+  name: string
+  species: "Dog" | "Cat" | "Bird" | "Rabbit" | "Fish" | "Other"
+  breed?: string
+  dateOfBirth?: string
+  microchipNumber?: string
+  color?: string
+  photoPath?: string
+  dietaryNeeds?: string
+  medications?: string
+  notes?: string
+}
+
+export type VetRecord = {
+  id: string
+  petId: string
+  petName?: string
+  date: string
+  vetName: string
+  description: string
+  cost?: number
+  nextVisit?: string
+  notes?: string
+}
+
+export type Vaccination = {
+  id: string
+  petId: string
+  petName?: string
+  name: string
+  date: string
+  nextDueDate?: string
+  vetName?: string
+  batchNumber?: string
   notes?: string
 }
 
