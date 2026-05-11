@@ -61,6 +61,14 @@ Built for people who want to know exactly where the blender's original box is lo
 * **Trust Rating:** Rate borrowers' reliability for future reference
 * **Dashboard Visualization:** See all currently lent items at a glance
 
+### 🐾 Pet Management Hub
+* **Pet Profiles:** Track all your pets with name, species, breed, color, and date of birth
+* **Microchip Numbers:** Store chip IDs for quick identification in emergencies
+* **Pet-Sitter Instructions:** Document dietary needs and current medications for easy handoffs
+* **Vet Record Tracking:** Log every veterinary visit with date, treatment, cost, and next appointment
+* **Vaccination Schedule:** Track all vaccinations with due dates — overdues flagged automatically
+* **Batch Number Logging:** Record vaccine batch numbers for full traceability
+
 ### 🪪 Identity Guard (Document Tracker)
 * **Multi-Person Tracking:** Monitor identity documents for yourself, spouse, children, and other household members
 * **Document Management:** Track IDs, Passports, Driver's Licenses, Visas, and custom documents

@@ -10,6 +10,7 @@ export type Appliance = {
   status: "protected" | "solo" | "zombie"
   brand: string
   price: number
+  receiptPath?: string
 }
 
 export type ServiceHistory = {
@@ -182,6 +183,44 @@ export type PackageReturn = {
   returnWindow: string
   receiptPhoto?: string
   updatedAt: string
+}
+
+export type Pet = {
+  id: string
+  name: string
+  species: "Dog" | "Cat" | "Bird" | "Rabbit" | "Fish" | "Other"
+  breed?: string
+  dateOfBirth?: string
+  microchipNumber?: string
+  color?: string
+  photoPath?: string
+  dietaryNeeds?: string
+  medications?: string
+  notes?: string
+}
+
+export type VetRecord = {
+  id: string
+  petId: string
+  petName?: string
+  date: string
+  vetName: string
+  description: string
+  cost?: number
+  nextVisit?: string
+  notes?: string
+}
+
+export type Vaccination = {
+  id: string
+  petId: string
+  petName?: string
+  name: string
+  date: string
+  nextDueDate?: string
+  vetName?: string
+  batchNumber?: string
+  notes?: string
 }
 
 // ─── Note ────────────────────────────────────────────────────────────────
