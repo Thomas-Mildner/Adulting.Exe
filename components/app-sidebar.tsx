@@ -17,6 +17,7 @@ import {
   CalendarDays,
   CreditCard,
   FileCheck,
+  Undo2,
   PawPrint,
 } from "lucide-react";
 
@@ -60,6 +61,7 @@ export function AppSidebar({ disabledModules = [] }: AppSidebarProps) {
     { key: "wishlist", title: t("wishlist"), href: "/wishlist", icon: Sparkles },
     { key: "lending", title: t("lending"), href: "/lending", icon: HandCoins },
     { key: "pets", title: t("pets"), href: "/pets", icon: PawPrint },
+    { key: "returns", title: t("returns"), href: "/returns", icon: Undo2 },
   ];
 
   const mainNav = allMainNav.filter((item) => !disabledModules.includes(item.key));

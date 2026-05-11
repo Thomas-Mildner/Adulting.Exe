@@ -28,6 +28,7 @@ const ALL_MODULES = [
   "wishlist",
   "lending",
   "pets",
+  "returns"
 ] as const;
 
 type ModuleKey = (typeof ALL_MODULES)[number];

@@ -12,6 +12,7 @@
     "lending": "Verleih",
     "contracts": "Verträge",
     "documents": "Ausweiskontrolle",
+    "returns": "Retouren",
     "pets": "Tier-Hub",
     "sidebarStatus": "Status: Haus steht (vorerst)"
   },
@@ -141,6 +142,10 @@
       "pets": {
         "title": "Tier-Hub",
         "desc": "Tierprofile, Tierarztbesuche und Impfpläne verwalten."
+      },
+      "returns": {
+        "title": "Retouren",
+        "desc": "Pakete und Rücksendungen verfolgen."
       }
     }
   },
@@ -924,6 +929,74 @@
       "person": "Möchtest du {name} wirklich löschen? Alle zugehörigen Dokumente werden gelöscht.",
       "document": "Möchtest du dieses {documentType} wirklich löschen?"
     }
+  },
+  "Returns": {
+    "title": "Der Retouren-Ranger",
+    "subtitle": "Bringt dein Geld von den Toten zurück.",
+    "addReturn": "Retoure hinzufügen",
+    "editReturn": "Retoure bearbeiten",
+    "deleteReturn": "Retoure löschen",
+    "scanToTrack": "Scannen",
+    "emptyState": "Keine Retouren? Entweder bist du ein perfekter Käufer oder du ertrinkst in Dingen, die du nicht brauchst.",
+    "searchPlaceholder": "Retouren durchsuchen...",
+    "tabs": {
+      "all": "Alle",
+      "active": "Aktiv",
+      "completed": "Abgeschlossen"
+    },
+    "table": {
+      "vendor": "Händler",
+      "trackingId": "Sendungsnummer",
+      "carrier": "Paketdienst",
+      "status": "Status",
+      "amount": "Erwarteter Betrag",
+      "returnWindow": "Rückgabefrist",
+      "actions": "Aktionen"
+    },
+    "form": {
+      "trackingId": "Sendungsnummer",
+      "trackingIdDesc": "Die eindeutige Paketkennung.",
+      "carrier": "Paketdienst",
+      "carrierPlaceholder": "Paketdienst wählen...",
+      "targetVendor": "Händler",
+      "targetVendorPlaceholder": "z.B. Amazon, Zalando, Shein...",
+      "status": "Status",
+      "statusPlaceholder": "Status wählen...",
+      "amountExpected": "Erwarteter Betrag (€)",
+      "refundReceived": "Geld erhalten?",
+      "dateSent": "Versanddatum",
+      "returnWindow": "Rückgabefrist",
+      "receiptPhoto": "Einlieferungsbeleg URL",
+      "receiptPhotoPlaceholder": "Optionales Foto vom physischen Beleg"
+    },
+    "status": {
+      "Sent": "Versendet",
+      "In Transit": "Im Abgrund (Transit)",
+      "Delivered": "Gib mir mein Geld",
+      "Refund Received": "Erstattung erhalten",
+      "Completed": "Abgeschlossen"
+    },
+    "carriers": {
+      "DHL": "DHL",
+      "UPS": "UPS",
+      "Hermes": "Hermes",
+      "GLS": "GLS",
+      "FedEx": "FedEx",
+      "Other": "Sonstige"
+    },
+    "alerts": {
+      "moneyBackTitle": "Geld zurück?",
+      "moneyBackMessage": "Es ist seit über 7 Tagen zugestellt, aber du hast noch keine Erstattung erhalten."
+    },
+    "delete": {
+      "title": "Retoure löschen?",
+      "description": "Bist du sicher? Diese Aktion kann nicht rückgängig gemacht werden.",
+      "action": "Löschen",
+      "cancel": "Abbrechen"
+    },
+    "save": "Speichern",
+    "cancel": "Abbrechen",
+    "saveError": "Fehler beim Speichern der Retoure."
   },
   "Onboarding": {
     "title": "Willkommen bei Adulting.Exe",

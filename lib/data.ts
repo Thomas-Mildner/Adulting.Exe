@@ -171,6 +171,20 @@ export type IdentityDocument = {
   notes?: string
 }
 
+export type PackageReturn = {
+  id: string
+  trackingId: string
+  carrier: string
+  targetVendor: string
+  status: string
+  amountExpected: number
+  refundReceived: boolean
+  dateSent: string
+  returnWindow: string
+  receiptPhoto?: string
+  updatedAt: string
+}
+
 export type Pet = {
   id: string
   name: string

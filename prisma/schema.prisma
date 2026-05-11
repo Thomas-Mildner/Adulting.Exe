@@ -320,3 +320,22 @@ model IdentityDocument {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
+// ─── The Return Ranger (Package & Refund Tracker) ───────────────────────
+
+model PackageReturn {
+  id             String   @id @default(cuid())
+  trackingId     String
+  carrier        String   // "DHL", "UPS", "Hermes", "GLS", "FedEx", "Other"
+  targetVendor   String
+  status         String   // "Sent", "In Transit", "Delivered", "Refund Received", "Completed"
+  amountExpected Float
+  refundReceived Boolean  @default(false)
+  
+  dateSent       DateTime
+  returnWindow   DateTime
+  receiptPhoto   String?  // Path/URL to the drop-off receipt
+  
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}

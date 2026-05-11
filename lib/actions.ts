@@ -17,6 +17,7 @@ import type {
   Notification,
   Person,
   IdentityDocument,
+  PackageReturn,
   Pet,
   VetRecord,
   Vaccination,
@@ -37,6 +38,7 @@ import type {
   Contract as PrismaContract,
   Person as PrismaPerson,
   IdentityDocument as PrismaIdentityDocument,
+  PackageReturn as PrismaPackageReturn,
   Pet as PrismaPet,
   VetRecord as PrismaVetRecord,
   Vaccination as PrismaVaccination,
@@ -838,6 +840,80 @@ export async function updateContract(id: string, data: Partial<Omit<Contract, "i
   revalidatePath("/")
 }
 
+// ─── Package Returns ────────────────────────────────────────────────────
+
+export async function getPackageReturns(): Promise<PackageReturn[]> {
+  const rows = await prisma.packageReturn.findMany({ orderBy: { createdAt: "desc" } })
+  return rows.map((r: PrismaPackageReturn) => ({
+    id: r.id,
+    trackingId: r.trackingId,
+    carrier: r.carrier,
+    targetVendor: r.targetVendor,
+    status: r.status,
+    amountExpected: r.amountExpected,
+    refundReceived: r.refundReceived,
+    dateSent: dateToStr(r.dateSent),
+    returnWindow: dateToStr(r.returnWindow),
+    receiptPhoto: r.receiptPhoto || undefined,
+    updatedAt: r.updatedAt.toISOString(),
+  }))
+}
+
+export async function createPackageReturn(data: Omit<PackageReturn, "id" | "updatedAt">) {
+  await prisma.packageReturn.create({
+    data: {
+      trackingId: data.trackingId,
+      carrier: data.carrier,
+      targetVendor: data.targetVendor,
+      status: data.status,
+      amountExpected: data.amountExpected,
+      refundReceived: data.refundReceived,
+      dateSent: new Date(data.dateSent),
+      returnWindow: new Date(data.returnWindow),
+      receiptPhoto: data.receiptPhoto || null,
+    },
+  })
+  revalidatePath("/returns")
+  revalidatePath("/")
+}
+
+export async function updatePackageReturn(id: string, data: Partial<Omit<PackageReturn, "id" | "updatedAt">>) {
+  await prisma.packageReturn.update({
+    where: { id },
+    data: {
+      ...(data.trackingId !== undefined && { trackingId: data.trackingId }),
+      ...(data.carrier !== undefined && { carrier: data.carrier }),
+      ...(data.targetVendor !== undefined && { targetVendor: data.targetVendor }),
+      ...(data.status !== undefined && { status: data.status }),
+      ...(data.amountExpected !== undefined && { amountExpected: data.amountExpected }),
+      ...(data.refundReceived !== undefined && { refundReceived: data.refundReceived }),
+      ...(data.dateSent !== undefined && { dateSent: new Date(data.dateSent) }),
+      ...(data.returnWindow !== undefined && { returnWindow: new Date(data.returnWindow) }),
+      ...(data.receiptPhoto !== undefined && { receiptPhoto: data.receiptPhoto || null }),
+    },
+  })
+  revalidatePath("/returns")
+  revalidatePath("/")
+}
+
+export async function deletePackageReturn(id: string) {
+  await prisma.packageReturn.delete({ where: { id } })
+  revalidatePath("/returns")
+  revalidatePath("/")
+}
+
+// Simulated API wrapper
+export async function fetchTrackingStatus(trackingId: string, carrier: string) {
+  // Placeholder logic for generic carrier API
+  // In a real app, you would have API specific clients checking the package status
+  // Wait to simulate network latency
+  await new Promise((resolve) => setTimeout(resolve, 800))
+  // Return random status update just for testing
+  const statuses = ["Sent", "In Transit", "Delivered"]
+  const randomStatus = statuses[Math.floor(Math.random() * statuses.length)]
+  return { trackingId, carrier, status: randomStatus }
+}
+
 export async function deleteContract(id: string) {
   await prisma.contract.delete({ where: { id } })
   revalidatePath("/contracts")
@@ -991,7 +1067,7 @@ export async function getNotifications(): Promise<Notification[]> {
   // 5. Contracts (Trial ending in 48 hours)
   const in48Hours = new Date(today)
   in48Hours.setHours(today.getHours() + 48)
-  
+
   const trials = await prisma.contract.findMany({
     where: {
       isTrial: true,
@@ -1017,7 +1093,7 @@ export async function getNotifications(): Promise<Notification[]> {
   // 5. Identity Documents (Expired or Expiring Soon)
   const sixMonthsFromNow = new Date(today)
   sixMonthsFromNow.setMonth(sixMonthsFromNow.getMonth() + 6)
-  
+
   const expiringDocuments = await prisma.identityDocument.findMany({
     where: {
       expiryDate: { lte: sixMonthsFromNow }
@@ -1030,7 +1106,7 @@ export async function getNotifications(): Promise<Notification[]> {
     const daysRemaining = Math.ceil(
       (doc.expiryDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24)
     )
-    
+
     if (daysRemaining < 0) {
       // Expired
       notifications.push({
@@ -1114,7 +1190,7 @@ export async function getPersons(): Promise<(Person & { documentCount: number })
       }
     }
   })
-  
+
   return persons.map((p) => ({
     id: p.id,
     name: p.name,
@@ -1169,7 +1245,7 @@ export async function getIdentityDocuments(personId?: string): Promise<IdentityD
     include: { person: true },
     orderBy: { expiryDate: "asc" },
   })
-  
+
   return docs.map((d) => ({
     id: d.id,
     personId: d.personId,
@@ -1194,7 +1270,7 @@ export async function getIdentityDocument(id: string): Promise<IdentityDocument 
     include: { person: true },
   })
   if (!d) return null
-  
+
   return {
     id: d.id,
     personId: d.personId,
@@ -1265,7 +1341,7 @@ export async function deleteIdentityDocument(id: string) {
 export async function getExpiringDocuments(daysThreshold: number = 180): Promise<IdentityDocument[]> {
   const thresholdDate = new Date()
   thresholdDate.setDate(thresholdDate.getDate() + daysThreshold)
-  
+
   const docs = await prisma.identityDocument.findMany({
     where: {
       expiryDate: { lte: thresholdDate }
@@ -1273,7 +1349,7 @@ export async function getExpiringDocuments(daysThreshold: number = 180): Promise
     include: { person: true },
     orderBy: { expiryDate: "asc" },
   })
-  
+
   return docs.map((d) => ({
     id: d.id,
     personId: d.personId,
