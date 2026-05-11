@@ -142,6 +142,10 @@
       "pets": {
         "title": "Pet Hub",
         "desc": "Manage pet profiles, vet records, and vaccination schedules."
+      },
+      "garage": {
+        "title": "Car Pit",
+        "desc": "Vehicle management, tire changes, and car costs."
       }
     }
   },
