@@ -1,3 +1,48 @@
+# [1.8.0-rc.11](https://github.com/Thomas-Mildner/Adulting.Exe/compare/v1.8.0-rc.10...v1.8.0-rc.11) (2026-04-12)
+
+
+### Bug Fixes
+
+* update packages to address security vulnerabilities ([4781a98](https://github.com/Thomas-Mildner/Adulting.Exe/commit/4781a98c5d87e33d29c6833f5e0b40215a9d6e8f))
+
+# [1.8.0-rc.10](https://github.com/Thomas-Mildner/Adulting.Exe/compare/v1.8.0-rc.9...v1.8.0-rc.10) (2026-04-12)
+
+
+### Bug Fixes
+
+* remove required from optional fields in onboarding, fix label translation key ([9279a99](https://github.com/Thomas-Mildner/Adulting.Exe/commit/9279a9976b81112245b8a9ab6c3b4c7069c7c46f))
+* use i18n translations for all hardcoded strings in onboarding wizard ([ee1c5c9](https://github.com/Thomas-Mildner/Adulting.Exe/commit/ee1c5c97ada56a1e5e795ccde367e10581ea3a9c))
+
+
+### Features
+
+* add onboarding wizard for new household setup ([f96d402](https://github.com/Thomas-Mildner/Adulting.Exe/commit/f96d40277f322eeb7ee365eadb39c36b3ef1544c))
+
+# [1.8.0-rc.9](https://github.com/Thomas-Mildner/Adulting.Exe/compare/v1.8.0-rc.8...v1.8.0-rc.9) (2026-04-12)
+
+
+### Bug Fixes
+
+* Add language toggle to webpage in docs ([5b6020d](https://github.com/Thomas-Mildner/Adulting.Exe/commit/5b6020d242858fb856ffeeae4a9752e52bdac0d1))
+* use captured previous state for error rollback in ModuleSettings ([ebbd3f1](https://github.com/Thomas-Mildner/Adulting.Exe/commit/ebbd3f12281bbbe8d388eb58533107920930e878))
+
+
+### Features
+
+* add module selection - enable/disable sidebar modules in settings ([5d1a01a](https://github.com/Thomas-Mildner/Adulting.Exe/commit/5d1a01ae457627336ccc4366ef317e6d942f3a57))
+
+# [1.8.0-rc.8](https://github.com/Thomas-Mildner/Adulting.Exe/compare/v1.8.0-rc.7...v1.8.0-rc.8) (2026-02-24)
+
+
+### Bug Fixes
+
+* Persist credentials during checkout in the build-and-deploy workflow ([515135c](https://github.com/Thomas-Mildner/Adulting.Exe/commit/515135c42194e014e4050be00bd394f9df597602))
+
+
+### Features
+
+* Add recurring contracts tracking module ([#26](https://github.com/Thomas-Mildner/Adulting.Exe/issues/26)) ([a53b600](https://github.com/Thomas-Mildner/Adulting.Exe/commit/a53b6007f6dbab850d028ddd34ce84b52fc7b391))
+
 # [1.8.0-rc.7](https://github.com/Thomas-Mildner/Adulting.Exe/compare/v1.8.0-rc.6...v1.8.0-rc.7) (2026-02-23)
 
 

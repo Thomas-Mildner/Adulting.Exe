@@ -12,3 +12,5 @@ node_modules/
 
 # Build artifacts
 tsconfig.tsbuildinfo
+# User uploads
+public/uploads/

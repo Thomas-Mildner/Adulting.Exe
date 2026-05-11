@@ -31,7 +31,7 @@ jobs:
 
     steps:
       - name: Checkout staging
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           ref: staging
           fetch-depth: 0
@@ -77,15 +77,15 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: '22.14.0'
 
       - name: Install pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@v5
         with:
           version: 8
 
@@ -95,7 +95,7 @@ jobs:
           echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
 
       - name: Setup pnpm cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: ${{ env.STORE_PATH }}
           key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
@@ -122,18 +122,18 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: '22.14.0'
 
       - name: Install pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@v5
         with:
           version: 8
 
@@ -158,11 +158,11 @@ jobs:
         id: check
         run: |
           git fetch --tags
-          LATEST_TAG=$(git tag --sort=-v:refname | head -n 1)
+          LATEST_TAG=$(git tag --sort=-v:refname | grep -m1 'rc\.')
           BEFORE="${{ steps.before.outputs.version }}"
           if [ -n "$LATEST_TAG" ]; then
             VERSION="${LATEST_TAG#v}"
-            echo "Latest tag: $LATEST_TAG (version: $VERSION), before: $BEFORE"
+            echo "Latest RC tag: $LATEST_TAG (version: $VERSION), before: $BEFORE"
             if [ "$VERSION" != "$BEFORE" ]; then
               echo "New release detected: $VERSION"
               echo "released=true" >> $GITHUB_OUTPUT
@@ -173,7 +173,7 @@ jobs:
               echo "version=$BEFORE" >> $GITHUB_OUTPUT
             fi
           else
-            echo "No tags found"
+            echo "No RC tags found"
             echo "released=false" >> $GITHUB_OUTPUT
             echo "version=$BEFORE" >> $GITHUB_OUTPUT
           fi
@@ -194,7 +194,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
           ref: v${{ needs.release.outputs.version }}

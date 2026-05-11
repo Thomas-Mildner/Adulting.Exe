@@ -19,6 +19,7 @@ model Appliance {
   status       String   // "protected" | "solo" | "zombie"
   brand        String
   price        Float
+  receiptPath  String?  // optional path to uploaded receipt/image
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -173,8 +174,11 @@ model WastePickup {
 // ─── App Configuration ────────────────────────────────────────────────
 
 model AppConfig {
-  id          String   @id @default("default") // Only one row
-  heatingType String   @default("Gas") // "Gas", "Oil", "Fernwärme", "Wärmepumpe", "Pellets"
+  id                       String   @id @default("default") // Only one row
+  heatingType              String   @default("Gas") // "Gas", "Oil", "Fernwärme", "Wärmepumpe", "Pellets"
+  onboardingCompleted  Boolean  @default(false)
+  disabledModules String[] @default([]) // Module keys that are hidden from the sidebar
+  tutorialCompletedModules String[] @default([]) // Module keys whose tutorial has been seen
 
   updatedAt DateTime @updatedAt
 }
@@ -227,6 +231,60 @@ model Contract {
 model NotificationRead {
   id        String   @id
   createdAt DateTime @default(now())
+}
+
+// ─── Pet Management Hub ──────────────────────────────────────────────────
+
+model Pet {
+  id              String    @id @default(cuid())
+  name            String
+  species         String    // "Dog", "Cat", "Bird", "Rabbit", "Fish", "Other"
+  breed           String?
+  dateOfBirth     DateTime?
+  microchipNumber String?
+  color           String?
+  photoPath       String?
+  dietaryNeeds    String?
+  medications     String?
+  notes           String?
+
+  vetRecords   VetRecord[]
+  vaccinations Vaccination[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model VetRecord {
+  id          String    @id @default(cuid())
+  date        DateTime
+  vetName     String
+  description String
+  cost        Float?
+  nextVisit   DateTime?
+  notes       String?
+
+  pet   Pet    @relation(fields: [petId], references: [id], onDelete: Cascade)
+  petId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Vaccination {
+  id          String    @id @default(cuid())
+  name        String
+  date        DateTime
+  nextDueDate DateTime?
+  vetName     String?
+  batchNumber String?
+  notes       String?
+
+  pet   Pet    @relation(fields: [petId], references: [id], onDelete: Cascade)
+  petId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 // ─── Identity Guard / Document Tracker ─────────────────────────────────
