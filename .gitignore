@@ -10,6 +10,9 @@ node_modules/
 .env*.local
 .DS_Store
 
+# Lock files (using pnpm)
+package-lock.json
+
 # Build artifacts
 tsconfig.tsbuildinfo
 # User uploads
