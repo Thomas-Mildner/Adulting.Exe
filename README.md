@@ -61,6 +61,14 @@ Built for people who want to know exactly where the blender's original box is lo
 * **Trust Rating:** Rate borrowers' reliability for future reference
 * **Dashboard Visualization:** See all currently lent items at a glance
 
+### 🐾 Pet Management Hub
+* **Pet Profiles:** Track all your pets with name, species, breed, color, and date of birth
+* **Microchip Numbers:** Store chip IDs for quick identification in emergencies
+* **Pet-Sitter Instructions:** Document dietary needs and current medications for easy handoffs
+* **Vet Record Tracking:** Log every veterinary visit with date, treatment, cost, and next appointment
+* **Vaccination Schedule:** Track all vaccinations with due dates — overdues flagged automatically
+* **Batch Number Logging:** Record vaccine batch numbers for full traceability
+
 ### 🪪 Identity Guard (Document Tracker)
 * **Multi-Person Tracking:** Monitor identity documents for yourself, spouse, children, and other household members
 * **Document Management:** Track IDs, Passports, Driver's Licenses, Visas, and custom documents
@@ -229,6 +237,82 @@ Navigate to [http://localhost:3000](http://localhost:3000) to see your home mana
 | `pnpm dev`   | Start development server with Turbo |
 | `pnpm build` | Build for production                |
 | `pnpm start` | Start production server             |
+
+
+---
+
+## 🚢 Deployment
+
+### Docker Compose (Recommended)
+
+The easiest way to deploy Adulting.exe is with Docker Compose. Create a `docker-compose.yml` on your server:
+
+```yaml
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: adulting-exe-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: adulting
+      POSTGRES_PASSWORD: <your-secure-password>
+      POSTGRES_DB: adulting_exe
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U adulting -d adulting_exe"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  app:
+    image: thomasmildner/adulting-exe:latest
+    container_name: adulting-exe-app
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: postgresql://adulting:<your-secure-password>@postgres:5432/adulting_exe
+    ports:
+      - "3000:3000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+volumes:
+  pgdata:
+```
+
+> **Note:** Replace `<your-secure-password>` with a strong password. Make sure the password matches in both `POSTGRES_PASSWORD` and `DATABASE_URL`.
+
+### Available Image Tags
+
+| Tag | Description |
+| --- | --- |
+| `latest` | Latest stable production release |
+| `main-latest` | Latest build from the main branch |
+| `1.2.3` | Specific semantic version |
+| `beta-latest` | Latest staging/beta build |
+| `1.8.0-rc.1` | Release candidate version |
+
+### Start the Stack
+
+```bash
+docker compose up -d
+```
+
+The app will be available at [http://localhost:3000](http://localhost:3000). On first startup, the database schema is applied automatically via Prisma migrations.
+
+### Updating
+
+Pull the latest image and restart:
+
+```bash
+docker compose pull app
+docker compose up -d
+```
 
 
 ---

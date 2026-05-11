@@ -1,688 +1,745 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Adulting.exe – Your Home Management Dashboard</title>
-    <meta
-      name="description"
-      content="Adulting.exe is a comprehensive home management dashboard for warranties, appliances, maintenance, utilities, and more."
-    />
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            fontFamily: {
-              sans: [
-                "Inter",
-                "system-ui",
-                "-apple-system",
-                "BlinkMacSystemFont",
-                "sans-serif",
-              ],
-              mono: ["JetBrains Mono", "Fira Code", "monospace"],
-            },
-            colors: {
-              brand: {
-                50: "#f0fdf4",
-                500: "#22c55e",
-                600: "#16a34a",
-              },
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Adulting.exe – Your Home Management Dashboard</title>
+  <meta name="description"
+    content="Adulting.exe is a comprehensive home management dashboard for warranties, appliances, maintenance, utilities, and more." />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: [
+              "Inter",
+              "system-ui",
+              "-apple-system",
+              "BlinkMacSystemFont",
+              "sans-serif",
+            ],
+            mono: ["JetBrains Mono", "Fira Code", "monospace"],
+          },
+          colors: {
+            brand: {
+              50: "#f0fdf4",
+              500: "#22c55e",
+              600: "#16a34a",
             },
           },
         },
-      };
-    </script>
-    <!-- Lucide Icons via CDN -->
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
-      rel="stylesheet"
-    />
-    <style>
-      html {
-        background-color: #0a0a0a;
-        color: #ededed;
-      }
-      .gradient-text {
-        background: linear-gradient(135deg, #22c55e 0%, #4ade80 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-      }
-      .hero-glow {
-        position: absolute;
-        width: 600px;
-        height: 600px;
-        border-radius: 50%;
-        background: radial-gradient(
-          circle,
+      },
+    };
+  </script>
+  <!-- Lucide Icons via CDN -->
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet" />
+  <style>
+    html {
+      background-color: #0a0a0a;
+      color: #ededed;
+    }
+
+    .gradient-text {
+      background: linear-gradient(135deg, #22c55e 0%, #4ade80 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-glow {
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle,
           rgba(34, 197, 94, 0.08) 0%,
-          transparent 70%
-        );
-        pointer-events: none;
-        top: -200px;
-        left: 50%;
-        transform: translateX(-50%);
-      }
-      .code-block {
-        background: #0d1117;
-        border: 1px solid #30363d;
-      }
-      .screenshot-img {
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-      }
-      .screenshot-img:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
-      }
-      .feature-card {
-        transition: border-color 0.2s ease, background 0.2s ease;
-      }
-      .feature-card:hover {
-        border-color: rgba(34, 197, 94, 0.4);
-        background: rgba(34, 197, 94, 0.04);
-      }
-      /* Scrollbar */
-      ::-webkit-scrollbar {
-        width: 6px;
-      }
-      ::-webkit-scrollbar-track {
-        background: #0a0a0a;
-      }
-      ::-webkit-scrollbar-thumb {
-        background: #333;
-        border-radius: 3px;
-      }
-    </style>
-  </head>
-  <body class="bg-[#0a0a0a] text-[#ededed] font-sans antialiased">
-    <!-- Navigation -->
-    <nav
-      class="fixed top-0 left-0 right-0 z-50 bg-[#0a0a0a]/80 backdrop-blur-md border-b border-white/[0.06]"
-    >
+          transparent 70%);
+      pointer-events: none;
+      top: -200px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .code-block {
+      background: #0d1117;
+      border: 1px solid #30363d;
+    }
+
+    .screenshot-img {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: zoom-in;
+    }
+
+    .screenshot-img:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+    }
+
+    /* Lightbox */
+    #lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+
+    #lightbox.open {
+      display: flex;
+    }
+
+    #lightbox-img {
+      max-width: 100%;
+      max-height: 90vh;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 32px 80px rgba(0, 0, 0, 0.8);
+      animation: lb-in 0.2s ease;
+    }
+
+    @keyframes lb-in {
+      from { opacity: 0; transform: scale(0.95); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+
+    #lightbox-close {
+      position: fixed;
+      top: 1.25rem;
+      right: 1.25rem;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #ededed;
+      border-radius: 50%;
+      width: 2.25rem;
+      height: 2.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background 0.15s ease;
+      font-size: 1.1rem;
+      line-height: 1;
+    }
+
+    #lightbox-close:hover {
+      background: rgba(255, 255, 255, 0.16);
+    }
+
+    .feature-card {
+      transition: border-color 0.2s ease, background 0.2s ease;
+    }
+
+    .feature-card:hover {
+      border-color: rgba(34, 197, 94, 0.4);
+      background: rgba(34, 197, 94, 0.04);
+    }
+
+    /* Language Switcher */
+    .lang-btn {
+      transition: all 0.15s ease;
+    }
+    .lang-btn.active {
+      background: rgba(34, 197, 94, 0.15);
+      color: #4ade80;
+      border-color: rgba(34, 197, 94, 0.3);
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #0a0a0a;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #333;
+      border-radius: 3px;
+    }
+  </style>
+</head>
+
+<body class="bg-[#0a0a0a] text-[#ededed] font-sans antialiased">
+
+  <!-- ── LIGHTBOX ──────────────────────────────────────────────────── -->
+  <div id="lightbox" role="dialog" aria-modal="true" aria-label="Screenshot preview" onclick="closeLightbox(event)">
+    <button id="lightbox-close" type="button" onclick="closeLightbox()" aria-label="Close">&#x2715;</button>
+    <img id="lightbox-img" src="" alt="" />
+  </div>
+
+  <!-- Navigation -->
+  <nav class="fixed top-0 left-0 right-0 z-50 bg-[#0a0a0a]/80 backdrop-blur-md border-b border-white/[0.06]">
+    <div class="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between">
+      <span class="font-semibold text-sm tracking-tight">
+        🏠 Adulting<span class="text-green-400">.exe</span>
+      </span>
+      <div class="flex items-center gap-6">
+        <a href="#features"
+          class="text-xs text-zinc-400 hover:text-white transition-colors hidden sm:block" data-i18n="nav.features">Features</a>
+        <a href="#screenshots"
+          class="text-xs text-zinc-400 hover:text-white transition-colors hidden sm:block" data-i18n="nav.screenshots">Screenshots</a>
+        <a href="#quickstart" class="text-xs text-zinc-400 hover:text-white transition-colors hidden sm:block" data-i18n="nav.quickstart">Quick
+          Start</a>
+
+        <!-- Language Switcher -->
+        <div class="flex items-center border border-white/[0.08] rounded-md overflow-hidden">
+          <button onclick="setLang('en')" id="lang-en"
+            class="lang-btn text-[11px] font-medium px-2 py-1.5 text-zinc-400 hover:text-white border-r border-white/[0.08] active">
+            EN
+          </button>
+          <button onclick="setLang('de')" id="lang-de"
+            class="lang-btn text-[11px] font-medium px-2 py-1.5 text-zinc-400 hover:text-white">
+            DE
+          </button>
+        </div>
+
+        <a href="https://github.com/Thomas-Mildner/Adulting.Exe" target="_blank" rel="noopener noreferrer"
+          class="flex items-center gap-1.5 text-xs bg-white/[0.06] hover:bg-white/[0.10] border border-white/[0.08] px-3 py-1.5 rounded-md transition-colors">
+          <i data-lucide="github" class="w-3.5 h-3.5"></i>
+          GitHub
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ── HERO ───────────────────────────────────────────────────────── -->
+  <section
+    class="relative min-h-screen flex flex-col items-center justify-center text-center px-6 pt-20 pb-24 overflow-hidden">
+    <div class="hero-glow"></div>
+
+    <div class="relative z-10 max-w-3xl mx-auto">
       <div
-        class="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between"
-      >
-        <span class="font-semibold text-sm tracking-tight">
-          🏠 Adulting<span class="text-green-400">.exe</span>
-        </span>
-        <div class="flex items-center gap-6">
-          <a
-            href="#features"
-            class="text-xs text-zinc-400 hover:text-white transition-colors hidden sm:block"
-            >Features</a
-          >
-          <a
-            href="#screenshots"
-            class="text-xs text-zinc-400 hover:text-white transition-colors hidden sm:block"
-            >Screenshots</a
-          >
-          <a
-            href="#quickstart"
-            class="text-xs text-zinc-400 hover:text-white transition-colors hidden sm:block"
-            >Quick Start</a
-          >
-          <a
-            href="https://github.com/Thomas-Mildner/Adulting.Exe"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="flex items-center gap-1.5 text-xs bg-white/[0.06] hover:bg-white/[0.10] border border-white/[0.08] px-3 py-1.5 rounded-md transition-colors"
-          >
-            <i data-lucide="github" class="w-3.5 h-3.5"></i>
-            GitHub
-          </a>
+        class="inline-flex items-center gap-2 text-xs text-green-400 bg-green-400/10 border border-green-400/20 px-3 py-1 rounded-full mb-8">
+        <i data-lucide="home" class="w-3.5 h-3.5"></i>
+        <span data-i18n="hero.badge">Your Home. Finally Under Control.</span>
+      </div>
+
+      <h1 class="text-5xl sm:text-6xl md:text-7xl font-extrabold tracking-tight leading-[1.05] mb-6" data-i18n-html="hero.title">
+        Because your house<br />
+        <span class="gradient-text">didn't come with a manual.</span>
+      </h1>
+
+      <p class="text-lg sm:text-xl text-zinc-400 max-w-xl mx-auto leading-relaxed mb-10" data-i18n="hero.subtitle">
+        Adulting.exe is the all-in-one home management dashboard that tracks
+        warranties, appliances, maintenance, utilities, documents, and more —
+        so you're always prepared.
+      </p>
+
+      <div class="flex flex-col sm:flex-row gap-3 justify-center">
+        <a href="https://github.com/Thomas-Mildner/Adulting.Exe" target="_blank" rel="noopener noreferrer"
+          class="inline-flex items-center justify-center gap-2 bg-green-500 hover:bg-green-400 text-black font-semibold text-sm px-6 py-3 rounded-lg transition-colors">
+          <i data-lucide="github" class="w-4 h-4"></i>
+          <span data-i18n="hero.github">View on GitHub</span>
+        </a>
+        <a href="#quickstart"
+          class="inline-flex items-center justify-center gap-2 bg-white/[0.06] hover:bg-white/[0.10] border border-white/[0.08] text-sm px-6 py-3 rounded-lg transition-colors">
+          <i data-lucide="terminal" class="w-4 h-4"></i>
+          <span data-i18n="hero.quickstart">Quick Start</span>
+        </a>
+      </div>
+
+      <!-- Tech Stack Badges -->
+      <div class="mt-16 flex flex-wrap items-center justify-center gap-2">
+        <span
+          class="text-xs text-zinc-500 bg-white/[0.04] border border-white/[0.06] px-2.5 py-1 rounded-full">Next.js</span>
+        <span
+          class="text-xs text-zinc-500 bg-white/[0.04] border border-white/[0.06] px-2.5 py-1 rounded-full">React</span>
+        <span
+          class="text-xs text-zinc-500 bg-white/[0.04] border border-white/[0.06] px-2.5 py-1 rounded-full">TypeScript</span>
+        <span class="text-xs text-zinc-500 bg-white/[0.04] border border-white/[0.06] px-2.5 py-1 rounded-full">Tailwind
+          CSS</span>
+        <span
+          class="text-xs text-zinc-500 bg-white/[0.04] border border-white/[0.06] px-2.5 py-1 rounded-full">Shadcn/UI</span>
+        <span
+          class="text-xs text-zinc-500 bg-white/[0.04] border border-white/[0.06] px-2.5 py-1 rounded-full">PostgreSQL</span>
+        <span
+          class="text-xs text-zinc-500 bg-white/[0.04] border border-white/[0.06] px-2.5 py-1 rounded-full">Prisma</span>
+        <span
+          class="text-xs text-zinc-500 bg-white/[0.04] border border-white/[0.06] px-2.5 py-1 rounded-full">Docker</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── MOTIVATION ─────────────────────────────────────────────────── -->
+  <section class="py-24 px-6 border-t border-white/[0.06]">
+    <div class="max-w-4xl mx-auto">
+      <div class="max-w-2xl">
+        <h2 class="text-3xl sm:text-4xl font-bold tracking-tight mb-6" data-i18n-html="motivation.title">
+          Why <span class="gradient-text">Adulting.exe?</span>
+        </h2>
+        <div class="space-y-5 text-zinc-400 text-base leading-relaxed">
+          <p data-i18n="motivation.p1">
+            Where's the warranty for that dishwasher you bought three years
+            ago? Who was the plumber you called last winter — and how much did
+            it cost? When does your passport expire? Most households answer
+            these questions with a mix of email searches, drawer rummaging, and
+            mild panic.
+          </p>
+          <p data-i18n="motivation.p2">
+            Adulting.exe was built to eliminate that chaos. It's a single,
+            private dashboard where everything about your home lives: every
+            appliance with its warranty status, every service call with its
+            invoice, every utility reading with its trend chart, every identity
+            document with its expiry countdown.
+          </p>
+          <p data-i18n="motivation.p3">
+            The vision is simple — give homeowners the clarity and confidence
+            that the house is under control, at a glance, on any device.
+            Because adulting shouldn't require a degree in spreadsheet
+            management.
+          </p>
         </div>
       </div>
-    </nav>
+    </div>
+  </section>
 
-    <!-- ── HERO ───────────────────────────────────────────────────────── -->
-    <section
-      class="relative min-h-screen flex flex-col items-center justify-center text-center px-6 pt-20 pb-24 overflow-hidden"
-    >
-      <div class="hero-glow"></div>
-
-      <div class="relative z-10 max-w-3xl mx-auto">
-        <div
-          class="inline-flex items-center gap-2 text-xs text-green-400 bg-green-400/10 border border-green-400/20 px-3 py-1 rounded-full mb-8"
-        >
-          <i data-lucide="home" class="w-3.5 h-3.5"></i>
-          Your Home. Finally Under Control.
-        </div>
-
-        <h1
-          class="text-5xl sm:text-6xl md:text-7xl font-extrabold tracking-tight leading-[1.05] mb-6"
-        >
-          Because your house<br />
-          <span class="gradient-text">didn't come with a manual.</span>
-        </h1>
-
-        <p
-          class="text-lg sm:text-xl text-zinc-400 max-w-xl mx-auto leading-relaxed mb-10"
-        >
-          Adulting.exe is the all-in-one home management dashboard that tracks
-          warranties, appliances, maintenance, utilities, documents, and more —
-          so you're always prepared.
+  <!-- ── FEATURES ───────────────────────────────────────────────────── -->
+  <section id="features" class="py-24 px-6 border-t border-white/[0.06]">
+    <div class="max-w-6xl mx-auto">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl sm:text-4xl font-bold tracking-tight mb-4" data-i18n="features.title">
+          Everything your home needs
+        </h2>
+        <p class="text-zinc-400 text-base max-w-xl mx-auto" data-i18n="features.subtitle">
+          Nine purpose-built modules, one cohesive dashboard.
         </p>
-
-        <div class="flex flex-col sm:flex-row gap-3 justify-center">
-          <a
-            href="https://github.com/Thomas-Mildner/Adulting.Exe"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="inline-flex items-center justify-center gap-2 bg-green-500 hover:bg-green-400 text-black font-semibold text-sm px-6 py-3 rounded-lg transition-colors"
-          >
-            <i data-lucide="github" class="w-4 h-4"></i>
-            View on GitHub
-          </a>
-          <a
-            href="#quickstart"
-            class="inline-flex items-center justify-center gap-2 bg-white/[0.06] hover:bg-white/[0.10] border border-white/[0.08] text-sm px-6 py-3 rounded-lg transition-colors"
-          >
-            <i data-lucide="terminal" class="w-4 h-4"></i>
-            Quick Start
-          </a>
-        </div>
-
-        <!-- Tech Stack Badges -->
-        <div class="mt-16 flex flex-wrap items-center justify-center gap-2">
-          <span
-            class="text-xs text-zinc-500 bg-white/[0.04] border border-white/[0.06] px-2.5 py-1 rounded-full"
-            >Next.js</span
-          >
-          <span
-            class="text-xs text-zinc-500 bg-white/[0.04] border border-white/[0.06] px-2.5 py-1 rounded-full"
-            >React</span
-          >
-          <span
-            class="text-xs text-zinc-500 bg-white/[0.04] border border-white/[0.06] px-2.5 py-1 rounded-full"
-            >TypeScript</span
-          >
-          <span
-            class="text-xs text-zinc-500 bg-white/[0.04] border border-white/[0.06] px-2.5 py-1 rounded-full"
-            >Tailwind CSS</span
-          >
-          <span
-            class="text-xs text-zinc-500 bg-white/[0.04] border border-white/[0.06] px-2.5 py-1 rounded-full"
-            >Shadcn/UI</span
-          >
-          <span
-            class="text-xs text-zinc-500 bg-white/[0.04] border border-white/[0.06] px-2.5 py-1 rounded-full"
-            >PostgreSQL</span
-          >
-          <span
-            class="text-xs text-zinc-500 bg-white/[0.04] border border-white/[0.06] px-2.5 py-1 rounded-full"
-            >Prisma</span
-          >
-          <span
-            class="text-xs text-zinc-500 bg-white/[0.04] border border-white/[0.06] px-2.5 py-1 rounded-full"
-            >Docker</span
-          >
-        </div>
       </div>
-    </section>
 
-    <!-- ── MOTIVATION ─────────────────────────────────────────────────── -->
-    <section class="py-24 px-6 border-t border-white/[0.06]">
-      <div class="max-w-4xl mx-auto">
-        <div class="max-w-2xl">
-          <h2 class="text-3xl sm:text-4xl font-bold tracking-tight mb-6">
-            Why <span class="gradient-text">Adulting.exe?</span>
-          </h2>
-          <div class="space-y-5 text-zinc-400 text-base leading-relaxed">
-            <p>
-              Where's the warranty for that dishwasher you bought three years
-              ago? Who was the plumber you called last winter — and how much did
-              it cost? When does your passport expire? Most households answer
-              these questions with a mix of email searches, drawer rummaging, and
-              mild panic.
-            </p>
-            <p>
-              Adulting.exe was built to eliminate that chaos. It's a single,
-              private dashboard where everything about your home lives: every
-              appliance with its warranty status, every service call with its
-              invoice, every utility reading with its trend chart, every identity
-              document with its expiry countdown.
-            </p>
-            <p>
-              The vision is simple — give homeowners the clarity and confidence
-              that the house is under control, at a glance, on any device.
-              Because adulting shouldn't require a degree in spreadsheet
-              management.
-            </p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <!-- Card 1 -->
+        <div class="feature-card bg-white/[0.03] border border-white/[0.07] rounded-xl p-6">
+          <div
+            class="w-10 h-10 rounded-lg bg-green-400/10 border border-green-400/20 flex items-center justify-center mb-4">
+            <i data-lucide="package" class="w-5 h-5 text-green-400"></i>
           </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ── FEATURES ───────────────────────────────────────────────────── -->
-    <section id="features" class="py-24 px-6 border-t border-white/[0.06]">
-      <div class="max-w-6xl mx-auto">
-        <div class="text-center mb-16">
-          <h2 class="text-3xl sm:text-4xl font-bold tracking-tight mb-4">
-            Everything your home needs
-          </h2>
-          <p class="text-zinc-400 text-base max-w-xl mx-auto">
-            Nine purpose-built modules, one cohesive dashboard.
+          <h3 class="font-semibold text-sm mb-2" data-i18n="feature.vault.title">Vault — Warranty Tracker</h3>
+          <p class="text-zinc-500 text-sm leading-relaxed" data-i18n="feature.vault.desc">
+            Catalog every appliance with purchase dates, brands, and warranty
+            status. Know exactly when you're protected — and when you're flying
+            solo.
           </p>
         </div>
 
-        <div
-          class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
-        >
-          <!-- Card 1 -->
+        <!-- Card 2 -->
+        <div class="feature-card bg-white/[0.03] border border-white/[0.07] rounded-xl p-6">
           <div
-            class="feature-card bg-white/[0.03] border border-white/[0.07] rounded-xl p-6"
-          >
-            <div
-              class="w-10 h-10 rounded-lg bg-green-400/10 border border-green-400/20 flex items-center justify-center mb-4"
-            >
-              <i data-lucide="package" class="w-5 h-5 text-green-400"></i>
-            </div>
-            <h3 class="font-semibold text-sm mb-2">Vault — Warranty Tracker</h3>
-            <p class="text-zinc-500 text-sm leading-relaxed">
-              Catalog every appliance with purchase dates, brands, and warranty
-              status. Know exactly when you're protected — and when you're flying
-              solo.
-            </p>
+            class="w-10 h-10 rounded-lg bg-green-400/10 border border-green-400/20 flex items-center justify-center mb-4">
+            <i data-lucide="wrench" class="w-5 h-5 text-green-400"></i>
           </div>
-
-          <!-- Card 2 -->
-          <div
-            class="feature-card bg-white/[0.03] border border-white/[0.07] rounded-xl p-6"
-          >
-            <div
-              class="w-10 h-10 rounded-lg bg-green-400/10 border border-green-400/20 flex items-center justify-center mb-4"
-            >
-              <i data-lucide="wrench" class="w-5 h-5 text-green-400"></i>
-            </div>
-            <h3 class="font-semibold text-sm mb-2">Services & Invoicing</h3>
-            <p class="text-zinc-500 text-sm leading-relaxed">
-              Maintain a searchable directory of contractors with ratings,
-              contact details, full service history, and tax-deductible invoice
-              storage.
-            </p>
-          </div>
-
-          <!-- Card 3 -->
-          <div
-            class="feature-card bg-white/[0.03] border border-white/[0.07] rounded-xl p-6"
-          >
-            <div
-              class="w-10 h-10 rounded-lg bg-green-400/10 border border-green-400/20 flex items-center justify-center mb-4"
-            >
-              <i data-lucide="clipboard-list" class="w-5 h-5 text-green-400"></i>
-            </div>
-            <h3 class="font-semibold text-sm mb-2">Maintenance Management</h3>
-            <p class="text-zinc-500 text-sm leading-relaxed">
-              Create tasks with due dates and priority levels. Set up recurring
-              reminders for filter changes, inspections, and seasonal upkeep.
-            </p>
-          </div>
-
-          <!-- Card 4 -->
-          <div
-            class="feature-card bg-white/[0.03] border border-white/[0.07] rounded-xl p-6"
-          >
-            <div
-              class="w-10 h-10 rounded-lg bg-green-400/10 border border-green-400/20 flex items-center justify-center mb-4"
-            >
-              <i data-lucide="zap" class="w-5 h-5 text-green-400"></i>
-            </div>
-            <h3 class="font-semibold text-sm mb-2">Utility Tracker</h3>
-            <p class="text-zinc-500 text-sm leading-relaxed">
-              Log meter readings for electricity, water, and heating. Interactive
-              charts reveal consumption trends and help identify cost-saving
-              patterns.
-            </p>
-          </div>
-
-          <!-- Card 5 -->
-          <div
-            class="feature-card bg-white/[0.03] border border-white/[0.07] rounded-xl p-6"
-          >
-            <div
-              class="w-10 h-10 rounded-lg bg-green-400/10 border border-green-400/20 flex items-center justify-center mb-4"
-            >
-              <i data-lucide="trash-2" class="w-5 h-5 text-green-400"></i>
-            </div>
-            <h3 class="font-semibold text-sm mb-2">Waste Calendar</h3>
-            <p class="text-zinc-500 text-sm leading-relaxed">
-              Manage pickup schedules for all waste types with color-coded
-              categories. A dashboard widget shows your next collection day at a
-              glance.
-            </p>
-          </div>
-
-          <!-- Card 6 -->
-          <div
-            class="feature-card bg-white/[0.03] border border-white/[0.07] rounded-xl p-6"
-          >
-            <div
-              class="w-10 h-10 rounded-lg bg-green-400/10 border border-green-400/20 flex items-center justify-center mb-4"
-            >
-              <i data-lucide="badge-check" class="w-5 h-5 text-green-400"></i>
-            </div>
-            <h3 class="font-semibold text-sm mb-2">Identity Guard</h3>
-            <p class="text-zinc-500 text-sm leading-relaxed">
-              Track IDs, passports, and driver's licenses for every household
-              member with expiry countdowns, smart reminders, and an emergency
-              guide.
-            </p>
-          </div>
-
-          <!-- Card 7 -->
-          <div
-            class="feature-card bg-white/[0.03] border border-white/[0.07] rounded-xl p-6"
-          >
-            <div
-              class="w-10 h-10 rounded-lg bg-green-400/10 border border-green-400/20 flex items-center justify-center mb-4"
-            >
-              <i data-lucide="hand-coins" class="w-5 h-5 text-green-400"></i>
-            </div>
-            <h3 class="font-semibold text-sm mb-2">Lend-O-Meter</h3>
-            <p class="text-zinc-500 text-sm leading-relaxed">
-              Track tools and items lent to others. Record borrowers, expected
-              return dates, and reliability ratings so nothing goes missing for
-              good.
-            </p>
-          </div>
-
-          <!-- Card 8 -->
-          <div
-            class="feature-card bg-white/[0.03] border border-white/[0.07] rounded-xl p-6"
-          >
-            <div
-              class="w-10 h-10 rounded-lg bg-green-400/10 border border-green-400/20 flex items-center justify-center mb-4"
-            >
-              <i data-lucide="target" class="w-5 h-5 text-green-400"></i>
-            </div>
-            <h3 class="font-semibold text-sm mb-2">Wishlist & Projects</h3>
-            <p class="text-zinc-500 text-sm leading-relaxed">
-              Plan future renovations with estimated budgets, urgency levels, and
-              progress bars. Turn vague dreams into tracked savings goals.
-            </p>
-          </div>
-
-          <!-- Card 9 -->
-          <div
-            class="feature-card bg-white/[0.03] border border-white/[0.07] rounded-xl p-6"
-          >
-            <div
-              class="w-10 h-10 rounded-lg bg-green-400/10 border border-green-400/20 flex items-center justify-center mb-4"
-            >
-              <i data-lucide="book-open" class="w-5 h-5 text-green-400"></i>
-            </div>
-            <h3 class="font-semibold text-sm mb-2">Knowledge Base</h3>
-            <p class="text-zinc-500 text-sm leading-relaxed">
-              Store manuals, guides, and how-to notes in a searchable library.
-              Categorized by Heating, Plumbing, Smart Home, Structural, or
-              General.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ── SCREENSHOTS ─────────────────────────────────────────────────── -->
-    <section
-      id="screenshots"
-      class="py-24 px-6 border-t border-white/[0.06]"
-    >
-      <div class="max-w-6xl mx-auto">
-        <div class="text-center mb-16">
-          <h2 class="text-3xl sm:text-4xl font-bold tracking-tight mb-4">
-            See it in action
-          </h2>
-          <p class="text-zinc-400 text-base max-w-xl mx-auto">
-            All screenshots were captured using the seeded demo data.
+          <h3 class="font-semibold text-sm mb-2" data-i18n="feature.services.title">Services & Invoicing</h3>
+          <p class="text-zinc-500 text-sm leading-relaxed" data-i18n="feature.services.desc">
+            Maintain a searchable directory of contractors with ratings,
+            contact details, full service history, and tax-deductible invoice
+            storage.
           </p>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <!-- Dashboard -->
-          <div class="col-span-1 md:col-span-2">
-            <div
-              class="screenshot-img overflow-hidden rounded-xl border border-white/[0.07] bg-zinc-900"
-            >
-              <img
-                src="images/01-dashboard.png"
-                alt="Adulting.exe Dashboard overview"
-                class="w-full object-cover"
-                loading="lazy"
-              />
-            </div>
-            <p class="mt-3 text-xs text-zinc-500 text-center">
-              🏡 <strong class="text-zinc-300">Dashboard</strong> — House health
-              status, quick stats, and fast access tiles for every module
-            </p>
+        <!-- Card 3 -->
+        <div class="feature-card bg-white/[0.03] border border-white/[0.07] rounded-xl p-6">
+          <div
+            class="w-10 h-10 rounded-lg bg-green-400/10 border border-green-400/20 flex items-center justify-center mb-4">
+            <i data-lucide="clipboard-list" class="w-5 h-5 text-green-400"></i>
           </div>
+          <h3 class="font-semibold text-sm mb-2" data-i18n="feature.maintenance.title">Maintenance Management</h3>
+          <p class="text-zinc-500 text-sm leading-relaxed" data-i18n="feature.maintenance.desc">
+            Create tasks with due dates and priority levels. Set up recurring
+            reminders for filter changes, inspections, and seasonal upkeep.
+          </p>
+        </div>
 
-          <!-- Vault -->
-          <div>
-            <div
-              class="screenshot-img overflow-hidden rounded-xl border border-white/[0.07] bg-zinc-900"
-            >
-              <img
-                src="images/02-vault.png"
-                alt="Appliance vault and warranty tracker"
-                class="w-full object-cover"
-                loading="lazy"
-              />
-            </div>
-            <p class="mt-3 text-xs text-zinc-500 text-center">
-              📦 <strong class="text-zinc-300">Vault</strong> — Appliance
-              inventory with warranty status badges and box-locator notes
-            </p>
+        <!-- Card 4 -->
+        <div class="feature-card bg-white/[0.03] border border-white/[0.07] rounded-xl p-6">
+          <div
+            class="w-10 h-10 rounded-lg bg-green-400/10 border border-green-400/20 flex items-center justify-center mb-4">
+            <i data-lucide="zap" class="w-5 h-5 text-green-400"></i>
           </div>
+          <h3 class="font-semibold text-sm mb-2" data-i18n="feature.utility.title">Utility Tracker</h3>
+          <p class="text-zinc-500 text-sm leading-relaxed" data-i18n="feature.utility.desc">
+            Log meter readings for electricity, water, and heating. Interactive
+            charts reveal consumption trends and help identify cost-saving
+            patterns.
+          </p>
+        </div>
 
-          <!-- Services -->
-          <div>
-            <div
-              class="screenshot-img overflow-hidden rounded-xl border border-white/[0.07] bg-zinc-900"
-            >
-              <img
-                src="images/03-services.png"
-                alt="Service team and invoice management"
-                class="w-full object-cover"
-                loading="lazy"
-              />
-            </div>
-            <p class="mt-3 text-xs text-zinc-500 text-center">
-              🛠️ <strong class="text-zinc-300">Service Team</strong> — Contractor
-              directory, service history, and tax-deductible invoice storage
-            </p>
+        <!-- Card 5 -->
+        <div class="feature-card bg-white/[0.03] border border-white/[0.07] rounded-xl p-6">
+          <div
+            class="w-10 h-10 rounded-lg bg-green-400/10 border border-green-400/20 flex items-center justify-center mb-4">
+            <i data-lucide="trash-2" class="w-5 h-5 text-green-400"></i>
           </div>
+          <h3 class="font-semibold text-sm mb-2" data-i18n="feature.waste.title">Waste Calendar</h3>
+          <p class="text-zinc-500 text-sm leading-relaxed" data-i18n="feature.waste.desc">
+            Manage pickup schedules for all waste types with color-coded
+            categories. A dashboard widget shows your next collection day at a
+            glance.
+          </p>
+        </div>
 
-          <!-- Identity Guard -->
-          <div>
-            <div
-              class="screenshot-img overflow-hidden rounded-xl border border-white/[0.07] bg-zinc-900"
-            >
-              <img
-                src="images/04-identity-guard.png"
-                alt="Identity document tracker"
-                class="w-full object-cover"
-                loading="lazy"
-              />
-            </div>
-            <p class="mt-3 text-xs text-zinc-500 text-center">
-              🪪 <strong class="text-zinc-300">Identity Guard</strong> — Document
-              expiry monitoring with smart reminders and emergency guides
-            </p>
+        <!-- Card 6 -->
+        <div class="feature-card bg-white/[0.03] border border-white/[0.07] rounded-xl p-6">
+          <div
+            class="w-10 h-10 rounded-lg bg-green-400/10 border border-green-400/20 flex items-center justify-center mb-4">
+            <i data-lucide="badge-check" class="w-5 h-5 text-green-400"></i>
           </div>
+          <h3 class="font-semibold text-sm mb-2" data-i18n="feature.identity.title">Identity Guard</h3>
+          <p class="text-zinc-500 text-sm leading-relaxed" data-i18n="feature.identity.desc">
+            Track IDs, passports, and driver's licenses for every household
+            member with expiry countdowns, smart reminders, and an emergency
+            guide.
+          </p>
+        </div>
 
-          <!-- Maintenance -->
-          <div>
-            <div
-              class="screenshot-img overflow-hidden rounded-xl border border-white/[0.07] bg-zinc-900"
-            >
-              <img
-                src="images/05-maintenance.png"
-                alt="Maintenance task management"
-                class="w-full object-cover"
-                loading="lazy"
-              />
-            </div>
-            <p class="mt-3 text-xs text-zinc-500 text-center">
-              🔧 <strong class="text-zinc-300">Maintenance</strong> — Task list
-              with priority levels, recurring schedules, and completion tracking
-            </p>
+        <!-- Card 7 -->
+        <div class="feature-card bg-white/[0.03] border border-white/[0.07] rounded-xl p-6">
+          <div
+            class="w-10 h-10 rounded-lg bg-green-400/10 border border-green-400/20 flex items-center justify-center mb-4">
+            <i data-lucide="hand-coins" class="w-5 h-5 text-green-400"></i>
           </div>
+          <h3 class="font-semibold text-sm mb-2" data-i18n="feature.lending.title">Lend-O-Meter</h3>
+          <p class="text-zinc-500 text-sm leading-relaxed" data-i18n="feature.lending.desc">
+            Track tools and items lent to others. Record borrowers, expected
+            return dates, and reliability ratings so nothing goes missing for
+            good.
+          </p>
+        </div>
 
-          <!-- Utilities -->
-          <div>
-            <div
-              class="screenshot-img overflow-hidden rounded-xl border border-white/[0.07] bg-zinc-900"
-            >
-              <img
-                src="images/06-utilities.png"
-                alt="Utility usage and cost tracker"
-                class="w-full object-cover"
-                loading="lazy"
-              />
-            </div>
-            <p class="mt-3 text-xs text-zinc-500 text-center">
-              📉 <strong class="text-zinc-300">Utilities</strong> — Monthly
-              meter readings and interactive cost-trend charts
-            </p>
+        <!-- Card 8 -->
+        <div class="feature-card bg-white/[0.03] border border-white/[0.07] rounded-xl p-6">
+          <div
+            class="w-10 h-10 rounded-lg bg-green-400/10 border border-green-400/20 flex items-center justify-center mb-4">
+            <i data-lucide="target" class="w-5 h-5 text-green-400"></i>
           </div>
+          <h3 class="font-semibold text-sm mb-2" data-i18n="feature.wishlist.title">Wishlist & Projects</h3>
+          <p class="text-zinc-500 text-sm leading-relaxed" data-i18n="feature.wishlist.desc">
+            Plan future renovations with estimated budgets, urgency levels, and
+            progress bars. Turn vague dreams into tracked savings goals.
+          </p>
+        </div>
 
-          <!-- Wishlist -->
-          <div>
-            <div
-              class="screenshot-img overflow-hidden rounded-xl border border-white/[0.07] bg-zinc-900"
-            >
-              <img
-                src="images/07-wishlist.png"
-                alt="Home project wishlist and budget tracker"
-                class="w-full object-cover"
-                loading="lazy"
-              />
-            </div>
-            <p class="mt-3 text-xs text-zinc-500 text-center">
-              🎯 <strong class="text-zinc-300">Wishlist</strong> — Project
-              planning with budget goals and urgency prioritization
-            </p>
+        <!-- Card 9 -->
+        <div class="feature-card bg-white/[0.03] border border-white/[0.07] rounded-xl p-6">
+          <div
+            class="w-10 h-10 rounded-lg bg-green-400/10 border border-green-400/20 flex items-center justify-center mb-4">
+            <i data-lucide="book-open" class="w-5 h-5 text-green-400"></i>
           </div>
+          <h3 class="font-semibold text-sm mb-2" data-i18n="feature.knowledge.title">Knowledge Base</h3>
+          <p class="text-zinc-500 text-sm leading-relaxed" data-i18n="feature.knowledge.desc">
+            Store manuals, guides, and how-to notes in a searchable library.
+            Categorized by Heating, Plumbing, Smart Home, Structural, or
+            General.
+          </p>
+        </div>
+
+        <!-- Card 10 -->
+        <div class="feature-card bg-white/[0.03] border border-white/[0.07] rounded-xl p-6">
+          <div
+            class="w-10 h-10 rounded-lg bg-green-400/10 border border-green-400/20 flex items-center justify-center mb-4">
+            <i data-lucide="credit-card" class="w-5 h-5 text-green-400"></i>
+          </div>
+          <h3 class="font-semibold text-sm mb-2" data-i18n="feature.payments.title">Recurring Payments</h3>
+          <p class="text-zinc-500 text-sm leading-relaxed" data-i18n="feature.payments.desc">
+            Track subscriptions and fixed-term contracts. Get alerts for trial
+            expirations, see wasted costs via the "Regret Meter", and generate
+            automated cancellation letters.
+          </p>
+        </div>
+
+        <!-- Card 11 (Outdoor & Garden) -->
+        <div class="feature-card bg-white/[0.03] border border-white/[0.07] rounded-xl p-6">
+          <div
+            class="w-10 h-10 rounded-lg bg-green-400/10 border border-green-400/20 flex items-center justify-center mb-4">
+            <i data-lucide="tree-pine" class="w-5 h-5 text-green-400"></i>
+          </div>
+          <h3 class="font-semibold text-sm mb-2" data-i18n="feature.outdoor.title">Outdoor & Garden</h3>
+          <p class="text-zinc-500 text-sm leading-relaxed" data-i18n="feature.outdoor.desc">
+            Track your living inventory. From plant species and watering schedules to soil treatments, irrigation zones, and landscaping galleries.
+          </p>
+        </div>
+
+        <!-- Card: Pet Management Hub -->
+        <div class="feature-card bg-white/[0.03] border border-white/[0.07] rounded-xl p-6">
+          <div
+            class="w-10 h-10 rounded-lg bg-orange-400/10 border border-orange-400/20 flex items-center justify-center mb-4">
+            <i data-lucide="paw-print" class="w-5 h-5 text-orange-400"></i>
+          </div>
+          <h3 class="font-semibold text-sm mb-2" data-i18n="feature.pets.title">Pet Management Hub</h3>
+          <p class="text-zinc-500 text-sm leading-relaxed" data-i18n="feature.pets.desc">
+            Track vet records, vaccination schedules, and microchip numbers. Store pet-sitter instructions with dietary needs and medications for every pet.
+          </p>
+        </div>
+
+        <!-- Card 12 (Room Chronicles) -->
+        <!-- Card 11 (Room Chronicles) -->
+        <div class="feature-card bg-white/[0.03] border border-white/[0.07] rounded-xl p-6 relative overflow-hidden">
+          <div class="flex items-center justify-between mb-4">
+            <div class="w-10 h-10 rounded-lg bg-zinc-400/10 border border-zinc-400/20 flex items-center justify-center">
+              <i data-lucide="door-open" class="w-5 h-5 text-zinc-400"></i>
+            </div>
+            <span
+              class="text-[10px] font-bold uppercase tracking-widest text-zinc-500 bg-zinc-500/10 border border-zinc-500/20 px-2 py-0.5 rounded" data-i18n="feature.soon">Soon</span>
+          </div>
+          <h3 class="font-semibold text-sm mb-2" data-i18n="feature.rooms.title">Room Chronicles</h3>
+          <p class="text-zinc-500 text-sm leading-relaxed" data-i18n="feature.rooms.desc">
+            Room-level event tracking with flexible storage for maintenance, aesthetics, and incidents. Log paint jobs,
+            repairs, and modifications with searchable history.
+          </p>
+        </div>
+
+        <!-- Card 12 (Insurance Management) -->
+        <div class="feature-card bg-white/[0.03] border border-white/[0.07] rounded-xl p-6 relative overflow-hidden">
+          <div class="flex items-center justify-between mb-4">
+            <div class="w-10 h-10 rounded-lg bg-zinc-400/10 border border-zinc-400/20 flex items-center justify-center">
+              <i data-lucide="shield" class="w-5 h-5 text-zinc-400"></i>
+            </div>
+            <span
+              class="text-[10px] font-bold uppercase tracking-widest text-zinc-500 bg-zinc-500/10 border border-zinc-500/20 px-2 py-0.5 rounded" data-i18n="feature.soon2">Soon</span>
+          </div>
+          <h3 class="font-semibold text-sm mb-2" data-i18n="feature.insurance.title">Insurance Hub</h3>
+          <p class="text-zinc-500 text-sm leading-relaxed" data-i18n="feature.insurance.desc">
+            Comprehensive policy management. Track premiums, deadlines, and coverage across all policy types to ensure
+            you're never under-insured.
+          </p>
+        </div>
+
+        <!-- Card 13 (Car Pit) -->
+        <div class="feature-card bg-white/[0.03] border border-white/[0.07] rounded-xl p-6 relative overflow-hidden">
+          <div class="flex items-center justify-between mb-4">
+            <div class="w-10 h-10 rounded-lg bg-zinc-400/10 border border-zinc-400/20 flex items-center justify-center">
+              <i data-lucide="car" class="w-5 h-5 text-zinc-400"></i>
+            </div>
+            <span
+              class="text-[10px] font-bold uppercase tracking-widest text-zinc-500 bg-zinc-500/10 border border-zinc-500/20 px-2 py-0.5 rounded" data-i18n="feature.soon3">Soon</span>
+          </div>
+          <h3 class="font-semibold text-sm mb-2" data-i18n="feature.car.title">Car Pit</h3>
+          <p class="text-zinc-500 text-sm leading-relaxed" data-i18n="feature.car.desc">
+            Total car management: TÜV tracking, tire change reminders, maintenance logs, fuel/toll tracking, and secure
+            document storage for your vehicles.
+          </p>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- ── QUICK START ─────────────────────────────────────────────────── -->
-    <section
-      id="quickstart"
-      class="py-24 px-6 border-t border-white/[0.06]"
-    >
-      <div class="max-w-3xl mx-auto">
-        <div class="text-center mb-12">
-          <h2 class="text-3xl sm:text-4xl font-bold tracking-tight mb-4">
-            Up and running in minutes
-          </h2>
-          <p class="text-zinc-400 text-base">
-            Prerequisites: Node.js ≥ 18, pnpm, Docker
+  <!-- ── SCREENSHOTS ─────────────────────────────────────────────────── -->
+  <section id="screenshots" class="py-24 px-6 border-t border-white/[0.06]">
+    <div class="max-w-6xl mx-auto">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl sm:text-4xl font-bold tracking-tight mb-4" data-i18n="screenshots.title">
+          See it in action
+        </h2>
+        <p class="text-zinc-400 text-base max-w-xl mx-auto" data-i18n="screenshots.subtitle">
+          All screenshots were captured using the seeded demo data.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Dashboard -->
+        <div class="col-span-1 md:col-span-2">
+          <div class="screenshot-img overflow-hidden rounded-xl border border-white/[0.07] bg-zinc-900">
+            <img src="images/01-dashboard.png" alt="Adulting.exe Dashboard overview" class="w-full object-cover"
+              loading="lazy" onclick="openLightbox(this)" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' ')openLightbox(this)" />
+          </div>
+          <p class="mt-3 text-xs text-zinc-500 text-center" data-i18n-html="screenshot.dashboard">
+            🏡 <strong class="text-zinc-300">Dashboard</strong> — House health
+            status, quick stats, and fast access tiles for every module
+          </p>
+        </div>
+
+        <!-- Vault -->
+        <div>
+          <div class="screenshot-img overflow-hidden rounded-xl border border-white/[0.07] bg-zinc-900">
+            <img src="images/02-vault.png" alt="Appliance vault and warranty tracker" class="w-full object-cover"
+              loading="lazy" onclick="openLightbox(this)" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' ')openLightbox(this)" />
+          </div>
+          <p class="mt-3 text-xs text-zinc-500 text-center" data-i18n-html="screenshot.vault">
+            📦 <strong class="text-zinc-300">Vault</strong> — Appliance
+            inventory with warranty status badges and box-locator notes
+          </p>
+        </div>
+
+        <!-- Services -->
+        <div>
+          <div class="screenshot-img overflow-hidden rounded-xl border border-white/[0.07] bg-zinc-900">
+            <img src="images/03-services.png" alt="Service team and invoice management" class="w-full object-cover"
+              loading="lazy" onclick="openLightbox(this)" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' ')openLightbox(this)" />
+          </div>
+          <p class="mt-3 text-xs text-zinc-500 text-center" data-i18n-html="screenshot.services">
+            🛠️ <strong class="text-zinc-300">Service Team</strong> — Contractor
+            directory, service history, and tax-deductible invoice storage
+          </p>
+        </div>
+
+        <!-- Identity Guard -->
+        <div>
+          <div class="screenshot-img overflow-hidden rounded-xl border border-white/[0.07] bg-zinc-900">
+            <img src="images/04-identity-guard.png" alt="Identity document tracker" class="w-full object-cover"
+              loading="lazy" onclick="openLightbox(this)" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' ')openLightbox(this)" />
+          </div>
+          <p class="mt-3 text-xs text-zinc-500 text-center" data-i18n-html="screenshot.identity">
+            🪪 <strong class="text-zinc-300">Identity Guard</strong> — Document
+            expiry monitoring with smart reminders and emergency guides
+          </p>
+        </div>
+
+        <!-- Maintenance -->
+        <div>
+          <div class="screenshot-img overflow-hidden rounded-xl border border-white/[0.07] bg-zinc-900">
+            <img src="images/05-maintenance.png" alt="Maintenance task management" class="w-full object-cover"
+              loading="lazy" onclick="openLightbox(this)" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' ')openLightbox(this)" />
+          </div>
+          <p class="mt-3 text-xs text-zinc-500 text-center" data-i18n-html="screenshot.maintenance">
+            🔧 <strong class="text-zinc-300">Maintenance</strong> — Task list
+            with priority levels, recurring schedules, and completion tracking
+          </p>
+        </div>
+
+        <!-- Utilities -->
+        <div>
+          <div class="screenshot-img overflow-hidden rounded-xl border border-white/[0.07] bg-zinc-900">
+            <img src="images/06-utilities.png" alt="Utility usage and cost tracker" class="w-full object-cover"
+              loading="lazy" onclick="openLightbox(this)" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' ')openLightbox(this)" />
+          </div>
+          <p class="mt-3 text-xs text-zinc-500 text-center" data-i18n-html="screenshot.utilities">
+            📉 <strong class="text-zinc-300">Utilities</strong> — Monthly
+            meter readings and interactive cost-trend charts
+          </p>
+        </div>
+
+        <!-- Wishlist -->
+        <div>
+          <div class="screenshot-img overflow-hidden rounded-xl border border-white/[0.07] bg-zinc-900">
+            <img src="images/07-wishlist.png" alt="Home project wishlist and budget tracker" class="w-full object-cover"
+              loading="lazy" onclick="openLightbox(this)" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' ')openLightbox(this)" />
+          </div>
+          <p class="mt-3 text-xs text-zinc-500 text-center" data-i18n-html="screenshot.wishlist">
+            🎯 <strong class="text-zinc-300">Wishlist</strong> — Project
+            planning with budget goals and urgency prioritization
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── QUICK START ─────────────────────────────────────────────────── -->
+  <section id="quickstart" class="py-24 px-6 border-t border-white/[0.06]">
+    <div class="max-w-3xl mx-auto">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl sm:text-4xl font-bold tracking-tight mb-4" data-i18n="quickstart.title">
+          Up and running in minutes
+        </h2>
+        <p class="text-zinc-400 text-base" data-i18n="quickstart.subtitle">
+          Prerequisites: Node.js ≥ 18, pnpm, Docker
+        </p>
+      </div>
+
+      <div class="code-block rounded-xl overflow-hidden font-mono text-sm">
+        <!-- Title bar -->
+        <div class="flex items-center gap-2 px-4 py-3 border-b border-[#30363d] bg-[#161b22]">
+          <span class="w-3 h-3 rounded-full bg-[#ff5f56]"></span>
+          <span class="w-3 h-3 rounded-full bg-[#ffbd2e]"></span>
+          <span class="w-3 h-3 rounded-full bg-[#27c93f]"></span>
+          <span class="ml-2 text-xs text-zinc-500">terminal</span>
+        </div>
+
+        <div class="p-6 space-y-1 text-[#e6edf3]">
+          <p>
+            <span class="text-zinc-500 select-none" data-i18n="quickstart.step1"># 1. Clone the repository</span>
+          </p>
+          <p>
+            <span class="text-green-400">$</span>
+            git clone https://github.com/Thomas-Mildner/Adulting.Exe.git
+          </p>
+          <p>
+            <span class="text-green-400">$</span>
+            cd Adulting.Exe
+          </p>
+          <br />
+          <p>
+            <span class="text-zinc-500 select-none" data-i18n="quickstart.step2"># 2. Install dependencies</span>
+          </p>
+          <p>
+            <span class="text-green-400">$</span>
+            pnpm install
+          </p>
+          <br />
+          <p>
+            <span class="text-zinc-500 select-none" data-i18n="quickstart.step3"># 3. Start the database</span>
+          </p>
+          <p>
+            <span class="text-green-400">$</span>
+            docker compose up -d
+          </p>
+          <br />
+          <p>
+            <span class="text-zinc-500 select-none" data-i18n="quickstart.step4"># 4. Configure environment</span>
+          </p>
+          <p>
+            <span class="text-green-400">$</span>
+            cp .env.example .env
+          </p>
+          <br />
+          <p>
+            <span class="text-zinc-500 select-none" data-i18n="quickstart.step5"># 5. Push schema &amp; seed demo data</span>
+          </p>
+          <p>
+            <span class="text-green-400">$</span>
+            pnpm db:push &amp;&amp; pnpm db:seed
+          </p>
+          <br />
+          <p>
+            <span class="text-zinc-500 select-none" data-i18n="quickstart.step6"># 6. Start the development server</span>
+          </p>
+          <p>
+            <span class="text-green-400">$</span>
+            pnpm dev
+          </p>
+          <br />
+          <p>
+            <span class="text-zinc-500 select-none">
+              # → Open http://localhost:3000
+            </span>
+          </p>
+        </div>
+      </div>
+
+      <!-- Docker Compose Deployment -->
+      <div class="mt-16">
+        <div class="text-center mb-8">
+          <h3 class="text-2xl font-bold tracking-tight mb-3">
+            <i data-lucide="container" class="w-6 h-6 inline-block mr-2 text-green-400"></i>
+            <span data-i18n="docker.title">Deploy with Docker Compose</span>
+          </h3>
+          <p class="text-zinc-400 text-sm" data-i18n-html="docker.subtitle">
+            No build tools needed — just Docker. Create a <code
+              class="text-green-400 bg-white/[0.06] px-1.5 py-0.5 rounded text-xs">docker-compose.yml</code> and go.
           </p>
         </div>
 
         <div class="code-block rounded-xl overflow-hidden font-mono text-sm">
-          <!-- Title bar -->
-          <div
-            class="flex items-center gap-2 px-4 py-3 border-b border-[#30363d] bg-[#161b22]"
-          >
+          <div class="flex items-center gap-2 px-4 py-3 border-b border-[#30363d] bg-[#161b22]">
             <span class="w-3 h-3 rounded-full bg-[#ff5f56]"></span>
             <span class="w-3 h-3 rounded-full bg-[#ffbd2e]"></span>
             <span class="w-3 h-3 rounded-full bg-[#27c93f]"></span>
-            <span class="ml-2 text-xs text-zinc-500">terminal</span>
+            <span class="ml-2 text-xs text-zinc-500">docker-compose.yml</span>
           </div>
 
-          <div class="p-6 space-y-1 text-[#e6edf3]">
-            <p>
-              <span class="text-zinc-500 select-none"># 1. Clone the repository</span>
-            </p>
-            <p>
-              <span class="text-green-400">$</span>
-              git clone https://github.com/Thomas-Mildner/Adulting.Exe.git
-            </p>
-            <p>
-              <span class="text-green-400">$</span>
-              cd Adulting.Exe
-            </p>
-            <br />
-            <p>
-              <span class="text-zinc-500 select-none"># 2. Install dependencies</span>
-            </p>
-            <p>
-              <span class="text-green-400">$</span>
-              pnpm install
-            </p>
-            <br />
-            <p>
-              <span class="text-zinc-500 select-none"># 3. Start the database</span>
-            </p>
-            <p>
-              <span class="text-green-400">$</span>
-              docker compose up -d
-            </p>
-            <br />
-            <p>
-              <span class="text-zinc-500 select-none"># 4. Configure environment</span>
-            </p>
-            <p>
-              <span class="text-green-400">$</span>
-              cp .env.example .env
-            </p>
-            <br />
-            <p>
-              <span class="text-zinc-500 select-none"># 5. Push schema &amp; seed demo data</span>
-            </p>
-            <p>
-              <span class="text-green-400">$</span>
-              pnpm db:push &amp;&amp; pnpm db:seed
-            </p>
-            <br />
-            <p>
-              <span class="text-zinc-500 select-none"># 6. Start the development server</span>
-            </p>
-            <p>
-              <span class="text-green-400">$</span>
-              pnpm dev
-            </p>
-            <br />
-            <p>
-              <span class="text-zinc-500 select-none">
-                # → Open http://localhost:3000
-              </span>
-            </p>
-          </div>
-        </div>
-
-        <!-- Docker Compose Deployment -->
-        <div class="mt-16">
-          <div class="text-center mb-8">
-            <h3 class="text-2xl font-bold tracking-tight mb-3">
-              <i data-lucide="container" class="w-6 h-6 inline-block mr-2 text-green-400"></i>
-              Deploy with Docker Compose
-            </h3>
-            <p class="text-zinc-400 text-sm">
-              No build tools needed — just Docker. Create a <code class="text-green-400 bg-white/[0.06] px-1.5 py-0.5 rounded text-xs">docker-compose.yml</code> and go.
-            </p>
-          </div>
-
-          <div class="code-block rounded-xl overflow-hidden font-mono text-sm">
-            <div class="flex items-center gap-2 px-4 py-3 border-b border-[#30363d] bg-[#161b22]">
-              <span class="w-3 h-3 rounded-full bg-[#ff5f56]"></span>
-              <span class="w-3 h-3 rounded-full bg-[#ffbd2e]"></span>
-              <span class="w-3 h-3 rounded-full bg-[#27c93f]"></span>
-              <span class="ml-2 text-xs text-zinc-500">docker-compose.yml</span>
-            </div>
-
-            <div class="p-6 text-[#e6edf3] leading-relaxed">
-<pre class="whitespace-pre"><span class="text-[#7ee787]">version:</span> <span class="text-[#a5d6ff]">"3.9"</span>
+          <div class="p-6 text-[#e6edf3] leading-relaxed">
+            <pre class="whitespace-pre"><span class="text-[#7ee787]">version:</span> <span class="text-[#a5d6ff]">"3.9"</span>
 
 <span class="text-[#7ee787]">services:</span>
   <span class="text-[#7ee787]">postgres:</span>
@@ -717,107 +774,354 @@
 
 <span class="text-[#7ee787]">volumes:</span>
   <span class="text-[#7ee787]">pgdata:</span></pre>
-            </div>
           </div>
-
-          <div class="code-block rounded-xl overflow-hidden font-mono text-sm mt-4">
-            <div class="flex items-center gap-2 px-4 py-3 border-b border-[#30363d] bg-[#161b22]">
-              <span class="w-3 h-3 rounded-full bg-[#ff5f56]"></span>
-              <span class="w-3 h-3 rounded-full bg-[#ffbd2e]"></span>
-              <span class="w-3 h-3 rounded-full bg-[#27c93f]"></span>
-              <span class="ml-2 text-xs text-zinc-500">terminal</span>
-            </div>
-            <div class="p-6 space-y-1 text-[#e6edf3]">
-              <p>
-                <span class="text-zinc-500 select-none"># Start the stack</span>
-              </p>
-              <p>
-                <span class="text-green-400">$</span>
-                docker compose up -d
-              </p>
-              <br />
-              <p>
-                <span class="text-zinc-500 select-none"># → Open http://localhost:3000</span>
-              </p>
-            </div>
-          </div>
-
-          <!-- Image Tags Table -->
-          <div class="mt-8 overflow-hidden rounded-xl border border-white/[0.06]">
-            <table class="w-full text-sm">
-              <thead class="bg-white/[0.04] border-b border-white/[0.06]">
-                <tr>
-                  <th class="text-left px-4 py-3 text-zinc-400 font-medium">Tag</th>
-                  <th class="text-left px-4 py-3 text-zinc-400 font-medium">Description</th>
-                </tr>
-              </thead>
-              <tbody class="divide-y divide-white/[0.04]">
-                <tr>
-                  <td class="px-4 py-2.5"><code class="text-green-400 text-xs">latest</code></td>
-                  <td class="px-4 py-2.5 text-zinc-400">Latest stable production release</td>
-                </tr>
-                <tr>
-                  <td class="px-4 py-2.5"><code class="text-green-400 text-xs">main-latest</code></td>
-                  <td class="px-4 py-2.5 text-zinc-400">Latest build from the main branch</td>
-                </tr>
-                <tr>
-                  <td class="px-4 py-2.5"><code class="text-green-400 text-xs">1.2.3</code></td>
-                  <td class="px-4 py-2.5 text-zinc-400">Specific semantic version</td>
-                </tr>
-                <tr>
-                  <td class="px-4 py-2.5"><code class="text-green-400 text-xs">beta-latest</code></td>
-                  <td class="px-4 py-2.5 text-zinc-400">Latest staging/beta build</td>
-                </tr>
-                <tr>
-                  <td class="px-4 py-2.5"><code class="text-green-400 text-xs">1.8.0-rc.1</code></td>
-                  <td class="px-4 py-2.5 text-zinc-400">Release candidate version</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <p class="mt-4 text-xs text-zinc-500 text-center">
-            Replace <code class="text-[#ffa657] bg-white/[0.06] px-1.5 py-0.5 rounded">&lt;your-secure-password&gt;</code> with a strong password in both places.
-          </p>
         </div>
-      </div>
-    </section>
 
-    <!-- ── FOOTER ─────────────────────────────────────────────────────── -->
-    <footer class="py-12 px-6 border-t border-white/[0.06]">
-      <div
-        class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4"
-      >
-        <span class="text-sm text-zinc-600">
-          🏠 Adulting<span class="text-green-400">.exe</span> — The house is
-          still standing.
-        </span>
-        <div class="flex items-center gap-6">
-          <a
-            href="https://github.com/Thomas-Mildner/Adulting.Exe/blob/main/LICENSE"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="flex items-center gap-1.5 text-sm text-zinc-500 hover:text-white transition-colors"
-          >
-            <i data-lucide="shield" class="w-3.5 h-3.5"></i>
-            MIT License
-          </a>
-          <a
-            href="https://github.com/Thomas-Mildner/Adulting.Exe"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="flex items-center gap-1.5 text-sm text-zinc-500 hover:text-white transition-colors"
-          >
-            <i data-lucide="github" class="w-3.5 h-3.5"></i>
-            Repository
-          </a>
+        <div class="code-block rounded-xl overflow-hidden font-mono text-sm mt-4">
+          <div class="flex items-center gap-2 px-4 py-3 border-b border-[#30363d] bg-[#161b22]">
+            <span class="w-3 h-3 rounded-full bg-[#ff5f56]"></span>
+            <span class="w-3 h-3 rounded-full bg-[#ffbd2e]"></span>
+            <span class="w-3 h-3 rounded-full bg-[#27c93f]"></span>
+            <span class="ml-2 text-xs text-zinc-500">terminal</span>
+          </div>
+          <div class="p-6 space-y-1 text-[#e6edf3]">
+            <p>
+              <span class="text-zinc-500 select-none" data-i18n="docker.start"># Start the stack</span>
+            </p>
+            <p>
+              <span class="text-green-400">$</span>
+              docker compose up -d
+            </p>
+            <br />
+            <p>
+              <span class="text-zinc-500 select-none"># → Open http://localhost:3000</span>
+            </p>
+          </div>
         </div>
-      </div>
-    </footer>
 
-    <script>
-      // Initialize Lucide icons
-      lucide.createIcons();
-    </script>
-  </body>
+        <!-- Image Tags Table -->
+        <div class="mt-8 overflow-hidden rounded-xl border border-white/[0.06]">
+          <table class="w-full text-sm">
+            <thead class="bg-white/[0.04] border-b border-white/[0.06]">
+              <tr>
+                <th class="text-left px-4 py-3 text-zinc-400 font-medium" data-i18n="table.tag">Tag</th>
+                <th class="text-left px-4 py-3 text-zinc-400 font-medium" data-i18n="table.description">Description</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-white/[0.04]">
+              <tr>
+                <td class="px-4 py-2.5"><code class="text-green-400 text-xs">latest</code></td>
+                <td class="px-4 py-2.5 text-zinc-400" data-i18n="table.latest">Latest stable production release</td>
+              </tr>
+              <tr>
+                <td class="px-4 py-2.5"><code class="text-green-400 text-xs">main-latest</code></td>
+                <td class="px-4 py-2.5 text-zinc-400" data-i18n="table.main">Latest build from the main branch</td>
+              </tr>
+              <tr>
+                <td class="px-4 py-2.5"><code class="text-green-400 text-xs">1.2.3</code></td>
+                <td class="px-4 py-2.5 text-zinc-400" data-i18n="table.semver">Specific semantic version</td>
+              </tr>
+              <tr>
+                <td class="px-4 py-2.5"><code class="text-green-400 text-xs">beta-latest</code></td>
+                <td class="px-4 py-2.5 text-zinc-400" data-i18n="table.beta">Latest staging/beta build</td>
+              </tr>
+              <tr>
+                <td class="px-4 py-2.5"><code class="text-green-400 text-xs">1.8.0-rc.1</code></td>
+                <td class="px-4 py-2.5 text-zinc-400" data-i18n="table.rc">Release candidate version</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p class="mt-4 text-xs text-zinc-500 text-center" data-i18n-html="docker.password_note">
+          Replace <code class="text-[#ffa657] bg-white/[0.06] px-1.5 py-0.5 rounded">&lt;your-secure-password&gt;</code>
+          with a strong password in both places.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ─────────────────────────────────────────────────────── -->
+  <footer class="py-12 px-6 border-t border-white/[0.06]">
+    <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+      <span class="text-sm text-zinc-600" data-i18n-html="footer.tagline">
+        🏠 Adulting<span class="text-green-400">.exe</span> — The house is
+        still standing.
+      </span>
+      <div class="flex items-center gap-6">
+        <a href="https://github.com/Thomas-Mildner/Adulting.Exe/blob/main/LICENSE" target="_blank"
+          rel="noopener noreferrer"
+          class="flex items-center gap-1.5 text-sm text-zinc-500 hover:text-white transition-colors">
+          <i data-lucide="shield" class="w-3.5 h-3.5"></i>
+          <span data-i18n="footer.license">MIT License</span>
+        </a>
+        <a href="https://github.com/Thomas-Mildner/Adulting.Exe" target="_blank" rel="noopener noreferrer"
+          class="flex items-center gap-1.5 text-sm text-zinc-500 hover:text-white transition-colors">
+          <i data-lucide="github" class="w-3.5 h-3.5"></i>
+          <span data-i18n="footer.repo">Repository</span>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ── Translations ──────────────────────────────────────────────────
+    const translations = {
+      en: {
+        // Nav
+        "nav.features": "Features",
+        "nav.screenshots": "Screenshots",
+        "nav.quickstart": "Quick Start",
+        // Hero
+        "hero.badge": "Your Home. Finally Under Control.",
+        "hero.title": 'Because your house<br /><span class="gradient-text">didn\'t come with a manual.</span>',
+        "hero.subtitle": "Adulting.exe is the all-in-one home management dashboard that tracks warranties, appliances, maintenance, utilities, documents, and more — so you're always prepared.",
+        "hero.github": "View on GitHub",
+        "hero.quickstart": "Quick Start",
+        // Motivation
+        "motivation.title": 'Why <span class="gradient-text">Adulting.exe?</span>',
+        "motivation.p1": "Where's the warranty for that dishwasher you bought three years ago? Who was the plumber you called last winter — and how much did it cost? When does your passport expire? Most households answer these questions with a mix of email searches, drawer rummaging, and mild panic.",
+        "motivation.p2": "Adulting.exe was built to eliminate that chaos. It's a single, private dashboard where everything about your home lives: every appliance with its warranty status, every service call with its invoice, every utility reading with its trend chart, every identity document with its expiry countdown.",
+        "motivation.p3": "The vision is simple — give homeowners the clarity and confidence that the house is under control, at a glance, on any device. Because adulting shouldn't require a degree in spreadsheet management.",
+        // Features
+        "features.title": "Everything your home needs",
+        "features.subtitle": "Ten purpose-built modules, one cohesive dashboard.",
+        "feature.vault.title": "Vault — Warranty Tracker",
+        "feature.vault.desc": "Catalog every appliance with purchase dates, brands, and warranty status. Know exactly when you're protected — and when you're flying solo.",
+        "feature.services.title": "Services & Invoicing",
+        "feature.services.desc": "Maintain a searchable directory of contractors with ratings, contact details, full service history, and tax-deductible invoice storage.",
+        "feature.maintenance.title": "Maintenance Management",
+        "feature.maintenance.desc": "Create tasks with due dates and priority levels. Set up recurring reminders for filter changes, inspections, and seasonal upkeep.",
+        "feature.utility.title": "Utility Tracker",
+        "feature.utility.desc": "Log meter readings for electricity, water, and heating. Interactive charts reveal consumption trends and help identify cost-saving patterns.",
+        "feature.waste.title": "Waste Calendar",
+        "feature.waste.desc": "Manage pickup schedules for all waste types with color-coded categories. A dashboard widget shows your next collection day at a glance.",
+        "feature.identity.title": "Identity Guard",
+        "feature.identity.desc": "Track IDs, passports, and driver's licenses for every household member with expiry countdowns, smart reminders, and an emergency guide.",
+        "feature.lending.title": "Lend-O-Meter",
+        "feature.lending.desc": "Track tools and items lent to others. Record borrowers, expected return dates, and reliability ratings so nothing goes missing for good.",
+        "feature.wishlist.title": "Wishlist & Projects",
+        "feature.wishlist.desc": "Plan future renovations with estimated budgets, urgency levels, and progress bars. Turn vague dreams into tracked savings goals.",
+        "feature.knowledge.title": "Knowledge Base",
+        "feature.knowledge.desc": "Store manuals, guides, and how-to notes in a searchable library. Categorized by Heating, Plumbing, Smart Home, Structural, or General.",
+        "feature.payments.title": "Recurring Payments",
+        "feature.payments.desc": 'Track subscriptions and fixed-term contracts. Get alerts for trial expirations, see wasted costs via the "Regret Meter", and generate automated cancellation letters.',
+        "feature.pets.title": "Pet Management Hub",
+        "feature.pets.desc": "Track vet records, vaccination schedules, and microchip numbers. Store pet-sitter instructions with dietary needs and medications for every pet.",
+        "feature.outdoor.title": "Outdoor & Garden",
+        "feature.outdoor.desc": "Track your living inventory. From plant species and watering schedules to soil treatments, irrigation zones, and landscaping galleries.",
+        "feature.soon": "Soon",
+        "feature.soon2": "Soon",
+        "feature.soon3": "Soon",
+        "feature.rooms.title": "Room Chronicles",
+        "feature.rooms.desc": "Room-level event tracking with flexible storage for maintenance, aesthetics, and incidents. Log paint jobs, repairs, and modifications with searchable history.",
+        "feature.insurance.title": "Insurance Hub",
+        "feature.insurance.desc": "Comprehensive policy management. Track premiums, deadlines, and coverage across all policy types to ensure you're never under-insured.",
+        "feature.car.title": "Car Pit",
+        "feature.car.desc": "Total car management: TÜV tracking, tire change reminders, maintenance logs, fuel/toll tracking, and secure document storage for your vehicles.",
+        // Screenshots
+        "screenshots.title": "See it in action",
+        "screenshots.subtitle": "All screenshots were captured using the seeded demo data.",
+        "screenshot.dashboard": '🏡 <strong class="text-zinc-300">Dashboard</strong> — House health status, quick stats, and fast access tiles for every module',
+        "screenshot.vault": '📦 <strong class="text-zinc-300">Vault</strong> — Appliance inventory with warranty status badges and box-locator notes',
+        "screenshot.services": '🛠️ <strong class="text-zinc-300">Service Team</strong> — Contractor directory, service history, and tax-deductible invoice storage',
+        "screenshot.identity": '🪪 <strong class="text-zinc-300">Identity Guard</strong> — Document expiry monitoring with smart reminders and emergency guides',
+        "screenshot.maintenance": '🔧 <strong class="text-zinc-300">Maintenance</strong> — Task list with priority levels, recurring schedules, and completion tracking',
+        "screenshot.utilities": '📉 <strong class="text-zinc-300">Utilities</strong> — Monthly meter readings and interactive cost-trend charts',
+        "screenshot.wishlist": '🎯 <strong class="text-zinc-300">Wishlist</strong> — Project planning with budget goals and urgency prioritization',
+        // Quick Start
+        "quickstart.title": "Up and running in minutes",
+        "quickstart.subtitle": "Prerequisites: Node.js ≥ 18, pnpm, Docker",
+        "quickstart.step1": "# 1. Clone the repository",
+        "quickstart.step2": "# 2. Install dependencies",
+        "quickstart.step3": "# 3. Start the database",
+        "quickstart.step4": "# 4. Configure environment",
+        "quickstart.step5": "# 5. Push schema & seed demo data",
+        "quickstart.step6": "# 6. Start the development server",
+        // Docker
+        "docker.title": "Deploy with Docker Compose",
+        "docker.subtitle": 'No build tools needed — just Docker. Create a <code class="text-green-400 bg-white/[0.06] px-1.5 py-0.5 rounded text-xs">docker-compose.yml</code> and go.',
+        "docker.start": "# Start the stack",
+        "docker.password_note": 'Replace <code class="text-[#ffa657] bg-white/[0.06] px-1.5 py-0.5 rounded">&lt;your-secure-password&gt;</code> with a strong password in both places.',
+        // Table
+        "table.tag": "Tag",
+        "table.description": "Description",
+        "table.latest": "Latest stable production release",
+        "table.main": "Latest build from the main branch",
+        "table.semver": "Specific semantic version",
+        "table.beta": "Latest staging/beta build",
+        "table.rc": "Release candidate version",
+        // Footer
+        "footer.tagline": '🏠 Adulting<span class="text-green-400">.exe</span> — The house is still standing.',
+        "footer.license": "MIT License",
+        "footer.repo": "Repository",
+      },
+      de: {
+        // Nav
+        "nav.features": "Funktionen",
+        "nav.screenshots": "Screenshots",
+        "nav.quickstart": "Schnellstart",
+        // Hero
+        "hero.badge": "Dein Zuhause. Endlich unter Kontrolle.",
+        "hero.title": 'Dein Haus kam leider<br /><span class="gradient-text">ohne Bedienungsanleitung.</span>',
+        "hero.subtitle": "Adulting.exe ist das All-in-One Hausverwaltungs-Dashboard, das Garantien, Geräte, Wartungen, Verbrauchswerte, Dokumente und mehr verwaltet — damit du immer vorbereitet bist.",
+        "hero.github": "Auf GitHub ansehen",
+        "hero.quickstart": "Schnellstart",
+        // Motivation
+        "motivation.title": 'Warum <span class="gradient-text">Adulting.exe?</span>',
+        "motivation.p1": "Wo ist die Garantie für den Geschirrspüler, den du vor drei Jahren gekauft hast? Wer war der Klempner, den du letzten Winter gerufen hast — und was hat es gekostet? Wann läuft dein Reisepass ab? Die meisten Haushalte beantworten diese Fragen mit einer Mischung aus E-Mail-Suche, Schubladenwühlen und leichter Panik.",
+        "motivation.p2": "Adulting.exe wurde entwickelt, um dieses Chaos zu beseitigen. Es ist ein einziges, privates Dashboard, in dem alles über dein Zuhause lebt: jedes Gerät mit seinem Garantiestatus, jeder Serviceeinsatz mit seiner Rechnung, jeder Zählerstand mit seinem Trenddiagramm, jedes Ausweisdokument mit seinem Ablauf-Countdown.",
+        "motivation.p3": "Die Vision ist einfach — Hausbesitzern die Klarheit und Sicherheit geben, dass ihr Haus unter Kontrolle ist, auf einen Blick, auf jedem Gerät. Denn Erwachsensein sollte keinen Abschluss in Tabellenkalkulation erfordern.",
+        // Features
+        "features.title": "Alles, was dein Zuhause braucht",
+        "features.subtitle": "Zehn speziell entwickelte Module, ein einheitliches Dashboard.",
+        "feature.vault.title": "Tresor — Garantie-Tracker",
+        "feature.vault.desc": "Katalogisiere jedes Gerät mit Kaufdatum, Marke und Garantiestatus. Wisse genau, wann du geschützt bist — und wann du auf dich allein gestellt bist.",
+        "feature.services.title": "Dienstleister & Rechnungen",
+        "feature.services.desc": "Pflege ein durchsuchbares Verzeichnis von Handwerkern mit Bewertungen, Kontaktdaten, vollständiger Servicehistorie und steuerlich absetzbarer Rechnungsspeicherung.",
+        "feature.maintenance.title": "Wartungsmanagement",
+        "feature.maintenance.desc": "Erstelle Aufgaben mit Fälligkeitsdaten und Prioritätsstufen. Richte wiederkehrende Erinnerungen für Filterwechsel, Inspektionen und saisonale Wartung ein.",
+        "feature.utility.title": "Verbrauchstracker",
+        "feature.utility.desc": "Erfasse Zählerstände für Strom, Wasser und Heizung. Interaktive Diagramme zeigen Verbrauchstrends und helfen, Einsparpotenziale zu erkennen.",
+        "feature.waste.title": "Abfallkalender",
+        "feature.waste.desc": "Verwalte Abholtermine für alle Abfallarten mit farbcodierten Kategorien. Ein Dashboard-Widget zeigt den nächsten Abholtermin auf einen Blick.",
+        "feature.identity.title": "Dokumentenwächter",
+        "feature.identity.desc": "Verfolge Ausweise, Reisepässe und Führerscheine für jedes Haushaltsmitglied mit Ablauf-Countdowns, smarten Erinnerungen und einem Notfall-Leitfaden.",
+        "feature.lending.title": "Verleih-O-Meter",
+        "feature.lending.desc": "Verfolge Werkzeug und Gegenstände, die du verliehen hast. Erfasse Ausleiher, voraussichtliche Rückgabedaten und Zuverlässigkeitsbewertungen, damit nichts für immer verschwindet.",
+        "feature.wishlist.title": "Wunschliste & Projekte",
+        "feature.wishlist.desc": "Plane zukünftige Renovierungen mit geschätzten Budgets, Dringlichkeitsstufen und Fortschrittsbalken. Verwandle vage Träume in nachverfolgbare Sparziele.",
+        "feature.knowledge.title": "Wissensdatenbank",
+        "feature.knowledge.desc": "Speichere Handbücher, Anleitungen und How-to-Notizen in einer durchsuchbaren Bibliothek. Kategorisiert nach Heizung, Sanitär, Smart Home, Bau oder Allgemein.",
+        "feature.payments.title": "Wiederkehrende Zahlungen",
+        "feature.payments.desc": 'Verfolge Abonnements und Laufzeitverträge. Erhalte Warnungen bei Ablauf von Probezeiten, erkenne verschwendete Kosten über das „Reue-O-Meter" und erstelle automatisierte Kündigungsschreiben.',
+        "feature.pets.title": "Tier-Management-Hub",
+        "feature.pets.desc": "Verfolge Tierarztbesuche, Impfpläne und Chip-Nummern. Speichere Tiersitter-Anweisungen mit Ernährungsbedarf und Medikamenten für jedes Tier.",
+        "feature.outdoor.title": "Outdoor & Garten",
+        "feature.outdoor.desc": "Verfolge deinen lebenden Bestand. Von Pflanzenarten und Bewässerungsplänen bis zu Bodenbehandlungen, Bewässerungszonen und Gartenbildern.",
+        "feature.soon": "Bald",
+        "feature.soon2": "Bald",
+        "feature.soon3": "Bald",
+        "feature.rooms.title": "Raum-Chroniken",
+        "feature.rooms.desc": "Raumweises Ereignis-Tracking mit flexibler Speicherung für Wartung, Ästhetik und Vorfälle. Protokolliere Malerarbeiten, Reparaturen und Umbaumaßnahmen mit durchsuchbarer Historie.",
+        "feature.insurance.title": "Versicherungs-Hub",
+        "feature.insurance.desc": "Umfassendes Policenmanagement. Verfolge Prämien, Fristen und Deckung über alle Policentypen hinweg, damit du nie unterversichert bist.",
+        "feature.car.title": "Auto-Werkstatt",
+        "feature.car.desc": "Komplettes Fahrzeugmanagement: TÜV-Tracking, Reifenwechsel-Erinnerungen, Wartungsprotokolle, Tank-/Mauterfassung und sichere Dokumentenspeicherung für deine Fahrzeuge.",
+        // Screenshots
+        "screenshots.title": "In Aktion erleben",
+        "screenshots.subtitle": "Alle Screenshots wurden mit den mitgelieferten Demodaten aufgenommen.",
+        "screenshot.dashboard": '🏡 <strong class="text-zinc-300">Dashboard</strong> — Hauszustand, Schnellstatistiken und Schnellzugriffskacheln für jedes Modul',
+        "screenshot.vault": '📦 <strong class="text-zinc-300">Tresor</strong> — Geräteinventar mit Garantiestatus-Badges und Karton-Standortnotizen',
+        "screenshot.services": '🛠️ <strong class="text-zinc-300">Service-Team</strong> — Handwerkerverzeichnis, Servicehistorie und steuerlich absetzbare Rechnungsspeicherung',
+        "screenshot.identity": '🪪 <strong class="text-zinc-300">Dokumentenwächter</strong> — Ablaufüberwachung mit smarten Erinnerungen und Notfall-Leitfäden',
+        "screenshot.maintenance": '🔧 <strong class="text-zinc-300">Wartung</strong> — Aufgabenliste mit Prioritätsstufen, wiederkehrenden Zeitplänen und Erledigungsverfolgung',
+        "screenshot.utilities": '📉 <strong class="text-zinc-300">Verbrauch</strong> — Monatliche Zählerstände und interaktive Kostentrend-Diagramme',
+        "screenshot.wishlist": '🎯 <strong class="text-zinc-300">Wunschliste</strong> — Projektplanung mit Budgetzielen und Dringlichkeitspriorisierung',
+        // Quick Start
+        "quickstart.title": "In wenigen Minuten startklar",
+        "quickstart.subtitle": "Voraussetzungen: Node.js ≥ 18, pnpm, Docker",
+        "quickstart.step1": "# 1. Repository klonen",
+        "quickstart.step2": "# 2. Abhängigkeiten installieren",
+        "quickstart.step3": "# 3. Datenbank starten",
+        "quickstart.step4": "# 4. Umgebung konfigurieren",
+        "quickstart.step5": "# 5. Schema pushen & Demodaten einspielen",
+        "quickstart.step6": "# 6. Entwicklungsserver starten",
+        // Docker
+        "docker.title": "Mit Docker Compose bereitstellen",
+        "docker.subtitle": 'Keine Build-Tools nötig — nur Docker. Erstelle eine <code class="text-green-400 bg-white/[0.06] px-1.5 py-0.5 rounded text-xs">docker-compose.yml</code> und los geht\'s.',
+        "docker.start": "# Stack starten",
+        "docker.password_note": 'Ersetze <code class="text-[#ffa657] bg-white/[0.06] px-1.5 py-0.5 rounded">&lt;your-secure-password&gt;</code> an beiden Stellen durch ein sicheres Passwort.',
+        // Table
+        "table.tag": "Tag",
+        "table.description": "Beschreibung",
+        "table.latest": "Neuester stabiler Produktions-Release",
+        "table.main": "Neuester Build vom Main-Branch",
+        "table.semver": "Spezifische semantische Version",
+        "table.beta": "Neuester Staging-/Beta-Build",
+        "table.rc": "Release-Kandidat-Version",
+        // Footer
+        "footer.tagline": '🏠 Adulting<span class="text-green-400">.exe</span> — Das Haus steht noch.',
+        "footer.license": "MIT-Lizenz",
+        "footer.repo": "Repository",
+      }
+    };
+
+    // ── Lightbox ─────────────────────────────────────────────────────
+    let _lbTrigger = null;
+
+    function openLightbox(img) {
+      const lb = document.getElementById("lightbox");
+      const lbImg = document.getElementById("lightbox-img");
+      lbImg.src = img.src;
+      lbImg.alt = img.alt;
+      lb.classList.add("open");
+      document.body.style.overflow = "hidden";
+      _lbTrigger = img;
+      document.getElementById("lightbox-close").focus();
+    }
+
+    function closeLightbox(event) {
+      if (event && event.target !== event.currentTarget) return;
+      const lb = document.getElementById("lightbox");
+      lb.classList.remove("open");
+      document.body.style.overflow = "";
+      if (_lbTrigger) { _lbTrigger.focus(); _lbTrigger = null; }
+    }
+
+    document.addEventListener("keydown", function (e) {
+      const lb = document.getElementById("lightbox");
+      if (e.key === "Escape" && lb.classList.contains("open")) closeLightbox();
+    });
+
+    // ── Language Switcher Logic ──────────────────────────────────────
+    let currentLang = localStorage.getItem("lang") || "en";
+
+    function setLang(lang) {
+      currentLang = lang;
+      localStorage.setItem("lang", lang);
+      document.documentElement.lang = lang;
+
+      // Update page title
+      document.title = lang === "de"
+        ? "Adulting.exe – Dein Hausverwaltungs-Dashboard"
+        : "Adulting.exe – Your Home Management Dashboard";
+
+      // Update meta description
+      const metaDesc = document.querySelector('meta[name="description"]');
+      if (metaDesc) {
+        metaDesc.content = lang === "de"
+          ? "Adulting.exe ist ein umfassendes Hausverwaltungs-Dashboard für Garantien, Geräte, Wartung, Verbrauchswerte und mehr."
+          : "Adulting.exe is a comprehensive home management dashboard for warranties, appliances, maintenance, utilities, and more.";
+      }
+
+      // Update text content
+      document.querySelectorAll("[data-i18n]").forEach(el => {
+        const key = el.getAttribute("data-i18n");
+        if (translations[lang] && translations[lang][key]) {
+          el.textContent = translations[lang][key];
+        }
+      });
+
+      // Update HTML content (for elements with inline HTML)
+      document.querySelectorAll("[data-i18n-html]").forEach(el => {
+        const key = el.getAttribute("data-i18n-html");
+        if (translations[lang] && translations[lang][key]) {
+          el.innerHTML = translations[lang][key];
+        }
+      });
+
+      // Update button states
+      document.getElementById("lang-en").classList.toggle("active", lang === "en");
+      document.getElementById("lang-de").classList.toggle("active", lang === "de");
+    }
+
+    // Initialize Lucide icons
+    lucide.createIcons();
+
+    // Apply saved language on load
+    setLang(currentLang);
+  </script>
+</body>
+
 </html>

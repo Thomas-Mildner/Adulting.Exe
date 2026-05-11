@@ -21,10 +21,13 @@ import type {
   FuelEntry,
   TollEntry,
   CarDocument,
-
+  Contract,
   Notification,
   Person,
   IdentityDocument,
+  Pet,
+  VetRecord,
+  Vaccination,
 } from "@/lib/data"
 import type {
   Appliance as PrismaAppliance,
@@ -44,8 +47,12 @@ import type {
   TollEntry as PrismaTollEntry,
   CarDocument as PrismaCarDocument,
   Insurance as PrismaInsurance,
+  Contract as PrismaContract,
   Person as PrismaPerson,
   IdentityDocument as PrismaIdentityDocument,
+  Pet as PrismaPet,
+  VetRecord as PrismaVetRecord,
+  Vaccination as PrismaVaccination,
 } from "@prisma/client"
 
 type PrismaServiceProvider = PrismaSP & { history: PrismaServiceHistory[] }
@@ -70,6 +77,7 @@ export async function getAppliances(): Promise<Appliance[]> {
     status: r.status as Appliance["status"],
     brand: r.brand,
     price: r.price,
+    receiptPath: r.receiptPath || undefined,
   }))
 }
 
@@ -86,6 +94,7 @@ export async function getAppliance(id: string): Promise<Appliance | null> {
     status: r.status as Appliance["status"],
     brand: r.brand,
     price: r.price,
+    receiptPath: r.receiptPath || undefined,
   }
 }
 
@@ -100,6 +109,7 @@ export async function createAppliance(data: Omit<Appliance, "id">) {
       status: data.status,
       brand: data.brand,
       price: data.price,
+      receiptPath: data.receiptPath ?? null,
     },
   })
   revalidatePath("/vault")
@@ -118,6 +128,7 @@ export async function updateAppliance(id: string, data: Partial<Omit<Appliance, 
       ...(data.status !== undefined && { status: data.status }),
       ...(data.brand !== undefined && { brand: data.brand }),
       ...(data.price !== undefined && { price: data.price }),
+      ...("receiptPath" in data && { receiptPath: data.receiptPath ?? null }),
     },
   })
   revalidatePath("/vault")
@@ -1057,6 +1068,34 @@ export async function uploadCarDocument(formData: FormData) {
   revalidatePath("/garage")
 }
 
+export async function completeOnboarding() {
+  await prisma.appConfig.upsert({
+    where: { id: "default" },
+    update: { onboardingCompleted: true },
+    create: { id: "default", heatingType: "Gas", onboardingCompleted: true },
+  })
+  revalidatePath("/")
+}
+
+export async function updateDisabledModules(modules: string[]) {
+  await prisma.appConfig.upsert({
+    where: { id: "default" },
+    create: { id: "default", heatingType: "Gas", disabledModules: modules },
+    update: { disabledModules: modules },
+  })
+  revalidatePath("/settings")
+  revalidatePath("/")
+}
+
+export async function completeTutorial(moduleKey: string) {
+  const config = await getAppConfig()
+  const updated = Array.from(new Set([...config.tutorialCompletedModules, moduleKey]))
+  await prisma.appConfig.update({
+    where: { id: "default" },
+    data: { tutorialCompletedModules: updated },
+  })
+}
+
 
 
 export async function generateCancellationLetter(id: string): Promise<string> {
@@ -1082,6 +1121,132 @@ ${today}
 Sehr geehrte Damen und Herren,
 
 hiermit kündige ich meine ${insurance.policyType} (Versicherungsschein-Nr.: ${insurance.policyNumber}) fristgerecht zum ${endDate} oder hilfsweise zum nächstmöglichen Termin.
+
+Bitte senden Sie mir eine schriftliche Bestätigung der Kündigung unter Angabe des Beendigungszeitpunktes zu.
+
+Mit freundlichen Grüßen
+
+Max Mustermann`
+}
+
+// ─── Contracts ──────────────────────────────────────────────────────────
+
+export async function getContracts(): Promise<Contract[]> {
+  const rows = await prisma.contract.findMany({ orderBy: { nextBillingDate: "asc" } })
+  return rows.map((r: PrismaContract) => ({
+    id: r.id,
+    providerName: r.providerName,
+    accountId: r.accountId || undefined,
+    monthlyCost: r.monthlyCost,
+    yearlyCost: r.yearlyCost || undefined,
+    category: r.category as Contract["category"],
+    lastUsedDate: r.lastUsedDate ? dateToStr(r.lastUsedDate) : undefined,
+    isTrial: r.isTrial,
+    trialEndDate: r.trialEndDate ? dateToStr(r.trialEndDate) : undefined,
+    nextBillingDate: dateToStr(r.nextBillingDate),
+    notes: r.notes || undefined,
+  }))
+}
+
+export async function getContract(id: string): Promise<Contract | null> {
+  const r = await prisma.contract.findUnique({ where: { id } })
+  if (!r) return null
+  return {
+    id: r.id,
+    providerName: r.providerName,
+    accountId: r.accountId || undefined,
+    monthlyCost: r.monthlyCost,
+    yearlyCost: r.yearlyCost || undefined,
+    category: r.category as Contract["category"],
+    lastUsedDate: r.lastUsedDate ? dateToStr(r.lastUsedDate) : undefined,
+    isTrial: r.isTrial,
+    trialEndDate: r.trialEndDate ? dateToStr(r.trialEndDate) : undefined,
+    nextBillingDate: dateToStr(r.nextBillingDate),
+    notes: r.notes || undefined,
+  }
+}
+
+export async function createContract(data: Omit<Contract, "id">) {
+  await prisma.contract.create({
+    data: {
+      providerName: data.providerName,
+      accountId: data.accountId || null,
+      monthlyCost: data.monthlyCost,
+      yearlyCost: data.yearlyCost || null,
+      category: data.category,
+      lastUsedDate: data.lastUsedDate ? new Date(data.lastUsedDate) : null,
+      isTrial: data.isTrial,
+      trialEndDate: data.trialEndDate ? new Date(data.trialEndDate) : null,
+      nextBillingDate: new Date(data.nextBillingDate),
+      notes: data.notes || null,
+    },
+  })
+  revalidatePath("/contracts")
+  revalidatePath("/")
+}
+
+export async function updateContract(id: string, data: Partial<Omit<Contract, "id">>) {
+  await prisma.contract.update({
+    where: { id },
+    data: {
+      ...(data.providerName !== undefined && { providerName: data.providerName }),
+      ...(data.accountId !== undefined && { accountId: data.accountId || null }),
+      ...(data.monthlyCost !== undefined && { monthlyCost: data.monthlyCost }),
+      ...(data.yearlyCost !== undefined && { yearlyCost: data.yearlyCost || null }),
+      ...(data.category !== undefined && { category: data.category }),
+      ...(data.lastUsedDate !== undefined && { lastUsedDate: data.lastUsedDate ? new Date(data.lastUsedDate) : null }),
+      ...(data.isTrial !== undefined && { isTrial: data.isTrial }),
+      ...(data.trialEndDate !== undefined && { trialEndDate: data.trialEndDate ? new Date(data.trialEndDate) : null }),
+      ...(data.nextBillingDate !== undefined && { nextBillingDate: new Date(data.nextBillingDate) }),
+      ...(data.notes !== undefined && { notes: data.notes || null }),
+    },
+  })
+  revalidatePath("/contracts")
+  revalidatePath("/")
+}
+
+export async function deleteContract(id: string) {
+  await prisma.contract.delete({ where: { id } })
+  revalidatePath("/contracts")
+  revalidatePath("/")
+}
+
+export async function generateContractCancellationLetter(id: string): Promise<string> {
+  const contract = await getContract(id)
+  if (!contract) throw new Error("Contract not found")
+
+  const today = new Date()
+  const todayStr = today.toLocaleDateString("de-DE", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+  })
+
+  // Calculate cancellation date (30 days from now as default)
+  const endDate = new Date(today)
+  endDate.setDate(endDate.getDate() + 30)
+  const endDateStr = endDate.toLocaleDateString("de-DE", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+  })
+
+  // NOTE: Replace placeholder personal information with actual user data
+  // This should be made configurable through user settings in a future update
+  return `Max Mustermann
+Musterstraße 1
+12345 Musterstadt
+
+${contract.providerName}
+${contract.accountId ? `Kundennummer: ${contract.accountId}` : ""}
+
+${todayStr}
+
+**Betreff: Kündigung des Vertrags${contract.accountId ? ` (Kundennummer: ${contract.accountId})` : ""}**
+
+Sehr geehrte Damen und Herren,
+
+hiermit kündige ich meinen Vertrag bei ${contract.providerName}${contract.accountId ? ` (Kundennummer: ${contract.accountId})` : ""} fristgerecht zum ${endDateStr} oder hilfsweise zum nächstmöglichen Termin.
 
 Bitte senden Sie mir eine schriftliche Bestätigung der Kündigung unter Angabe des Beendigungszeitpunktes zu.
 
@@ -1187,6 +1352,32 @@ export async function getNotifications(): Promise<Notification[]> {
       category: "Lent",
       link: "/lending",
       date: dateToStr(l.expectedReturn),
+    })
+  })
+
+  // 5. Contracts (Trial ending in 48 hours)
+  const in48Hours = new Date(today)
+  in48Hours.setHours(today.getHours() + 48)
+  
+  const trials = await prisma.contract.findMany({
+    where: {
+      isTrial: true,
+      trialEndDate: {
+        gte: today,
+        lte: in48Hours,
+      },
+    },
+  })
+
+  trials.forEach((c) => {
+    notifications.push({
+      id: `contract-trial-${c.id}`,
+      title: `🚨 Trial-Trap Alert: ${c.providerName}`,
+      message: `Free trial ends in 48 hours! First charge: €${c.monthlyCost}/month`,
+      type: "warning",
+      category: "Contract",
+      link: "/contracts",
+      date: c.trialEndDate ? dateToStr(c.trialEndDate) : undefined,
     })
   })
 
@@ -1466,4 +1657,208 @@ export async function getExpiringDocuments(daysThreshold: number = 180): Promise
     emergencyContact: d.emergencyContact || undefined,
     notes: d.notes || undefined,
   }))
+}
+
+// ─── Pet Management ──────────────────────────────────────────────────────
+
+function mapPet(r: PrismaPet): Pet {
+  return {
+    id: r.id,
+    name: r.name,
+    species: r.species as Pet["species"],
+    breed: r.breed || undefined,
+    dateOfBirth: r.dateOfBirth ? dateToStr(r.dateOfBirth) : undefined,
+    microchipNumber: r.microchipNumber || undefined,
+    color: r.color || undefined,
+    photoPath: r.photoPath || undefined,
+    dietaryNeeds: r.dietaryNeeds || undefined,
+    medications: r.medications || undefined,
+    notes: r.notes || undefined,
+  }
+}
+
+function mapVetRecord(r: PrismaVetRecord, petName?: string): VetRecord {
+  return {
+    id: r.id,
+    petId: r.petId,
+    petName,
+    date: dateToStr(r.date),
+    vetName: r.vetName,
+    description: r.description,
+    cost: r.cost ?? undefined,
+    nextVisit: r.nextVisit ? dateToStr(r.nextVisit) : undefined,
+    notes: r.notes || undefined,
+  }
+}
+
+function mapVaccination(r: PrismaVaccination, petName?: string): Vaccination {
+  return {
+    id: r.id,
+    petId: r.petId,
+    petName,
+    name: r.name,
+    date: dateToStr(r.date),
+    nextDueDate: r.nextDueDate ? dateToStr(r.nextDueDate) : undefined,
+    vetName: r.vetName || undefined,
+    batchNumber: r.batchNumber || undefined,
+    notes: r.notes || undefined,
+  }
+}
+
+export async function getPets(): Promise<Pet[]> {
+  const rows = await prisma.pet.findMany({ orderBy: { name: "asc" } })
+  return rows.map(mapPet)
+}
+
+export async function getPet(id: string): Promise<Pet | null> {
+  const r = await prisma.pet.findUnique({ where: { id } })
+  if (!r) return null
+  return mapPet(r)
+}
+
+export async function createPet(data: Omit<Pet, "id">) {
+  await prisma.pet.create({
+    data: {
+      name: data.name,
+      species: data.species,
+      breed: data.breed || null,
+      dateOfBirth: data.dateOfBirth ? new Date(data.dateOfBirth) : null,
+      microchipNumber: data.microchipNumber || null,
+      color: data.color || null,
+      photoPath: data.photoPath || null,
+      dietaryNeeds: data.dietaryNeeds || null,
+      medications: data.medications || null,
+      notes: data.notes || null,
+    },
+  })
+  revalidatePath("/pets")
+  revalidatePath("/")
+}
+
+export async function updatePet(id: string, data: Partial<Omit<Pet, "id">>) {
+  await prisma.pet.update({
+    where: { id },
+    data: {
+      ...(data.name !== undefined && { name: data.name }),
+      ...(data.species !== undefined && { species: data.species }),
+      ...(data.breed !== undefined && { breed: data.breed || null }),
+      ...(data.dateOfBirth !== undefined && { dateOfBirth: data.dateOfBirth ? new Date(data.dateOfBirth) : null }),
+      ...(data.microchipNumber !== undefined && { microchipNumber: data.microchipNumber || null }),
+      ...(data.color !== undefined && { color: data.color || null }),
+      ...(data.photoPath !== undefined && { photoPath: data.photoPath || null }),
+      ...(data.dietaryNeeds !== undefined && { dietaryNeeds: data.dietaryNeeds || null }),
+      ...(data.medications !== undefined && { medications: data.medications || null }),
+      ...(data.notes !== undefined && { notes: data.notes || null }),
+    },
+  })
+  revalidatePath("/pets")
+  revalidatePath("/")
+}
+
+export async function deletePet(id: string) {
+  await prisma.pet.delete({ where: { id } })
+  revalidatePath("/pets")
+  revalidatePath("/")
+}
+
+// ─── Vet Records ──────────────────────────────────────────────────────────
+
+export async function getVetRecords(petId?: string): Promise<VetRecord[]> {
+  const where = petId ? { petId } : {}
+  const rows = await prisma.vetRecord.findMany({
+    where,
+    include: { pet: true },
+    orderBy: { date: "desc" },
+  })
+  return rows.map((r) => mapVetRecord(r, r.pet.name))
+}
+
+export async function createVetRecord(data: Omit<VetRecord, "id" | "petName">) {
+  await prisma.vetRecord.create({
+    data: {
+      petId: data.petId,
+      date: new Date(data.date),
+      vetName: data.vetName,
+      description: data.description,
+      cost: data.cost ?? null,
+      nextVisit: data.nextVisit ? new Date(data.nextVisit) : null,
+      notes: data.notes || null,
+    },
+  })
+  revalidatePath("/pets")
+  revalidatePath("/")
+}
+
+export async function updateVetRecord(id: string, data: Partial<Omit<VetRecord, "id" | "petName">>) {
+  await prisma.vetRecord.update({
+    where: { id },
+    data: {
+      ...(data.petId !== undefined && { petId: data.petId }),
+      ...(data.date !== undefined && { date: new Date(data.date) }),
+      ...(data.vetName !== undefined && { vetName: data.vetName }),
+      ...(data.description !== undefined && { description: data.description }),
+      ...(data.cost !== undefined && { cost: data.cost ?? null }),
+      ...(data.nextVisit !== undefined && { nextVisit: data.nextVisit ? new Date(data.nextVisit) : null }),
+      ...(data.notes !== undefined && { notes: data.notes || null }),
+    },
+  })
+  revalidatePath("/pets")
+  revalidatePath("/")
+}
+
+export async function deleteVetRecord(id: string) {
+  await prisma.vetRecord.delete({ where: { id } })
+  revalidatePath("/pets")
+  revalidatePath("/")
+}
+
+// ─── Vaccinations ─────────────────────────────────────────────────────────
+
+export async function getVaccinations(petId?: string): Promise<Vaccination[]> {
+  const where = petId ? { petId } : {}
+  const rows = await prisma.vaccination.findMany({
+    where,
+    include: { pet: true },
+    orderBy: { date: "desc" },
+  })
+  return rows.map((r) => mapVaccination(r, r.pet.name))
+}
+
+export async function createVaccination(data: Omit<Vaccination, "id" | "petName">) {
+  await prisma.vaccination.create({
+    data: {
+      petId: data.petId,
+      name: data.name,
+      date: new Date(data.date),
+      nextDueDate: data.nextDueDate ? new Date(data.nextDueDate) : null,
+      vetName: data.vetName || null,
+      batchNumber: data.batchNumber || null,
+      notes: data.notes || null,
+    },
+  })
+  revalidatePath("/pets")
+  revalidatePath("/")
+}
+
+export async function updateVaccination(id: string, data: Partial<Omit<Vaccination, "id" | "petName">>) {
+  await prisma.vaccination.update({
+    where: { id },
+    data: {
+      ...(data.petId !== undefined && { petId: data.petId }),
+      ...(data.name !== undefined && { name: data.name }),
+      ...(data.date !== undefined && { date: new Date(data.date) }),
+      ...(data.nextDueDate !== undefined && { nextDueDate: data.nextDueDate ? new Date(data.nextDueDate) : null }),
+      ...(data.vetName !== undefined && { vetName: data.vetName || null }),
+      ...(data.batchNumber !== undefined && { batchNumber: data.batchNumber || null }),
+      ...(data.notes !== undefined && { notes: data.notes || null }),
+    },
+  })
+  revalidatePath("/pets")
+  revalidatePath("/")
+}
+
+export async function deleteVaccination(id: string) {
+  await prisma.vaccination.delete({ where: { id } })
+  revalidatePath("/pets")
+  revalidatePath("/")
 }
