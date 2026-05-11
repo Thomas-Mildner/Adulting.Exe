@@ -154,7 +154,7 @@ export function MaintenanceFormDialog({
                         </div>
                         <div className="grid gap-2">
                             <Label htmlFor="category">{t("maintenance.category")}</Label>
-                            <Select value={category} onValueChange={setCategory}>
+                            <Select value={category} onValueChange={(value) => setCategory(value as "oil_change" | "repair" | "inspection" | "parts" | "other")}>
                                 <SelectTrigger>
                                     <SelectValue />
                                 </SelectTrigger>
