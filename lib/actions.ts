@@ -714,6 +714,34 @@ export async function updateHeatingType(type: string) {
   revalidatePath("/utilities")
 }
 
+export async function completeOnboarding() {
+  await prisma.appConfig.upsert({
+    where: { id: "default" },
+    update: { onboardingCompleted: true },
+    create: { id: "default", heatingType: "Gas", onboardingCompleted: true },
+  })
+  revalidatePath("/")
+}
+
+export async function updateDisabledModules(modules: string[]) {
+  await prisma.appConfig.upsert({
+    where: { id: "default" },
+    create: { id: "default", heatingType: "Gas", disabledModules: modules },
+    update: { disabledModules: modules },
+  })
+  revalidatePath("/settings")
+  revalidatePath("/")
+}
+
+export async function completeTutorial(moduleKey: string) {
+  const config = await getAppConfig()
+  const updated = Array.from(new Set([...config.tutorialCompletedModules, moduleKey]))
+  await prisma.appConfig.update({
+    where: { id: "default" },
+    data: { tutorialCompletedModules: updated },
+  })
+}
+
 // ─── Cars ───────────────────────────────────────────────────────────────
 
 export async function getCars(): Promise<Car[]> {
@@ -1068,35 +1096,6 @@ export async function uploadCarDocument(formData: FormData) {
   revalidatePath("/garage")
 }
 
-export async function completeOnboarding() {
-  await prisma.appConfig.upsert({
-    where: { id: "default" },
-    update: { onboardingCompleted: true },
-    create: { id: "default", heatingType: "Gas", onboardingCompleted: true },
-  })
-  revalidatePath("/")
-}
-
-export async function updateDisabledModules(modules: string[]) {
-  await prisma.appConfig.upsert({
-    where: { id: "default" },
-    create: { id: "default", heatingType: "Gas", disabledModules: modules },
-    update: { disabledModules: modules },
-  })
-  revalidatePath("/settings")
-  revalidatePath("/")
-}
-
-export async function completeTutorial(moduleKey: string) {
-  const config = await getAppConfig()
-  const updated = Array.from(new Set([...config.tutorialCompletedModules, moduleKey]))
-  await prisma.appConfig.update({
-    where: { id: "default" },
-    data: { tutorialCompletedModules: updated },
-  })
-}
-
-
 
 export async function generateCancellationLetter(id: string): Promise<string> {
   const insurance = await prisma.insurance.findUnique({ where: { id } })
@@ -1358,7 +1357,7 @@ export async function getNotifications(): Promise<Notification[]> {
   // 5. Contracts (Trial ending in 48 hours)
   const in48Hours = new Date(today)
   in48Hours.setHours(today.getHours() + 48)
-  
+
   const trials = await prisma.contract.findMany({
     where: {
       isTrial: true,

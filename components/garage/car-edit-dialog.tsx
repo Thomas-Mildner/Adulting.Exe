@@ -168,7 +168,7 @@ export function CarEditDialog({
                         </div>
                         <div className="grid gap-2">
                             <Label htmlFor="edit-tireType">{t("form.tireType")}</Label>
-                            <Select value={currentTireType} onValueChange={setCurrentTireType}>
+                            <Select value={currentTireType} onValueChange={(value) => setCurrentTireType(value as "summer" | "winter")}>
                                 <SelectTrigger>
                                     <SelectValue />
                                 </SelectTrigger>

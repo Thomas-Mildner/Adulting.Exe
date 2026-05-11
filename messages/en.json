@@ -926,9 +926,164 @@
       "document": "Are you sure you want to delete this {documentType}?"
     }
   },
+  "Garage": {
+    "title": "The Money Pit",
+    "subtitle": "From legal reminders to detailed cost analysis of fuel and repairs.",
+    "loading": "Loading...",
+    "emptyState": "No car added? Enjoy your functional legs while they last.",
+    "optional": "Optional",
+    "tabs": {
+      "overview": "Overview",
+      "maintenance": "Maintenance Log",
+      "fuel": "Fuel & Tolls",
+      "analytics": "Cost Analytics",
+      "documents": "Digital Glovebox"
+    },
+    "addCar": "Add Car",
+    "noCars": "No cars registered yet.",
+    "tuv": {
+      "title": "TÜV Status",
+      "safe": "Safe to Drive",
+      "illegal": "Illegal Go-Kart",
+      "warning": "Warning",
+      "dueIn": "Due in {days} days",
+      "overdue": "Overdue by {days} days",
+      "nextInspection": "Next Inspection",
+      "notSet": "Not set",
+      "expired": "Expired"
+    },
+    "tireReminder": {
+      "title": "The Tire Ritual",
+      "current": "Currently on: {type} tires",
+      "storage": "Storage: {location}",
+      "noStorage": "Storage location not set",
+      "summer": "Summer",
+      "winter": "Winter",
+      "changeDue": "Time to change tires!"
+    },
+    "firstAid": {
+      "title": "First Aid Expiry",
+      "expires": "Expires: {date}",
+      "expired": "Expired! Replace it before the next inspection.",
+      "notSet": "Not tracked"
+    },
+    "details": {
+      "title": "Car Details",
+      "purchaseDate": "Purchase Date",
+      "purchasePrice": "Purchase Price",
+      "analyticsPlaceholder": "Cost analytics will be displayed here."
+    },
+    "maintenance": {
+      "title": "Maintenance Log",
+      "subtitle": "Record repairs, oil changes, and parts replacements.",
+      "empty": "No maintenance records yet. Keep fingers crossed.",
+      "addEntry": "New Entry",
+      "editEntry": "Edit Entry",
+      "date": "Date",
+      "description": "Description",
+      "cost": "Cost (€)",
+      "mileage": "Mileage (km)",
+      "category": "Category",
+      "categories": {
+        "oil_change": "Oil Change",
+        "repair": "Repair",
+        "inspection": "Inspection",
+        "parts": "Parts Replacement",
+        "other": "Other"
+      }
+    },
+    "fuel": {
+      "title": "Fuel & Toll Tracker",
+      "fuel": "Fuel",
+      "tolls": "Tolls",
+      "subtitle": "Quick-entry form for refueling and highway tolls.",
+      "addFuel": "Add Fuel",
+      "addToll": "Add Toll",
+      "editEntry": "Edit Entry",
+      "editToll": "Edit Toll",
+      "fuelEmpty": "No fuel entries yet.",
+      "tollEmpty": "No toll entries yet.",
+      "date": "Date",
+      "liters": "Liters",
+      "pricePerLiter": "Price/Liter (€)",
+      "totalCost": "Total Cost (€)",
+      "mileage": "Mileage (km)",
+      "fuelType": "Fuel Type",
+      "fuelTypes": {
+        "diesel": "Diesel",
+        "petrol": "Petrol",
+        "e10": "E10",
+        "electric": "Electric"
+      },
+      "route": "Route",
+      "country": "Country",
+      "routePlaceholder": "e.g., Munich to Berlin"
+    },
+    "costSummary": {
+      "title": "Cost Summary",
+      "subtitle": "Expenses and Distribution",
+      "history": "History",
+      "distribution": "Distribution",
+      "total": "Total"
+    },
+    "documents": {
+      "title": "Digital Glovebox",
+      "subtitle": "Upload registration documents and insurance policies.",
+      "empty": "No documents uploaded yet.",
+      "upload": "Upload Document",
+      "download": "Download",
+      "fileName": "File Name",
+      "category": "Category",
+      "categories": {
+        "registration": "Registration (Fahrzeugschein/Brief)",
+        "insurance": "Insurance Policy",
+        "invoice": "Invoice",
+        "other": "Other"
+      },
+      "uploadDate": "Uploaded"
+    },
+    "resaleValue": {
+      "title": "Resale Value Protector",
+      "subtitle": "Export maintenance history as PDF for resale.",
+      "export": "Export History",
+      "exporting": "Generating PDF..."
+    },
+    "form": {
+      "carName": "Car Name",
+      "carNamePlaceholder": "e.g., The Beast, Daily Driver",
+      "brand": "Brand",
+      "brandPlaceholder": "e.g., BMW, VW",
+      "model": "Model",
+      "modelPlaceholder": "e.g., 3 Series, Golf",
+      "licensePlate": "License Plate",
+      "licensePlatePlaceholder": "e.g., M-AB 1234",
+      "purchaseDate": "Purchase Date",
+      "purchasePrice": "Purchase Price (€)",
+      "nextInspection": "Next Inspection (TÜV)",
+      "tireType": "Current Tire Type",
+      "tireStorage": "Tire Storage Location",
+      "tireStoragePlaceholder": "e.g., In the garage, bottom left, under the old tarp",
+      "firstAidExpiry": "First Aid Kit Expiry",
+      "save": "Save",
+      "saving": "Saving...",
+      "cancel": "Cancel",
+      "delete": "Delete Car",
+      "deleting": "Deleting..."
+    },
+    "create": {
+      "title": "Add New Car",
+      "description": "Register your money pit."
+    },
+    "edit": {
+      "title": "Edit Car",
+      "description": "Update car details."
+    },
+    "delete": {
+      "title": "Delete Car?",
+      "description": "This will permanently delete the car and all its maintenance records, fuel entries, and documents.",
+      "confirm": "Permanently Delete"
   "Onboarding": {
     "title": "Welcome to Adulting.Exe",
-    "subtitle": "Let's set up your household. This will only take a minute.",
     "steps": {
       "welcome": "Welcome",
       "appliance": "First Appliance",
