@@ -1082,6 +1082,7 @@
       "title": "Delete Car?",
       "description": "This will permanently delete the car and all its maintenance records, fuel entries, and documents.",
       "confirm": "Permanently Delete"
+    }},
   "Onboarding": {
     "title": "Welcome to Adulting.Exe",
     "steps": {
