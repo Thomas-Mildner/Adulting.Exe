@@ -142,6 +142,10 @@
       "pets": {
         "title": "Pet Hub",
         "desc": "Manage pet profiles, vet records, and vaccination schedules."
+      },
+      "returns": {
+        "title": "Returns",
+        "desc": "Track return shipments and refunds."
       }
     }
   },
@@ -991,7 +995,8 @@
       "cancel": "Cancel"
     },
     "save": "Save",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "saveError": "Failed to save the return."
   },
   "Onboarding": {
     "title": "Welcome to Adulting.Exe",

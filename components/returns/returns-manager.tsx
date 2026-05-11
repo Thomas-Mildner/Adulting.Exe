@@ -2,6 +2,7 @@
 
 import { useState, useTransition, useEffect } from "react";
 import { useTranslations } from "next-intl";
+import { toast } from "sonner";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -28,7 +29,7 @@ import {
 } from "@/components/ui/table";
 import { type PackageReturn, formatCurrency } from "@/lib/data";
 import { createPackageReturn, updatePackageReturn, deletePackageReturn, fetchTrackingStatus } from "@/lib/actions";
-import { PackageOpen, Camera, Pencil, Trash2, CheckCircle2, RotateCcw, AlertTriangle, RefreshCw } from "lucide-react";
+import { PackageOpen, Camera, Pencil, Trash2, CheckCircle2, RotateCcw, AlertTriangle, RefreshCw, ExternalLink } from "lucide-react";
 import { BarcodeScanner } from "./barcode-scanner";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
@@ -76,21 +77,24 @@ export function ReturnsManager({ initialReturns }: { initialReturns: PackageRetu
         if (!trackingId || !carrier || !targetVendor || amountExpected === "") return;
 
         startTransition(async () => {
-            await createPackageReturn({
-                trackingId,
-                carrier,
-                targetVendor,
-                status,
-                amountExpected: Number(amountExpected),
-                refundReceived,
-                dateSent,
-                returnWindow,
-                receiptPhoto: receiptPhoto || undefined,
-            });
-            setOpen(false);
-            resetForm();
-            // Wait for revalidation or optimistic update
-            window.location.reload();
+            try {
+                await createPackageReturn({
+                    trackingId,
+                    carrier,
+                    targetVendor,
+                    status,
+                    amountExpected: Number(amountExpected),
+                    refundReceived,
+                    dateSent,
+                    returnWindow,
+                    receiptPhoto: receiptPhoto || undefined,
+                });
+                setOpen(false);
+                resetForm();
+                window.location.reload();
+            } catch {
+                toast.error(t("saveError"));
+            }
         });
     }
 
@@ -113,21 +117,25 @@ export function ReturnsManager({ initialReturns }: { initialReturns: PackageRetu
         if (!editId || !trackingId || !carrier || !targetVendor || amountExpected === "") return;
 
         startTransition(async () => {
-            await updatePackageReturn(editId, {
-                trackingId,
-                carrier,
-                targetVendor,
-                status,
-                amountExpected: Number(amountExpected),
-                refundReceived,
-                dateSent,
-                returnWindow,
-                receiptPhoto: receiptPhoto || undefined,
-            });
-            setEditOpen(false);
-            setEditId(null);
-            resetForm();
-            window.location.reload();
+            try {
+                await updatePackageReturn(editId, {
+                    trackingId,
+                    carrier,
+                    targetVendor,
+                    status,
+                    amountExpected: Number(amountExpected),
+                    refundReceived,
+                    dateSent,
+                    returnWindow,
+                    receiptPhoto: receiptPhoto || undefined,
+                });
+                setEditOpen(false);
+                setEditId(null);
+                resetForm();
+                window.location.reload();
+            } catch {
+                toast.error(t("saveError"));
+            }
         });
     }
 
@@ -388,6 +396,18 @@ export function ReturnsManager({ initialReturns }: { initialReturns: PackageRetu
                                         </TableCell>
                                         <TableCell className="text-right">
                                             <div className="flex items-center justify-end gap-1">
+                                                {item.receiptPhoto && (
+                                                    <Button
+                                                        variant="ghost"
+                                                        size="icon"
+                                                        className="h-7 w-7"
+                                                        asChild
+                                                    >
+                                                        <a href={item.receiptPhoto} target="_blank" rel="noopener noreferrer">
+                                                            <ExternalLink className="h-3.5 w-3.5" />
+                                                        </a>
+                                                    </Button>
+                                                )}
                                                 <Button
                                                     variant="ghost"
                                                     size="icon"
@@ -495,6 +515,15 @@ export function ReturnsManager({ initialReturns }: { initialReturns: PackageRetu
                                         </SelectContent>
                                     </Select>
                                 </div>
+                            </div>
+
+                            <div className="grid gap-2">
+                                <Label>{t("form.receiptPhoto")}</Label>
+                                <Input
+                                    placeholder={t("form.receiptPhotoPlaceholder")}
+                                    value={receiptPhoto}
+                                    onChange={(e) => setReceiptPhoto(e.target.value)}
+                                />
                             </div>
 
                             <div className="flex items-center space-x-2 pt-2 pb-1 border-t mt-2">
