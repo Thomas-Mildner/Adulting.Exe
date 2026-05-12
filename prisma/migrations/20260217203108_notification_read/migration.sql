@@ -1,5 +1,4 @@
--- AlterTable
-ALTER TABLE "Insurance" ALTER COLUMN "deductible" DROP DEFAULT;
+
 
 -- CreateTable
 CREATE TABLE "NotificationRead" (

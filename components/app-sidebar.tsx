@@ -15,10 +15,11 @@ import {
   Settings,
   Terminal,
   CalendarDays,
+  Car,
   CreditCard,
   FileCheck,
   PawPrint,
-} from "lucide-react";
+} from "lucide-react"
 
 import {
   Sidebar,
@@ -56,6 +57,7 @@ export function AppSidebar({ disabledModules = [] }: AppSidebarProps) {
     { key: "waste", title: t("waste"), href: "/waste", icon: CalendarDays },
     { key: "maintenance", title: t("maintenance"), href: "/maintenance", icon: ClipboardCheck },
     { key: "utilities", title: t("utilities"), href: "/utilities", icon: Gauge },
+    { key: "garage", title: t("garage"), href: "/garage", icon: Car },
     { key: "contracts", title: t("contracts"), href: "/contracts", icon: CreditCard },
     { key: "wishlist", title: t("wishlist"), href: "/wishlist", icon: Sparkles },
     { key: "lending", title: t("lending"), href: "/lending", icon: HandCoins },
