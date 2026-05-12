@@ -1,3 +1,19 @@
+# [1.8.0-rc.20](https://github.com/Thomas-Mildner/Adulting.Exe/compare/v1.8.0-rc.19...v1.8.0-rc.20) (2026-05-12)
+
+
+### Bug Fixes
+
+* add garage module with management features to settings ([88e5167](https://github.com/Thomas-Mildner/Adulting.Exe/commit/88e5167dbba7d0b31f167ac368df833137229c6c))
+* Add initial database migration and lock file for schema setup ([1b8f3f5](https://github.com/Thomas-Mildner/Adulting.Exe/commit/1b8f3f5b11c229912e6cc68c6f6adca4c848bde7))
+* add packages entry to pnpm workspace config ([3cbf4ec](https://github.com/Thomas-Mildner/Adulting.Exe/commit/3cbf4ec1cfeef71b92ac24dd1788b814decce7eb))
+* update translation context for species in PetFormFields ([74394ce](https://github.com/Thomas-Mildner/Adulting.Exe/commit/74394ce317c11f7df3a81a97a1bfac7851ad2502))
+
+
+### Features
+
+* add database migration for car models and related entities ([62e8bf9](https://github.com/Thomas-Mildner/Adulting.Exe/commit/62e8bf9d9961359005860c061cdc295dec12fdfb))
+* add IF NOT EXISTS clause to table creation and foreign key constraints in migration.sql ([a04cc45](https://github.com/Thomas-Mildner/Adulting.Exe/commit/a04cc45047050168820a21a7fb38edf465636849))
+
 # [1.8.0-rc.19](https://github.com/Thomas-Mildner/Adulting.Exe/compare/v1.8.0-rc.18...v1.8.0-rc.19) (2026-05-07)
 
 
