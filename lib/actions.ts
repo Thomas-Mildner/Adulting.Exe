@@ -1,5 +1,8 @@
 "use server"
 
+import { writeFile } from "fs/promises"
+import { join } from "path"
+
 import { prisma } from "@/lib/prisma"
 import { revalidatePath } from "next/cache"
 import type {
@@ -13,6 +16,11 @@ import type {
   WishlistProject,
   WasteType,
   WastePickup,
+  Car,
+  CarMaintenance,
+  FuelEntry,
+  TollEntry,
+  CarDocument,
   Contract,
   Notification,
   Person,
@@ -33,6 +41,11 @@ import type {
   WishlistProject as PrismaWishlistProject,
   WasteType as PrismaWasteType,
   WastePickup as PrismaWastePickup,
+  Car as PrismaCar,
+  CarMaintenance as PrismaCarMaintenance,
+  FuelEntry as PrismaFuelEntry,
+  TollEntry as PrismaTollEntry,
+  CarDocument as PrismaCarDocument,
   Insurance as PrismaInsurance,
   Contract as PrismaContract,
   Person as PrismaPerson,
@@ -729,6 +742,359 @@ export async function completeTutorial(moduleKey: string) {
   })
 }
 
+// ─── Cars ───────────────────────────────────────────────────────────────
+
+export async function getCars(): Promise<Car[]> {
+  const rows = await prisma.car.findMany({ orderBy: { createdAt: "desc" } })
+  return rows.map((r: PrismaCar) => ({
+    id: r.id,
+    name: r.name,
+    brand: r.brand,
+    model: r.model,
+    licensePlate: r.licensePlate,
+    purchaseDate: dateToStr(r.purchaseDate),
+    purchasePrice: r.purchasePrice,
+    nextInspection: r.nextInspection ? dateToStr(r.nextInspection) : undefined,
+    currentTireType: r.currentTireType as "summer" | "winter",
+    tireStorageLocation: r.tireStorageLocation ?? undefined,
+    firstAidKitExpiry: r.firstAidKitExpiry ? dateToStr(r.firstAidKitExpiry) : undefined,
+  }))
+}
+
+export async function createCar(data: {
+  name: string
+  brand: string
+  model: string
+  licensePlate: string
+  purchaseDate: string
+  purchasePrice: number
+  nextInspection?: string
+  currentTireType?: string
+  tireStorageLocation?: string
+  firstAidKitExpiry?: string
+}) {
+  await prisma.car.create({
+    data: {
+      name: data.name,
+      brand: data.brand,
+      model: data.model,
+      licensePlate: data.licensePlate,
+      purchaseDate: new Date(data.purchaseDate),
+      purchasePrice: data.purchasePrice,
+      nextInspection: data.nextInspection ? new Date(data.nextInspection) : null,
+      currentTireType: data.currentTireType || "summer",
+      tireStorageLocation: data.tireStorageLocation || null,
+      firstAidKitExpiry: data.firstAidKitExpiry ? new Date(data.firstAidKitExpiry) : null,
+    },
+  })
+  revalidatePath("/garage")
+}
+
+export async function updateCar(
+  id: string,
+  data: {
+    name: string
+    brand: string
+    model: string
+    licensePlate: string
+    purchaseDate: string
+    purchasePrice: number
+    nextInspection?: string
+    currentTireType?: string
+    tireStorageLocation?: string
+    firstAidKitExpiry?: string
+  }
+) {
+  await prisma.car.update({
+    where: { id },
+    data: {
+      name: data.name,
+      brand: data.brand,
+      model: data.model,
+      licensePlate: data.licensePlate,
+      purchaseDate: new Date(data.purchaseDate),
+      purchasePrice: data.purchasePrice,
+      nextInspection: data.nextInspection ? new Date(data.nextInspection) : null,
+      currentTireType: data.currentTireType || "summer",
+      tireStorageLocation: data.tireStorageLocation || null,
+      firstAidKitExpiry: data.firstAidKitExpiry ? new Date(data.firstAidKitExpiry) : null,
+    },
+  })
+  revalidatePath("/garage")
+}
+
+export async function deleteCar(id: string) {
+  await prisma.car.delete({ where: { id } })
+  revalidatePath("/garage")
+}
+
+// ─── Car Maintenance ────────────────────────────────────────────────────
+
+export async function getCarMaintenance(carId: string): Promise<CarMaintenance[]> {
+  const rows = await prisma.carMaintenance.findMany({
+    where: { carId },
+    orderBy: { date: "desc" },
+  })
+  return rows.map((r: PrismaCarMaintenance) => ({
+    id: r.id,
+    carId: r.carId,
+    date: dateToStr(r.date),
+    description: r.description,
+    cost: r.cost,
+    mileage: r.mileage ?? undefined,
+    category: r.category as CarMaintenance["category"],
+  }))
+}
+
+export async function createCarMaintenance(data: {
+  carId: string
+  date: string
+  description: string
+  cost: number
+  mileage?: number
+  category: string
+}) {
+  await prisma.carMaintenance.create({
+    data: {
+      carId: data.carId,
+      date: new Date(data.date),
+      description: data.description,
+      cost: data.cost,
+      mileage: data.mileage || null,
+      category: data.category,
+    },
+  })
+  revalidatePath("/garage")
+}
+
+export async function updateCarMaintenance(
+  id: string,
+  data: {
+    date: string
+    description: string
+    cost: number
+    mileage?: number
+    category: string
+  }
+) {
+  await prisma.carMaintenance.update({
+    where: { id },
+    data: {
+      date: new Date(data.date),
+      description: data.description,
+      cost: data.cost,
+      mileage: data.mileage || null,
+      category: data.category,
+    },
+  })
+  revalidatePath("/garage")
+}
+
+export async function deleteCarMaintenance(id: string) {
+  await prisma.carMaintenance.delete({ where: { id } })
+  revalidatePath("/garage")
+}
+
+// ─── Fuel Entries ───────────────────────────────────────────────────────
+
+export async function getFuelEntries(carId: string): Promise<FuelEntry[]> {
+  const rows = await prisma.fuelEntry.findMany({
+    where: { carId },
+    orderBy: { date: "desc" },
+  })
+  return rows.map((r: PrismaFuelEntry) => ({
+    id: r.id,
+    carId: r.carId,
+    date: dateToStr(r.date),
+    liters: r.liters,
+    pricePerLiter: r.pricePerLiter,
+    totalCost: r.totalCost,
+    mileage: r.mileage,
+    fuelType: r.fuelType as FuelEntry["fuelType"],
+  }))
+}
+
+export async function createFuelEntry(data: {
+  carId: string
+  date: string
+  liters: number
+  pricePerLiter: number
+  totalCost: number
+  mileage: number | null
+  fuelType: string
+}) {
+  await prisma.fuelEntry.create({
+    data: {
+      carId: data.carId,
+      date: new Date(data.date),
+      liters: data.liters,
+      pricePerLiter: data.pricePerLiter,
+      totalCost: data.totalCost,
+      mileage: data.mileage,
+      fuelType: data.fuelType,
+    },
+  })
+  revalidatePath("/garage")
+}
+
+export async function updateFuelEntry(
+  id: string,
+  data: {
+    date: string
+    liters: number
+    pricePerLiter: number
+    totalCost: number
+    mileage: number | null
+    fuelType: string
+  }
+) {
+  await prisma.fuelEntry.update({
+    where: { id },
+    data: {
+      date: new Date(data.date),
+      liters: data.liters,
+      pricePerLiter: data.pricePerLiter,
+      totalCost: data.totalCost,
+      mileage: data.mileage,
+      fuelType: data.fuelType,
+    },
+  })
+  revalidatePath("/garage")
+}
+
+export async function deleteFuelEntry(id: string) {
+  await prisma.fuelEntry.delete({ where: { id } })
+  revalidatePath("/garage")
+}
+
+// ─── Toll Entries ───────────────────────────────────────────────────────
+
+export async function getTollEntries(carId: string): Promise<TollEntry[]> {
+  const rows = await prisma.tollEntry.findMany({
+    where: { carId },
+    orderBy: { date: "desc" },
+  })
+  return rows.map((r: PrismaTollEntry) => ({
+    id: r.id,
+    carId: r.carId,
+    date: dateToStr(r.date),
+    cost: r.cost,
+    route: r.route ?? undefined,
+    country: r.country ?? undefined,
+  }))
+}
+
+export async function createTollEntry(data: {
+  carId: string
+  date: string
+  cost: number
+  route?: string
+  country?: string
+}) {
+  await prisma.tollEntry.create({
+    data: {
+      carId: data.carId,
+      date: new Date(data.date),
+      cost: data.cost,
+      route: data.route || null,
+      country: data.country || null,
+    },
+  })
+  revalidatePath("/garage")
+}
+
+export async function updateTollEntry(
+  id: string,
+  data: {
+    date: string
+    cost: number
+    route?: string
+    country?: string
+  }
+) {
+  await prisma.tollEntry.update({
+    where: { id },
+    data: {
+      date: new Date(data.date),
+      cost: data.cost,
+      route: data.route || null,
+      country: data.country || null,
+    },
+  })
+  revalidatePath("/garage")
+}
+
+export async function deleteTollEntry(id: string) {
+  await prisma.tollEntry.delete({ where: { id } })
+  revalidatePath("/garage")
+}
+
+// ─── Car Documents ──────────────────────────────────────────────────────
+
+export async function getCarDocuments(carId: string): Promise<CarDocument[]> {
+  const rows = await prisma.carDocument.findMany({
+    where: { carId },
+    orderBy: { uploadDate: "desc" },
+  })
+  return rows.map((r: PrismaCarDocument) => ({
+    id: r.id,
+    carId: r.carId,
+    title: r.title,
+    category: r.category as CarDocument["category"],
+    fileName: r.fileName,
+    uploadDate: dateToStr(r.uploadDate),
+  }))
+}
+
+export async function createCarDocument(data: {
+  carId: string
+  title: string
+  category: string
+  fileName: string
+}) {
+  await prisma.carDocument.create({
+    data: {
+      carId: data.carId,
+      title: data.title,
+      category: data.category,
+      fileName: data.fileName,
+    },
+  })
+  revalidatePath("/garage")
+}
+
+export async function deleteCarDocument(id: string) {
+  await prisma.carDocument.delete({ where: { id } })
+  revalidatePath("/garage")
+}
+
+export async function uploadCarDocument(formData: FormData) {
+  const file = formData.get("file") as File
+  const carId = formData.get("carId") as string
+  const title = formData.get("title") as string
+  const category = formData.get("category") as string
+
+  if (!file) throw new Error("No file uploaded")
+
+  const bytes = await file.arrayBuffer()
+  const buffer = Buffer.from(bytes)
+
+  const fileName = `${Date.now()}-${file.name}`
+  const path = join(process.cwd(), "public/uploads", fileName)
+
+  await writeFile(path, buffer)
+
+  await prisma.carDocument.create({
+    data: {
+      carId,
+      title,
+      category,
+      fileName,
+      uploadDate: new Date(),
+    },
+  })
+  revalidatePath("/garage")
+}
 
 
 export async function generateCancellationLetter(id: string): Promise<string> {
@@ -991,7 +1357,7 @@ export async function getNotifications(): Promise<Notification[]> {
   // 5. Contracts (Trial ending in 48 hours)
   const in48Hours = new Date(today)
   in48Hours.setHours(today.getHours() + 48)
-  
+
   const trials = await prisma.contract.findMany({
     where: {
       isTrial: true,
