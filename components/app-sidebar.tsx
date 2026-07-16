@@ -19,6 +19,7 @@ import {
   CreditCard,
   FileCheck,
   PawPrint,
+  Stethoscope,
 } from "lucide-react"
 
 import {
@@ -62,6 +63,7 @@ export function AppSidebar({ disabledModules = [] }: AppSidebarProps) {
     { key: "wishlist", title: t("wishlist"), href: "/wishlist", icon: Sparkles },
     { key: "lending", title: t("lending"), href: "/lending", icon: HandCoins },
     { key: "pets", title: t("pets"), href: "/pets", icon: PawPrint },
+    { key: "illnesses", title: t("illnesses"), href: "/illnesses", icon: Stethoscope },
   ];
 
   const mainNav = allMainNav.filter((item) => !disabledModules.includes(item.key));

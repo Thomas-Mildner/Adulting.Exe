@@ -28,6 +28,7 @@ const ALL_MODULES = [
   "wishlist",
   "lending",
   "pets",
+  "illnesses",
   "garage",
 ] as const;
 

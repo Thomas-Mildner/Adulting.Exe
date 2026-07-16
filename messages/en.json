@@ -14,7 +14,8 @@
     "contracts": "Contracts",
     "documents": "Identity Guard",
     "pets": "Pet Hub",
-    "sidebarStatus": "Status: House standing (for now)"
+    "sidebarStatus": "Status: House standing (for now)",
+    "illnesses": "Illness Tracker"
   },
   "Dashboard": {
     "welcome": "Welcome back",
@@ -146,6 +147,10 @@
       "garage": {
         "title": "Car Pit",
         "desc": "Vehicle management, tire changes, and car costs."
+      },
+      "illnesses": {
+        "title": "Illness Tracker",
+        "desc": "Track illnesses per family member with yearly sick-day heatmaps."
       }
     }
   },
@@ -1086,7 +1091,80 @@
       "title": "Delete Car?",
       "description": "This will permanently delete the car and all its maintenance records, fuel entries, and documents.",
       "confirm": "Permanently Delete"
-    }},
+    }
+  },
+  "Illnesses": {
+    "title": "Illness Tracker",
+    "subtitle": "Track who was sick, with what, and for how long.",
+    "overview": "Overview",
+    "addPerson": "Add Person",
+    "addIllness": "Add Illness",
+    "editIllness": "Edit Illness",
+    "deleteIllness": "Delete Illness",
+    "dialogDescription": "Track an illness entry for a family member.",
+    "noPeople": "No family members available yet. Add one to start tracking illnesses.",
+    "noIllnesses": "No illnesses tracked yet.",
+    "noIllnessesForPerson": "No illnesses recorded for {name} yet.",
+    "allEntries": "All illness entries",
+    "allEntriesDescription": "A household-wide timeline of every tracked illness record.",
+    "entriesForPerson": "{name} illness history",
+    "entriesForPersonDescription": "Each illness is tracked separately so recurring issues stay visible.",
+    "activityByYear": "Yearly activity",
+    "activityByYearDescription": "GitHub-style heatmaps show which days were marked as sick for this person.",
+    "personSummaryDescription": "Individual illness history and yearly sick-day totals for {name}.",
+    "yearlySummary": "{year} summary",
+    "sickDaysThisYear": "Sick days in {year}",
+    "currentlySick": "Currently sick",
+    "records": "Records",
+    "heatmapDescription": "Every highlighted square marks a day that was tracked as sick.",
+    "heatmapTooltip": "{count, plural, one {# illness tracked} other {# illnesses tracked}}",
+    "legendLess": "Less",
+    "legendMore": "More",
+    "sickDaysCount": "{count, plural, one {# sick day} other {# sick days}}",
+    "trackedDays": "{count, plural, one {# tracked day} other {# tracked days}}",
+    "ongoing": "Ongoing",
+    "deleteConfirm": "Delete the illness entry for “{name}”?",
+    "cancel": "Cancel",
+    "save": "Save",
+    "add": "Add",
+    "status": {
+      "active": "Active",
+      "resolved": "Resolved"
+    },
+    "stats": {
+      "familyMembers": "family members",
+      "entries": "illness entries",
+      "active": "currently active",
+      "currentYearDays": "sick days in {year}"
+    },
+    "validation": {
+      "personRequired": "Please select a family member first.",
+      "endDate": "The end date must be on or after the start date."
+    },
+    "messages": {
+      "created": "Illness saved.",
+      "updated": "Illness updated.",
+      "deleted": "Illness deleted.",
+      "error": "Could not save the illness entry."
+    },
+    "relationTypes": {
+      "Self": "Self",
+      "Spouse": "Spouse",
+      "Child": "Child",
+      "Other": "Other"
+    },
+    "form": {
+      "person": "Person",
+      "personPlaceholder": "Select person...",
+      "name": "Illness",
+      "namePlaceholder": "e.g. Flu, Migraine, COVID-19",
+      "startDate": "Start Date",
+      "endDate": "End Date",
+      "notes": "Notes",
+      "notesPlaceholder": "Symptoms, medication, recovery notes, or anything worth remembering."
+    },
+    "personDialogDescription": "Add a family member so their illnesses can be tracked separately."
+  },
   "Onboarding": {
     "title": "Welcome to Adulting.Exe",
     "steps": {
@@ -1331,6 +1409,25 @@
         "title": "Vaccination Schedule",
         "description": "Never miss a booster shot. Track every vaccination with its due date and get notified when it's time to renew."
       }
+    },
+    "illnesses": {
+      "step1": {
+        "title": "Track Every Illness",
+        "description": "Log each illness separately for every family member using your shared household person list.",
+        "feature1": "Reuse the same person records as Identity Guard",
+        "feature2": "Capture the illness name, start date, and end date",
+        "feature3": "Keep optional notes for symptoms, recovery, or follow-ups"
+      },
+      "step2": {
+        "title": "Family History at a Glance",
+        "description": "Switch between family members to review their individual illness history without mixing everyone together.",
+        "feature1": "Dedicated timeline cards for each illness entry",
+        "feature2": "Per-person yearly summaries with tracked sick days"
+      },
+      "step3": {
+        "title": "GitHub-Style Sick-Day Heatmap",
+        "description": "Each person gets a year-by-year activity grid so you can see how many days they were sick over time."
+      }
     }
   },
   "Pets": {
@@ -1472,164 +1569,6 @@
       "batchPlaceholder": "e.g. 4A2B9C",
       "notes": "Notes",
       "notesPlaceholder": "Additional notes..."
-    }
-  },
-  "Garage": {
-    "title": "The Money Pit",
-    "subtitle": "From legal reminders to detailed cost analysis of fuel and repairs.",
-    "loading": "Loading...",
-    "emptyState": "No car added? Enjoy your functional legs while they last.",
-    "optional": "Optional",
-    "tabs": {
-      "overview": "Overview",
-      "maintenance": "Maintenance Log",
-      "fuel": "Fuel & Tolls",
-      "analytics": "Cost Analytics",
-      "documents": "Digital Glovebox"
-    },
-    "addCar": "Add Car",
-    "noCars": "No cars registered yet.",
-    "tuv": {
-      "title": "TÜV Status",
-      "safe": "Safe to Drive",
-      "illegal": "Illegal Go-Kart",
-      "warning": "Warning",
-      "dueIn": "Due in {days} days",
-      "overdue": "Overdue by {days} days",
-      "nextInspection": "Next Inspection",
-      "notSet": "Not set",
-      "expired": "Expired"
-    },
-    "tireReminder": {
-      "title": "The Tire Ritual",
-      "current": "Currently on: {type} tires",
-      "storage": "Storage: {location}",
-      "noStorage": "Storage location not set",
-      "summer": "Summer",
-      "winter": "Winter",
-      "changeDue": "Time to change tires!"
-    },
-    "firstAid": {
-      "title": "First Aid Expiry",
-      "expires": "Expires: {date}",
-      "expired": "Expired! Replace it before the next inspection.",
-      "notSet": "Not tracked"
-    },
-    "details": {
-      "title": "Car Details",
-      "purchaseDate": "Purchase Date",
-      "purchasePrice": "Purchase Price",
-      "analyticsPlaceholder": "Cost analytics will be displayed here."
-    },
-    "maintenance": {
-      "title": "Maintenance Log",
-      "subtitle": "Record repairs, oil changes, and parts replacements.",
-      "empty": "No maintenance records yet. Keep fingers crossed.",
-      "addEntry": "New Entry",
-      "editEntry": "Edit Entry",
-      "date": "Date",
-      "description": "Description",
-      "cost": "Cost (€)",
-      "mileage": "Mileage (km)",
-      "category": "Category",
-      "categories": {
-        "oil_change": "Oil Change",
-        "repair": "Repair",
-        "inspection": "Inspection",
-        "parts": "Parts Replacement",
-        "other": "Other"
-      }
-    },
-    "fuel": {
-      "title": "Fuel & Toll Tracker",
-      "fuel": "Fuel",
-      "tolls": "Tolls",
-      "subtitle": "Quick-entry form for refueling and highway tolls.",
-      "addFuel": "Add Fuel",
-      "addToll": "Add Toll",
-      "editEntry": "Edit Entry",
-      "editToll": "Edit Toll",
-      "fuelEmpty": "No fuel entries yet.",
-      "tollEmpty": "No toll entries yet.",
-      "date": "Date",
-      "liters": "Liters",
-      "pricePerLiter": "Price/Liter (€)",
-      "totalCost": "Total Cost (€)",
-      "mileage": "Mileage (km)",
-      "fuelType": "Fuel Type",
-      "fuelTypes": {
-        "diesel": "Diesel",
-        "petrol": "Petrol",
-        "e10": "E10",
-        "electric": "Electric"
-      },
-      "route": "Route",
-      "country": "Country",
-      "routePlaceholder": "e.g., Munich to Berlin"
-    },
-    "costSummary": {
-      "title": "Cost Summary",
-      "subtitle": "Expenses and Distribution",
-      "history": "History",
-      "distribution": "Distribution",
-      "total": "Total"
-    },
-    "documents": {
-      "title": "Digital Glovebox",
-      "subtitle": "Upload registration documents and insurance policies.",
-      "empty": "No documents uploaded yet.",
-      "upload": "Upload Document",
-      "download": "Download",
-      "fileName": "File Name",
-      "category": "Category",
-      "categories": {
-        "registration": "Registration (Fahrzeugschein/Brief)",
-        "insurance": "Insurance Policy",
-        "invoice": "Invoice",
-        "other": "Other"
-      },
-      "uploadDate": "Uploaded"
-    },
-    "resaleValue": {
-      "title": "Resale Value Protector",
-      "subtitle": "Export maintenance history as PDF for resale.",
-      "export": "Export History",
-      "exporting": "Generating PDF..."
-    },
-    "form": {
-      "carName": "Car Name",
-      "carNamePlaceholder": "e.g., The Beast, Daily Driver",
-      "brand": "Brand",
-      "brandPlaceholder": "e.g., BMW, VW",
-      "model": "Model",
-      "modelPlaceholder": "e.g., 3 Series, Golf",
-      "licensePlate": "License Plate",
-      "licensePlatePlaceholder": "e.g., M-AB 1234",
-      "purchaseDate": "Purchase Date",
-      "purchasePrice": "Purchase Price (€)",
-      "nextInspection": "Next Inspection (TÜV)",
-      "tireType": "Current Tire Type",
-      "tireStorage": "Tire Storage Location",
-      "tireStoragePlaceholder": "e.g., In the garage, bottom left, under the old tarp",
-      "firstAidExpiry": "First Aid Kit Expiry",
-      "save": "Save",
-      "saving": "Saving...",
-      "cancel": "Cancel",
-      "delete": "Delete Car",
-      "deleting": "Deleting..."
-    },
-    "create": {
-      "title": "Add New Car",
-      "description": "Register your money pit."
-    },
-    "edit": {
-      "title": "Edit Car",
-      "description": "Update car details."
-    },
-    "delete": {
-      "title": "Delete Car?",
-      "description": "This will permanently delete the car and all its maintenance records, fuel entries, and documents.",
-      "confirm": "Permanently Delete"
     }
   }
 }
