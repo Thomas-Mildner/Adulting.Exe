@@ -483,6 +483,21 @@
           </p>
         </div>
 
+        <!-- Card: Illness Tracker -->
+        <div class="feature-card bg-white/[0.03] border border-white/[0.07] rounded-xl p-6 relative overflow-hidden">
+          <div class="flex items-center justify-between mb-4">
+            <div class="w-10 h-10 rounded-lg bg-rose-400/10 border border-rose-400/20 flex items-center justify-center">
+              <i data-lucide="stethoscope" class="w-5 h-5 text-rose-400"></i>
+            </div>
+            <span
+              class="text-[10px] font-bold uppercase tracking-widest text-zinc-500 bg-zinc-500/10 border border-zinc-500/20 px-2 py-0.5 rounded" data-i18n="feature.soon">Soon</span>
+          </div>
+          <h3 class="font-semibold text-sm mb-2" data-i18n="feature.illness.title">Illness Tracker</h3>
+          <p class="text-zinc-500 text-sm leading-relaxed" data-i18n="feature.illness.desc">
+            Track each illness per family member with start/end dates and a GitHub-style yearly heatmap for sick days.
+          </p>
+        </div>
+
             <!-- Card 13 (Car Pit) -->
         <div class="feature-card bg-white/[0.03] border border-white/[0.07] rounded-xl p-6 relative overflow-hidden">
           <div class="flex items-center justify-between mb-4">
@@ -591,6 +606,17 @@
           <p class="mt-3 text-xs text-zinc-500 text-center" data-i18n-html="screenshot.identity">
             🪪 <strong class="text-zinc-300">Identity Guard</strong> — Document
             expiry monitoring with smart reminders and emergency guides
+          </p>
+        </div>
+
+        <!-- Illness Tracker -->
+        <div>
+          <div class="screenshot-img overflow-hidden rounded-xl border border-white/[0.07] bg-zinc-900">
+            <img src="images/11-illness-tracker.png" alt="Illness tracker with yearly activity heatmap" class="w-full object-cover"
+              loading="lazy" onclick="openLightbox(this)" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' ')openLightbox(this)" />
+          </div>
+          <p class="mt-3 text-xs text-zinc-500 text-center" data-i18n-html="screenshot.illness">
+            🤒 <strong class="text-zinc-300">Illness Tracker</strong> — Person-based illness history with yearly sick-day heatmaps
           </p>
         </div>
 
@@ -883,7 +909,7 @@
         "motivation.p3": "The vision is simple — give homeowners the clarity and confidence that the house is under control, at a glance, on any device. Because adulting shouldn't require a degree in spreadsheet management.",
         // Features
         "features.title": "Everything your home needs",
-        "features.subtitle": "Ten purpose-built modules, one cohesive dashboard.",
+        "features.subtitle": "Eleven purpose-built modules, one cohesive dashboard.",
         "feature.vault.title": "Vault — Warranty Tracker",
         "feature.vault.desc": "Catalog every appliance with purchase dates, brands, and warranty status. Know exactly when you're protected — and when you're flying solo.",
         "feature.services.title": "Services & Invoicing",
@@ -906,6 +932,8 @@
         "feature.payments.desc": 'Track subscriptions and fixed-term contracts. Get alerts for trial expirations, see wasted costs via the "Regret Meter", and generate automated cancellation letters.',
         "feature.pets.title": "Pet Management Hub",
         "feature.pets.desc": "Track vet records, vaccination schedules, and microchip numbers. Store pet-sitter instructions with dietary needs and medications for every pet.",
+        "feature.illness.title": "Illness Tracker",
+        "feature.illness.desc": "Track each illness per family member with start/end dates and a GitHub-style yearly heatmap for sick days.",
         "feature.outdoor.title": "Outdoor & Garden",
         "feature.outdoor.desc": "Track your living inventory. From plant species and watering schedules to soil treatments, irrigation zones, and landscaping galleries.",
         "feature.soon": "Soon",
@@ -924,6 +952,7 @@
         "screenshot.vault": '📦 <strong class="text-zinc-300">Vault</strong> — Appliance inventory with warranty status badges and box-locator notes',
         "screenshot.services": '🛠️ <strong class="text-zinc-300">Service Team</strong> — Contractor directory, service history, and tax-deductible invoice storage',
         "screenshot.identity": '🪪 <strong class="text-zinc-300">Identity Guard</strong> — Document expiry monitoring with smart reminders and emergency guides',
+        "screenshot.illness": '🤒 <strong class="text-zinc-300">Illness Tracker</strong> — Person-based illness history with yearly sick-day heatmaps',
         "screenshot.maintenance": '🔧 <strong class="text-zinc-300">Maintenance</strong> — Task list with priority levels, recurring schedules, and completion tracking',
         "screenshot.utilities": '📉 <strong class="text-zinc-300">Utilities</strong> — Monthly meter readings and interactive cost-trend charts',
         "screenshot.wishlist": '🎯 <strong class="text-zinc-300">Wishlist</strong> — Project planning with budget goals and urgency prioritization',
@@ -972,7 +1001,7 @@
         "motivation.p3": "Die Vision ist einfach — Hausbesitzern die Klarheit und Sicherheit geben, dass ihr Haus unter Kontrolle ist, auf einen Blick, auf jedem Gerät. Denn Erwachsensein sollte keinen Abschluss in Tabellenkalkulation erfordern.",
         // Features
         "features.title": "Alles, was dein Zuhause braucht",
-        "features.subtitle": "Zehn speziell entwickelte Module, ein einheitliches Dashboard.",
+        "features.subtitle": "Elf speziell entwickelte Module, ein einheitliches Dashboard.",
         "feature.vault.title": "Tresor — Garantie-Tracker",
         "feature.vault.desc": "Katalogisiere jedes Gerät mit Kaufdatum, Marke und Garantiestatus. Wisse genau, wann du geschützt bist — und wann du auf dich allein gestellt bist.",
         "feature.services.title": "Dienstleister & Rechnungen",
@@ -995,6 +1024,8 @@
         "feature.payments.desc": 'Verfolge Abonnements und Laufzeitverträge. Erhalte Warnungen bei Ablauf von Probezeiten, erkenne verschwendete Kosten über das „Reue-O-Meter" und erstelle automatisierte Kündigungsschreiben.',
         "feature.pets.title": "Tier-Management-Hub",
         "feature.pets.desc": "Verfolge Tierarztbesuche, Impfpläne und Chip-Nummern. Speichere Tiersitter-Anweisungen mit Ernährungsbedarf und Medikamenten für jedes Tier.",
+        "feature.illness.title": "Krankheitentracker",
+        "feature.illness.desc": "Erfasse jede Krankheit pro Familienmitglied mit Start-/Enddatum und einer Sick-Day-Heatmap im GitHub-Stil.",
         "feature.outdoor.title": "Outdoor & Garten",
         "feature.outdoor.desc": "Verfolge deinen lebenden Bestand. Von Pflanzenarten und Bewässerungsplänen bis zu Bodenbehandlungen, Bewässerungszonen und Gartenbildern.",
         "feature.soon": "Bald",
@@ -1013,6 +1044,7 @@
         "screenshot.vault": '📦 <strong class="text-zinc-300">Tresor</strong> — Geräteinventar mit Garantiestatus-Badges und Karton-Standortnotizen',
         "screenshot.services": '🛠️ <strong class="text-zinc-300">Service-Team</strong> — Handwerkerverzeichnis, Servicehistorie und steuerlich absetzbare Rechnungsspeicherung',
         "screenshot.identity": '🪪 <strong class="text-zinc-300">Dokumentenwächter</strong> — Ablaufüberwachung mit smarten Erinnerungen und Notfall-Leitfäden',
+        "screenshot.illness": '🤒 <strong class="text-zinc-300">Krankheitentracker</strong> — Personenbezogene Krankheitshistorie mit jährlichen Sick-Day-Heatmaps',
         "screenshot.maintenance": '🔧 <strong class="text-zinc-300">Wartung</strong> — Aufgabenliste mit Prioritätsstufen, wiederkehrenden Zeitplänen und Erledigungsverfolgung',
         "screenshot.utilities": '📉 <strong class="text-zinc-300">Verbrauch</strong> — Monatliche Zählerstände und interaktive Kostentrend-Diagramme',
         "screenshot.wishlist": '🎯 <strong class="text-zinc-300">Wunschliste</strong> — Projektplanung mit Budgetzielen und Dringlichkeitspriorisierung',

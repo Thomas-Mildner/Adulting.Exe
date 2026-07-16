@@ -14,6 +14,7 @@ import {
   ClipboardCheck,
   Settings,
   Search,
+  Stethoscope,
   Trash2,
 } from "lucide-react"
 import {
@@ -42,6 +43,7 @@ export function GlobalSearch() {
     { title: tNav("utilities"), href: "/utilities", icon: Gauge, keywords: ["utilities", "power", "water", "heating", "consumption", "ressourcen", "strom", "wasser", "heizung", "verbrauch"] },
     { title: tNav("wishlist"), href: "/wishlist", icon: Sparkles, keywords: ["wishlist", "project", "saving", "dream", "wunschliste", "projekt", "sparen", "traum"] },
     { title: tNav("lending"), href: "/lending", icon: HandCoins, keywords: ["lending", "borrow", "item", "return", "verleih", "verliehen", "gegenstand", "rückgabe"] },
+    { title: tNav("illnesses"), href: "/illnesses", icon: Stethoscope, keywords: ["illness", "sick", "health", "fever", "krankheit", "krank", "gesundheit", "fieber"] },
     { title: tNav("waste"), href: "/waste", icon: Trash2, keywords: ["waste", "calendar", "garbage", "trash", "pickup", "müll", "kalender", "abfall", "tonne", "leerung"] },
     { title: tNav("settings"), href: "/settings", icon: Settings, keywords: ["settings", "profile", "notification", "data", "einstellungen", "profil", "benachrichtigung", "daten"] },
   ]

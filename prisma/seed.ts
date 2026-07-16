@@ -305,6 +305,9 @@ async function main() {
 
   const sixMonthsFromNow = new Date(today)
   sixMonthsFromNow.setMonth(sixMonthsFromNow.getMonth() + 6)
+
+  const currentYear = today.getFullYear()
+  const previousYear = currentYear - 1
   
   const oneYearFromNow = new Date(today)
   oneYearFromNow.setFullYear(oneYearFromNow.getFullYear() + 1)
@@ -355,6 +358,24 @@ async function main() {
             emergencyContact: "Führerscheinstelle: +49 30 9018 0"
           }
         ]
+      },
+      illnesses: {
+        create: [
+          {
+            id: "illness-1",
+            name: "Seasonal Flu",
+            startDate: new Date(`${currentYear}-01-12`),
+            endDate: new Date(`${currentYear}-01-18`),
+            notes: "Fever for two days, then a week of couch recovery."
+          },
+          {
+            id: "illness-2",
+            name: "Stomach Bug",
+            startDate: new Date(`${previousYear}-11-03`),
+            endDate: new Date(`${previousYear}-11-05`),
+            notes: "Likely traced back to that suspicious office potluck."
+          }
+        ]
       }
     }
   })
@@ -387,6 +408,24 @@ async function main() {
             emergencyContact: "Bürgeramt: +49 30 115"
           }
         ]
+      },
+      illnesses: {
+        create: [
+          {
+            id: "illness-3",
+            name: "Migraine Episode",
+            startDate: new Date(`${currentYear}-03-07`),
+            endDate: new Date(`${currentYear}-03-08`),
+            notes: "Low-light mode and quiet room required."
+          },
+          {
+            id: "illness-4",
+            name: "COVID-19",
+            startDate: new Date(`${previousYear}-02-14`),
+            endDate: new Date(`${previousYear}-02-21`),
+            notes: "Isolated at home and kept hydration high."
+          }
+        ]
       }
     }
   })
@@ -410,11 +449,29 @@ async function main() {
             notes: "EXPIRED - Needs immediate renewal!"
           }
         ]
+      },
+      illnesses: {
+        create: [
+          {
+            id: "illness-5",
+            name: "Chickenpox",
+            startDate: new Date(`${previousYear}-05-06`),
+            endDate: new Date(`${previousYear}-05-15`),
+            notes: "Ten very itchy days and a lot of cartoons."
+          },
+          {
+            id: "illness-6",
+            name: "Common Cold",
+            startDate: new Date(`${currentYear}-02-02`),
+            endDate: new Date(`${currentYear}-02-06`)
+          }
+        ]
       }
     }
   })
 
   console.log("  ✅ Persons & identity documents seeded")
+  console.log("  ✅ Illness tracker data seeded")
 
   console.log("🎉 Seeding complete!")
 }
