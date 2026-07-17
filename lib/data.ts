@@ -224,6 +224,16 @@ export type IdentityDocument = {
   notes?: string
 }
 
+export type Illness = {
+  id: string
+  personId: string
+  personName?: string
+  name: string
+  startDate: string
+  endDate?: string
+  notes?: string
+}
+
 export type Pet = {
   id: string
   name: string
@@ -306,4 +316,3 @@ export function getDocumentStatusLabel(status: "valid" | "expiring-soon" | "expi
     case "expired": return "International Fugitive"
   }
 }
-

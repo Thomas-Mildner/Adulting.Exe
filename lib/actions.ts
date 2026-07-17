@@ -25,6 +25,7 @@ import type {
   Notification,
   Person,
   IdentityDocument,
+  Illness,
   Pet,
   VetRecord,
   Vaccination,
@@ -50,6 +51,7 @@ import type {
   Contract as PrismaContract,
   Person as PrismaPerson,
   IdentityDocument as PrismaIdentityDocument,
+  Illness as PrismaIllness,
   Pet as PrismaPet,
   VetRecord as PrismaVetRecord,
   Vaccination as PrismaVaccination,
@@ -1507,6 +1509,7 @@ export async function createPerson(data: Omit<Person, "id">) {
     },
   })
   revalidatePath("/documents")
+  revalidatePath("/illnesses")
   revalidatePath("/")
 }
 
@@ -1519,12 +1522,14 @@ export async function updatePerson(id: string, data: Partial<Omit<Person, "id">>
     },
   })
   revalidatePath("/documents")
+  revalidatePath("/illnesses")
   revalidatePath("/")
 }
 
 export async function deletePerson(id: string) {
   await prisma.person.delete({ where: { id } })
   revalidatePath("/documents")
+  revalidatePath("/illnesses")
   revalidatePath("/")
 }
 
@@ -1656,6 +1661,100 @@ export async function getExpiringDocuments(daysThreshold: number = 180): Promise
     emergencyContact: d.emergencyContact || undefined,
     notes: d.notes || undefined,
   }))
+}
+
+function mapIllness(illness: PrismaIllness & { person: PrismaPerson }): Illness {
+  return {
+    id: illness.id,
+    personId: illness.personId,
+    personName: illness.person.name,
+    name: illness.name,
+    startDate: dateToStr(illness.startDate),
+    endDate: illness.endDate ? dateToStr(illness.endDate) : undefined,
+    notes: illness.notes || undefined,
+  }
+}
+
+function validateIllnessDates(startDate: string, endDate?: string) {
+  if (!endDate) return
+
+  const start = new Date(startDate)
+  const end = new Date(endDate)
+
+  if (Number.isNaN(start.getTime()) || Number.isNaN(end.getTime()) || end < start) {
+    throw new Error("Illness end date must be on or after the start date.")
+  }
+}
+
+export async function getIllnesses(personId?: string): Promise<Illness[]> {
+  const where = personId ? { personId } : {}
+  const illnesses = await prisma.illness.findMany({
+    where,
+    include: { person: true },
+    orderBy: [
+      { startDate: "desc" },
+      { createdAt: "desc" },
+    ],
+  })
+
+  return illnesses.map(mapIllness)
+}
+
+export async function getIllness(id: string): Promise<Illness | null> {
+  const illness = await prisma.illness.findUnique({
+    where: { id },
+    include: { person: true },
+  })
+
+  return illness ? mapIllness(illness) : null
+}
+
+export async function createIllness(data: Omit<Illness, "id" | "personName">) {
+  validateIllnessDates(data.startDate, data.endDate)
+
+  await prisma.illness.create({
+    data: {
+      personId: data.personId,
+      name: data.name,
+      startDate: new Date(data.startDate),
+      endDate: data.endDate ? new Date(data.endDate) : null,
+      notes: data.notes ?? null,
+    },
+  })
+
+  revalidatePath("/illnesses")
+}
+
+export async function updateIllness(id: string, data: Partial<Omit<Illness, "id" | "personName">>) {
+  if (data.startDate !== undefined || data.endDate !== undefined) {
+    const existingIllness = await prisma.illness.findUnique({ where: { id } })
+    if (!existingIllness) {
+      throw new Error("Illness not found.")
+    }
+
+    validateIllnessDates(
+      data.startDate ?? dateToStr(existingIllness.startDate),
+      data.endDate ?? (existingIllness.endDate ? dateToStr(existingIllness.endDate) : undefined)
+    )
+  }
+
+  await prisma.illness.update({
+    where: { id },
+    data: {
+      ...(data.personId !== undefined && { personId: data.personId }),
+      ...(data.name !== undefined && { name: data.name }),
+      ...(data.startDate !== undefined && { startDate: new Date(data.startDate) }),
+      ...(data.endDate !== undefined && { endDate: data.endDate ? new Date(data.endDate) : null }),
+      ...(data.notes !== undefined && { notes: data.notes || null }),
+    },
+  })
+
+  revalidatePath("/illnesses")
+}
+
+export async function deleteIllness(id: string) {
+  await prisma.illness.delete({ where: { id } })
+  revalidatePath("/illnesses")
 }
 
 // ─── Pet Management ──────────────────────────────────────────────────────

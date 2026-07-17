@@ -14,7 +14,8 @@
     "contracts": "Verträge",
     "documents": "Ausweiskontrolle",
     "pets": "Tier-Hub",
-    "sidebarStatus": "Status: Haus steht (vorerst)"
+    "sidebarStatus": "Status: Haus steht (vorerst)",
+    "illnesses": "Krankheitentracker"
   },
   "Dashboard": {
     "welcome": "Willkommen zurück",
@@ -146,6 +147,10 @@
       "garage": {
         "title": "Car Pit",
         "desc": "Fahrzeugverwaltung, Reifenwechsel und KFZ-Kosten."
+      },
+      "illnesses": {
+        "title": "Krankheitentracker",
+        "desc": "Erfasse Krankheiten pro Familienmitglied mit jährlichen Sick-Day-Heatmaps."
       }
     }
   },
@@ -1085,7 +1090,81 @@
     "delete": {
       "title": "Auto löschen?",
       "description": "Dies löscht das Auto permanent und alle zugehörigen Wartungseinträge, Tankeinträge und Dokumente.",
-      "confirm": "Permanent löschen"}},
+      "confirm": "Permanent löschen"
+    }
+  },
+  "Illnesses": {
+    "title": "Krankheitentracker",
+    "subtitle": "Behalte im Blick, wer krank war, womit und wie lange.",
+    "overview": "Übersicht",
+    "addPerson": "Person hinzufügen",
+    "addIllness": "Krankheit hinzufügen",
+    "editIllness": "Krankheit bearbeiten",
+    "deleteIllness": "Krankheit löschen",
+    "dialogDescription": "Erfasse einen Krankheitseintrag für ein Familienmitglied.",
+    "noPeople": "Noch keine Familienmitglieder vorhanden. Füge zuerst eine Person hinzu.",
+    "noIllnesses": "Noch keine Krankheiten erfasst.",
+    "noIllnessesForPerson": "Für {name} wurden noch keine Krankheiten erfasst.",
+    "allEntries": "Alle Krankheitseinträge",
+    "allEntriesDescription": "Eine Haushaltsübersicht über alle erfassten Krankheiten.",
+    "entriesForPerson": "Krankheitshistorie von {name}",
+    "entriesForPersonDescription": "Jede Krankheit bleibt separat sichtbar, damit Wiederholungen nicht untergehen.",
+    "activityByYear": "Aktivität nach Jahr",
+    "activityByYearDescription": "GitHub-ähnliche Heatmaps zeigen, an welchen Tagen die Person krank war.",
+    "personSummaryDescription": "Individuelle Krankheitshistorie und jährliche Krankheitstage für {name}.",
+    "yearlySummary": "Zusammenfassung {year}",
+    "sickDaysThisYear": "Krankheitstage in {year}",
+    "currentlySick": "Aktuell krank",
+    "records": "Einträge",
+    "heatmapDescription": "Jedes hervorgehobene Feld steht für einen erfassten Krankheitstag.",
+    "heatmapTooltip": "{count, plural, one {# Krankheit erfasst} other {# Krankheiten erfasst}}",
+    "legendLess": "Weniger",
+    "legendMore": "Mehr",
+    "sickDaysCount": "{count, plural, one {# Krankheitstag} other {# Krankheitstage}}",
+    "trackedDays": "{count, plural, one {# erfasster Tag} other {# erfasste Tage}}",
+    "ongoing": "Laufend",
+    "deleteConfirm": "Den Krankheitseintrag „{name}“ löschen?",
+    "cancel": "Abbrechen",
+    "save": "Speichern",
+    "add": "Hinzufügen",
+    "status": {
+      "active": "Aktiv",
+      "resolved": "Abgeschlossen"
+    },
+    "stats": {
+      "familyMembers": "Familienmitglieder",
+      "entries": "Krankheitseinträge",
+      "active": "aktuell aktiv",
+      "currentYearDays": "Krankheitstage in {year}"
+    },
+    "validation": {
+      "personRequired": "Bitte zuerst ein Familienmitglied auswählen.",
+      "endDate": "Das Enddatum muss am oder nach dem Startdatum liegen."
+    },
+    "messages": {
+      "created": "Krankheit gespeichert.",
+      "updated": "Krankheit aktualisiert.",
+      "deleted": "Krankheit gelöscht.",
+      "error": "Der Krankheitseintrag konnte nicht gespeichert werden."
+    },
+    "relationTypes": {
+      "Self": "Ich",
+      "Spouse": "Ehepartner/in",
+      "Child": "Kind",
+      "Other": "Sonstiges"
+    },
+    "form": {
+      "person": "Person",
+      "personPlaceholder": "Person auswählen...",
+      "name": "Krankheit",
+      "namePlaceholder": "z. B. Grippe, Migräne, COVID-19",
+      "startDate": "Startdatum",
+      "endDate": "Enddatum",
+      "notes": "Notizen",
+      "notesPlaceholder": "Symptome, Medikamente, Genesungsverlauf oder alles, was du später noch wissen willst."
+    },
+    "personDialogDescription": "Füge ein Familienmitglied hinzu, damit dessen Krankheiten separat erfasst werden können."
+  },
   "Onboarding": {
     "title": "Willkommen bei Adulting.Exe",
     "steps": {
@@ -1330,6 +1409,25 @@
         "title": "Impfkalender",
         "description": "Kein Auffrischungsimpfstoff mehr vergessen. Verfolge jede Impfung mit Fälligkeitsdatum und erhalte Erinnerungen."
       }
+    },
+    "illnesses": {
+      "step1": {
+        "title": "Jede Krankheit einzeln erfassen",
+        "description": "Speichere jede Krankheit separat pro Familienmitglied und nutze dabei die gemeinsame Personenliste des Haushalts.",
+        "feature1": "Verwendet dieselben Personen wie die Ausweiskontrolle",
+        "feature2": "Erfasst Krankheit, Startdatum und Enddatum",
+        "feature3": "Optionale Notizen für Symptome, Verlauf und Nachsorge"
+      },
+      "step2": {
+        "title": "Familienhistorie auf einen Blick",
+        "description": "Wechsle zwischen Familienmitgliedern und sieh ihre Krankheitsverläufe getrennt voneinander.",
+        "feature1": "Eigene Verlaufskarten für jeden Krankheitseintrag",
+        "feature2": "Jährliche Zusammenfassungen pro Person mit Krankheitstagen"
+      },
+      "step3": {
+        "title": "Sick-Day-Heatmap im GitHub-Stil",
+        "description": "Jede Person erhält eine jahresweise Aktivitätsansicht, damit du Krankheitstage schnell erkennen kannst."
+      }
     }
   },
   "Pets": {
@@ -1471,164 +1569,6 @@
       "batchPlaceholder": "z.B. 4A2B9C",
       "notes": "Hinweise",
       "notesPlaceholder": "Weitere Hinweise..."
-    }
-  },
-  "Garage": {
-    "title": "Die Geldgrube",
-    "subtitle": "Von gesetzlichen Erinnerungen bis zur detaillierten Kostenanalyse von Treibstoff und Reparaturen.",
-    "loading": "Lädt...",
-    "emptyState": "Kein Auto hinzugefügt? Genieß deine funktionierenden Beine, solange sie halten.",
-    "optional": "Optional",
-    "tabs": {
-      "overview": "Übersicht",
-      "maintenance": "Wartungsprotokoll",
-      "fuel": "Sprit & Maut",
-      "analytics": "Kostenanalyse",
-      "documents": "Digitales Handschuhfach"
-    },
-    "addCar": "Auto hinzufügen",
-    "noCars": "Noch keine Autos registriert.",
-    "tuv": {
-      "title": "TÜV-Status",
-      "safe": "Fahrtüchtig",
-      "illegal": "Illegales Go-Kart",
-      "warning": "Warnung",
-      "dueIn": "Fällig in {days} Tagen",
-      "overdue": "Überfällig seit {days} Tagen",
-      "nextInspection": "Nächste Inspektion",
-      "notSet": "Nicht angegeben",
-      "expired": "Abgelaufen"
-    },
-    "tireReminder": {
-      "title": "Das Reifen-Ritual",
-      "current": "Aktuell montiert: {type}-Reifen",
-      "storage": "Lagerort: {location}",
-      "noStorage": "Lagerort nicht angegeben",
-      "summer": "Sommer",
-      "winter": "Winter",
-      "changeDue": "Zeit für den Reifenwechsel!"
-    },
-    "firstAid": {
-      "title": "Verbandskasten-Check",
-      "expires": "Läuft ab: {date}",
-      "expired": "Abgelaufen! Vor der nächsten Kontrolle austauschen.",
-      "notSet": "Nicht überwacht"
-    },
-    "details": {
-      "title": "Fahrzeugdetails",
-      "purchaseDate": "Kaufdatum",
-      "purchasePrice": "Kaufpreis",
-      "analyticsPlaceholder": "Kostenanalyse wird hier angezeigt."
-    },
-    "maintenance": {
-      "title": "Wartungsprotokoll",
-      "subtitle": "Reparaturen, Ölwechsel und Teileaustausch dokumentieren.",
-      "empty": "Noch keine Wartungseinträge. Daumen drücken.",
-      "addEntry": "Neuer Eintrag",
-      "editEntry": "Eintrag bearbeiten",
-      "date": "Datum",
-      "description": "Beschreibung",
-      "cost": "Kosten (€)",
-      "mileage": "Kilometerstand",
-      "category": "Kategorie",
-      "categories": {
-        "oil_change": "Ölwechsel",
-        "repair": "Reparatur",
-        "inspection": "Inspektion",
-        "parts": "Teileaustausch",
-        "other": "Sonstiges"
-      }
-    },
-    "fuel": {
-      "title": "Sprit- & Maut-Tracker",
-      "fuel": "Sprit",
-      "tolls": "Maut",
-      "subtitle": "Schnelleingabe für Tankvorgänge und Autobahnmaut.",
-      "addFuel": "Tankvorgang hinzufügen",
-      "addToll": "Maut hinzufügen",
-      "editEntry": "Eintrag bearbeiten",
-      "editToll": "Maut bearbeiten",
-      "fuelEmpty": "Noch keine Tankeinträge.",
-      "tollEmpty": "Noch keine Mauteinträge.",
-      "date": "Datum",
-      "liters": "Liter",
-      "pricePerLiter": "Preis/Liter (€)",
-      "totalCost": "Gesamtkosten (€)",
-      "mileage": "Kilometerstand",
-      "fuelType": "Treibstoffart",
-      "fuelTypes": {
-        "diesel": "Diesel",
-        "petrol": "Benzin",
-        "e10": "E10",
-        "electric": "Elektro"
-      },
-      "route": "Strecke",
-      "country": "Land",
-      "routePlaceholder": "z.B. München nach Berlin"
-    },
-    "costSummary": {
-      "title": "Kostenübersicht",
-      "subtitle": "Ausgaben und Verteilung",
-      "history": "Verlauf",
-      "distribution": "Verteilung",
-      "total": "Gesamt"
-    },
-    "documents": {
-      "title": "Digitales Handschuhfach",
-      "subtitle": "Fahrzeugschein, Fahrzeugbrief und Versicherungspolicen hochladen.",
-      "empty": "Noch keine Dokumente hochgeladen.",
-      "upload": "Dokument hochladen",
-      "download": "Herunterladen",
-      "fileName": "Dateiname",
-      "category": "Kategorie",
-      "categories": {
-        "registration": "Zulassung (Fahrzeugschein/Brief)",
-        "insurance": "Versicherungspolice",
-        "invoice": "Rechnung",
-        "other": "Sonstiges"
-      },
-      "uploadDate": "Hochgeladen"
-    },
-    "resaleValue": {
-      "title": "Wiederverkaufswert-Beschützer",
-      "subtitle": "Wartungshistorie als PDF für Wiederverkauf exportieren.",
-      "export": "Historie exportieren",
-      "exporting": "PDF wird erstellt..."
-    },
-    "form": {
-      "carName": "Autoname",
-      "carNamePlaceholder": "z.B. Die Bestie, Alltagsauto",
-      "brand": "Marke",
-      "brandPlaceholder": "z.B. BMW, VW",
-      "model": "Modell",
-      "modelPlaceholder": "z.B. 3er, Golf",
-      "licensePlate": "Kennzeichen",
-      "licensePlatePlaceholder": "z.B. M-AB 1234",
-      "purchaseDate": "Kaufdatum",
-      "purchasePrice": "Kaufpreis (€)",
-      "nextInspection": "Nächste Inspektion (TÜV)",
-      "tireType": "Aktueller Reifentyp",
-      "tireStorage": "Reifenlagerort",
-      "tireStoragePlaceholder": "z.B. In der Garage, links unten, unter der alten Plane",
-      "firstAidExpiry": "Verbandskasten Ablaufdatum",
-      "save": "Speichern",
-      "saving": "Speichern...",
-      "cancel": "Abbrechen",
-      "delete": "Auto löschen",
-      "deleting": "Löschen..."
-    },
-    "create": {
-      "title": "Neues Auto hinzufügen",
-      "description": "Registriere deine Geldgrube."
-    },
-    "edit": {
-      "title": "Auto bearbeiten",
-      "description": "Fahrzeugdetails aktualisieren."
-    },
-    "delete": {
-      "title": "Auto löschen?",
-      "description": "Dies löscht das Auto permanent und alle zugehörigen Wartungseinträge, Tankeinträge und Dokumente.",
-      "confirm": "Permanent löschen"
     }
   }
 }

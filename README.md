@@ -83,6 +83,12 @@ Built for people who want to know exactly where the blender's original box is lo
 * **Dashboard Integration:** Critical document status at a glance
 * **Date Validation:** Prevents future issue dates and ensures logical date ranges
 
+### 🤒 Illness Tracker
+* **Per-Person Illness History:** Track every illness separately for each family member using the shared household person list
+* **Start & End Dates:** Capture when an illness began, when it ended, and keep optional notes
+* **Yearly Sick-Day Summary:** Count how many unique days each family member was sick in a given year
+* **GitHub-Style Activity View:** Visualize sick days in a yearly heatmap grouped by person
+
 ### 🎯 Wishlist & Project Planning
 * **Future Projects:** Plan home improvement projects with descriptions and goals
 * **Budget Tracking:** Set estimated costs and track current savings progress
@@ -128,6 +134,9 @@ All screenshots were taken using the seeded demo data (`pnpm db:seed`).
 
 ### 🪪 Identity Guard
 ![Identity Guard](docs/images/04-identity-guard.png)
+
+### 🤒 Illness Tracker
+![Illness Tracker](docs/images/11-illness-tracker.png)
 
 ### 🔧 Maintenance
 ![Maintenance](docs/images/05-maintenance.png)

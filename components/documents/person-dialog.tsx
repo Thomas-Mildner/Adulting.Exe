@@ -27,6 +27,7 @@ type Props = {
   open: boolean
   onOpenChange: (open: boolean) => void
   person?: Person
+  descriptionOverride?: string
 }
 
 type FormData = {
@@ -39,7 +40,7 @@ const emptyForm: FormData = {
   relation: "Self",
 }
 
-export function PersonDialog({ open, onOpenChange, person }: Props) {
+export function PersonDialog({ open, onOpenChange, person, descriptionOverride }: Props) {
   const t = useTranslations("Documents")
   const [isPending, startTransition] = useTransition()
   const [form, setForm] = useState<FormData>(person || emptyForm)
@@ -71,7 +72,7 @@ export function PersonDialog({ open, onOpenChange, person }: Props) {
               {person ? t("editPerson") : t("addPerson")}
             </DialogTitle>
             <DialogDescription>
-              {t("personDialogDescription")}
+              {descriptionOverride ?? t("personDialogDescription")}
             </DialogDescription>
           </DialogHeader>
 
