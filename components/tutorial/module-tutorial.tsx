@@ -31,6 +31,7 @@ import {
   Bell,
   ListChecks,
   RotateCcw,
+  Activity,
   BarChart3,
   Ban,
   Wallet,
@@ -222,6 +223,25 @@ const MODULE_STEPS: Record<string, TutorialStep[]> = {
       icon: Syringe,
       titleKey: "pets.step3.title",
       descriptionKey: "pets.step3.description",
+    },
+  ],
+  illnesses: [
+    {
+      icon: Stethoscope,
+      titleKey: "illnesses.step1.title",
+      descriptionKey: "illnesses.step1.description",
+      featuresKeys: ["illnesses.step1.feature1", "illnesses.step1.feature2", "illnesses.step1.feature3"],
+    },
+    {
+      icon: CalendarDays,
+      titleKey: "illnesses.step2.title",
+      descriptionKey: "illnesses.step2.description",
+      featuresKeys: ["illnesses.step2.feature1", "illnesses.step2.feature2"],
+    },
+    {
+      icon: Activity,
+      titleKey: "illnesses.step3.title",
+      descriptionKey: "illnesses.step3.description",
     },
   ],
 }
