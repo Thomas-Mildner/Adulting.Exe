@@ -1,3 +1,16 @@
+# [1.8.0-rc.21](https://github.com/Thomas-Mildner/Adulting.Exe/compare/v1.8.0-rc.20...v1.8.0-rc.21) (2026-07-19)
+
+
+### Bug Fixes
+
+* add Car Pit feature card to documentation ([99d3578](https://github.com/Thomas-Mildner/Adulting.Exe/commit/99d35782878540d96f7f0db86ca8c14cc6ba3137))
+
+
+### Features
+
+* add dependabot configuration and update nightly-staging workflow ([1bdd67b](https://github.com/Thomas-Mildner/Adulting.Exe/commit/1bdd67b68926acc9800b7399113c2e41245a35c5))
+* add dependabot configuration for GitHub Actions and npm updates ([c8a8016](https://github.com/Thomas-Mildner/Adulting.Exe/commit/c8a8016c2a40cfdab38f5af08ad7d7def59c5147))
+
 # [1.8.0-rc.20](https://github.com/Thomas-Mildner/Adulting.Exe/compare/v1.8.0-rc.19...v1.8.0-rc.20) (2026-05-12)
 
 
