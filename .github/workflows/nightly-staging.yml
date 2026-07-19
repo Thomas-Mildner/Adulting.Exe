@@ -70,7 +70,7 @@ jobs:
     needs: nightly-merge
     if: |
       always() &&
-      (github.event_name != 'schedule' || needs.nightly-merge.outputs.has_changes == 'true')
+      github.event_name != 'schedule'
 
     permissions:
       contents: read
@@ -78,6 +78,9 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
+        with:
+          ref: staging
+          fetch-depth: 0
 
       - name: Setup Node.js
         uses: actions/setup-node@v6
@@ -122,6 +125,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v6
         with:
+          ref: staging
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
 
