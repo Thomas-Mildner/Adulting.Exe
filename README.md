@@ -433,15 +433,156 @@ The current version is displayed in the app sidebar.
 
 ## 📝 Roadmap
 
-Future features and improvements:
+This roadmap consolidates all researched features and improvements, organized by category. Items marked with 🔖 have a dedicated tracking issue. Items marked with *(v1)* were present in the original roadmap.
 
-- [ ] QR Code Generator for moving boxes and quick inventory access
-- [ ] Automatic PDF Export for home insurance audits
-- [ ] Smart Meter API integrations for automated utility tracking
-- [ ] Notification system for upcoming maintenance and warranty expirations
-- [ ] Mobile app (iOS/Android) companion
-- [ ] Import/Export functionality for data portability
-- [ ] Multi-household support for property managers
+---
+
+### 🆕 New Modules
+
+#### 🚗 Car Workshop *(Garage / "The Money Pit")* 🔖 [#15](https://github.com/Thomas-Mildner/Adulting.Exe/issues/15)
+- TÜV / Safety inspection countdown with "Illegal Go-Kart" status badge
+- Maintenance & repair log (oil changes, parts replacements)
+- Fuel & toll tracker (liters, price, mileage)
+- Seasonal tire-change reminders with storage-location note
+- First-aid kit expiry tracker
+- Digital glovebox for registration documents & insurance policies
+- Cost analytics: fuel vs. repairs vs. tolls
+- One-click "Resale History" PDF export
+
+#### 🛡️ Insurance Hub *(The Safety Net)* 🔖 [#17](https://github.com/Thomas-Mildner/Adulting.Exe/issues/17)
+- Full policy registry (Hausrat, Wohngebäude, Haftpflicht, KFZ, etc.)
+- Premium drain calculator — monthly & annual spend overview
+- Cancellation-deadline sentinel with visual warnings (3-month lead)
+- Claims checklist generator per policy
+- Coverage overlap detector to spot double-insured items
+- "Emergency Folder" ZIP export with all active policies
+
+#### 🏠 Room Chronicles 🔖 [#27](https://github.com/Thomas-Mildner/Adulting.Exe/issues/27)
+- Per-room event timeline (maintenance, aesthetics, incidents)
+- Paint / flooring swatch library with color codes
+- Quick-log hardware shortcuts (lightbulb, battery replacements)
+- Room-specific printable QR codes
+- Photo before/after gallery
+- "Days since last kitchen incident" humor counter
+- Tenant handover PDF export
+
+#### 🌱 Gardening & Landscaping Log 🔖 [#39](https://github.com/Thomas-Mildner/Adulting.Exe/issues/39)
+- Planting dates, soil treatments, and fertilizer tracking
+- Irrigation schedules and watering reminders
+- Seasonal task planning (spring prep, winter protection)
+- Plant care history and notes per bed / zone
+
+#### 🏥 Family Health Records 🔖 [#40](https://github.com/Thomas-Mildner/Adulting.Exe/issues/40)
+- Blood types, immunization dates, allergy notes per household member
+- Local doctor, dentist, and specialist contacts
+- Next appointment reminders
+- Medication schedule tracking
+
+#### 🐾 Pet Management Hub 🔖 [#41](https://github.com/Thomas-Mildner/Adulting.Exe/issues/41)
+- Vaccination schedules, vet records, microchip numbers
+- Pet-sitter instruction sheet (dietary needs, medications)
+- Annual check-up and flea/tick treatment reminders
+- Pet insurance policy link
+
+#### 🚨 Emergency Preparedness Hub *(new)*
+- Emergency kit inventory with expiry dates (medicines, food rations, batteries)
+- Fire extinguisher and smoke detector inspection tracker
+- Household emergency contacts (neighbors, doctor, utilities hotline)
+- Evacuation plan storage (PDF upload / notes)
+- Power-outage supply checklist
+
+#### 🛒 Shopping List & Household Inventory *(new)*
+- Track household consumables (cleaning supplies, toiletries, pantry staples)
+- Configurable reorder-point alerts per item
+- Auto-generated shopping list when stock runs low
+- Price history per item across shopping trips
+- Barcode / QR-code scanner for quick item lookup
+
+#### 🏘️ Neighbor & Community Directory *(new)*
+- Neighbor contact cards with address, phone, and notes
+- HOA / property management contacts
+- Local tradespeople directory (emergency plumber, locksmith)
+- Shared community notes (parcel deliveries, neighborhood events)
+
+#### 📦 Moving & Relocation Manager *(new)*
+- QR-labeled moving-box inventory with searchable contents
+- "Find it fast" search across all boxes
+- Room-assignment planner for unpacking
+- Integration with Box Vault (appliance locations)
+- Printable box labels with QR codes
+
+---
+
+### 🔧 Improvements to Existing Modules
+
+#### 📦 Vault Enhancements
+- [ ] QR Code Generator for appliances and moving boxes *(v1)*
+- [ ] Automatic PDF Export for insurance audits *(v1)*
+- [ ] Bulk import via CSV (purchase history spreadsheets)
+- [ ] Appliance energy-consumption log per device
+- [ ] Repair cost tracker linked to each appliance
+
+#### 📉 Utility Tracker Enhancements
+- [ ] Smart Meter API integrations for automated readings *(v1)*
+- [ ] Solar panel and battery-storage production tracking
+- [ ] Cost-per-day/week breakdown view
+- [ ] Annual comparison chart (year-over-year)
+- [ ] Carbon footprint estimation based on consumption
+
+#### 🔧 Maintenance Enhancements
+- [ ] Seasonal task templates (spring checklist, winterization guide)
+- [ ] Maintenance history timeline view
+- [ ] Parts and materials cost tracking per task
+- [ ] Photo attachment for before/after documentation
+- [ ] Contractor assignment (link to service provider from task)
+
+#### 💸 Lending Tracker Enhancements
+- [ ] Item categories and tags for easier filtering
+- [ ] Automated overdue notification emails/webhooks
+- [ ] Borrower reputation history across all loans
+
+#### 🎯 Wishlist Enhancements
+- [ ] Price tracking integration (monitor target price online)
+- [ ] Voting / approval system for multi-user households
+- [ ] Attach contractor quotes directly to a project
+- [ ] Gantt-style project timeline view
+
+#### 📚 Knowledge Base Enhancements
+- [ ] Full-text search with highlighted excerpts
+- [ ] Version history for edited entries
+- [ ] AI-assisted summary generation for uploaded manuals
+
+---
+
+### 🎨 UX / UI Improvements
+
+- [ ] **In-App Notification Center** — unified hub for all upcoming reminders (warranties, maintenance, documents, subscriptions) with read/unread management
+- [ ] **Advanced Global Search** — cross-module full-text search with result categorization, recent-search history, and keyboard shortcut (`Cmd+K`)
+- [ ] **Customizable Dashboard** — drag-and-drop widget arrangement, show/hide individual cards
+- [ ] **Module Selection** — enable/disable entire modules from Settings 🔖 [#44](https://github.com/Thomas-Mildner/Adulting.Exe/issues/44)
+- [ ] **Compact / Density Mode** — toggle between comfortable and dense table layouts
+- [ ] **Onboarding Wizard** — guided setup for new households (add first appliance, set heating type, configure waste categories)
+- [ ] **Keyboard Navigation** — full keyboard-shortcut support for power users
+- [ ] **Color Theme Customization** — custom accent color, additional preset themes
+- [ ] **Print-Friendly Views** — printable reports for each module (warranty list, maintenance log, insurance overview)
+
+---
+
+### ⚙️ Technical & Infrastructure
+
+- [ ] **Authentication System** — local username/password or SSO (OAuth2) to secure self-hosted instances
+- [ ] **Multi-User & Role-Based Access** 🔖 [#42](https://github.com/Thomas-Mildner/Adulting.Exe/issues/42) — Viewer / Editor / Admin roles per household
+- [ ] **Multi-Household Support** — manage multiple properties from one account *(v1)*
+- [ ] **Import / Export (CSV & JSON)** — full data portability for all modules *(v1)*
+- [ ] **Progressive Web App (PWA)** — offline support, installable on iOS/Android home screen
+- [ ] **External Notifications via Webhook** 🔖 [#43](https://github.com/Thomas-Mildner/Adulting.Exe/issues/43) — push events to Slack, Ntfy, Gotify, Apprise, etc.
+- [ ] **RESTful API** — documented public API for integrations with Home Assistant, n8n, Zapier
+- [ ] **Tax Preparation Export** 🔖 [#38](https://github.com/Thomas-Mildner/Adulting.Exe/issues/38) — one-click ZIP of all tax-relevant invoices per fiscal year
+- [ ] **Database Backup & Restore UI** — schedule automated backups and restore from the Settings page
+- [ ] **Audit Log** — change history for all records (who changed what and when)
+- [ ] **Additional Language Support** — French, Spanish, Italian; community-contributed translations
+- [ ] **Accessibility (WCAG 2.1)** — screen-reader optimization, improved color contrast, full keyboard navigation
+- [ ] **Mobile App (iOS/Android)** — native companion app *(v1)*
 
 ---
 
