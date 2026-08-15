@@ -10,9 +10,14 @@
     "maintenance": "Wartungen",
     "wishlist": "Wunschliste",
     "lending": "Verleih",
+    "garage": "Die Geldgrube",
+    "contracts": "Verträge",
     "insurance": "Versicherungen",
     "documents": "Ausweiskontrolle",
-    "sidebarStatus": "Status: Haus steht (vorerst)"
+    "pets": "Tier-Hub",
+    "sidebarStatus": "Status: Haus steht (vorerst)",
+    "illnesses": "Krankheitentracker",
+    "meals": "Essensplanung"
   },
   "Dashboard": {
     "welcome": "Willkommen zurück",
@@ -89,6 +94,69 @@
         "red": "Rot (Gefahrgut)",
         "brown": "Braun (Bio)",
         "black": "Schwarz"
+      }
+    },
+    "modulesTab": "Module",
+    "modules": {
+      "title": "Modulauswahl",
+      "description": "Module in der Navigation ein- oder ausblenden. Deaktivierte Module werden in der Seitenleiste nicht angezeigt.",
+      "saved": "Moduleinstellungen gespeichert",
+      "error": "Fehler beim Speichern der Moduleinstellungen",
+      "vault": {
+        "title": "Tresor",
+        "desc": "Geräteverwaltung und Garantieverfolgung."
+      },
+      "services": {
+        "title": "Rettungsteam",
+        "desc": "Dienstleister und Reparaturhistorie."
+      },
+      "documents": {
+        "title": "Ausweiskontrolle",
+        "desc": "Ausweisdokumente und Ablaufüberwachung."
+      },
+      "library": {
+        "title": "Bibliothek",
+        "desc": "Wissensdatenbank und Haushaltsdokumente."
+      },
+      "waste": {
+        "title": "Müllkalender",
+        "desc": "Müllabfuhrtermine und Erinnerungen."
+      },
+      "maintenance": {
+        "title": "Wartungen",
+        "desc": "Wiederkehrende Wartungsaufgaben und Zeitpläne."
+      },
+      "utilities": {
+        "title": "Ressourcen",
+        "desc": "Zählerstände und Energiekostenverfolgung."
+      },
+      "contracts": {
+        "title": "Verträge",
+        "desc": "Abonnements und wiederkehrende Verträge."
+      },
+      "wishlist": {
+        "title": "Wunschliste",
+        "desc": "Projektplanung und Sparziele."
+      },
+      "lending": {
+        "title": "Verleih",
+        "desc": "Verliehene Gegenstände und Entleiher verfolgen."
+      },
+      "pets": {
+        "title": "Tier-Hub",
+        "desc": "Tierprofile, Tierarztbesuche und Impfpläne verwalten."
+      },
+      "garage": {
+        "title": "Car Pit",
+        "desc": "Fahrzeugverwaltung, Reifenwechsel und KFZ-Kosten."
+      },
+      "illnesses": {
+        "title": "Krankheitentracker",
+        "desc": "Erfasse Krankheiten pro Familienmitglied mit jährlichen Sick-Day-Heatmaps."
+      },
+      "meals": {
+        "title": "Essensplanung",
+        "desc": "Verwalte deine wöchentlichen Mahlzeiten mit 7-meals."
       }
     }
   },
@@ -270,7 +338,16 @@
       "warrantyEnd": "Garantie bis",
       "boxLocation": "Aufbewahrungsort",
       "boxLocationPlaceholder": "z.B. Regal A3, Keller Box 2...",
-      "status": "Status"
+      "status": "Status",
+      "receipt": "Quittung / Bild",
+      "receiptUpload": "Datei hochladen oder Foto aufnehmen",
+      "receiptDragDrop": "Datei hierher ziehen oder klicken zum Durchsuchen",
+      "receiptCamera": "Foto aufnehmen",
+      "receiptFile": "Datei hochladen",
+      "receiptPreview": "Quittungsvorschau",
+      "receiptRemove": "Entfernen",
+      "receiptUploading": "Wird hochgeladen...",
+      "receiptError": "Upload fehlgeschlagen. Bitte erneut versuchen."
     },
     "card": {
       "warranty": "Garantie",
@@ -320,7 +397,10 @@
       "editDesc": "Änderungen werden sofort gespeichert.",
       "deleteTitle": "Rechnung löschen?",
       "deleteDesc": "Der Rechnungseintrag wird unwiderruflich gelöscht.",
-      "empty": "Keine Rechnungen gefunden. Ein gutes Zeichen oder Quittung verloren?"
+      "empty": "Keine Rechnungen gefunden. Ein gutes Zeichen oder Quittung verloren?",
+      "exportZip": "Steuerexport (ZIP)",
+      "exportZipTooltip": "Alle steuerlich absetzbaren Rechnungen als ZIP-Archiv herunterladen",
+      "exportZipEmpty": "Keine steuerlich absetzbaren Rechnungen zum Exportieren."
     },
     "form": {
       "name": "Name",
@@ -662,6 +742,86 @@
       "upcoming": "Anstehend"
     }
   },
+  "Contracts": {
+    "title": "Wiederkehrende Verträge",
+    "subtitle": "Das moderne Leben ist eine Serie monatlicher Zahlungen bis zum Tod",
+    "burnRate": "Monatlicher Abfluss",
+    "burnRateNote": "Deine Abos kosten mehr als eine Hypothek aus den 90ern. Nur so nebenbei.",
+    "totalContracts": "Aktive Verträge",
+    "activeTrials": "Testversionen",
+    "cumulativeDonation": "Kumulative Spende",
+    "regretMeter": "Reue-Meter",
+    "regretMeterSubtitle": "Geld an Anbieter gesendet, ohne den Service tatsächlich zu nutzen",
+    "wasted": "verschwendet",
+    "lastUsed": "Zuletzt verwendet",
+    "monthsAgo": "Monate her",
+    "allCategories": "Alle",
+    "tableTitle": "Alle Verträge",
+    "tableSubtitle": "Sortiert nach nächstem Abrechnungsdatum",
+    "trialTrapAlert": "Testversion läuft ab!",
+    "trial": "Testversion",
+    "active": "Aktiv",
+    "killSwitch": "Kündigungsschreiben generieren",
+    "cancel": "Abbrechen",
+    "close": "Schließen",
+    "categories": {
+      "Utilities": "Versorgung",
+      "Entertainment": "Unterhaltung",
+      "Fitness": "Fitness",
+      "Software": "Software",
+      "Guilty Pleasure": "Schlechtes Gewissen",
+      "Other": "Andere"
+    },
+    "table": {
+      "provider": "Anbieter",
+      "category": "Kategorie",
+      "monthlyCost": "Monatliche Kosten",
+      "nextBilling": "Nächste Abrechnung",
+      "status": "Status",
+      "actions": "Aktionen"
+    },
+    "fields": {
+      "providerName": "Anbieter",
+      "accountId": "Konto-/Kundennummer",
+      "monthlyCost": "Monatliche Kosten (€)",
+      "yearlyCost": "Jährliche Kosten (€)",
+      "category": "Kategorie",
+      "lastUsedDate": "Letztes echtes Nutzungsdatum",
+      "isTrial": "Kostenlose Testversion",
+      "trialEndDate": "Ende der Testversion",
+      "nextBillingDate": "Nächstes Abrechnungsdatum",
+      "notes": "Notizen"
+    },
+    "placeholders": {
+      "providerName": "z.B. Netflix, Spotify",
+      "accountId": "Optional: Kunden-/Kontonummer",
+      "notes": "Optionale Notizen oder Erinnerungen"
+    },
+    "create": {
+      "title": "Vertrag hinzufügen",
+      "description": "Eine neue wiederkehrende Zahlung erfassen",
+      "action": "Vertrag hinzufügen"
+    },
+    "edit": {
+      "title": "Vertrag bearbeiten",
+      "description": "Vertragsdetails aktualisieren",
+      "action": "Änderungen speichern"
+    },
+    "delete": {
+      "title": "Vertrag löschen",
+      "description": "Bist du sicher? Diese Aktion kann nicht rückgängig gemacht werden.",
+      "action": "Löschen"
+    },
+    "cancellation": {
+      "title": "Kündigungsschreiben",
+      "description": "Generiertes Kündigungsschreiben versandbereit",
+      "copy": "In Zwischenablage kopieren"
+    },
+    "emptyState": {
+      "title": "Keine Abonnements?",
+      "message": "Lebst du in einer Höhle oder leihst du dir einfach alle Passwörter?"
+    }
+  },
   "Insurance": {
     "title": "Das Sicherheitsnetz",
     "subtitle": "Bezahlen für das 'Nur für den Fall'",
@@ -917,5 +1077,648 @@
       "person": "Möchtest du {name} wirklich löschen? Alle zugehörigen Dokumente werden gelöscht.",
       "document": "Möchtest du dieses {documentType} wirklich löschen?"
     }
+  },
+  "Garage": {
+    "title": "Die Geldgrube",
+    "subtitle": "Von gesetzlichen Erinnerungen bis zur detaillierten Kostenanalyse von Treibstoff und Reparaturen.",
+    "loading": "Lädt...",
+    "emptyState": "Kein Auto hinzugefügt? Genieß deine funktionierenden Beine, solange sie halten.",
+    "optional": "Optional",
+    "tabs": {
+      "overview": "Übersicht",
+      "maintenance": "Wartungsprotokoll",
+      "fuel": "Sprit & Maut",
+      "analytics": "Kostenanalyse",
+      "documents": "Digitales Handschuhfach"
+    },
+    "addCar": "Auto hinzufügen",
+    "noCars": "Noch keine Autos registriert.",
+    "tuv": {
+      "title": "TÜV-Status",
+      "safe": "Fahrtüchtig",
+      "illegal": "Illegales Go-Kart",
+      "warning": "Warnung",
+      "dueIn": "Fällig in {days} Tagen",
+      "overdue": "Überfällig seit {days} Tagen",
+      "nextInspection": "Nächste Inspektion",
+      "notSet": "Nicht angegeben",
+      "expired": "Abgelaufen"
+    },
+    "tireReminder": {
+      "title": "Das Reifen-Ritual",
+      "current": "Aktuell montiert: {type}-Reifen",
+      "storage": "Lagerort: {location}",
+      "noStorage": "Lagerort nicht angegeben",
+      "summer": "Sommer",
+      "winter": "Winter",
+      "changeDue": "Zeit für den Reifenwechsel!"
+    },
+    "firstAid": {
+      "title": "Verbandskasten-Check",
+      "expires": "Läuft ab: {date}",
+      "expired": "Abgelaufen! Vor der nächsten Kontrolle austauschen.",
+      "notSet": "Nicht überwacht"
+    },
+    "details": {
+      "title": "Fahrzeugdetails",
+      "purchaseDate": "Kaufdatum",
+      "purchasePrice": "Kaufpreis",
+      "analyticsPlaceholder": "Kostenanalyse wird hier angezeigt."
+    },
+    "maintenance": {
+      "title": "Wartungsprotokoll",
+      "subtitle": "Reparaturen, Ölwechsel und Teileaustausch dokumentieren.",
+      "empty": "Noch keine Wartungseinträge. Daumen drücken.",
+      "addEntry": "Neuer Eintrag",
+      "editEntry": "Eintrag bearbeiten",
+      "date": "Datum",
+      "description": "Beschreibung",
+      "cost": "Kosten (€)",
+      "mileage": "Kilometerstand",
+      "category": "Kategorie",
+      "categories": {
+        "oil_change": "Ölwechsel",
+        "repair": "Reparatur",
+        "inspection": "Inspektion",
+        "parts": "Teileaustausch",
+        "other": "Sonstiges"
+      }
+    },
+    "fuel": {
+      "title": "Sprit- & Maut-Tracker",
+      "fuel": "Sprit",
+      "tolls": "Maut",
+      "subtitle": "Schnelleingabe für Tankvorgänge und Autobahnmaut.",
+      "addFuel": "Tankvorgang hinzufügen",
+      "addToll": "Maut hinzufügen",
+      "editEntry": "Eintrag bearbeiten",
+      "editToll": "Maut bearbeiten",
+      "fuelEmpty": "Noch keine Tankeinträge.",
+      "tollEmpty": "Noch keine Mauteinträge.",
+      "date": "Datum",
+      "liters": "Liter",
+      "pricePerLiter": "Preis/Liter (€)",
+      "totalCost": "Gesamtkosten (€)",
+      "mileage": "Kilometerstand",
+      "fuelType": "Treibstoffart",
+      "fuelTypes": {
+        "diesel": "Diesel",
+        "petrol": "Benzin",
+        "e10": "E10",
+        "electric": "Elektro"
+      },
+      "route": "Strecke",
+      "country": "Land",
+      "routePlaceholder": "z.B. München nach Berlin"
+    },
+    "costSummary": {
+      "title": "Kostenübersicht",
+      "subtitle": "Ausgaben und Verteilung",
+      "history": "Verlauf",
+      "distribution": "Verteilung",
+      "total": "Gesamt"
+    },
+    "documents": {
+      "title": "Digitales Handschuhfach",
+      "subtitle": "Fahrzeugschein, Fahrzeugbrief und Versicherungspolicen hochladen.",
+      "empty": "Noch keine Dokumente hochgeladen.",
+      "upload": "Dokument hochladen",
+      "download": "Herunterladen",
+      "fileName": "Dateiname",
+      "category": "Kategorie",
+      "categories": {
+        "registration": "Zulassung (Fahrzeugschein/Brief)",
+        "insurance": "Versicherungspolice",
+        "invoice": "Rechnung",
+        "other": "Sonstiges"
+      },
+      "uploadDate": "Hochgeladen"
+    },
+    "resaleValue": {
+      "title": "Wiederverkaufswert-Beschützer",
+      "subtitle": "Wartungshistorie als PDF für Wiederverkauf exportieren.",
+      "export": "Historie exportieren",
+      "exporting": "PDF wird erstellt..."
+    },
+    "form": {
+      "carName": "Autoname",
+      "carNamePlaceholder": "z.B. Die Bestie, Alltagsauto",
+      "brand": "Marke",
+      "brandPlaceholder": "z.B. BMW, VW",
+      "model": "Modell",
+      "modelPlaceholder": "z.B. 3er, Golf",
+      "licensePlate": "Kennzeichen",
+      "licensePlatePlaceholder": "z.B. M-AB 1234",
+      "purchaseDate": "Kaufdatum",
+      "purchasePrice": "Kaufpreis (€)",
+      "nextInspection": "Nächste Inspektion (TÜV)",
+      "tireType": "Aktueller Reifentyp",
+      "tireStorage": "Reifenlagerort",
+      "tireStoragePlaceholder": "z.B. In der Garage, links unten, unter der alten Plane",
+      "firstAidExpiry": "Verbandskasten Ablaufdatum",
+      "save": "Speichern",
+      "saving": "Speichern...",
+      "cancel": "Abbrechen",
+      "delete": "Auto löschen",
+      "deleting": "Löschen..."
+    },
+    "create": {
+      "title": "Neues Auto hinzufügen",
+      "description": "Registriere deine Geldgrube."
+    },
+    "edit": {
+      "title": "Auto bearbeiten",
+      "description": "Fahrzeugdetails aktualisieren."
+    },
+    "delete": {
+      "title": "Auto löschen?",
+      "description": "Dies löscht das Auto permanent und alle zugehörigen Wartungseinträge, Tankeinträge und Dokumente.",
+      "confirm": "Permanent löschen"
+    }
+  },
+  "Illnesses": {
+    "title": "Krankheitentracker",
+    "subtitle": "Behalte im Blick, wer krank war, womit und wie lange.",
+    "overview": "Übersicht",
+    "addPerson": "Person hinzufügen",
+    "addIllness": "Krankheit hinzufügen",
+    "editIllness": "Krankheit bearbeiten",
+    "deleteIllness": "Krankheit löschen",
+    "dialogDescription": "Erfasse einen Krankheitseintrag für ein Familienmitglied.",
+    "noPeople": "Noch keine Familienmitglieder vorhanden. Füge zuerst eine Person hinzu.",
+    "noIllnesses": "Noch keine Krankheiten erfasst.",
+    "noIllnessesForPerson": "Für {name} wurden noch keine Krankheiten erfasst.",
+    "allEntries": "Alle Krankheitseinträge",
+    "allEntriesDescription": "Eine Haushaltsübersicht über alle erfassten Krankheiten.",
+    "entriesForPerson": "Krankheitshistorie von {name}",
+    "entriesForPersonDescription": "Jede Krankheit bleibt separat sichtbar, damit Wiederholungen nicht untergehen.",
+    "activityByYear": "Aktivität nach Jahr",
+    "activityByYearDescription": "GitHub-ähnliche Heatmaps zeigen, an welchen Tagen die Person krank war.",
+    "personSummaryDescription": "Individuelle Krankheitshistorie und jährliche Krankheitstage für {name}.",
+    "yearlySummary": "Zusammenfassung {year}",
+    "sickDaysThisYear": "Krankheitstage in {year}",
+    "currentlySick": "Aktuell krank",
+    "records": "Einträge",
+    "heatmapDescription": "Jedes hervorgehobene Feld steht für einen erfassten Krankheitstag.",
+    "heatmapTooltip": "{count, plural, one {# Krankheit erfasst} other {# Krankheiten erfasst}}",
+    "legendLess": "Weniger",
+    "legendMore": "Mehr",
+    "sickDaysCount": "{count, plural, one {# Krankheitstag} other {# Krankheitstage}}",
+    "trackedDays": "{count, plural, one {# erfasster Tag} other {# erfasste Tage}}",
+    "ongoing": "Laufend",
+    "deleteConfirm": "Den Krankheitseintrag „{name}“ löschen?",
+    "cancel": "Abbrechen",
+    "save": "Speichern",
+    "add": "Hinzufügen",
+    "status": {
+      "active": "Aktiv",
+      "resolved": "Abgeschlossen"
+    },
+    "stats": {
+      "familyMembers": "Familienmitglieder",
+      "entries": "Krankheitseinträge",
+      "active": "aktuell aktiv",
+      "currentYearDays": "Krankheitstage in {year}"
+    },
+    "validation": {
+      "personRequired": "Bitte zuerst ein Familienmitglied auswählen.",
+      "endDate": "Das Enddatum muss am oder nach dem Startdatum liegen."
+    },
+    "messages": {
+      "created": "Krankheit gespeichert.",
+      "updated": "Krankheit aktualisiert.",
+      "deleted": "Krankheit gelöscht.",
+      "error": "Der Krankheitseintrag konnte nicht gespeichert werden."
+    },
+    "relationTypes": {
+      "Self": "Ich",
+      "Spouse": "Ehepartner/in",
+      "Child": "Kind",
+      "Other": "Sonstiges"
+    },
+    "form": {
+      "person": "Person",
+      "personPlaceholder": "Person auswählen...",
+      "name": "Krankheit",
+      "namePlaceholder": "z. B. Grippe, Migräne, COVID-19",
+      "startDate": "Startdatum",
+      "endDate": "Enddatum",
+      "notes": "Notizen",
+      "notesPlaceholder": "Symptome, Medikamente, Genesungsverlauf oder alles, was du später noch wissen willst."
+    },
+    "personDialogDescription": "Füge ein Familienmitglied hinzu, damit dessen Krankheiten separat erfasst werden können."
+  },
+  "Onboarding": {
+    "title": "Willkommen bei Adulting.Exe",
+    "steps": {
+      "welcome": "Willkommen",
+      "appliance": "Erstes Gerät",
+      "heating": "Heizungstyp",
+      "waste": "Müllkategorien",
+      "done": "Fertig"
+    },
+    "step1": {
+      "title": "Willkommen, Hausbesitzer! 🏠",
+      "description": "Adulting.Exe hilft dir, Garantien, Wartungen, Nebenkosten und mehr zu verwalten. Lass uns deinen Haushalt in ein paar schnellen Schritten einrichten.",
+      "features": {
+        "vault": "Garantien & Geräte verfolgen",
+        "maintenance": "Wartungsaufgaben planen",
+        "utilities": "Energie- & Wasserverbrauch überwachen",
+        "waste": "Keine Müllabholung mehr verpassen"
+      }
+    },
+    "step2": {
+      "title": "Erstes Gerät hinzufügen",
+      "description": "Starte mit der Garantieverfolgung, indem du dein erstes Gerät hinzufügst. Du kannst diesen Schritt überspringen und Geräte später hinzufügen.",
+      "skip": "Vorerst überspringen",
+      "addedSuccess": "Gerät erfolgreich hinzugefügt!",
+      "toastSuccess": "Gerät hinzugefügt!",
+      "toastError": "Fehler beim Hinzufügen des Geräts"
+    },
+    "step3": {
+      "title": "Was ist dein Heizungstyp?",
+      "description": "Wähle deine Wärmequelle, damit die Einheiten im Bereich Ressourcen korrekt angezeigt werden.",
+      "select": "Heizungstyp auswählen",
+      "toastError": "Fehler beim Speichern des Heizungstyps"
+    },
+    "step4": {
+      "title": "Müllkategorien konfigurieren",
+      "description": "Füge deine lokalen Müllarten hinzu (z.B. Wertstoff, Bio, Papier). Du kannst in den Einstellungen weitere hinzufügen.",
+      "skip": "Vorerst überspringen",
+      "addButton": "Art hinzufügen",
+      "nameLabel": "Müllart-Name",
+      "namePlaceholder": "z.B. Wertstoff, Biomüll...",
+      "toastSuccess": "Müllart hinzugefügt!",
+      "toastError": "Fehler beim Hinzufügen der Müllart"
+    },
+    "step5": {
+      "title": "Alles ist eingerichtet! 🎉",
+      "description": "Dein Haushalt ist konfiguriert und bereit. Du kannst diese Einstellungen jederzeit ändern.",
+      "goToDashboard": "Zum Dashboard",
+      "toastError": "Fehler beim Abschließen der Einrichtung",
+      "summaryAppliance": "Erstes Gerät erfasst ✓",
+      "summaryHeating": "Heizungstyp konfiguriert ✓",
+      "summaryWaste": "{count} Müllart(en) hinzugefügt ✓"
+    },
+    "next": "Weiter",
+    "back": "Zurück",
+    "skip": "Überspringen",
+    "saving": "Speichert...",
+    "stepOf": "Schritt {current} von {total}"
+  },
+  "Tutorial": {
+    "back": "Zurück",
+    "next": "Weiter",
+    "skip": "Tutorial überspringen",
+    "gotIt": "Verstanden!",
+    "stepOf": "{current} von {total}",
+    "vault": {
+      "step1": {
+        "title": "Der Garantie- & Box-Tresor",
+        "description": "Behalte den Überblick über alle deine Geräte – vom Geschirrspüler bis zur Kaffeemaschine.",
+        "feature1": "Kaufdatum und Garantieablauf erfassen",
+        "feature2": "Aufbewahrungsort der Originalverpackung speichern",
+        "feature3": "Marke, Kategorie und Preis des Geräts verfolgen"
+      },
+      "step2": {
+        "title": "Garantiestatus auf einen Blick",
+        "description": "Sieh sofort, welche Geräte noch abgesichert sind, welche abgelaufen sind und welche kurz davor stehen.",
+        "feature1": "Geschützt: Garantie noch aktiv",
+        "feature2": "Zombie: Gerät außerhalb der Garantiezeit"
+      },
+      "step3": {
+        "title": "Dein erstes Gerät hinzufügen",
+        "description": "Klicke auf 'Neuer Eintrag', fülle Name, Marke, Kaufdatum und Garantieende aus – fertig."
+      }
+    },
+    "services": {
+      "step1": {
+        "title": "Dein Dienstleister-Notizbuch",
+        "description": "Speichere Kontaktdaten für jeden Klempner, Elektriker oder Handwerker, mit dem du je zusammengearbeitet hast.",
+        "feature1": "Telefon, E-Mail und Website für jeden Anbieter",
+        "feature2": "Anbieter nach Zuverlässigkeit bewerten",
+        "feature3": "Rechnungen direkt mit Anbietern verknüpfen"
+      },
+      "step2": {
+        "title": "Servicehistorie",
+        "description": "Protokolliere jeden Reparatur- und Serviceeinsatz, damit du immer weißt, was wann gemacht wurde.",
+        "feature1": "Datum, Beschreibung und Kosten erfassen",
+        "feature2": "Ausgaben als steuerlich absetzbar markieren"
+      },
+      "step3": {
+        "title": "Rechnungsverwaltung",
+        "description": "Lade Rechnungen hoch und verknüpfe sie mit bestimmten Serviceeinsätzen. Kein langes Suchen in E-Mails mehr."
+      }
+    },
+    "library": {
+      "step1": {
+        "title": "Deine Heim-Wissensdatenbank",
+        "description": "Bewahre wichtige Hausdokumente, Anleitungen und Handbücher an einem durchsuchbaren Ort auf.",
+        "feature1": "PDFs hochladen und Markdown-Notizen erstellen",
+        "feature2": "Nach Thema kategorisieren (Heizung, Sanitär usw.)",
+        "feature3": "Volltextsuche über alle Dokumente"
+      },
+      "step2": {
+        "title": "Dokumente sofort finden",
+        "description": "Suche nach Titel oder filtere nach Kategorie, um genau das zu finden, was du brauchst.",
+        "feature1": "Nach Dokumenttyp filtern: PDF oder Notiz",
+        "feature2": "Vorschau von Dokumenten direkt in der App"
+      }
+    },
+    "waste": {
+      "step1": {
+        "title": "Keine Abholung mehr verpassen",
+        "description": "Konfiguriere deinen lokalen Abfallkalender und weiß immer, was diese Woche rausgestellt werden muss.",
+        "feature1": "Eigene Mülltypen hinzufügen (Wertstoff, Bio usw.)",
+        "feature2": "Wiederkehrende Abholtermine eintragen",
+        "feature3": "Bevorstehende Abholungen im Kalender sehen"
+      },
+      "step2": {
+        "title": "Erinnerungen im Dashboard",
+        "description": "Das Dashboard zeigt die nächste geplante Abholung an, damit du den Müll nie vergisst.",
+        "feature1": "Nächste Abholung direkt im Dashboard sichtbar",
+        "feature2": "Farbcodierte Mülltypen für schnelle Erkennung"
+      }
+    },
+    "maintenance": {
+      "step1": {
+        "title": "Wartung im Griff behalten",
+        "description": "Plane und verfolge alle wiederkehrenden Wartungsaufgaben, die dein Zuhause in Schuss halten.",
+        "feature1": "Fälligkeitsdaten und Prioritäten festlegen",
+        "feature2": "Aufgaben als erledigt markieren",
+        "feature3": "Nach Datum oder Priorität sortieren"
+      },
+      "step2": {
+        "title": "Wiederkehrende Aufgaben leicht gemacht",
+        "description": "Lege einen Wiederholungsrhythmus fest (monatlich, jährlich usw.) und die Aufgabe erscheint automatisch wieder.",
+        "feature1": "Täglich, wöchentlich, monatlich und jährlich möglich",
+        "feature2": "Vergiss nie wieder Jahresprüfungen wie Rauchmelder oder Filterwechsel"
+      }
+    },
+    "utilities": {
+      "step1": {
+        "title": "Energieverbrauch verfolgen",
+        "description": "Trage monatliche Zählerstände für Strom, Wasser und Heizung ein, um deinen Verbrauch zu überwachen.",
+        "feature1": "Werte für Strom, Wasser und Heizung eingeben",
+        "feature2": "Preis pro Einheit für genaue Kostenschätzung hinzufügen",
+        "feature3": "Unterstützt alle gängigen Heizungstypen"
+      },
+      "step2": {
+        "title": "Verbrauch visualisieren",
+        "description": "Diagramme und Verlaufsdaten helfen dir, Trends zu erkennen, Monate zu vergleichen und ungewöhnliche Spitzen zu entdecken.",
+        "feature1": "Monatliche Vergleichsdiagramme",
+        "feature2": "Gesamtkostenübersicht pro Zeitraum"
+      }
+    },
+    "contracts": {
+      "step1": {
+        "title": "Abos & Verträge im Überblick",
+        "description": "Behalte alle Abonnements, Verträge und laufenden Kosten im Blick, damit nichts durch die Maschen fällt.",
+        "feature1": "Monatliche und jährliche Kosten verfolgen",
+        "feature2": "Testphasen markieren, um unerwartete Verlängerungen zu vermeiden",
+        "feature3": "Nach Kategorie organisieren (Utilities, Entertainment usw.)"
+      },
+      "step2": {
+        "title": "Unnötige Ausgaben erkennen",
+        "description": "Abonnements, die du lange nicht genutzt hast, werden hervorgehoben, damit du entscheidest, ob du sie kündigen möchtest.",
+        "feature1": "Letztes Nutzungsdatum für jeden Dienst eintragen",
+        "feature2": "Nächstes Abrechnungsdatum für gezielte Kündigung sehen"
+      }
+    },
+    "wishlist": {
+      "step1": {
+        "title": "Heimverbesserungen planen",
+        "description": "Erstelle Projekte für alles, was du für dein Zuhause kaufen oder umsetzen möchtest, und verfolge deine Ersparnisse.",
+        "feature1": "Geschätzte Kosten und aktuelle Ersparnisse eintragen",
+        "feature2": "Dringlichkeitsstufen von nett-zu-haben bis Notfall",
+        "feature3": "Projekte nach Typ kategorisieren"
+      },
+      "step2": {
+        "title": "Beobachte, wie deine Ersparnisse wachsen",
+        "description": "Jedes Projekt zeigt einen Fortschrittsbalken, damit du auf einen Blick siehst, wie nah du deinem Ziel bist.",
+        "feature1": "Visueller Fortschrittsbalken pro Projekt",
+        "feature2": "Ersparnisse aktualisieren, wann immer du Geld zurücklegst"
+      }
+    },
+    "lending": {
+      "step1": {
+        "title": "Der Lend-O-Meter",
+        "description": "Behalte alles im Blick, was du Freunden und Familie geliehen hast, damit du es auch zurückbekommst.",
+        "feature1": "Was, an wen und wann verliehen erfassen",
+        "feature2": "Erwartetes Rückgabedatum festlegen",
+        "feature3": "Jedem Ausleiher ein Vertrauensniveau zuweisen"
+      },
+      "step2": {
+        "title": "Wem du vertraust",
+        "description": "Das Vertrauensniveau-System hilft dir, sich zu merken, welche Ausleiher zuverlässig zurückgeben – und welche nicht.",
+        "feature1": "Vertrauensstufen von 1 (riskant) bis 5 (sehr zuverlässig)",
+        "feature2": "Überfällige Gegenstände auf einen Blick im Dashboard"
+      }
+    },
+    "documents": {
+      "step1": {
+        "title": "Identitätsschutz",
+        "description": "Halte alle wichtigen persönlichen Dokumente organisiert, damit du immer weißt, wann sie ablaufen und wo sie sind.",
+        "feature1": "Reisepässe, Ausweise und Führerscheine speichern",
+        "feature2": "Ausstellungs- und Ablaufdaten verfolgen",
+        "feature3": "Aufbewahrungsort des physischen Dokuments vermerken"
+      },
+      "step2": {
+        "title": "Ablaufwarnungen",
+        "description": "Dokumente, die bald ablaufen, werden automatisch markiert, damit du rechtzeitig verlängern kannst.",
+        "feature1": "Farbcodierter Ablaufstatus (gültig, läuft bald ab, abgelaufen)",
+        "feature2": "Dokumente für den gesamten Haushalt verwalten"
+      },
+      "step3": {
+        "title": "Notfallvorbereitung",
+        "description": "Füge Notfallkontakte und einen Verlust-/Diebstahlleitfaden für jedes Dokument hinzu, damit du weißt, was im Ernstfall zu tun ist."
+      }
+    },
+    "pets": {
+      "step1": {
+        "title": "Dein Tier-Management-Hub",
+        "description": "Halte alle Informationen deiner Tiere an einem Ort – von Chip-Nummern bis zu Ernährungshinweisen für Tiersitter.",
+        "feature1": "Profile für jedes Tier mit Art, Rasse und Geburtstag",
+        "feature2": "Chip-Nummern und Notfallpflegeanweisungen speichern",
+        "feature3": "Ernährungsbedarf und Medikamente für Tiersitter-Übergaben"
+      },
+      "step2": {
+        "title": "Tierarztbesuch-Tracking",
+        "description": "Protokolliere jeden Tierarztbesuch mit Datum, Beschreibung und Kosten. Plane die nächsten Termine.",
+        "feature1": "Besuchsdaten, Tierarzt und Behandlungsbeschreibung erfassen",
+        "feature2": "Kosten und nächste Termine planen"
+      },
+      "step3": {
+        "title": "Impfkalender",
+        "description": "Kein Auffrischungsimpfstoff mehr vergessen. Verfolge jede Impfung mit Fälligkeitsdatum und erhalte Erinnerungen."
+      }
+    },
+    "illnesses": {
+      "step1": {
+        "title": "Jede Krankheit einzeln erfassen",
+        "description": "Speichere jede Krankheit separat pro Familienmitglied und nutze dabei die gemeinsame Personenliste des Haushalts.",
+        "feature1": "Verwendet dieselben Personen wie die Ausweiskontrolle",
+        "feature2": "Erfasst Krankheit, Startdatum und Enddatum",
+        "feature3": "Optionale Notizen für Symptome, Verlauf und Nachsorge"
+      },
+      "step2": {
+        "title": "Familienhistorie auf einen Blick",
+        "description": "Wechsle zwischen Familienmitgliedern und sieh ihre Krankheitsverläufe getrennt voneinander.",
+        "feature1": "Eigene Verlaufskarten für jeden Krankheitseintrag",
+        "feature2": "Jährliche Zusammenfassungen pro Person mit Krankheitstagen"
+      },
+      "step3": {
+        "title": "Sick-Day-Heatmap im GitHub-Stil",
+        "description": "Jede Person erhält eine jahresweise Aktivitätsansicht, damit du Krankheitstage schnell erkennen kannst."
+      }
+    }
+  },
+  "Pets": {
+    "title": "Tier-Management-Hub",
+    "subtitle": "Weil deine Fellnasen auch eine digitale Akte verdienen.",
+    "tabs": {
+      "vet": "Tierarzt",
+      "vaccinations": "Impfungen"
+    },
+    "stats": {
+      "pets": "Tiere",
+      "registered": "registriert",
+      "vetVisits": "Tierarztbesuche",
+      "recorded": "erfasst",
+      "vaccinations": "Impfungen",
+      "administered": "verabreicht",
+      "overdueVacc": "Überfällige Impfungen",
+      "needsAttention": "braucht Aufmerksamkeit",
+      "allUpToDate": "alles aktuell"
+    },
+    "list": {
+      "title": "Deine Tiere",
+      "description": "Klicke auf ein Tier, um Tierarztbesuche und Impfungen zu sehen.",
+      "empty": "Noch keine Tiere registriert. Füge deinen ersten Gefährten hinzu."
+    },
+    "create": {
+      "button": "Tier hinzufügen",
+      "title": "Neues Tier hinzufügen",
+      "description": "Registriere ein neues Tier in deinem Haushalt."
+    },
+    "edit": {
+      "title": "Tier bearbeiten",
+      "description": "Aktualisiere die Informationen deines Tieres."
+    },
+    "delete": {
+      "title": "Tier entfernen?",
+      "description": "Dies entfernt das Tier dauerhaft mitsamt aller Tierarztbesuche und Impfungen.",
+      "confirm": "Tier entfernen",
+      "deleting": "Entferne...",
+      "cancel": "Abbrechen"
+    },
+    "detail": {
+      "microchip": "Microchip",
+      "nextVaccination": "Nächste Impfung",
+      "nextVetVisit": "Nächster Tierarzt",
+      "sitterInstructions": "Tiersitter-Anweisungen",
+      "bornOn": "geboren"
+    },
+    "species": {
+      "dog": "Hund",
+      "cat": "Katze",
+      "bird": "Vogel",
+      "rabbit": "Hase",
+      "fish": "Fisch",
+      "other": "Sonstiges"
+    },
+    "form": {
+      "name": "Name",
+      "namePlaceholder": "z.B. Buddy, Luna, Nemo...",
+      "species": "Art",
+      "breed": "Rasse",
+      "breedPlaceholder": "z.B. Labrador, Perser...",
+      "color": "Farbe / Zeichnung",
+      "colorPlaceholder": "z.B. Braun mit weißen Flecken",
+      "dateOfBirth": "Geburtsdatum",
+      "microchipNumber": "Chip-Nummer",
+      "microchipPlaceholder": "15-stellige Chip-Nummer",
+      "dietaryNeeds": "Ernährungsbedarf",
+      "dietaryNeedsPlaceholder": "z.B. Getreidefreies Futter, 2x täglich, je 200g...",
+      "medications": "Aktuelle Medikamente",
+      "medicationsPlaceholder": "z.B. Apoquel 16mg, 1 Tablette täglich mit Futter...",
+      "notes": "Hinweise",
+      "notesPlaceholder": "Weitere wichtige Informationen für Tiersitter...",
+      "cancel": "Abbrechen",
+      "save": "Speichern",
+      "saving": "Speichert...",
+      "editSave": "Änderungen speichern"
+    },
+    "vet": {
+      "title": "Tierarztbesuch-Verlauf",
+      "add": "Besuch hinzufügen",
+      "createTitle": "Tierarztbesuch erfassen",
+      "createDesc": "Neuen Tierarzttermin protokollieren.",
+      "editTitle": "Eintrag bearbeiten",
+      "editDesc": "Details dieses Besuchs aktualisieren.",
+      "deleteTitle": "Eintrag löschen?",
+      "deleteDesc": "Dieser Tierarztbesuch wird dauerhaft entfernt.",
+      "empty": "Noch keine Tierarztbesuche erfasst. Füge den ersten hinzu!",
+      "table": {
+        "date": "Datum",
+        "vet": "Tierarzt",
+        "description": "Beschreibung",
+        "cost": "Kosten",
+        "nextVisit": "Nächster Termin",
+        "actions": "Aktionen"
+      }
+    },
+    "vacc": {
+      "title": "Impfkalender",
+      "add": "Impfung hinzufügen",
+      "createTitle": "Impfung erfassen",
+      "createDesc": "Neue Impfung für dieses Tier eintragen.",
+      "editTitle": "Impfung bearbeiten",
+      "editDesc": "Diesen Impfeintrag aktualisieren.",
+      "deleteTitle": "Impfung löschen?",
+      "deleteDesc": "Dieser Impfeintrag wird dauerhaft entfernt.",
+      "empty": "Noch keine Impfungen erfasst.",
+      "overdue": "Überfällig",
+      "table": {
+        "name": "Impfstoff",
+        "date": "Gegeben am",
+        "nextDue": "Nächste Fälligkeit",
+        "vet": "Tierarzt",
+        "batch": "Chargen-Nr.",
+        "actions": "Aktionen"
+      }
+    },
+    "vetForm": {
+      "pet": "Tier",
+      "date": "Besuchsdatum",
+      "vetName": "Tierarzt",
+      "vetNamePlaceholder": "Dr. Müller / Tierklinik Stadtmitte",
+      "description": "Beschreibung",
+      "descriptionPlaceholder": "z.B. Jahresuntersuchung, Auffrischungsimpfung...",
+      "cost": "Kosten (EUR)",
+      "nextVisit": "Nächster Besuch",
+      "notes": "Hinweise",
+      "notesPlaceholder": "Weitere Hinweise..."
+    },
+    "vaccForm": {
+      "pet": "Tier",
+      "name": "Impfstoffname",
+      "namePlaceholder": "z.B. Tollwut, Staupe, DHPP...",
+      "date": "Verabreicht am",
+      "nextDueDate": "Nächste Fälligkeit",
+      "vetName": "Tierarzt",
+      "vetNamePlaceholder": "Dr. Müller / Tierklinik Stadtmitte",
+      "batchNumber": "Chargen-/Losnummer",
+      "batchPlaceholder": "z.B. 4A2B9C",
+      "notes": "Hinweise",
+      "notesPlaceholder": "Weitere Hinweise..."
+    }
+  },
+  "Meals": {
+    "title": "Essensplanung",
+    "subtitle": "Plane deine Mahlzeiten für die ganze Woche.",
+    "description": "Entdecke 7-meals: Die App, mit der du deine Essenspläne erstellen, verwalten und mit deinem Haushalt teilen kannst. Melde dich an, um loszulegen.",
+    "openApp": "7-meals öffnen",
+    "openAppSubtitle": "Öffnet in einem neuen Tab"
   }
 }

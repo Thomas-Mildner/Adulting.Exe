@@ -10,9 +10,14 @@
     "maintenance": "Maintenance",
     "wishlist": "Wishlist",
     "lending": "Lending",
+    "garage": "The Money Pit",
+    "contracts": "Contracts",
     "insurance": "Insurance",
     "documents": "Identity Guard",
-    "sidebarStatus": "Status: House standing (for now)"
+    "pets": "Pet Hub",
+    "sidebarStatus": "Status: House standing (for now)",
+    "illnesses": "Illness Tracker",
+    "meals": "Meal Planning"
   },
   "Dashboard": {
     "welcome": "Welcome back",
@@ -89,6 +94,69 @@
         "red": "Red (Hazardous)",
         "brown": "Brown (Bio)",
         "black": "Black"
+      }
+    },
+    "modulesTab": "Modules",
+    "modules": {
+      "title": "Module Selection",
+      "description": "Show or hide modules in the sidebar. Disabled modules are hidden from the navigation.",
+      "saved": "Module settings saved",
+      "error": "Failed to save module settings",
+      "vault": {
+        "title": "Vault",
+        "desc": "Appliance tracking and warranty management."
+      },
+      "services": {
+        "title": "Service Team",
+        "desc": "Service providers and repair history."
+      },
+      "documents": {
+        "title": "Identity Guard",
+        "desc": "Identity documents and expiry monitoring."
+      },
+      "library": {
+        "title": "Library",
+        "desc": "Knowledge base and household documents."
+      },
+      "waste": {
+        "title": "Waste Calendar",
+        "desc": "Waste pickup schedule and reminders."
+      },
+      "maintenance": {
+        "title": "Maintenance",
+        "desc": "Recurring maintenance tasks and schedules."
+      },
+      "utilities": {
+        "title": "Utilities",
+        "desc": "Meter readings and energy cost tracking."
+      },
+      "contracts": {
+        "title": "Contracts",
+        "desc": "Subscriptions and recurring contracts."
+      },
+      "wishlist": {
+        "title": "Wishlist",
+        "desc": "Project planning and savings goals."
+      },
+      "lending": {
+        "title": "Lending",
+        "desc": "Track borrowed items and who has them."
+      },
+      "pets": {
+        "title": "Pet Hub",
+        "desc": "Manage pet profiles, vet records, and vaccination schedules."
+      },
+      "garage": {
+        "title": "Car Pit",
+        "desc": "Vehicle management, tire changes, and car costs."
+      },
+      "illnesses": {
+        "title": "Illness Tracker",
+        "desc": "Track illnesses per family member with yearly sick-day heatmaps."
+      },
+      "meals": {
+        "title": "Meal Planning",
+        "desc": "Manage your weekly meals with 7-meals."
       }
     }
   },
@@ -270,7 +338,16 @@
       "warrantyEnd": "Warranty Until",
       "boxLocation": "Box Location",
       "boxLocationPlaceholder": "e.g. Shelf A3, Basement Box 2...",
-      "status": "Status"
+      "status": "Status",
+      "receipt": "Receipt / Image",
+      "receiptUpload": "Upload file or take photo",
+      "receiptDragDrop": "Drag & drop a file, or click to browse",
+      "receiptCamera": "Take Photo",
+      "receiptFile": "Upload File",
+      "receiptPreview": "Receipt preview",
+      "receiptRemove": "Remove",
+      "receiptUploading": "Uploading...",
+      "receiptError": "Upload failed. Please try again."
     },
     "card": {
       "warranty": "Warranty",
@@ -320,7 +397,10 @@
       "editDesc": "Changes are saved immediately.",
       "deleteTitle": "Delete Invoice?",
       "deleteDesc": "This will permanently remove the invoice record.",
-      "empty": "No invoices found. A good sign or a lost receipt?"
+      "empty": "No invoices found. A good sign or a lost receipt?",
+      "exportZip": "Export Tax ZIP",
+      "exportZipTooltip": "Download all tax-deductible invoices as a ZIP archive",
+      "exportZipEmpty": "No tax-deductible invoices to export."
     },
     "form": {
       "name": "Name",
@@ -662,6 +742,86 @@
       "upcoming": "Upcoming"
     }
   },
+  "Contracts": {
+    "title": "Recurring Contracts",
+    "subtitle": "Modern life is just a series of monthly payments until you die",
+    "burnRate": "Monthly Bleed",
+    "burnRateNote": "Your subscriptions cost more than a 1990s mortgage. Just saying.",
+    "totalContracts": "Active Contracts",
+    "activeTrials": "trials",
+    "cumulativeDonation": "Cumulative Donation",
+    "regretMeter": "Regret-Meter",
+    "regretMeterSubtitle": "Money sent to providers without actually using the service",
+    "wasted": "wasted",
+    "lastUsed": "Last used",
+    "monthsAgo": "months ago",
+    "allCategories": "All",
+    "tableTitle": "All Contracts",
+    "tableSubtitle": "Sorted by next billing date",
+    "trialTrapAlert": "Trial ending!",
+    "trial": "Trial",
+    "active": "Active",
+    "killSwitch": "Generate cancellation letter",
+    "cancel": "Cancel",
+    "close": "Close",
+    "categories": {
+      "Utilities": "Utilities",
+      "Entertainment": "Entertainment",
+      "Fitness": "Fitness",
+      "Software": "Software",
+      "Guilty Pleasure": "Guilty Pleasure",
+      "Other": "Other"
+    },
+    "table": {
+      "provider": "Provider",
+      "category": "Category",
+      "monthlyCost": "Monthly Cost",
+      "nextBilling": "Next Billing",
+      "status": "Status",
+      "actions": "Actions"
+    },
+    "fields": {
+      "providerName": "Provider Name",
+      "accountId": "Account/Customer ID",
+      "monthlyCost": "Monthly Cost (€)",
+      "yearlyCost": "Yearly Cost (€)",
+      "category": "Category",
+      "lastUsedDate": "Last Date of Real Use",
+      "isTrial": "Free Trial",
+      "trialEndDate": "Trial End Date",
+      "nextBillingDate": "Next Billing Date",
+      "notes": "Notes"
+    },
+    "placeholders": {
+      "providerName": "e.g., Netflix, Spotify",
+      "accountId": "Optional customer/account number",
+      "notes": "Optional notes or reminders"
+    },
+    "create": {
+      "title": "Add Contract",
+      "description": "Track a new recurring payment",
+      "action": "Add Contract"
+    },
+    "edit": {
+      "title": "Edit Contract",
+      "description": "Update contract details",
+      "action": "Save Changes"
+    },
+    "delete": {
+      "title": "Delete Contract",
+      "description": "Are you sure? This action cannot be undone.",
+      "action": "Delete"
+    },
+    "cancellation": {
+      "title": "Cancellation Letter (Kündigungsschreiben)",
+      "description": "Generated cancellation letter ready to send",
+      "copy": "Copy to Clipboard"
+    },
+    "emptyState": {
+      "title": "No subscriptions?",
+      "message": "Are you living in a cave or just borrowing everyone's passwords?"
+    }
+  },
   "Insurance": {
     "title": "The Safety Net",
     "subtitle": "Paying for the 'Just in Case'",
@@ -917,5 +1077,648 @@
       "person": "Are you sure you want to delete {name}? All associated documents will be deleted.",
       "document": "Are you sure you want to delete this {documentType}?"
     }
+  },
+  "Garage": {
+    "title": "The Money Pit",
+    "subtitle": "From legal reminders to detailed cost analysis of fuel and repairs.",
+    "loading": "Loading...",
+    "emptyState": "No car added? Enjoy your functional legs while they last.",
+    "optional": "Optional",
+    "tabs": {
+      "overview": "Overview",
+      "maintenance": "Maintenance Log",
+      "fuel": "Fuel & Tolls",
+      "analytics": "Cost Analytics",
+      "documents": "Digital Glovebox"
+    },
+    "addCar": "Add Car",
+    "noCars": "No cars registered yet.",
+    "tuv": {
+      "title": "TÜV Status",
+      "safe": "Safe to Drive",
+      "illegal": "Illegal Go-Kart",
+      "warning": "Warning",
+      "dueIn": "Due in {days} days",
+      "overdue": "Overdue by {days} days",
+      "nextInspection": "Next Inspection",
+      "notSet": "Not set",
+      "expired": "Expired"
+    },
+    "tireReminder": {
+      "title": "The Tire Ritual",
+      "current": "Currently on: {type} tires",
+      "storage": "Storage: {location}",
+      "noStorage": "Storage location not set",
+      "summer": "Summer",
+      "winter": "Winter",
+      "changeDue": "Time to change tires!"
+    },
+    "firstAid": {
+      "title": "First Aid Expiry",
+      "expires": "Expires: {date}",
+      "expired": "Expired! Replace it before the next inspection.",
+      "notSet": "Not tracked"
+    },
+    "details": {
+      "title": "Car Details",
+      "purchaseDate": "Purchase Date",
+      "purchasePrice": "Purchase Price",
+      "analyticsPlaceholder": "Cost analytics will be displayed here."
+    },
+    "maintenance": {
+      "title": "Maintenance Log",
+      "subtitle": "Record repairs, oil changes, and parts replacements.",
+      "empty": "No maintenance records yet. Keep fingers crossed.",
+      "addEntry": "New Entry",
+      "editEntry": "Edit Entry",
+      "date": "Date",
+      "description": "Description",
+      "cost": "Cost (€)",
+      "mileage": "Mileage (km)",
+      "category": "Category",
+      "categories": {
+        "oil_change": "Oil Change",
+        "repair": "Repair",
+        "inspection": "Inspection",
+        "parts": "Parts Replacement",
+        "other": "Other"
+      }
+    },
+    "fuel": {
+      "title": "Fuel & Toll Tracker",
+      "fuel": "Fuel",
+      "tolls": "Tolls",
+      "subtitle": "Quick-entry form for refueling and highway tolls.",
+      "addFuel": "Add Fuel",
+      "addToll": "Add Toll",
+      "editEntry": "Edit Entry",
+      "editToll": "Edit Toll",
+      "fuelEmpty": "No fuel entries yet.",
+      "tollEmpty": "No toll entries yet.",
+      "date": "Date",
+      "liters": "Liters",
+      "pricePerLiter": "Price/Liter (€)",
+      "totalCost": "Total Cost (€)",
+      "mileage": "Mileage (km)",
+      "fuelType": "Fuel Type",
+      "fuelTypes": {
+        "diesel": "Diesel",
+        "petrol": "Petrol",
+        "e10": "E10",
+        "electric": "Electric"
+      },
+      "route": "Route",
+      "country": "Country",
+      "routePlaceholder": "e.g., Munich to Berlin"
+    },
+    "costSummary": {
+      "title": "Cost Summary",
+      "subtitle": "Expenses and Distribution",
+      "history": "History",
+      "distribution": "Distribution",
+      "total": "Total"
+    },
+    "documents": {
+      "title": "Digital Glovebox",
+      "subtitle": "Upload registration documents and insurance policies.",
+      "empty": "No documents uploaded yet.",
+      "upload": "Upload Document",
+      "download": "Download",
+      "fileName": "File Name",
+      "category": "Category",
+      "categories": {
+        "registration": "Registration (Fahrzeugschein/Brief)",
+        "insurance": "Insurance Policy",
+        "invoice": "Invoice",
+        "other": "Other"
+      },
+      "uploadDate": "Uploaded"
+    },
+    "resaleValue": {
+      "title": "Resale Value Protector",
+      "subtitle": "Export maintenance history as PDF for resale.",
+      "export": "Export History",
+      "exporting": "Generating PDF..."
+    },
+    "form": {
+      "carName": "Car Name",
+      "carNamePlaceholder": "e.g., The Beast, Daily Driver",
+      "brand": "Brand",
+      "brandPlaceholder": "e.g., BMW, VW",
+      "model": "Model",
+      "modelPlaceholder": "e.g., 3 Series, Golf",
+      "licensePlate": "License Plate",
+      "licensePlatePlaceholder": "e.g., M-AB 1234",
+      "purchaseDate": "Purchase Date",
+      "purchasePrice": "Purchase Price (€)",
+      "nextInspection": "Next Inspection (TÜV)",
+      "tireType": "Current Tire Type",
+      "tireStorage": "Tire Storage Location",
+      "tireStoragePlaceholder": "e.g., In the garage, bottom left, under the old tarp",
+      "firstAidExpiry": "First Aid Kit Expiry",
+      "save": "Save",
+      "saving": "Saving...",
+      "cancel": "Cancel",
+      "delete": "Delete Car",
+      "deleting": "Deleting..."
+    },
+    "create": {
+      "title": "Add New Car",
+      "description": "Register your money pit."
+    },
+    "edit": {
+      "title": "Edit Car",
+      "description": "Update car details."
+    },
+    "delete": {
+      "title": "Delete Car?",
+      "description": "This will permanently delete the car and all its maintenance records, fuel entries, and documents.",
+      "confirm": "Permanently Delete"
+    }
+  },
+  "Illnesses": {
+    "title": "Illness Tracker",
+    "subtitle": "Track who was sick, with what, and for how long.",
+    "overview": "Overview",
+    "addPerson": "Add Person",
+    "addIllness": "Add Illness",
+    "editIllness": "Edit Illness",
+    "deleteIllness": "Delete Illness",
+    "dialogDescription": "Track an illness entry for a family member.",
+    "noPeople": "No family members available yet. Add one to start tracking illnesses.",
+    "noIllnesses": "No illnesses tracked yet.",
+    "noIllnessesForPerson": "No illnesses recorded for {name} yet.",
+    "allEntries": "All illness entries",
+    "allEntriesDescription": "A household-wide timeline of every tracked illness record.",
+    "entriesForPerson": "{name} illness history",
+    "entriesForPersonDescription": "Each illness is tracked separately so recurring issues stay visible.",
+    "activityByYear": "Yearly activity",
+    "activityByYearDescription": "GitHub-style heatmaps show which days were marked as sick for this person.",
+    "personSummaryDescription": "Individual illness history and yearly sick-day totals for {name}.",
+    "yearlySummary": "{year} summary",
+    "sickDaysThisYear": "Sick days in {year}",
+    "currentlySick": "Currently sick",
+    "records": "Records",
+    "heatmapDescription": "Every highlighted square marks a day that was tracked as sick.",
+    "heatmapTooltip": "{count, plural, one {# illness tracked} other {# illnesses tracked}}",
+    "legendLess": "Less",
+    "legendMore": "More",
+    "sickDaysCount": "{count, plural, one {# sick day} other {# sick days}}",
+    "trackedDays": "{count, plural, one {# tracked day} other {# tracked days}}",
+    "ongoing": "Ongoing",
+    "deleteConfirm": "Delete the illness entry for “{name}”?",
+    "cancel": "Cancel",
+    "save": "Save",
+    "add": "Add",
+    "status": {
+      "active": "Active",
+      "resolved": "Resolved"
+    },
+    "stats": {
+      "familyMembers": "family members",
+      "entries": "illness entries",
+      "active": "currently active",
+      "currentYearDays": "sick days in {year}"
+    },
+    "validation": {
+      "personRequired": "Please select a family member first.",
+      "endDate": "The end date must be on or after the start date."
+    },
+    "messages": {
+      "created": "Illness saved.",
+      "updated": "Illness updated.",
+      "deleted": "Illness deleted.",
+      "error": "Could not save the illness entry."
+    },
+    "relationTypes": {
+      "Self": "Self",
+      "Spouse": "Spouse",
+      "Child": "Child",
+      "Other": "Other"
+    },
+    "form": {
+      "person": "Person",
+      "personPlaceholder": "Select person...",
+      "name": "Illness",
+      "namePlaceholder": "e.g. Flu, Migraine, COVID-19",
+      "startDate": "Start Date",
+      "endDate": "End Date",
+      "notes": "Notes",
+      "notesPlaceholder": "Symptoms, medication, recovery notes, or anything worth remembering."
+    },
+    "personDialogDescription": "Add a family member so their illnesses can be tracked separately."
+  },
+  "Onboarding": {
+    "title": "Welcome to Adulting.Exe",
+    "steps": {
+      "welcome": "Welcome",
+      "appliance": "First Appliance",
+      "heating": "Heating Type",
+      "waste": "Waste Categories",
+      "done": "Done"
+    },
+    "step1": {
+      "title": "Welcome, Homeowner! 🏠",
+      "description": "Adulting.Exe helps you manage warranties, maintenance, utilities, and more. Let's get your household set up in a few quick steps.",
+      "features": {
+        "vault": "Track warranties & appliances",
+        "maintenance": "Schedule maintenance tasks",
+        "utilities": "Monitor energy & water usage",
+        "waste": "Never miss a trash pickup"
+      }
+    },
+    "step2": {
+      "title": "Add Your First Appliance",
+      "description": "Start tracking warranties by adding your first appliance. You can skip this and add appliances later.",
+      "skip": "Skip for now",
+      "addedSuccess": "Appliance added successfully!",
+      "toastSuccess": "Appliance added!",
+      "toastError": "Failed to add appliance"
+    },
+    "step3": {
+      "title": "What's Your Heating Type?",
+      "description": "Select your heating source so the units in the Utilities section are displayed correctly.",
+      "select": "Select heating type",
+      "toastError": "Failed to save heating type"
+    },
+    "step4": {
+      "title": "Configure Waste Categories",
+      "description": "Add your local waste pickup types (e.g. Recycling, Organic, Paper). You can add more later in Settings.",
+      "skip": "Skip for now",
+      "addButton": "Add Type",
+      "nameLabel": "Waste Type Name",
+      "namePlaceholder": "e.g. Recycling, Organic Waste...",
+      "toastSuccess": "Waste type added!",
+      "toastError": "Failed to add waste type"
+    },
+    "step5": {
+      "title": "You're All Set! 🎉",
+      "description": "Your household is configured and ready to go. You can always change these settings later.",
+      "goToDashboard": "Go to Dashboard",
+      "toastError": "Failed to complete setup",
+      "summaryAppliance": "First appliance tracked ✓",
+      "summaryHeating": "Heating type configured ✓",
+      "summaryWaste": "{count} waste type(s) added ✓"
+    },
+    "next": "Next",
+    "back": "Back",
+    "skip": "Skip",
+    "saving": "Saving...",
+    "stepOf": "Step {current} of {total}"
+  },
+  "Tutorial": {
+    "back": "Back",
+    "next": "Next",
+    "skip": "Skip tutorial",
+    "gotIt": "Got it!",
+    "stepOf": "{current} of {total}",
+    "vault": {
+      "step1": {
+        "title": "The Warranty & Box Vault",
+        "description": "Keep track of every appliance you own — from the dishwasher to the coffee machine.",
+        "feature1": "Record purchase dates and warranty expiry",
+        "feature2": "Store where you keep the original box",
+        "feature3": "Track appliance brand, category, and price"
+      },
+      "step2": {
+        "title": "Warranty Status at a Glance",
+        "description": "See instantly which appliances are still covered, which have run out, and which are in the danger zone.",
+        "feature1": "Protected: warranty still active",
+        "feature2": "Zombie: appliance past its warranty date"
+      },
+      "step3": {
+        "title": "Add Your First Appliance",
+        "description": "Hit 'New Entry' to add an appliance. Fill in the name, brand, purchase date, and warranty end date — and you're set."
+      }
+    },
+    "services": {
+      "step1": {
+        "title": "Your Service Provider Rolodex",
+        "description": "Store contact details for every plumber, electrician, or handyman you've ever worked with.",
+        "feature1": "Add phone, email, and website for each provider",
+        "feature2": "Rate providers by reliability",
+        "feature3": "Link invoices directly to providers"
+      },
+      "step2": {
+        "title": "Service History Log",
+        "description": "Log every repair and service call so you always know what was done and when.",
+        "feature1": "Record date, description, and cost",
+        "feature2": "Mark expenses as tax-deductible"
+      },
+      "step3": {
+        "title": "Invoice Management",
+        "description": "Upload and attach invoices to specific service calls. No more hunting through email for receipts."
+      }
+    },
+    "library": {
+      "step1": {
+        "title": "Your Home Knowledge Base",
+        "description": "Store important home documents, guides, and manuals in one searchable place.",
+        "feature1": "Upload PDFs and write Markdown notes",
+        "feature2": "Categorize by topic (Heating, Plumbing, etc.)",
+        "feature3": "Full-text search across all documents"
+      },
+      "step2": {
+        "title": "Find Any Document Instantly",
+        "description": "Search by title or filter by category to find exactly what you need when you need it.",
+        "feature1": "Filter by document type: PDF or note",
+        "feature2": "Preview documents without leaving the app"
+      }
+    },
+    "waste": {
+      "step1": {
+        "title": "Never Miss a Pickup",
+        "description": "Configure your local waste pickup schedule and always know what goes out this week.",
+        "feature1": "Add custom waste types (recycling, organic, etc.)",
+        "feature2": "Schedule recurring pickup dates",
+        "feature3": "See upcoming pickups on the calendar"
+      },
+      "step2": {
+        "title": "Dashboard Reminders",
+        "description": "The dashboard shows your next scheduled pickup so you never forget to take out the trash.",
+        "feature1": "Upcoming pickup shown on the dashboard",
+        "feature2": "Color-coded waste types for quick recognition"
+      }
+    },
+    "maintenance": {
+      "step1": {
+        "title": "Stay on Top of Home Maintenance",
+        "description": "Schedule and track all the recurring maintenance tasks your home needs to stay in shape.",
+        "feature1": "Set due dates and priority levels",
+        "feature2": "Mark tasks as complete when done",
+        "feature3": "Sort by date or priority"
+      },
+      "step2": {
+        "title": "Recurring Tasks Made Easy",
+        "description": "Set a recurring schedule (monthly, yearly, etc.) and the task will reappear automatically.",
+        "feature1": "Supports daily, weekly, monthly, and yearly schedules",
+        "feature2": "Never forget annual checks like smoke detectors or filter changes"
+      }
+    },
+    "utilities": {
+      "step1": {
+        "title": "Track Your Energy Usage",
+        "description": "Log monthly meter readings for electricity, water, and heating to monitor your household consumption.",
+        "feature1": "Enter readings for power, water, and heating",
+        "feature2": "Add cost per unit for accurate billing estimates",
+        "feature3": "Supports all major heating types"
+      },
+      "step2": {
+        "title": "Visualize Your Consumption",
+        "description": "Charts and history let you spot trends, compare months, and catch unusual spikes in usage.",
+        "feature1": "Monthly comparison charts",
+        "feature2": "Total cost summary per period"
+      }
+    },
+    "contracts": {
+      "step1": {
+        "title": "Subscription & Contract Central",
+        "description": "Keep an eye on every subscription, contract, and recurring cost so nothing slips through the cracks.",
+        "feature1": "Track monthly and yearly costs",
+        "feature2": "Mark trials to avoid auto-renewing unexpectedly",
+        "feature3": "Organize by category (utilities, entertainment, etc.)"
+      },
+      "step2": {
+        "title": "Spot the Dead Weight",
+        "description": "Subscriptions you haven't used in a while are highlighted so you can decide whether to cancel them.",
+        "feature1": "Log when you last used each service",
+        "feature2": "See next billing date to plan cancellations"
+      }
+    },
+    "wishlist": {
+      "step1": {
+        "title": "Plan Your Home Improvements",
+        "description": "Create projects for everything you want to do or buy for your home, and track your savings toward each goal.",
+        "feature1": "Set an estimated cost and track current savings",
+        "feature2": "Assign urgency levels from nice-to-have to emergency",
+        "feature3": "Categorize projects by type"
+      },
+      "step2": {
+        "title": "Watch Your Savings Grow",
+        "description": "Each project shows a progress bar so you can see at a glance how close you are to your goal.",
+        "feature1": "Visual progress bar per project",
+        "feature2": "Update savings whenever you set money aside"
+      }
+    },
+    "lending": {
+      "step1": {
+        "title": "The Lend-O-Meter",
+        "description": "Track everything you've lent to friends and family so you actually get it back.",
+        "feature1": "Record what you lent, to whom, and when",
+        "feature2": "Set an expected return date",
+        "feature3": "Assign a trust level to each borrower"
+      },
+      "step2": {
+        "title": "Know Who to Trust",
+        "description": "The trust level system helps you remember which borrowers reliably return things — and which don't.",
+        "feature1": "Trust levels from 1 (risky) to 5 (very reliable)",
+        "feature2": "Dashboard shows overdue items at a glance"
+      }
+    },
+    "documents": {
+      "step1": {
+        "title": "Identity Guard",
+        "description": "Keep all important personal documents organized so you always know when they expire and where they are.",
+        "feature1": "Store passports, IDs, and driver's licenses",
+        "feature2": "Track issue and expiry dates",
+        "feature3": "Record where the physical document is kept"
+      },
+      "step2": {
+        "title": "Expiry Alerts",
+        "description": "Documents nearing their expiry date are flagged automatically, giving you time to renew before it's too late.",
+        "feature1": "Color-coded expiry status (valid, expiring soon, expired)",
+        "feature2": "Manage documents for your whole household"
+      },
+      "step3": {
+        "title": "Emergency Preparedness",
+        "description": "Add emergency contacts and a lost/stolen guide for each document so you know exactly what to do if something goes missing."
+      }
+    },
+    "pets": {
+      "step1": {
+        "title": "Your Pet Management Hub",
+        "description": "Keep all your pet's information in one place — from microchip numbers to dietary needs for pet sitters.",
+        "feature1": "Create profiles for each pet with species, breed, and birthday",
+        "feature2": "Store microchip numbers and emergency care instructions",
+        "feature3": "Add dietary needs and medications for pet-sitter handoffs"
+      },
+      "step2": {
+        "title": "Vet Record Tracking",
+        "description": "Log every vet visit with date, description, and cost. Set reminders for upcoming check-ups.",
+        "feature1": "Track visit dates, vet names, and treatment descriptions",
+        "feature2": "Record costs and schedule next appointments"
+      },
+      "step3": {
+        "title": "Vaccination Schedule",
+        "description": "Never miss a booster shot. Track every vaccination with its due date and get notified when it's time to renew."
+      }
+    },
+    "illnesses": {
+      "step1": {
+        "title": "Track Every Illness",
+        "description": "Log each illness separately for every family member using your shared household person list.",
+        "feature1": "Reuse the same person records as Identity Guard",
+        "feature2": "Capture the illness name, start date, and end date",
+        "feature3": "Keep optional notes for symptoms, recovery, or follow-ups"
+      },
+      "step2": {
+        "title": "Family History at a Glance",
+        "description": "Switch between family members to review their individual illness history without mixing everyone together.",
+        "feature1": "Dedicated timeline cards for each illness entry",
+        "feature2": "Per-person yearly summaries with tracked sick days"
+      },
+      "step3": {
+        "title": "GitHub-Style Sick-Day Heatmap",
+        "description": "Each person gets a year-by-year activity grid so you can see how many days they were sick over time."
+      }
+    }
+  },
+  "Pets": {
+    "title": "Pet Management Hub",
+    "subtitle": "Because your fur babies deserve a digital file too.",
+    "tabs": {
+      "vet": "Vet Records",
+      "vaccinations": "Vaccinations"
+    },
+    "stats": {
+      "pets": "Pets",
+      "registered": "registered",
+      "vetVisits": "Vet Visits",
+      "recorded": "recorded",
+      "vaccinations": "Vaccinations",
+      "administered": "administered",
+      "overdueVacc": "Overdue Vaccines",
+      "needsAttention": "needs attention",
+      "allUpToDate": "all up to date"
+    },
+    "list": {
+      "title": "Your Pets",
+      "description": "Click a pet to view their vet records and vaccinations.",
+      "empty": "No pets registered yet. Add your first furry (or scaly) companion."
+    },
+    "create": {
+      "button": "Add Pet",
+      "title": "Add New Pet",
+      "description": "Register a new pet in your household."
+    },
+    "edit": {
+      "title": "Edit Pet",
+      "description": "Update your pet's information."
+    },
+    "delete": {
+      "title": "Remove Pet?",
+      "description": "This will permanently remove the pet and all associated vet records and vaccinations.",
+      "confirm": "Remove Pet",
+      "deleting": "Removing...",
+      "cancel": "Cancel"
+    },
+    "detail": {
+      "microchip": "Microchip",
+      "nextVaccination": "Next Vaccination",
+      "nextVetVisit": "Next Vet Visit",
+      "sitterInstructions": "Pet-Sitter Instructions",
+      "bornOn": "born"
+    },
+    "species": {
+      "dog": "Dog",
+      "cat": "Cat",
+      "bird": "Bird",
+      "rabbit": "Rabbit",
+      "fish": "Fish",
+      "other": "Other"
+    },
+    "form": {
+      "name": "Name",
+      "namePlaceholder": "e.g. Buddy, Luna, Nemo...",
+      "species": "Species",
+      "breed": "Breed",
+      "breedPlaceholder": "e.g. Labrador, Persian...",
+      "color": "Color / Markings",
+      "colorPlaceholder": "e.g. Brown with white patches",
+      "dateOfBirth": "Date of Birth",
+      "microchipNumber": "Microchip Number",
+      "microchipPlaceholder": "15-digit chip number",
+      "dietaryNeeds": "Dietary Needs",
+      "dietaryNeedsPlaceholder": "e.g. Grain-free food, 2x daily, 200g each...",
+      "medications": "Current Medications",
+      "medicationsPlaceholder": "e.g. Apoquel 16mg, 1 tablet daily with food...",
+      "notes": "Notes",
+      "notesPlaceholder": "Other important information for pet sitters...",
+      "cancel": "Cancel",
+      "save": "Save",
+      "saving": "Saving...",
+      "editSave": "Save Changes"
+    },
+    "vet": {
+      "title": "Vet Visit History",
+      "add": "Add Visit",
+      "createTitle": "Record Vet Visit",
+      "createDesc": "Log a new veterinary appointment.",
+      "editTitle": "Edit Vet Record",
+      "editDesc": "Update the details of this visit.",
+      "deleteTitle": "Delete Vet Record?",
+      "deleteDesc": "This will permanently remove this vet record.",
+      "empty": "No vet visits recorded yet. Add the first one!",
+      "table": {
+        "date": "Date",
+        "vet": "Veterinarian",
+        "description": "Description",
+        "cost": "Cost",
+        "nextVisit": "Next Visit",
+        "actions": "Actions"
+      }
+    },
+    "vacc": {
+      "title": "Vaccination Schedule",
+      "add": "Add Vaccination",
+      "createTitle": "Record Vaccination",
+      "createDesc": "Log a new vaccination for this pet.",
+      "editTitle": "Edit Vaccination",
+      "editDesc": "Update this vaccination record.",
+      "deleteTitle": "Delete Vaccination?",
+      "deleteDesc": "This will permanently remove this vaccination record.",
+      "empty": "No vaccinations recorded yet.",
+      "overdue": "Overdue",
+      "table": {
+        "name": "Vaccine",
+        "date": "Given",
+        "nextDue": "Next Due",
+        "vet": "Veterinarian",
+        "batch": "Batch No.",
+        "actions": "Actions"
+      }
+    },
+    "vetForm": {
+      "pet": "Pet",
+      "date": "Visit Date",
+      "vetName": "Veterinarian",
+      "vetNamePlaceholder": "Dr. Smith / City Vet Clinic",
+      "description": "Description",
+      "descriptionPlaceholder": "e.g. Annual checkup, vaccination booster...",
+      "cost": "Cost (EUR)",
+      "nextVisit": "Next Visit Date",
+      "notes": "Notes",
+      "notesPlaceholder": "Additional notes..."
+    },
+    "vaccForm": {
+      "pet": "Pet",
+      "name": "Vaccine Name",
+      "namePlaceholder": "e.g. Rabies, Distemper, DHPP...",
+      "date": "Date Given",
+      "nextDueDate": "Next Due Date",
+      "vetName": "Veterinarian",
+      "vetNamePlaceholder": "Dr. Smith / City Vet Clinic",
+      "batchNumber": "Batch / Lot Number",
+      "batchPlaceholder": "e.g. 4A2B9C",
+      "notes": "Notes",
+      "notesPlaceholder": "Additional notes..."
+    }
+  },
+  "Meals": {
+    "title": "Meal Planning",
+    "subtitle": "Plan your meals for the whole week.",
+    "description": "Discover 7-meals: The app that lets you create, manage, and share your meal plans with your household. Log in to get started.",
+    "openApp": "Open 7-meals",
+    "openAppSubtitle": "Opens in a new tab"
   }
 }

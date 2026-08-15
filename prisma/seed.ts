@@ -17,6 +17,7 @@ async function main() {
   await prisma.wishlistProject.deleteMany()
   await prisma.wastePickup.deleteMany()
   await prisma.wasteType.deleteMany()
+  await prisma.contract.deleteMany()
   await prisma.insurance.deleteMany()
   await prisma.identityDocument.deleteMany()
   await prisma.person.deleteMany()
@@ -205,6 +206,102 @@ async function main() {
   })
   console.log("  ✅ Waste calendar seeded")
 
+  // ─── Contracts ──────────────────────────────────────────────────────────
+  const now = new Date()
+  const trialEndingSoon = new Date(now)
+  trialEndingSoon.setHours(now.getHours() + 36) // Within 48 hours for trial-trap alert
+
+  await prisma.contract.createMany({
+    data: [
+      {
+        id: "con-1",
+        providerName: "Netflix",
+        accountId: "netflix@example.com",
+        monthlyCost: 17.99,
+        yearlyCost: 215.88,
+        category: "Entertainment",
+        lastUsedDate: new Date("2026-02-15"),
+        isTrial: false,
+        nextBillingDate: new Date("2026-03-01"),
+        notes: "Premium plan with 4K",
+      },
+      {
+        id: "con-2",
+        providerName: "Spotify",
+        accountId: "user@example.com",
+        monthlyCost: 10.99,
+        yearlyCost: 131.88,
+        category: "Entertainment",
+        lastUsedDate: new Date("2026-02-17"),
+        isTrial: false,
+        nextBillingDate: new Date("2026-02-25"),
+      },
+      {
+        id: "con-3",
+        providerName: "Ultra-Premium Yoga App",
+        monthlyCost: 19.99,
+        category: "Guilty Pleasure",
+        lastUsedDate: new Date("2022-03-15"),
+        isTrial: false,
+        nextBillingDate: new Date("2026-03-05"),
+        notes: "Used once in 2022. Classic.",
+      },
+      {
+        id: "con-4",
+        providerName: "Electricity Provider",
+        accountId: "KD-1234567",
+        monthlyCost: 95.0,
+        category: "Utilities",
+        lastUsedDate: new Date(),
+        isTrial: false,
+        nextBillingDate: new Date("2026-03-01"),
+      },
+      {
+        id: "con-5",
+        providerName: "Internet & Fiber",
+        accountId: "12345678",
+        monthlyCost: 49.99,
+        category: "Utilities",
+        lastUsedDate: new Date(),
+        isTrial: false,
+        nextBillingDate: new Date("2026-02-28"),
+      },
+      {
+        id: "con-6",
+        providerName: "Cloud Storage Pro",
+        accountId: "cloud@example.com",
+        monthlyCost: 9.99,
+        yearlyCost: 99.99,
+        category: "Software",
+        lastUsedDate: new Date("2026-01-20"),
+        isTrial: false,
+        nextBillingDate: new Date("2026-03-15"),
+      },
+      {
+        id: "con-7",
+        providerName: "Premium Fitness Tracker",
+        monthlyCost: 14.99,
+        category: "Fitness",
+        isTrial: true,
+        trialEndDate: trialEndingSoon,
+        nextBillingDate: trialEndingSoon,
+        notes: "Trial ending soon! Cancel before first charge!",
+      },
+      {
+        id: "con-8",
+        providerName: "Meal Kit Delivery",
+        accountId: "meal@example.com",
+        monthlyCost: 89.99,
+        category: "Guilty Pleasure",
+        lastUsedDate: new Date("2025-11-10"),
+        isTrial: false,
+        nextBillingDate: new Date("2026-03-10"),
+        notes: "Haven't ordered in months but still paying",
+      },
+    ],
+  })
+  console.log("  ✅ Contracts seeded")
+
   // ─── Insurance ──────────────────────────────────────────────────────────
   const now = new Date()
   const threeMonthsFromNow = new Date(now)
@@ -311,12 +408,15 @@ async function main() {
   // ─── Persons & Identity Documents ───────────────────────────────────────
 
   sixMonthsFromNow.setMonth(sixMonthsFromNow.getMonth() + 6)
-  
+
+  const currentYear = today.getFullYear()
+  const previousYear = currentYear - 1
+
   oneYearFromNow.setFullYear(oneYearFromNow.getFullYear() + 1)
-  
+
   const twoYearsFromNow = new Date(today)
   twoYearsFromNow.setFullYear(twoYearsFromNow.getFullYear() + 2)
-  
+
   const threeMonthsAgo = new Date(today)
   threeMonthsAgo.setMonth(threeMonthsAgo.getMonth() - 3)
 
@@ -360,6 +460,24 @@ async function main() {
             emergencyContact: "Führerscheinstelle: +49 30 9018 0"
           }
         ]
+      },
+      illnesses: {
+        create: [
+          {
+            id: "illness-1",
+            name: "Seasonal Flu",
+            startDate: new Date(`${currentYear}-01-12`),
+            endDate: new Date(`${currentYear}-01-18`),
+            notes: "Fever for two days, then a week of couch recovery."
+          },
+          {
+            id: "illness-2",
+            name: "Stomach Bug",
+            startDate: new Date(`${previousYear}-11-03`),
+            endDate: new Date(`${previousYear}-11-05`),
+            notes: "Likely traced back to that suspicious office potluck."
+          }
+        ]
       }
     }
   })
@@ -392,6 +510,24 @@ async function main() {
             emergencyContact: "Bürgeramt: +49 30 115"
           }
         ]
+      },
+      illnesses: {
+        create: [
+          {
+            id: "illness-3",
+            name: "Migraine Episode",
+            startDate: new Date(`${currentYear}-03-07`),
+            endDate: new Date(`${currentYear}-03-08`),
+            notes: "Low-light mode and quiet room required."
+          },
+          {
+            id: "illness-4",
+            name: "COVID-19",
+            startDate: new Date(`${previousYear}-02-14`),
+            endDate: new Date(`${previousYear}-02-21`),
+            notes: "Isolated at home and kept hydration high."
+          }
+        ]
       }
     }
   })
@@ -415,11 +551,29 @@ async function main() {
             notes: "EXPIRED - Needs immediate renewal!"
           }
         ]
+      },
+      illnesses: {
+        create: [
+          {
+            id: "illness-5",
+            name: "Chickenpox",
+            startDate: new Date(`${previousYear}-05-06`),
+            endDate: new Date(`${previousYear}-05-15`),
+            notes: "Ten very itchy days and a lot of cartoons."
+          },
+          {
+            id: "illness-6",
+            name: "Common Cold",
+            startDate: new Date(`${currentYear}-02-02`),
+            endDate: new Date(`${currentYear}-02-06`)
+          }
+        ]
       }
     }
   })
 
   console.log("  ✅ Persons & identity documents seeded")
+  console.log("  ✅ Illness tracker data seeded")
 
   console.log("🎉 Seeding complete!")
 }

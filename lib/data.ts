@@ -10,6 +10,7 @@ export type Appliance = {
   status: "protected" | "solo" | "zombie"
   brand: string
   price: number
+  receiptPath?: string
 }
 
 export type ServiceHistory = {
@@ -104,6 +105,59 @@ export type WastePickup = {
   wasteType?: WasteType
 }
 
+export type Car = {
+  id: string
+  name: string
+  brand: string
+  model: string
+  licensePlate: string
+  purchaseDate: string
+  purchasePrice: number
+  nextInspection?: string
+  currentTireType: "summer" | "winter"
+  tireStorageLocation?: string
+  firstAidKitExpiry?: string
+}
+
+export type CarMaintenance = {
+  id: string
+  carId: string
+  date: string
+  description: string
+  cost: number
+  mileage?: number
+  category: "oil_change" | "repair" | "inspection" | "parts" | "other"
+}
+
+export type FuelEntry = {
+  id: string
+  carId: string
+  date: string
+  liters: number
+  pricePerLiter: number
+  totalCost: number
+  mileage: number | null
+  fuelType: "diesel" | "petrol" | "e10" | "electric"
+}
+
+export type TollEntry = {
+  id: string
+  carId: string
+  date: string
+  cost: number
+  route?: string
+  country?: string
+}
+
+export type CarDocument = {
+  id: string
+  carId: string
+  title: string
+  category: "registration" | "insurance" | "invoice" | "other"
+  fileName: string
+  uploadDate: string
+}
+
 export type Insurance = {
   id: string
   providerName: string
@@ -128,9 +182,23 @@ export type Notification = {
   title: string
   message: string
   type: "warning" | "info" | "error"
-  category: "Waste" | "Appliance" | "Maintenance" | "Lent" | "Insurance"
+  category: "Waste" | "Appliance" | "Maintenance" | "Lent" | "Insurance" | "Contract"
   link?: string
   date?: string
+}
+
+export type Contract = {
+  id: string
+  providerName: string
+  accountId?: string
+  monthlyCost: number
+  yearlyCost?: number
+  category: "Utilities" | "Entertainment" | "Fitness" | "Software" | "Guilty Pleasure" | "Other"
+  lastUsedDate?: string
+  isTrial: boolean
+  trialEndDate?: string
+  nextBillingDate: string
+  notes?: string
 }
 
 export type Person = {
@@ -153,6 +221,54 @@ export type IdentityDocument = {
   physicalLocation?: string
   lostFoundGuide?: string
   emergencyContact?: string
+  notes?: string
+}
+
+export type Illness = {
+  id: string
+  personId: string
+  personName?: string
+  name: string
+  startDate: string
+  endDate?: string
+  notes?: string
+}
+
+export type Pet = {
+  id: string
+  name: string
+  species: "Dog" | "Cat" | "Bird" | "Rabbit" | "Fish" | "Other"
+  breed?: string
+  dateOfBirth?: string
+  microchipNumber?: string
+  color?: string
+  photoPath?: string
+  dietaryNeeds?: string
+  medications?: string
+  notes?: string
+}
+
+export type VetRecord = {
+  id: string
+  petId: string
+  petName?: string
+  date: string
+  vetName: string
+  description: string
+  cost?: number
+  nextVisit?: string
+  notes?: string
+}
+
+export type Vaccination = {
+  id: string
+  petId: string
+  petName?: string
+  name: string
+  date: string
+  nextDueDate?: string
+  vetName?: string
+  batchNumber?: string
   notes?: string
 }
 
@@ -200,4 +316,3 @@ export function getDocumentStatusLabel(status: "valid" | "expiring-soon" | "expi
     case "expired": return "International Fugitive"
   }
 }
-

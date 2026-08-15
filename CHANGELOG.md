@@ -1,3 +1,118 @@
+# [1.8.0-rc.11](https://github.com/Thomas-Mildner/Adulting.Exe/compare/v1.8.0-rc.10...v1.8.0-rc.11) (2026-04-12)
+
+
+### Bug Fixes
+
+* update packages to address security vulnerabilities ([4781a98](https://github.com/Thomas-Mildner/Adulting.Exe/commit/4781a98c5d87e33d29c6833f5e0b40215a9d6e8f))
+
+# [1.8.0-rc.10](https://github.com/Thomas-Mildner/Adulting.Exe/compare/v1.8.0-rc.9...v1.8.0-rc.10) (2026-04-12)
+
+
+### Bug Fixes
+
+* remove required from optional fields in onboarding, fix label translation key ([9279a99](https://github.com/Thomas-Mildner/Adulting.Exe/commit/9279a9976b81112245b8a9ab6c3b4c7069c7c46f))
+* use i18n translations for all hardcoded strings in onboarding wizard ([ee1c5c9](https://github.com/Thomas-Mildner/Adulting.Exe/commit/ee1c5c97ada56a1e5e795ccde367e10581ea3a9c))
+
+
+### Features
+
+* add onboarding wizard for new household setup ([f96d402](https://github.com/Thomas-Mildner/Adulting.Exe/commit/f96d40277f322eeb7ee365eadb39c36b3ef1544c))
+
+# [1.8.0-rc.9](https://github.com/Thomas-Mildner/Adulting.Exe/compare/v1.8.0-rc.8...v1.8.0-rc.9) (2026-04-12)
+
+
+### Bug Fixes
+
+* Add language toggle to webpage in docs ([5b6020d](https://github.com/Thomas-Mildner/Adulting.Exe/commit/5b6020d242858fb856ffeeae4a9752e52bdac0d1))
+* use captured previous state for error rollback in ModuleSettings ([ebbd3f1](https://github.com/Thomas-Mildner/Adulting.Exe/commit/ebbd3f12281bbbe8d388eb58533107920930e878))
+
+
+### Features
+
+* add module selection - enable/disable sidebar modules in settings ([5d1a01a](https://github.com/Thomas-Mildner/Adulting.Exe/commit/5d1a01ae457627336ccc4366ef317e6d942f3a57))
+
+# [1.8.0-rc.8](https://github.com/Thomas-Mildner/Adulting.Exe/compare/v1.8.0-rc.7...v1.8.0-rc.8) (2026-02-24)
+
+
+### Bug Fixes
+
+* Persist credentials during checkout in the build-and-deploy workflow ([515135c](https://github.com/Thomas-Mildner/Adulting.Exe/commit/515135c42194e014e4050be00bd394f9df597602))
+
+
+### Features
+
+* Add recurring contracts tracking module ([#26](https://github.com/Thomas-Mildner/Adulting.Exe/issues/26)) ([a53b600](https://github.com/Thomas-Mildner/Adulting.Exe/commit/a53b6007f6dbab850d028ddd34ce84b52fc7b391))
+
+# [1.8.0-rc.7](https://github.com/Thomas-Mildner/Adulting.Exe/compare/v1.8.0-rc.6...v1.8.0-rc.7) (2026-02-23)
+
+
+### Bug Fixes
+
+* **ci:** Remove '-rc' suffix from version output in beta releases ([0de0221](https://github.com/Thomas-Mildner/Adulting.Exe/commit/0de0221cd82bea5b147cd5016aaa62a92f07fdbb))
+* update Dockerfile to use lts-alpine node version for consistency ([cf2d781](https://github.com/Thomas-Mildner/Adulting.Exe/commit/cf2d781bedac923d2cf0b58bc3c65dcd557df10f))
+* update entrypoint script to deploy database migrations instead of pushing schema ([201c18c](https://github.com/Thomas-Mildner/Adulting.Exe/commit/201c18c23f143ee8a2192d72680eb4d79326719a))
+
+
+### Features
+
+* add GitHub Pages site (index.html) ([#33](https://github.com/Thomas-Mildner/Adulting.Exe/issues/33)) ([3d070c0](https://github.com/Thomas-Mildner/Adulting.Exe/commit/3d070c09b3a4fba173d3bb83895cb312a1c81908))
+* add index.html for home management dashboard ([65f5717](https://github.com/Thomas-Mildner/Adulting.Exe/commit/65f571775eed630735f2e472e27fc871eb556aee))
+
+# [1.8.0-rc.6](https://github.com/Thomas-Mildner/Adulting.Exe/compare/v1.8.0-rc.5...v1.8.0-rc.6) (2026-02-22)
+
+
+### Bug Fixes
+
+* **release:** add check for new release detection in semantic release step ([c68fc69](https://github.com/Thomas-Mildner/Adulting.Exe/commit/c68fc69ca1551eb226c94c44b7fa40e8752e9f29))
+
+# [1.8.0-rc.5](https://github.com/Thomas-Mildner/Adulting.Exe/compare/v1.8.0-rc.4...v1.8.0-rc.5) (2026-02-22)
+
+
+### Bug Fixes
+
+* **release:** add check for new release detection in semantic release step ([3ebc2e6](https://github.com/Thomas-Mildner/Adulting.Exe/commit/3ebc2e666d0f15fe2b9acb1a9818830beab71285))
+
+# [1.8.0-rc.4](https://github.com/Thomas-Mildner/Adulting.Exe/compare/v1.8.0-rc.3...v1.8.0-rc.4) (2026-02-22)
+
+
+### Bug Fixes
+
+* Trigger a new release version ([9709cef](https://github.com/Thomas-Mildner/Adulting.Exe/commit/9709cef4fe37ad58e16f66eaaab4984b0ef48d74))
+
+# [1.8.0-rc.3](https://github.com/Thomas-Mildner/Adulting.Exe/compare/v1.8.0-rc.2...v1.8.0-rc.3) (2026-02-22)
+
+
+### Bug Fixes
+
+* Fixed Database Schema while startup and add agents.md file ([789cb7d](https://github.com/Thomas-Mildner/Adulting.Exe/commit/789cb7de9715822a555dc5b1d568202eb299de7e))
+* **release:** enhance conditions for semantic release and beta image push ([21fe045](https://github.com/Thomas-Mildner/Adulting.Exe/commit/21fe0455047249368396fb3b330a2a9ace288c00))
+* **release:** update release output variables and add version check for semantic release ([b089690](https://github.com/Thomas-Mildner/Adulting.Exe/commit/b089690a90df685f9d9f6185e45108700cd54dd4))
+
+# [1.8.0-rc.2](https://github.com/Thomas-Mildner/Adulting.Exe/compare/v1.8.0-rc.1...v1.8.0-rc.2) (2026-02-22)
+
+
+### Bug Fixes
+
+* **ci:** changed dockerhub repo ([907910b](https://github.com/Thomas-Mildner/Adulting.Exe/commit/907910b5204eb49770d9bcabfc9b6d1d3fbbcf52))
+* conditionally render StatusBanner based on document length ([6bc2efa](https://github.com/Thomas-Mildner/Adulting.Exe/commit/6bc2efa2002f3d9f5424cdc88e2a273c26e34f7d))
+
+# [1.8.0-rc.1](https://github.com/Thomas-Mildner/Adulting.Exe/compare/v1.7.1...v1.8.0-rc.1) (2026-02-19)
+
+
+### Bug Fixes
+
+* internationalize all user-facing strings in documents components ([b2a2cf4](https://github.com/Thomas-Mildner/Adulting.Exe/commit/b2a2cf419830753fafa23173458c27dedaa19dc0))
+
+
+### Features
+
+* add database schema for Person and IdentityDocument models ([ee57e72](https://github.com/Thomas-Mildner/Adulting.Exe/commit/ee57e7263667fb8356af4f9b8154dd242e4f7f96))
+* add document tracking functionality with editing capabilities ([d34c6be](https://github.com/Thomas-Mildner/Adulting.Exe/commit/d34c6bee0113758108f565822dd74e6399d7bbbe))
+* add documents card to dashboard and expiry notifications ([2c19c22](https://github.com/Thomas-Mildner/Adulting.Exe/commit/2c19c22c514b86cf955445f8ae086af524cd601d))
+* add documents page with UI components and translations ([07d4fc4](https://github.com/Thomas-Mildner/Adulting.Exe/commit/07d4fc4282438a83b08e30a0b037f53952dcd3c4))
+* add proper Prisma migration for Person and IdentityDocument models ([6e26629](https://github.com/Thomas-Mildner/Adulting.Exe/commit/6e26629e8cf388e2c80cc2566b264a1b1e683922))
+* add staging release workflow with build, release, and Docker image steps ([419ff06](https://github.com/Thomas-Mildner/Adulting.Exe/commit/419ff06ab89788b9ac60177bf387fe7f2890837c))
+
 ## [1.7.1](https://github.com/Thomas-Mildner/Adulting.Exe/compare/v1.7.0...v1.7.1) (2026-02-17)
 
 

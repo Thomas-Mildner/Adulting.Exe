@@ -7,8 +7,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// ─── Appliance / Warranty Vault ─────────────────────────────────────────
-
 model Appliance {
   id           String   @id @default(cuid())
   name         String
@@ -16,93 +14,74 @@ model Appliance {
   purchaseDate DateTime
   warrantyEnd  DateTime
   boxLocation  String
-  status       String   // "protected" | "solo" | "zombie"
+  status       String
   brand        String
   price        Float
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  receiptPath  String?  // optional path to uploaded receipt/image
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 }
 
-// ─── Service Providers & History ────────────────────────────────────────
-
 model ServiceProvider {
-  id        String   @id @default(cuid())
+  id        String           @id @default(cuid())
   name      String
   specialty String
   phone     String
   email     String
   website   String?
   rating    Int
-
-  history  ServiceHistory[]
-  invoices Invoice[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
+  invoices  Invoice[]
+  history   ServiceHistory[]
 }
 
 model ServiceHistory {
-  id          String   @id @default(cuid())
+  id          String          @id @default(cuid())
   date        DateTime
   description String
   cost        Float
   taxRelevant Boolean
-
-  provider   ServiceProvider @relation(fields: [providerId], references: [id], onDelete: Cascade)
-  providerId String
-
-  invoiceId String?
-
-  createdAt DateTime @default(now())
+  providerId  String
+  invoiceId   String?
+  createdAt   DateTime        @default(now())
+  provider    ServiceProvider @relation(fields: [providerId], references: [id], onDelete: Cascade)
 }
 
-// ─── Invoices ───────────────────────────────────────────────────────────
-
 model Invoice {
-  id           String   @id @default(cuid())
+  id           String          @id @default(cuid())
   date         DateTime
   description  String
   amount       Float
   taxRelevant  Boolean
   fileName     String
   providerName String
-
-  provider   ServiceProvider @relation(fields: [providerId], references: [id], onDelete: Cascade)
-  providerId String
-
-  createdAt DateTime @default(now())
+  providerId   String
+  createdAt    DateTime        @default(now())
+  provider     ServiceProvider @relation(fields: [providerId], references: [id], onDelete: Cascade)
 }
-
-// ─── Knowledge Base / Documents ─────────────────────────────────────────
 
 model Document {
-  id          String  @id @default(cuid())
+  id          String   @id @default(cuid())
   title       String
-  category    String  // "Heating" | "Plumbing" | "Smart Home" | "Structural" | "General"
-  type        String  // "pdf" | "markdown"
+  category    String
+  type        String
   description String
   content     String?
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
-
-// ─── Maintenance Tasks ──────────────────────────────────────────────────
 
 model MaintenanceTask {
   id        String   @id @default(cuid())
   title     String
   dueDate   DateTime
   recurring String
-  priority  String   // "high" | "medium" | "low"
+  priority  String
   completed Boolean  @default(false)
-
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
-
-// ─── Lending / Lent Items ───────────────────────────────────────────────
 
 model LentItem {
   id             String   @id @default(cuid())
@@ -111,63 +90,51 @@ model LentItem {
   lentDate       DateTime
   expectedReturn DateTime
   trustLevel     Int
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
 }
 
-// ─── Utility / Meter Readings ───────────────────────────────────────────
-
 model MeterReading {
-  id          String @id @default(cuid())
-  month       String @unique
+  id          String   @id @default(cuid())
+  month       String   @unique
   power       Float
   water       Float
   heating     Float
-  powerCost   Float  @default(0)
-  waterCost   Float  @default(0)
-  heatingCost Float  @default(0)
-
-  createdAt DateTime @default(now())
+  powerCost   Float    @default(0)
+  waterCost   Float    @default(0)
+  heatingCost Float    @default(0)
+  createdAt   DateTime @default(now())
 }
 
-// ─── Wishlist / Projects ────────────────────────────────────────────────
-
 model WishlistProject {
-  id             String @id @default(cuid())
+  id             String   @id @default(cuid())
   title          String
   description    String
   estimatedCost  Float
   currentSavings Float
-  urgency        String // "nice-to-have" | "should-do" | "need-soon" | "falling-apart"
+  urgency        String
   category       String
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
 }
 
-// ─── Waste Calendar ───────────────────────────────────────────────────
-
 model WasteType {
-  id      String @id @default(cuid())
-  name    String // e.g., "Restmüll", "Bio", "Papier", "Gelber Sack"
-  color   String // tailwind color class or hex, e.g., "gray-700", "green-600"
-  icon    String // lucide icon name
-
-  pickups WastePickup[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id        String        @id @default(cuid())
+  name      String
+  color     String
+  icon      String
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+  pickups   WastePickup[]
 }
 
 model WastePickup {
-  id          String   @id @default(cuid())
+  id          String    @id @default(cuid())
   date        DateTime
-  wasteType   WasteType @relation(fields: [wasteTypeId], references: [id], onDelete: Cascade)
   wasteTypeId String
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  wasteType   WasteType @relation(fields: [wasteTypeId], references: [id], onDelete: Cascade)
 }
 
 // ─── Insurance Management ──────────────────────────────────────────────
@@ -194,22 +161,165 @@ model Insurance {
   updatedAt DateTime @updatedAt
 }
 
-// ─── App Configuration ────────────────────────────────────────────────
-
 model AppConfig {
-  id          String   @id @default("default") // Only one row
-  heatingType String   @default("Gas") // "Gas", "Oil", "Fernwärme", "Wärmepumpe", "Pellets"
+  id                       String   @id @default("default") // Only one row
+  heatingType              String   @default("Gas") // "Gas", "Oil", "Fernwärme", "Wärmepumpe", "Pellets"
+  onboardingCompleted      Boolean  @default(false)
+  disabledModules          String[] @default([]) // Module keys that are hidden from the sidebar
+  tutorialCompletedModules String[] @default([]) // Module keys whose tutorial has been seen
 
   updatedAt DateTime @updatedAt
 }
 
+model Car {
+  id                  String           @id @default(cuid())
+  name                String
+  brand               String
+  model               String
+  licensePlate        String
+  purchaseDate        DateTime
+  purchasePrice       Float
+  nextInspection      DateTime?
+  currentTireType     String           @default("summer")
+  tireStorageLocation String?
+  firstAidKitExpiry   DateTime?
+  createdAt           DateTime         @default(now())
+  updatedAt           DateTime         @updatedAt
+  documents           CarDocument[]
+  maintenanceLogs     CarMaintenance[]
+  fuelEntries         FuelEntry[]
+  tollEntries         TollEntry[]
+}
 
+model CarMaintenance {
+  id          String   @id @default(cuid())
+  date        DateTime
+  description String
+  cost        Float
+  mileage     Int?
+  category    String
+  carId       String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  car         Car      @relation(fields: [carId], references: [id], onDelete: Cascade)
+}
+
+model FuelEntry {
+  id            String   @id @default(cuid())
+  date          DateTime
+  liters        Float
+  pricePerLiter Float
+  totalCost     Float
+  mileage       Int?
+  fuelType      String   @default("diesel")
+  carId         String
+  createdAt     DateTime @default(now())
+  car           Car      @relation(fields: [carId], references: [id], onDelete: Cascade)
+}
+
+model TollEntry {
+  id        String   @id @default(cuid())
+  date      DateTime
+  cost      Float
+  route     String?
+  country   String?
+  carId     String
+  createdAt DateTime @default(now())
+  car       Car      @relation(fields: [carId], references: [id], onDelete: Cascade)
+}
+
+model CarDocument {
+  id                      String   @id @default(cuid())
+  title      String
+  category   String
+  fileName                String
+  uploadDate DateTime @default(now())
+  carId      String  
+
+  createdAt  DateTime @default(now())
+  car        Car      @relation(fields: [carId], references: [id], onDelete: Cascade)
+}
+
+
+
+// ─── Recurring Contracts / Subscriptions ──────────────────────────────
+
+model Contract {
+  id              String   @id @default(cuid())
+  providerName    String
+  accountId       String?
+  monthlyCost     Float
+  yearlyCost      Float?
+  category        String   // "Utilities", "Entertainment", "Fitness", "Software", "Guilty Pleasure"
+  lastUsedDate    DateTime?
+  isTrial         Boolean  @default(false)
+  trialEndDate    DateTime?
+  nextBillingDate DateTime
+  notes           String?
+
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
 
 // ─── Notification History ──────────────────────────────────────────────
 
 model NotificationRead {
   id        String   @id
   createdAt DateTime @default(now())
+}
+
+// ─── Pet Management Hub ──────────────────────────────────────────────────
+
+model Pet {
+  id              String    @id @default(cuid())
+  name            String
+  species         String    // "Dog", "Cat", "Bird", "Rabbit", "Fish", "Other"
+  breed           String?
+  dateOfBirth     DateTime?
+  microchipNumber String?
+  color           String?
+  photoPath       String?
+  dietaryNeeds    String?
+  medications     String?
+  notes           String?
+
+  vetRecords   VetRecord[]
+  vaccinations Vaccination[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model VetRecord {
+  id          String    @id @default(cuid())
+  date        DateTime
+  vetName     String
+  description String
+  cost        Float?
+  nextVisit   DateTime?
+  notes       String?
+
+  pet   Pet    @relation(fields: [petId], references: [id], onDelete: Cascade)
+  petId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Vaccination {
+  id          String    @id @default(cuid())
+  name        String
+  date        DateTime
+  nextDueDate DateTime?
+  vetName     String?
+  batchNumber String?
+  notes       String?
+
+  pet   Pet    @relation(fields: [petId], references: [id], onDelete: Cascade)
+  petId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 // ─── Identity Guard / Document Tracker ─────────────────────────────────
@@ -220,6 +330,7 @@ model Person {
   relation  String   // "Self", "Spouse", "Child", "Other"
   
   documents IdentityDocument[]
+  illnesses Illness[]
   
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -242,6 +353,20 @@ model IdentityDocument {
   person   Person @relation(fields: [personId], references: [id], onDelete: Cascade)
   personId String
   
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Illness {
+  id        String   @id @default(cuid())
+  name      String
+  startDate DateTime
+  endDate   DateTime?
+  notes     String?
+
+  person   Person @relation(fields: [personId], references: [id], onDelete: Cascade)
+  personId String
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
