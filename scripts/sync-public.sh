@@ -49,7 +49,7 @@ if [[ -z $(git status --porcelain) ]]; then
 fi
 
 # Commit-Nachricht vergeben (Standard: letzte Commit-Nachricht aus dem privaten Branch)
-LAST_MSG=$(git log -1 --pretty=%B | head -n 1)
+LAST_MSG=$(git log -1 --pretty=%B $CURRENT_BRANCH | head -n 1)
 COMMIT_MSG=${1:-"$LAST_MSG"}
 git commit -m "$COMMIT_MSG"
 
