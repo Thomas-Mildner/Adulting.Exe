@@ -15,7 +15,8 @@
     "documents": "Identity Guard",
     "pets": "Pet Hub",
     "sidebarStatus": "Status: House standing (for now)",
-    "illnesses": "Illness Tracker"
+    "illnesses": "Illness Tracker",
+    "meals": "Meal Planning"
   },
   "Dashboard": {
     "welcome": "Welcome back",
@@ -151,6 +152,10 @@
       "illnesses": {
         "title": "Illness Tracker",
         "desc": "Track illnesses per family member with yearly sick-day heatmaps."
+      },
+      "meals": {
+        "title": "Meal Planning",
+        "desc": "Manage your weekly meals with 7-meals."
       }
     }
   },
@@ -1570,5 +1575,12 @@
       "notes": "Notes",
       "notesPlaceholder": "Additional notes..."
     }
+  },
+  "Meals": {
+    "title": "Meal Planning",
+    "subtitle": "Plan your meals for the whole week.",
+    "description": "Discover 7-meals: The app that lets you create, manage, and share your meal plans with your household. Log in to get started.",
+    "openApp": "Open 7-meals",
+    "openAppSubtitle": "Opens in a new tab"
   }
 }
