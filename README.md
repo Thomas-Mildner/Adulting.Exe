@@ -103,6 +103,22 @@ Built for people who want to know exactly where the blender's original box is lo
 * **Searchable Content:** Quickly find the information you need
 * **Custom Entries:** Write and save your own how-to guides and notes
 
+### 🚗 Garage (The Money Pit)
+* **Vehicle Management:** Track cars, motorcycles, and other vehicles
+* **Maintenance & Repair Log:** Keep a detailed record of all mechanical repairs and part replacements
+* **Tire Changes:** Track seasonal tire swaps and tread depths
+* **Fuel & Cost Analytics:** Detailed cost analysis of fuel, insurance, and running costs
+
+### 📄 Contracts & Subscriptions
+* **Recurring Cost Tracker:** Monitor all subscriptions, memberships, and recurring contracts
+* **Billing Intervals:** Support for monthly, quarterly, and yearly payment cycles
+* **Trial Periods:** Mark trials to receive reminders before they auto-renew
+* **Burn Rate Analytics:** See exactly how much your subscriptions cost you each month
+
+### 🍽️ Meal Planning
+* **7-Meals Integration:** Seamlessly connect with the 7-meals app
+* **Weekly Planner:** Organize and structure your household's meals for the week
+* **Household Sharing:** Share meal plans with family members
 
 ### ⚙️ Settings & Customization
 * **Multi-Language Support:** Switch between multiple languages
