@@ -57,7 +57,7 @@ export function AppSidebar({ disabledModules = [] }: AppSidebarProps) {
   ];
 
   const allToolsNav = [
-    { title: t("insurance"), href: "/insurance", icon: Shield },
+    { key: "insurance", title: t("insurance"), href: "/insurance", icon: Shield },
     { key: "waste", title: t("waste"), href: "/waste", icon: CalendarDays },
     { key: "maintenance", title: t("maintenance"), href: "/maintenance", icon: ClipboardCheck },
     { key: "utilities", title: t("utilities"), href: "/utilities", icon: Gauge },

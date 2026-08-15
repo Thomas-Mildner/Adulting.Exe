@@ -157,6 +157,10 @@
       "meals": {
         "title": "Meal Planning",
         "desc": "Manage your weekly meals with 7-meals."
+      },
+      "insurance": {
+        "title": "Insurance",
+        "desc": "Manage your insurance policies and contracts."
       }
     }
   },

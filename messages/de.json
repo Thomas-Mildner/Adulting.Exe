@@ -157,6 +157,10 @@
       "meals": {
         "title": "Essensplanung",
         "desc": "Verwalte deine wöchentlichen Mahlzeiten mit 7-meals."
+      },
+      "insurance": {
+        "title": "Versicherungen",
+        "desc": "Verwalte deine Versicherungspolicen und Verträge."
       }
     }
   },
