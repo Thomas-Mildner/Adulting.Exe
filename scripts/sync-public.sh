@@ -48,8 +48,9 @@ if [[ -z $(git status --porcelain) ]]; then
   exit 0
 fi
 
-# Commit-Nachricht vergeben (Standard: "chore: sync <branch> to public repo")
-COMMIT_MSG=${1:-"chore: sync $CURRENT_BRANCH to public repo"}
+# Commit-Nachricht vergeben (Standard: letzte Commit-Nachricht aus dem privaten Branch)
+LAST_MSG=$(git log -1 --pretty=%B | head -n 1)
+COMMIT_MSG=${1:-"$LAST_MSG"}
 git commit -m "$COMMIT_MSG"
 
 # Zum öffentlichen Repository pushen (lokaler public-* Branch wird auf den regulären Namen gemappt)
