@@ -16,7 +16,8 @@
     "db:studio": "prisma studio",
     "db:generate": "prisma generate",
     "db:reset": "prisma db push --force-reset && prisma db seed",
-    "postinstall": "prisma generate"
+    "postinstall": "prisma generate",
+    "sync:public": "./scripts/sync-public.sh"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"
