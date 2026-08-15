@@ -30,6 +30,7 @@ const ALL_MODULES = [
   "pets",
   "illnesses",
   "garage",
+  "meals",
 ] as const;
 
 type ModuleKey = (typeof ALL_MODULES)[number];
