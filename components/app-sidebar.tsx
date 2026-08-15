@@ -21,6 +21,7 @@ import {
   PawPrint,
   Stethoscope,
   Utensils,
+  ListTodo,
 } from "lucide-react"
 
 import {
@@ -66,6 +67,7 @@ export function AppSidebar({ disabledModules = [] }: AppSidebarProps) {
     { key: "pets", title: t("pets"), href: "/pets", icon: PawPrint },
     { key: "illnesses", title: t("illnesses"), href: "/illnesses", icon: Stethoscope },
     { key: "meals", title: t("meals"), href: "/meals", icon: Utensils },
+    { key: "chores", title: t("chores"), href: "/chores", icon: ListTodo },
   ];
 
   const mainNav = allMainNav.filter((item) => !disabledModules.includes(item.key));
