@@ -153,13 +153,8 @@ importers:
         specifier: ^2.1.9
         version: 2.1.9(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
       recharts:
-<<<<<<< HEAD
-        specifier: ^2.15.0
-        version: 2.15.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
-=======
         specifier: 2.15.0
         version: 2.15.0(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
->>>>>>> dev
       sonner:
         specifier: ^1.7.4
         version: 1.7.4(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
