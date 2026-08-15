@@ -1960,3 +1960,83 @@ export async function deleteVaccination(id: string) {
   revalidatePath("/pets")
   revalidatePath("/")
 }
+
+// ─── Chore Tracker ──────────────────────────────────────────────────────────
+
+export async function getChores() {
+  return prisma.chore.findMany({
+    include: { assignee: true },
+    orderBy: { createdAt: "desc" },
+  })
+}
+
+export async function createChore(data: {
+  title: string
+  description?: string
+  intervalDays: number
+  points?: number
+  assigneeId?: string
+}) {
+  await prisma.chore.create({
+    data: {
+      title: data.title,
+      description: data.description || null,
+      intervalDays: data.intervalDays,
+      points: data.points ?? 1,
+      assigneeId: data.assigneeId || null,
+    },
+  })
+  revalidatePath("/chores")
+}
+
+export async function updateChore(id: string, data: Partial<{
+  title: string
+  description: string | null
+  intervalDays: number
+  points: number
+  assigneeId: string | null
+}>) {
+  await prisma.chore.update({
+    where: { id },
+    data,
+  })
+  revalidatePath("/chores")
+}
+
+export async function deleteChore(id: string) {
+  await prisma.chore.delete({ where: { id } })
+  revalidatePath("/chores")
+}
+
+export async function completeChore(choreId: string, personId?: string) {
+  const now = new Date()
+  await prisma.$transaction([
+    prisma.choreHistory.create({
+      data: {
+        choreId,
+        personId: personId || null,
+        doneAt: now,
+      },
+    }),
+    prisma.chore.update({
+      where: { id: choreId },
+      data: { lastDone: now },
+    }),
+  ])
+  revalidatePath("/chores")
+}
+
+export async function getChoreLeaderboard() {
+  const persons = await prisma.person.findMany()
+  const history = await prisma.choreHistory.findMany({
+    include: { chore: true },
+  })
+  
+  const leaderboard = persons.map((person) => {
+    const personHistory = history.filter((h) => h.personId === person.id)
+    const points = personHistory.reduce((acc, h) => acc + (h.chore?.points || 1), 0)
+    return { ...person, points }
+  })
+  
+  return leaderboard.sort((a, b) => b.points - a.points)
+}

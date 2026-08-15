@@ -16,7 +16,8 @@
     "pets": "Tier-Hub",
     "sidebarStatus": "Status: Haus steht (vorerst)",
     "illnesses": "Krankheitentracker",
-    "meals": "Essensplanung"
+    "meals": "Essensplanung",
+    "chores": "Putzplan"
   },
   "Dashboard": {
     "welcome": "Willkommen zurück",
@@ -156,6 +157,10 @@
       "meals": {
         "title": "Essensplanung",
         "desc": "Verwalte deine wöchentlichen Mahlzeiten mit 7-meals."
+      },
+      "chores": {
+        "title": "Putzplan",
+        "desc": "Tracke Haushaltsaufgaben und sammle Punkte."
       }
     }
   },
@@ -1582,5 +1587,33 @@
     "description": "Entdecke 7-meals: Die App, mit der du deine Essenspläne erstellen, verwalten und mit deinem Haushalt teilen kannst. Melde dich an, um loszulegen.",
     "openApp": "7-meals öffnen",
     "openAppSubtitle": "Öffnet in einem neuen Tab"
+  },
+  "Chores": {
+    "title": "Putzplan & Kehrwoche",
+    "subtitle": "Weil der Boden sich nicht von alleine saugt.",
+    "newChore": "Neue Aufgabe",
+    "createChore": "Aufgabe erstellen",
+    "choreName": "Aufgabenname",
+    "choreNamePlaceholder": "z.B. Müll rausbringen",
+    "interval": "Intervall (Tage)",
+    "points": "Punkte",
+    "assignee": "Zuständig",
+    "unassigned": "Nicht zugewiesen",
+    "completeBtn": "Erledigen",
+    "completed": "Erledigt",
+    "leaderboard": "Bestenliste",
+    "leaderboardDesc": "Wer schmeißt den Haushalt?",
+    "pointsSuffix": "Punkte",
+    "dueIn": "Fällig in {days} Tagen",
+    "dueToday": "Heute fällig!",
+    "overdue": "Seit {days} Tagen überfällig",
+    "noChores": "Keine Aufgaben vorhanden. Füge eine hinzu!",
+    "neverDone": "Noch nie erledigt",
+    "toastCreated": "Aufgabe erstellt",
+    "toastCreateError": "Fehler beim Erstellen der Aufgabe",
+    "toastCompleted": "Aufgabe erledigt!",
+    "toastCompleteError": "Fehler beim Erledigen der Aufgabe",
+    "toastDeleted": "Aufgabe gelöscht",
+    "toastDeleteError": "Fehler beim Löschen der Aufgabe"
   }
 }

@@ -18,9 +18,6 @@
     "db:reset": "prisma db push --force-reset && prisma db seed",
     "postinstall": "prisma generate"
   },
-  "prisma": {
-    "seed": "tsx prisma/seed.ts"
-  },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
     "@prisma/client": "^6.19.3",
