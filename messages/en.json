@@ -16,7 +16,8 @@
     "pets": "Pet Hub",
     "sidebarStatus": "Status: House standing (for now)",
     "illnesses": "Illness Tracker",
-    "meals": "Meal Planning"
+    "meals": "Meal Planning",
+    "chores": "Chore Tracker"
   },
   "Dashboard": {
     "welcome": "Welcome back",
@@ -156,6 +157,10 @@
       "meals": {
         "title": "Meal Planning",
         "desc": "Manage your weekly meals with 7-meals."
+      },
+      "chores": {
+        "title": "Chore Tracker",
+        "desc": "Track household chores and earn points."
       }
     }
   },
@@ -1582,5 +1587,33 @@
     "description": "Discover 7-meals: The app that lets you create, manage, and share your meal plans with your household. Log in to get started.",
     "openApp": "Open 7-meals",
     "openAppSubtitle": "Opens in a new tab"
+  },
+  "Chores": {
+    "title": "Chore Tracker",
+    "subtitle": "Because the floor doesn't vacuum itself.",
+    "newChore": "New Chore",
+    "createChore": "Create Chore",
+    "choreName": "Chore Name",
+    "choreNamePlaceholder": "e.g. Take out the trash",
+    "interval": "Interval (Days)",
+    "points": "Points",
+    "assignee": "Assignee",
+    "unassigned": "Unassigned",
+    "completeBtn": "Complete",
+    "completed": "Completed",
+    "leaderboard": "Leaderboard",
+    "leaderboardDesc": "Who's carrying the team?",
+    "pointsSuffix": "pts",
+    "dueIn": "Due in {days} days",
+    "dueToday": "Due today!",
+    "overdue": "Overdue by {days} days",
+    "noChores": "No chores found. Add one!",
+    "neverDone": "Never done",
+    "toastCreated": "Chore created",
+    "toastCreateError": "Failed to create chore",
+    "toastCompleted": "Chore completed!",
+    "toastCompleteError": "Error completing chore",
+    "toastDeleted": "Chore deleted",
+    "toastDeleteError": "Error deleting chore"
   }
 }
