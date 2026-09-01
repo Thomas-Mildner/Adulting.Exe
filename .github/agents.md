@@ -1,58 +1,42 @@
-# Agent Instructions for Adulting.Exe
+# Agent Instructions for Adulting.exe
 
-## Project Overview
+> **Note:** The comprehensive, canonical agent instructions for all AI coding agents (Antigravity, Copilot, Cursor, Claude Code, etc.) are maintained in [AGENTS.md](../AGENTS.md).
 
-Adulting.Exe is a Next.js household management app using TypeScript, Prisma ORM with PostgreSQL, Tailwind CSS, shadcn/ui, and next-intl for i18n (locales: `de`, `en`).
+---
 
-## Database & Prisma Rules
+## Quick Reference
 
-### MANDATORY: Create Migrations for Schema Changes
+### Tech Stack
+Next.js 16 (App Router), React 19, TypeScript (strict), Tailwind CSS, shadcn/ui, Prisma ORM (PostgreSQL), next-intl (`de`, `en`), pnpm.
 
-When adding, modifying, or removing models/fields in `prisma/schema.prisma`, you **MUST** create a Prisma migration:
+### 1. Prisma & Database
+- **MANDATORY:** Always create migrations for schema changes:
+  ```bash
+  npx prisma migrate dev --name <descriptive-name>
+  ```
+- **Never use `db push` for committed changes.**
+- Run `pnpm db:generate` after modifying `prisma/schema.prisma`.
+- Update `prisma/seed.ts`, `lib/data.ts`, and `lib/actions.ts` when schema changes occur.
 
-```bash
-npx prisma migrate dev --name <descriptive-name>
-```
+### 2. Routing & i18n
+- All UI pages live under `app/[locale]/` — never directly under `app/`.
+- Always use `import { Link, redirect, usePathname, useRouter } from "@/lib/navigation"`.
+- Never use `next/link` or `next/navigation` directly.
+- Add user-facing translation strings to **both** `messages/de.json` and `messages/en.json`.
 
-**Migration naming convention:** Use lowercase kebab-case describing the change, e.g.:
-- `add-insurance-model`
-- `add-notes-to-appliance`
-- `rename-status-field`
-- `add-notification-preferences`
+### 3. Components & Styling
+- Primitives in `components/ui/` (shadcn/ui).
+- Feature components in `components/<feature>/`.
+- Server Components by default; `"use client"` only where needed.
+- Styling with Tailwind CSS and `cn()` from `@/lib/utils`.
 
-### Never use `db push` for schema changes
+### 4. Available Commands
+- `pnpm dev` — Start development server
+- `pnpm build` — Production build & type-checking
+- `pnpm db:generate` — Regenerate Prisma Client
+- `pnpm db:seed` — Seed sample data
+- `pnpm db:studio` — Prisma Studio
+- `pnpm db:reset` — Reset database & reseed
+- `docker compose up -d postgres` — Run local PostgreSQL
 
-`prisma db push` is for development prototyping only. All schema changes that will be committed must go through `prisma migrate dev` to generate a proper migration file in `prisma/migrations/`.
-
-### After schema changes
-
-1. Run `npx prisma migrate dev --name <name>` to create the migration
-2. Run `npx prisma generate` to regenerate the Prisma Client
-3. Update `prisma/seed.ts` if new models need seed data
-4. Update `lib/data.ts` and `lib/actions.ts` if new data access or server actions are needed
-
-## Routing & i18n
-
-- All pages live under `app/[locale]/` — never create pages directly under `app/`
-- Use `import { Link } from "@/lib/navigation"` instead of `next/link`
-- Use `useTranslations("Namespace")` from `next-intl` for all user-facing strings
-- Add translations to both `messages/en.json` and `messages/de.json`
-
-## Component Conventions
-
-- UI primitives are in `components/ui/` (shadcn/ui)
-- Feature components go in `components/<feature>/` (e.g., `components/insurance/`)
-- Use TypeScript for all files
-- Keep components small and focused
-
-## Available Scripts
-
-| Command | Description |
-| --- | --- |
-| `pnpm dev` | Start development server |
-| `pnpm build` | Production build |
-| `pnpm db:generate` | Regenerate Prisma Client |
-| `pnpm db:push` | Push schema (dev prototyping only) |
-| `pnpm db:seed` | Seed database with sample data |
-| `pnpm db:studio` | Open Prisma Studio |
-| `pnpm db:reset` | Reset DB and re-seed |
+See [AGENTS.md](../AGENTS.md) for full details.
