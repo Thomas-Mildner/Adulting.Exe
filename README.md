@@ -89,6 +89,17 @@ Built for people who want to know exactly where the blender's original box is lo
 * **Yearly Sick-Day Summary:** Count how many unique days each family member was sick in a given year
 * **GitHub-Style Activity View:** Visualize sick days in a yearly heatmap grouped by person
 
+### 🛟 Emergency Hub (Digitaler Notfallordner)
+* **Official Hotlines & ICE Contacts:** Pre-populated official emergency numbers (112, 110, 116 117, poison control, card blocking) with one-click dialing and primary ICE contacts
+* **Advance Directives & Vault:** Checklist and tracking for living wills, healthcare proxies, custody orders, and testaments with mandatory physical location of the original, ZVR registry numbers, notary contacts, and optional digital scans
+* **Medical Emergency Dossier:** Blood types, highlighted allergy warnings, regular medication schedules, pre-existing conditions, implants/aids, insurance & tax IDs, and doctor contacts for every family member
+* **Crisis Care & Key Holders:** Organized contingency plans for childcare, pet feeding, and key holders in emergencies
+* **Safe Financials & Digital Estate:** Security-first financial summary (last 4 IBAN digits only), powers of attorney, and secure access instructions for master passwords and PINs
+* **Personal Wishes:** Burial preferences, pre-need funeral contracts, and personal bereavement notification lists
+* **Home Emergency Shut-offs:** Exact locations and operating instructions for main water shut-off valve, electrical breaker box, and gas meter
+* **DIN A4 Printable Fridge Sheet:** One-click print-optimized summary for emergency responders, hospital stays, or physical emergency binders
+* **Annual Review Protocol:** Visual status badges and 1-click review logging ensuring vital emergency documents never go outdated
+
 ### 🎯 Wishlist & Project Planning
 * **Future Projects:** Plan home improvement projects with descriptions and goals
 * **Budget Tracking:** Set estimated costs and track current savings progress
@@ -219,11 +230,6 @@ The default `DATABASE_URL` is:
 postgresql://adulting:adulting_secret@localhost:5432/adulting_exe?schema=public
 ```
 
-**Optional:** If the repository is private, add a GitHub token to fetch release information:
-```bash
-GITHUB_TOKEN=ghp_your_token_here
-```
-You can create a Personal Access Token at [GitHub Settings > Developer settings > Personal access tokens](https://github.com/settings/tokens) with `repo` scope.
 
 ### 5. Push database schema & seed data
 
@@ -449,15 +455,40 @@ The current version is displayed in the app sidebar.
 
 ## 📝 Roadmap
 
-Future features and improvements:
+### 🚀 Upcoming Planned Modules
+
+#### 💊 1. Smart Medicine Cabinet & First Aid (Smarte Hausapotheke)
+* **Expiry Date Tracker:** Automated warnings before pain relievers, fever syrups, eye drops, or ointments expire.
+* **Symptom & Indication Directory:** Quickly locate medications by ailment (*"What do we have against stomach cramps, insect bites, or fever?"*).
+* **DIN 13164 Car First-Aid Kit Inspector:** Tracks vehicle first-aid kit expiration dates to ensure TÜV and traffic inspection compliance.
+* **Leaflet & Dosage Archive:** Store digital packaging leaflets (PDF) and quick dosage guidelines for children and adults.
+
+#### 🛋️ 2. Home Inventory & Insurance Value (Hausrat-Inventar & Versicherungswert)
+* **Room-by-Room Inventory:** Catalog high-value furniture, electronics, jewelry, bikes, musical instruments, and collections with photos, purchase receipts, and serial numbers.
+* **Replacement Value Calculator:** Automatically aggregates total household inventory value to identify and prevent dangerous underinsurance (*Unterversicherung*).
+* **1-Click Insurance Claim Export:** Export a complete, formatted claim dossier with photos and proof of purchase in the event of burglary, fire, storm, or water damage.
+
+#### 🧾 3. Tax Helper & Household Services Deductions (§ 35a EStG)
+* **Contractor & Services Tax Deduction:** Automatically extracts and aggregates eligible labor and travel costs from the `Services` module for direct income tax reduction (20% under § 35a German Income Tax Act / *Handwerkerbonus*).
+* **Utility Bill Splitting (Nebenkostenabrechnung):** Capture and allocate tax-deductible items (caretaker, building cleaning, winter services, garden maintenance).
+* **Year-End Tax Report:** 1-click pre-formatted summary and proof list ready for tax software (WISO Steuer, Taxfix, Smartsteuer) or Elster.
+
+#### 🔄 4. Subscription Radar & Renewal Watchdog (Abo- & Kündigungswächter)
+* **Digital Micro-Subscription Audit:** Specialized tracking for streaming services, cloud storage, software licenses, gym memberships, BahnCards, and news subscriptions.
+* **Burn Rate & Cost Insights:** Instant visibility into monthly and annual recurring digital costs (*"I'm spending 94 €/month on recurring digital services?!"*).
+* **Countdown & Notice Period Radar:** Automated countdown and proactive reminders before contract renewal locks you into another cycle.
+* **1-Click Cancellation Templates:** Generate legally compliant cancellation notices adhering to modern consumer protection and button-solution laws.
+
+---
+
+### 🛠️ General Platform Improvements
 
 - [ ] QR Code Generator for moving boxes and quick inventory access
-- [ ] Automatic PDF Export for home insurance audits
 - [ ] Smart Meter API integrations for automated utility tracking
-- [ ] Notification system for upcoming maintenance and warranty expirations
-- [ ] Mobile app (iOS/Android) companion
-- [ ] Import/Export functionality for data portability
-- [ ] Multi-household support for property managers
+- [ ] Notification system for upcoming maintenance, warranty, and document expirations
+- [ ] Mobile app (iOS/Android companion)
+- [ ] Import/Export functionality for full data portability
+- [ ] Multi-household support for property managers or multiple homes
 
 ---
 
