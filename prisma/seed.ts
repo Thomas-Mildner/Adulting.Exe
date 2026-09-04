@@ -18,6 +18,7 @@ async function main() {
   await prisma.wastePickup.deleteMany()
   await prisma.wasteType.deleteMany()
   await prisma.contract.deleteMany()
+  await prisma.insurance.deleteMany()
   await prisma.identityDocument.deleteMany()
   await prisma.person.deleteMany()
 
@@ -209,7 +210,7 @@ async function main() {
   const now = new Date()
   const trialEndingSoon = new Date(now)
   trialEndingSoon.setHours(now.getHours() + 36) // Within 48 hours for trial-trap alert
-  
+
   await prisma.contract.createMany({
     data: [
       {
@@ -301,20 +302,121 @@ async function main() {
   })
   console.log("  ✅ Contracts seeded")
 
+  // ─── Insurance ──────────────────────────────────────────────────────────
+  const now = new Date()
+  const threeMonthsFromNow = new Date(now)
+  threeMonthsFromNow.setMonth(now.getMonth() + 3)
+  const sixMonthsFromNow = new Date(now)
+  sixMonthsFromNow.setMonth(now.getMonth() + 6)
+  const oneYearFromNow = new Date(now)
+  oneYearFromNow.setFullYear(now.getFullYear() + 1)
+  const twoMonthsAgo = new Date(now)
+  twoMonthsAgo.setMonth(now.getMonth() - 2)
+
+  await prisma.insurance.createMany({
+    data: [
+      {
+        id: "ins-1",
+        providerName: "Allianz",
+        policyType: "Private Liability",
+        policyNumber: "HV-2023-45678",
+        premiumAmount: 85.50,
+        paymentFrequency: "Annually",
+        deductible: 0,
+        startDate: new Date("2023-03-01"),
+        cancellationDeadline: threeMonthsFromNow,
+        claimsHotline: "+49 800 4 100 100",
+        agentEmail: "service@allianz.de",
+        notes: "Deckungssumme: 10 Mio. €",
+      },
+      {
+        id: "ins-2",
+        providerName: "HUK-Coburg",
+        policyType: "Car Insurance",
+        policyNumber: "KFZ-2024-12345",
+        premiumAmount: 89.90,
+        paymentFrequency: "Monthly",
+        deductible: 500,
+        startDate: new Date("2024-01-01"),
+        cancellationDeadline: oneYearFromNow,
+        claimsHotline: "+49 9561 96 0",
+        agentEmail: "schadenservice@huk-coburg.de",
+        beneficiary: "",
+        notes: "Vollkasko, SF-Klasse 12",
+      },
+      {
+        id: "ins-3",
+        providerName: "Debeka",
+        policyType: "Home Contents",
+        policyNumber: "HR-2022-98765",
+        premiumAmount: 198.00,
+        paymentFrequency: "Annually",
+        deductible: 150,
+        startDate: new Date("2022-05-15"),
+        cancellationDeadline: twoMonthsAgo, // Expired - should show as "Yolo"
+        claimsHotline: "+49 261 498 1200",
+        agentEmail: "service@debeka.de",
+        notes: "Versicherungssumme: 65.000 €, inkl. Fahrraddiebstahl",
+      },
+      {
+        id: "ins-4",
+        providerName: "ERGO",
+        policyType: "Legal Protection",
+        policyNumber: "RS-2023-54321",
+        premiumAmount: 32.50,
+        paymentFrequency: "Monthly",
+        deductible: 0,
+        startDate: new Date("2023-09-01"),
+        cancellationDeadline: sixMonthsFromNow,
+        claimsHotline: "+49 211 477 5000",
+        agentEmail: "rechtsschutz@ergo.de",
+        notes: "Privat-, Berufs- und Verkehrsrechtsschutz",
+      },
+      {
+        id: "ins-5",
+        providerName: "WWK",
+        policyType: "Disability",
+        policyNumber: "BU-2021-11111",
+        premiumAmount: 125.00,
+        paymentFrequency: "Monthly",
+        deductible: 0,
+        startDate: new Date("2021-01-01"),
+        cancellationDeadline: oneYearFromNow,
+        claimsHotline: "+49 89 5114 0",
+        agentEmail: "service@wwk.de",
+        beneficiary: "Lebenspartner",
+        notes: "Monatliche BU-Rente: 2.000 €",
+      },
+      {
+        id: "ins-6",
+        providerName: "Petplan",
+        policyType: "Pet Insurance",
+        policyNumber: "TK-2024-77777",
+        premiumAmount: 45.90,
+        paymentFrequency: "Monthly",
+        deductible: 100,
+        startDate: new Date("2024-06-01"),
+        cancellationDeadline: sixMonthsFromNow,
+        claimsHotline: "+49 40 8080 7474",
+        agentEmail: "schadenservice@petplan.de",
+        notes: "Für Hund: Max, 5 Jahre, Labrador",
+      },
+    ],
+  })
+  console.log("  ✅ Insurance policies seeded")
+
   // ─── Persons & Identity Documents ───────────────────────────────────────
 
-  const sixMonthsFromNow = new Date(today)
   sixMonthsFromNow.setMonth(sixMonthsFromNow.getMonth() + 6)
 
   const currentYear = today.getFullYear()
   const previousYear = currentYear - 1
-  
-  const oneYearFromNow = new Date(today)
+
   oneYearFromNow.setFullYear(oneYearFromNow.getFullYear() + 1)
-  
+
   const twoYearsFromNow = new Date(today)
   twoYearsFromNow.setFullYear(twoYearsFromNow.getFullYear() + 2)
-  
+
   const threeMonthsAgo = new Date(today)
   threeMonthsAgo.setMonth(threeMonthsAgo.getMonth() - 3)
 

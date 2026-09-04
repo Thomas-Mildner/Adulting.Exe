@@ -31,6 +31,7 @@ const ALL_MODULES = [
   "illnesses",
   "garage",
   "meals",
+  "insurance",
 ] as const;
 
 type ModuleKey = (typeof ALL_MODULES)[number];

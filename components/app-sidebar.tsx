@@ -17,6 +17,7 @@ import {
   CalendarDays,
   Car,
   CreditCard,
+  Shield,
   FileCheck,
   PawPrint,
   Stethoscope,
@@ -56,6 +57,7 @@ export function AppSidebar({ disabledModules = [] }: AppSidebarProps) {
   ];
 
   const allToolsNav = [
+    { key: "insurance", title: t("insurance"), href: "/insurance", icon: Shield },
     { key: "waste", title: t("waste"), href: "/waste", icon: CalendarDays },
     { key: "maintenance", title: t("maintenance"), href: "/maintenance", icon: ClipboardCheck },
     { key: "utilities", title: t("utilities"), href: "/utilities", icon: Gauge },

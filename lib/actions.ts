@@ -23,6 +23,7 @@ import type {
   CarDocument,
   Contract,
   Notification,
+  Insurance,
   Person,
   IdentityDocument,
   Illness,
@@ -716,6 +717,89 @@ export async function updateHeatingType(type: string) {
   revalidatePath("/utilities")
 }
 
+// ─── Insurance ──────────────────────────────────────────────────────────
+
+export async function getInsurances(): Promise<Insurance[]> {
+  // @ts-ignore
+  const rows = await prisma.insurance.findMany({ orderBy: { startDate: "desc" } })
+  return rows.map((r: PrismaInsurance) => ({
+    id: r.id,
+    providerName: r.providerName,
+    policyType: r.policyType as Insurance["policyType"],
+    customPolicyType: r.customPolicyType || undefined,
+    policyNumber: r.policyNumber,
+    premiumAmount: r.premiumAmount,
+    paymentFrequency: r.paymentFrequency as Insurance["paymentFrequency"],
+    deductible: r.deductible,
+    startDate: dateToStr(r.startDate),
+    endDate: r.endDate ? dateToStr(r.endDate) : undefined,
+    cancellationDeadline: dateToStr(r.cancellationDeadline),
+    documentPath: r.documentPath || undefined,
+    claimsHotline: r.claimsHotline,
+    agentEmail: r.agentEmail,
+    beneficiary: r.beneficiary || undefined,
+    notes: r.notes || undefined,
+  }))
+}
+
+export async function createInsurance(data: Omit<Insurance, "id">) {
+  // @ts-ignore
+  await prisma.insurance.create({
+    data: {
+      providerName: data.providerName,
+      policyType: data.policyType,
+      customPolicyType: data.customPolicyType || null,
+      policyNumber: data.policyNumber,
+      premiumAmount: data.premiumAmount,
+      paymentFrequency: data.paymentFrequency,
+      deductible: data.deductible,
+      startDate: new Date(data.startDate),
+      endDate: data.endDate ? new Date(data.endDate) : null,
+      cancellationDeadline: new Date(data.cancellationDeadline),
+      documentPath: data.documentPath || null,
+      claimsHotline: data.claimsHotline,
+      agentEmail: data.agentEmail,
+      beneficiary: data.beneficiary || null,
+      notes: data.notes || null,
+    },
+  })
+  revalidatePath("/insurance")
+  revalidatePath("/")
+}
+
+export async function updateInsurance(id: string, data: Partial<Omit<Insurance, "id">>) {
+  // @ts-ignore
+  await prisma.insurance.update({
+    where: { id },
+    data: {
+      ...(data.providerName !== undefined && { providerName: data.providerName }),
+      ...(data.policyType !== undefined && { policyType: data.policyType }),
+      ...(data.customPolicyType !== undefined && { customPolicyType: data.customPolicyType || null }),
+      ...(data.policyNumber !== undefined && { policyNumber: data.policyNumber }),
+      ...(data.premiumAmount !== undefined && { premiumAmount: data.premiumAmount }),
+      ...(data.paymentFrequency !== undefined && { paymentFrequency: data.paymentFrequency }),
+      ...(data.deductible !== undefined && { deductible: data.deductible }),
+      ...(data.startDate !== undefined && { startDate: new Date(data.startDate) }),
+      ...(data.endDate !== undefined && { endDate: data.endDate ? new Date(data.endDate) : null }),
+      ...(data.cancellationDeadline !== undefined && { cancellationDeadline: new Date(data.cancellationDeadline) }),
+      ...(data.documentPath !== undefined && { documentPath: data.documentPath || null }),
+      ...(data.claimsHotline !== undefined && { claimsHotline: data.claimsHotline }),
+      ...(data.agentEmail !== undefined && { agentEmail: data.agentEmail }),
+      ...(data.beneficiary !== undefined && { beneficiary: data.beneficiary || null }),
+      ...(data.notes !== undefined && { notes: data.notes || null }),
+    },
+  })
+  revalidatePath("/insurance")
+  revalidatePath("/")
+}
+
+export async function deleteInsurance(id: string) {
+  // @ts-ignore
+  await prisma.insurance.delete({ where: { id } })
+  revalidatePath("/insurance")
+  revalidatePath("/")
+}
+
 export async function completeOnboarding() {
   await prisma.appConfig.upsert({
     where: { id: "default" },
@@ -1385,7 +1469,7 @@ export async function getNotifications(): Promise<Notification[]> {
   // 5. Identity Documents (Expired or Expiring Soon)
   const sixMonthsFromNow = new Date(today)
   sixMonthsFromNow.setMonth(sixMonthsFromNow.getMonth() + 6)
-  
+
   const expiringDocuments = await prisma.identityDocument.findMany({
     where: {
       expiryDate: { lte: sixMonthsFromNow }
@@ -1398,7 +1482,7 @@ export async function getNotifications(): Promise<Notification[]> {
     const daysRemaining = Math.ceil(
       (doc.expiryDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24)
     )
-    
+
     if (daysRemaining < 0) {
       // Expired
       notifications.push({
@@ -1482,7 +1566,7 @@ export async function getPersons(): Promise<(Person & { documentCount: number })
       }
     }
   })
-  
+
   return persons.map((p) => ({
     id: p.id,
     name: p.name,
@@ -1540,7 +1624,7 @@ export async function getIdentityDocuments(personId?: string): Promise<IdentityD
     include: { person: true },
     orderBy: { expiryDate: "asc" },
   })
-  
+
   return docs.map((d) => ({
     id: d.id,
     personId: d.personId,
@@ -1565,7 +1649,7 @@ export async function getIdentityDocument(id: string): Promise<IdentityDocument 
     include: { person: true },
   })
   if (!d) return null
-  
+
   return {
     id: d.id,
     personId: d.personId,
@@ -1636,7 +1720,7 @@ export async function deleteIdentityDocument(id: string) {
 export async function getExpiringDocuments(daysThreshold: number = 180): Promise<IdentityDocument[]> {
   const thresholdDate = new Date()
   thresholdDate.setDate(thresholdDate.getDate() + daysThreshold)
-  
+
   const docs = await prisma.identityDocument.findMany({
     where: {
       expiryDate: { lte: thresholdDate }
@@ -1644,7 +1728,7 @@ export async function getExpiringDocuments(daysThreshold: number = 180): Promise
     include: { person: true },
     orderBy: { expiryDate: "asc" },
   })
-  
+
   return docs.map((d) => ({
     id: d.id,
     personId: d.personId,
