@@ -1,5 +1,5 @@
 # ---- Base ----
-FROM node:22-alpine AS base
+FROM node:24-alpine AS base
 
 # Use corepack (built into Node) instead of global npm install
 RUN corepack enable && corepack prepare pnpm@9.15.9 --activate
@@ -36,7 +36,7 @@ RUN printf '{"name":"prisma-cli","private":true}' > package.json \
     && pnpm add prisma@6.19.3
 
 # ---- Runner ----
-FROM node:22-alpine AS runner
+FROM node:24-alpine AS runner
 WORKDIR /app
 
 ENV NODE_ENV=production

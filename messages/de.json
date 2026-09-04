@@ -15,7 +15,8 @@
     "documents": "Ausweiskontrolle",
     "pets": "Tier-Hub",
     "sidebarStatus": "Status: Haus steht (vorerst)",
-    "illnesses": "Krankheitentracker"
+    "illnesses": "Krankheitentracker",
+    "meals": "Essensplanung"
   },
   "Dashboard": {
     "welcome": "Willkommen zurück",
@@ -145,12 +146,16 @@
         "desc": "Tierprofile, Tierarztbesuche und Impfpläne verwalten."
       },
       "garage": {
-        "title": "Car Pit",
+        "title": "Garage",
         "desc": "Fahrzeugverwaltung, Reifenwechsel und KFZ-Kosten."
       },
       "illnesses": {
         "title": "Krankheitentracker",
         "desc": "Erfasse Krankheiten pro Familienmitglied mit jährlichen Sick-Day-Heatmaps."
+      },
+      "meals": {
+        "title": "Essensplanung",
+        "desc": "Verwalte deine wöchentlichen Mahlzeiten mit 7-meals."
       }
     }
   },
@@ -1570,5 +1575,12 @@
       "notes": "Hinweise",
       "notesPlaceholder": "Weitere Hinweise..."
     }
+  },
+  "Meals": {
+    "title": "Essensplanung",
+    "subtitle": "Plane deine Mahlzeiten für die ganze Woche.",
+    "description": "Entdecke 7-meals: Die App, mit der du deine Essenspläne erstellen, verwalten und mit deinem Haushalt teilen kannst. Melde dich an, um loszulegen.",
+    "openApp": "7-meals öffnen",
+    "openAppSubtitle": "Öffnet in einem neuen Tab"
   }
 }
