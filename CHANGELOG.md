@@ -1,3 +1,29 @@
+# [1.10.0-rc.1](https://github.com/Thomas-Mildner/Adulting.Exe/compare/v1.9.0...v1.10.0-rc.1) (2026-09-04)
+
+
+### Bug Fixes
+
+* **changelog:** cleaning up repo urls ([ffcae3b](https://github.com/Thomas-Mildner/Adulting.Exe/commit/ffcae3b6d361b0dd071c7d7f0b2d7ee7cd3bc0e2))
+* **ci:** resolve staging release pipeline and align version baseline ([f635fef](https://github.com/Thomas-Mildner/Adulting.Exe/commit/f635fefb45e7990856a1c1fd63110e02a0524ccb))
+* **ci:** update packages ([7f5dc96](https://github.com/Thomas-Mildner/Adulting.Exe/commit/7f5dc96d3621f4f8b13297115ada9b7397b3718f))
+* **i18n:** correct german translation for garage module title in settings ([d81f7ef](https://github.com/Thomas-Mildner/Adulting.Exe/commit/d81f7ef3b3ea4c6cda693e2775fcf4ee46a48be0))
+* **package:** add missing commas in package.json for proper JSON formatting ([c75c0da](https://github.com/Thomas-Mildner/Adulting.Exe/commit/c75c0dad647b0b4e252ab89c35064bbde473c042))
+* **scripts:** read commit message from correct branch in sync script ([034908b](https://github.com/Thomas-Mildner/Adulting.Exe/commit/034908b44fa04d1a6bf0d83cc75da254109c50c0))
+* **sync:** correct public branch naming in sync script ([b28a88f](https://github.com/Thomas-Mildner/Adulting.Exe/commit/b28a88f415b8e261e54cd12ec60a29fc6d71784f))
+* **sync:** correct public branch naming in sync script ([c0ed265](https://github.com/Thomas-Mildner/Adulting.Exe/commit/c0ed2659cc8950e79f7ecfcac6dfda16a9736922))
+* update packages ([cf95d4c](https://github.com/Thomas-Mildner/Adulting.Exe/commit/cf95d4c5c1ee578bafca480d6d5bd29fed2a2fd0))
+* upgrade Next.js to 16.3.1 and migrate pnpm overrides to workspace configuration ([20a9d46](https://github.com/Thomas-Mildner/Adulting.Exe/commit/20a9d46b9f1edd5e2752eee59df87bd00c7ac086))
+* upgrade Node.js to 24 and @types/node to 24.13.3, ([ece2a7b](https://github.com/Thomas-Mildner/Adulting.Exe/commit/ece2a7bcfc7d45bd053bf628dd4ad3b6bf6e392f))
+* use latest private commit message for public sync ([a95c066](https://github.com/Thomas-Mildner/Adulting.Exe/commit/a95c0663431df51d04fe63bd2407b0666b2b584f))
+* **workflow:** update condition to check for job failure in nightly build ([cd155a8](https://github.com/Thomas-Mildner/Adulting.Exe/commit/cd155a8048d2a1f7508941e4918ee5dd074a4177))
+
+
+### Features
+
+* add Emergency Hub section with essential emergency contacts and documents management ([2f71837](https://github.com/Thomas-Mildner/Adulting.Exe/commit/2f718376d4891e9bf5377dd4dc0f7d369e8074c6))
+* add initial agent and Copilot instructions, and establish guidelines in AGENTS.md ([dc7a535](https://github.com/Thomas-Mildner/Adulting.Exe/commit/dc7a535cc03dd75998091646ccc9262f7183483f))
+* add meal planning module with integration for 7-meals ([9370998](https://github.com/Thomas-Mildner/Adulting.Exe/commit/9370998bd731dd62c7aac8b28ec140c5545607fb))
+
 # [1.8.0-rc.21](https://github.com/Thomas-Mildner/Adulting.Exe/compare/v1.8.0-rc.20...v1.8.0-rc.21) (2026-07-19)
 
 
