@@ -71,7 +71,7 @@ jobs:
     if: |
       always() &&
       !cancelled() &&
-      !failed() &&
+      !failure() &&
       (github.event_name != 'schedule' || needs.nightly-merge.outputs.has_changes == 'true')
 
     permissions:
