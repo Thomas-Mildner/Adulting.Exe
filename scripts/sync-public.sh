@@ -10,7 +10,7 @@ if [[ "$CURRENT_BRANCH" != "dev" && "$CURRENT_BRANCH" != "staging" && "$CURRENT_
   exit 1
 fi
 
-PUBLIC_BRANCH="public-$CURRENT_BRANCH"
+PUBLIC_BRANCH="$CURRENT_BRANCH"
 
 echo "🔄 Synchronisiere '$CURRENT_BRANCH' in das öffentliche Repository..."
 
