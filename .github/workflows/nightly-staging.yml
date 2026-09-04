@@ -70,7 +70,9 @@ jobs:
     needs: nightly-merge
     if: |
       always() &&
-      github.event_name != 'schedule'
+      !cancelled() &&
+      !failed() &&
+      (github.event_name != 'schedule' || needs.nightly-merge.outputs.has_changes == 'true')
 
     permissions:
       contents: read
@@ -116,10 +118,19 @@ jobs:
     name: Semantic Release (RC)
     runs-on: ubuntu-latest
     needs: build
-    if: github.repository == 'Thomas-Mildner/Adulting.Exe' && always() && needs.build.result == 'success'
+    if: |
+      always() &&
+      !cancelled() &&
+      needs.build.result == 'success' &&
+      (github.repository == 'Thomas-Mildner/Adulting.Exe' || github.repository == 'Thomas-Mildner/Adulting.Exe-Privat')
     outputs:
       released: ${{ steps.check.outputs.released }}
       version: ${{ steps.check.outputs.version }}
+
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
 
     steps:
       - name: Checkout code
@@ -127,7 +138,10 @@ jobs:
         with:
           ref: staging
           fetch-depth: 0
-          token: ${{ secrets.GITHUB_TOKEN }}
+          persist-credentials: true
+
+      - name: Ensure branch is checked out
+        run: git checkout staging || git checkout -b staging
 
       - name: Setup Node.js
         uses: actions/setup-node@v6
@@ -157,23 +171,15 @@ jobs:
       - name: Check release result
         id: check
         run: |
-          git fetch --tags
-          LATEST_TAG=$(git tag --sort=-v:refname | grep -m1 'rc\.')
+          AFTER=$(node -p "require('./package.json').version")
           BEFORE="${{ steps.before.outputs.version }}"
-          if [ -n "$LATEST_TAG" ]; then
-            VERSION="${LATEST_TAG#v}"
-            echo "Latest RC tag: $LATEST_TAG (version: $VERSION), before: $BEFORE"
-            if [ "$VERSION" != "$BEFORE" ]; then
-              echo "New release detected: $VERSION"
-              echo "released=true" >> $GITHUB_OUTPUT
-              echo "version=$VERSION" >> $GITHUB_OUTPUT
-            else
-              echo "No new release (version unchanged: $BEFORE)"
-              echo "released=false" >> $GITHUB_OUTPUT
-              echo "version=$BEFORE" >> $GITHUB_OUTPUT
-            fi
+          echo "Version before: $BEFORE, version after: $AFTER"
+          if [ "$AFTER" != "$BEFORE" ]; then
+            echo "New release detected: $AFTER"
+            echo "released=true" >> $GITHUB_OUTPUT
+            echo "version=$AFTER" >> $GITHUB_OUTPUT
           else
-            echo "No RC tags found"
+            echo "No new release (version unchanged: $BEFORE)"
             echo "released=false" >> $GITHUB_OUTPUT
             echo "version=$BEFORE" >> $GITHUB_OUTPUT
           fi
@@ -183,11 +189,12 @@ jobs:
     runs-on: ubuntu-latest
     needs: [build, release]
     if: |
-      github.repository == 'Thomas-Mildner/Adulting.Exe' &&
       always() &&
+      !cancelled() &&
       needs.build.result == 'success' &&
       needs.release.result == 'success' &&
-      needs.release.outputs.released == 'true'
+      needs.release.outputs.released == 'true' &&
+      (github.repository == 'Thomas-Mildner/Adulting.Exe' || github.repository == 'Thomas-Mildner/Adulting.Exe-Privat')
 
     permissions:
       contents: read
