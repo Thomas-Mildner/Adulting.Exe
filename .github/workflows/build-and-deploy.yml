@@ -29,8 +29,6 @@ jobs:
 
       - name: Install pnpm
         uses: pnpm/action-setup@v5
-        with:
-          version: 8
 
       - name: Get pnpm store directory
         shell: bash
@@ -82,8 +80,6 @@ jobs:
 
       - name: Install pnpm
         uses: pnpm/action-setup@v5
-        with:
-          version: 8
 
       - name: Install dependencies
         run: pnpm install --no-frozen-lockfile
