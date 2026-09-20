@@ -1,3 +1,10 @@
+# [1.10.0-rc.2](https://github.com/Thomas-Mildner/Adulting.Exe/compare/v1.10.0-rc.1...v1.10.0-rc.2) (2026-09-20)
+
+
+### Features
+
+* add data import and export API endpoints and UI support ([59d338c](https://github.com/Thomas-Mildner/Adulting.Exe/commit/59d338c5a48b713e2733e625e465f697f69f36a8))
+
 # [1.10.0-rc.1](https://github.com/Thomas-Mildner/Adulting.Exe/compare/v1.9.0...v1.10.0-rc.1) (2026-09-04)
 
 
