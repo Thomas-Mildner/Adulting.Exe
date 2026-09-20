@@ -1,4 +1,4 @@
-name: Staging Pipeline
+Name: Staging Pipeline
 
 on:
   push:
@@ -78,6 +78,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
+        with:
+          ref: staging
 
       - name: Setup Node.js
         uses: actions/setup-node@v6
@@ -124,6 +126,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v6
         with:
+          ref: staging
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
 
@@ -148,6 +151,8 @@ jobs:
         id: semrel
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REF: refs/heads/staging
+          GITHUB_REF_NAME: staging
           GIT_AUTHOR_NAME: github-actions[bot]
           GIT_AUTHOR_EMAIL: github-actions[bot]@users.noreply.github.com
           GIT_COMMITTER_NAME: github-actions[bot]
@@ -227,3 +232,4 @@ jobs:
           platforms: linux/amd64,linux/arm64
           build-args: |
             APP_VERSION=${{ needs.release.outputs.version }}
+            
