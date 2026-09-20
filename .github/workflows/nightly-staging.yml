@@ -1,4 +1,4 @@
-Name: Staging Pipeline
+name: Staging Pipeline
 
 on:
   push:
