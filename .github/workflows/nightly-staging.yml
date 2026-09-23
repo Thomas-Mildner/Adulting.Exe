@@ -31,7 +31,7 @@ jobs:
 
     steps:
       - name: Checkout staging
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           ref: staging
           fetch-depth: 0
@@ -79,7 +79,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           ref: staging
 
@@ -133,7 +133,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           ref: staging
           fetch-depth: 0
@@ -203,7 +203,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
           ref: v${{ needs.release.outputs.version }}
