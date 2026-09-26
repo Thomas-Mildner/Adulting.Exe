@@ -1,3 +1,10 @@
+# [1.10.0-rc.3](https://github.com/Thomas-Mildner/Adulting.Exe/compare/v1.10.0-rc.2...v1.10.0-rc.3) (2026-09-26)
+
+
+### Bug Fixes
+
+* **ci:** update packages ([910efe2](https://github.com/Thomas-Mildner/Adulting.Exe/commit/910efe283c51b314495e3452d3585a681d7144bf))
+
 # [1.10.0-rc.2](https://github.com/Thomas-Mildner/Adulting.Exe/compare/v1.10.0-rc.1...v1.10.0-rc.2) (2026-09-20)
 
 
