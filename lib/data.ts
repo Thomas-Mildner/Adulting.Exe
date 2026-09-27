@@ -290,8 +290,8 @@ export function getWarrantyPercent(purchase: string, expiry: string): number {
   return Math.max(0, Math.min(100, 100 - (elapsed / total) * 100))
 }
 
-export function formatCurrency(amount: number): string {
-  return new Intl.NumberFormat("de-DE", { style: "currency", currency: "EUR" }).format(amount)
+export function formatCurrency(amount: number, locale = "de-DE", currency = "EUR"): string {
+  return new Intl.NumberFormat(locale, { style: "currency", currency }).format(amount)
 }
 
 export function getDocumentStatus(expiryDate: string): "valid" | "expiring-soon" | "expired" {

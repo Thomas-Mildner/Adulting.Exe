@@ -219,6 +219,18 @@
     "expired": "Abgelaufen",
     "daysRemaining": "{days}T übrig"
   },
+  "WasteCard": {
+    "title": "Müllabfuhr",
+    "subtitle": "Die Tonne wartet nicht auf dich",
+    "emptyTitle": "Müllkalender",
+    "emptySubtitle": "Keine anstehenden Abholungen",
+    "emptyMessage": "Alle Tonnen sind geleert (hoffentlich).",
+    "manageDates": "Termine verwalten",
+    "viewCalendar": "Vollständigen Kalender ansehen",
+    "today": "Heute",
+    "tomorrow": "Morgen",
+    "inDays": "In {days} Tagen"
+  },
   "EnergyCard": {
     "title": "Ressourcenfresser",
     "noData": "Noch keine Zählerstände vorhanden",
@@ -315,6 +327,12 @@
       "protected": "Unter Schutz",
       "solo": "Auf sich allein gestellt",
       "zombie": "Zombie-Modus"
+    },
+    "detail": {
+      "subtitle": "Details zu deinem {brand}-Gerät.",
+      "backToVault": "Zurück zum Tresor",
+      "qrScanPrompt": "Scanne diesen Code, um direkt hierher zu gelangen.",
+      "unknown": "Unbekannt"
     },
     "create": {
       "button": "Neuer Eintrag",

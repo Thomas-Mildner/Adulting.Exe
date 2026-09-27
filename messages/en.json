@@ -219,6 +219,18 @@
     "expired": "Expired",
     "daysRemaining": "{days}d remaining"
   },
+  "WasteCard": {
+    "title": "Waste Collection",
+    "subtitle": "The bin waits for no one",
+    "emptyTitle": "Waste Calendar",
+    "emptySubtitle": "No upcoming collections",
+    "emptyMessage": "All bins are emptied (hopefully).",
+    "manageDates": "Manage pickups",
+    "viewCalendar": "View full calendar",
+    "today": "Today",
+    "tomorrow": "Tomorrow",
+    "inDays": "In {days} days"
+  },
   "EnergyCard": {
     "title": "Resource Guzzler",
     "noData": "No meter readings yet",
@@ -315,6 +327,12 @@
       "protected": "Protected",
       "solo": "On its own",
       "zombie": "Zombie Mode"
+    },
+    "detail": {
+      "subtitle": "Details for your {brand} device.",
+      "backToVault": "Back to Vault",
+      "qrScanPrompt": "Scan this code to jump directly here.",
+      "unknown": "Unknown"
     },
     "create": {
       "button": "New Entry",

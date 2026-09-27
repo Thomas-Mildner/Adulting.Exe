@@ -49,7 +49,8 @@ RUN addgroup --system --gid 1001 nodejs && \
     adduser --system --uid 1001 nextjs
 
 # Public assets (cacheable, no sensitive data)
-COPY --from=builder /app/public ./public
+COPY --from=builder --chown=nextjs:nodejs /app/public ./public
+RUN mkdir -p /app/public/uploads && chown -R nextjs:nodejs /app/public
 
 # Standalone server + static files
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./

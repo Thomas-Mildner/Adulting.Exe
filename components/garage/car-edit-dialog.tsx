@@ -23,6 +23,7 @@ import {
 } from "@/components/ui/select"
 import { updateCar, deleteCar } from "@/lib/actions"
 import type { Car } from "@/lib/data"
+import { useRouter } from "@/lib/navigation"
 import { Trash2 } from "lucide-react"
 
 export function CarEditDialog({
@@ -70,13 +71,15 @@ export function CarEditDialog({
         })
     }
 
+    const router = useRouter()
+
     const handleDelete = () => {
         if (confirm(t("delete.description"))) {
             startTransition(async () => {
                 await deleteCar(car.id)
                 setOpen(false)
-                // Redirect or handle deletion success (usually navigating back to garage list)
-                window.location.reload()
+                onSuccess()
+                router.refresh()
             })
         }
     }

@@ -1,7 +1,8 @@
 "use server"
 
-import { writeFile } from "fs/promises"
-import { join } from "path"
+import { writeFile, mkdir } from "fs/promises"
+import { join, extname, basename } from "path"
+import { randomUUID } from "crypto"
 
 import { prisma } from "@/lib/prisma"
 import { revalidatePath } from "next/cache"
@@ -1070,32 +1071,53 @@ export async function deleteCarDocument(id: string) {
   revalidatePath("/garage")
 }
 
-export async function uploadCarDocument(formData: FormData) {
-  const file = formData.get("file") as File
-  const carId = formData.get("carId") as string
-  const title = formData.get("title") as string
-  const category = formData.get("category") as string
+const MAX_UPLOAD_SIZE = 10 * 1024 * 1024 // 10 MB
+const ALLOWED_UPLOAD_EXTENSIONS = new Set([".jpg", ".jpeg", ".png", ".webp", ".gif", ".pdf"])
 
-  if (!file) throw new Error("No file uploaded")
+export async function uploadCarDocument(formData: FormData) {
+  const file = formData.get("file") as File | null
+  const carId = formData.get("carId") as string | null
+  const title = (formData.get("title") as string | null) || ""
+  const category = (formData.get("category") as string | null) || "other"
+
+  if (!file || typeof (file as any).arrayBuffer !== "function") {
+    throw new Error("No file uploaded")
+  }
+  if (!carId) {
+    throw new Error("Car ID is required")
+  }
+  if (file.size > MAX_UPLOAD_SIZE) {
+    throw new Error("File too large. Maximum size is 10 MB.")
+  }
+
+  const rawExt = extname(file.name).toLowerCase()
+  if (!ALLOWED_UPLOAD_EXTENSIONS.has(rawExt)) {
+    throw new Error("Invalid file type. Only images (JPEG, PNG, WebP, GIF) and PDFs are allowed.")
+  }
 
   const bytes = await file.arrayBuffer()
   const buffer = Buffer.from(bytes)
 
-  const fileName = `${Date.now()}-${file.name}`
-  const path = join(process.cwd(), "public/uploads", fileName)
+  const sanitizedBase = basename(file.name, rawExt).replace(/[^a-zA-Z0-9_-]/g, "_").slice(0, 50)
+  const uniqueFileName = `${Date.now()}-${randomUUID().slice(0, 8)}-${sanitizedBase || "doc"}${rawExt}`
 
-  await writeFile(path, buffer)
+  const uploadDir = join(process.cwd(), "public", "uploads")
+  await mkdir(uploadDir, { recursive: true })
+  const destinationPath = join(uploadDir, uniqueFileName)
 
-  await prisma.carDocument.create({
+  await writeFile(destinationPath, buffer)
+
+  const doc = await prisma.carDocument.create({
     data: {
       carId,
-      title,
+      title: title || sanitizedBase || "Car Document",
       category,
-      fileName,
+      fileName: uniqueFileName,
       uploadDate: new Date(),
     },
   })
   revalidatePath("/garage")
+  return { success: true, data: doc }
 }
 
 
@@ -1167,8 +1189,8 @@ export async function getContract(id: string): Promise<Contract | null> {
   }
 }
 
-export async function createContract(data: Omit<Contract, "id">) {
-  await prisma.contract.create({
+export async function createContract(data: Omit<Contract, "id">): Promise<Contract> {
+  const r = await prisma.contract.create({
     data: {
       providerName: data.providerName,
       accountId: data.accountId || null,
@@ -1184,6 +1206,19 @@ export async function createContract(data: Omit<Contract, "id">) {
   })
   revalidatePath("/contracts")
   revalidatePath("/")
+  return {
+    id: r.id,
+    providerName: r.providerName,
+    accountId: r.accountId || undefined,
+    monthlyCost: r.monthlyCost,
+    yearlyCost: r.yearlyCost || undefined,
+    category: r.category as Contract["category"],
+    lastUsedDate: r.lastUsedDate ? dateToStr(r.lastUsedDate) : undefined,
+    isTrial: r.isTrial,
+    trialEndDate: r.trialEndDate ? dateToStr(r.trialEndDate) : undefined,
+    nextBillingDate: dateToStr(r.nextBillingDate),
+    notes: r.notes || undefined,
+  }
 }
 
 export async function updateContract(id: string, data: Partial<Omit<Contract, "id">>) {

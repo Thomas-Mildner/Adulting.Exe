@@ -36,7 +36,7 @@ import { createAppliance, updateAppliance, deleteAppliance } from "@/lib/actions
 import { useMemo, useState, useTransition, useRef } from "react"
 
 // Only allow paths from our own uploads directory to prevent XSS
-const SAFE_RECEIPT_PATH = /^\/uploads\/vault\/[a-zA-Z0-9_-]+\.[a-zA-Z]{3,4}$/
+const SAFE_RECEIPT_PATH = /^\/uploads\/(vault\/)?[a-zA-Z0-9._-]+\.[a-zA-Z]{3,4}(\?.*)?$/
 
 function isSafeReceiptPath(v: string): boolean {
   return SAFE_RECEIPT_PATH.test(v)

@@ -13,9 +13,6 @@ const packageJson = JSON.parse(readFileSync(join(__dirname, 'package.json'), 'ut
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'standalone',
-  typescript: {
-    ignoreBuildErrors: true,
-  },
   images: {
     unoptimized: true,
   },
