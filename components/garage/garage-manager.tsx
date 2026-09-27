@@ -7,13 +7,27 @@ import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Plus } from "lucide-react"
 import type { Car } from "@/lib/data"
+import { getCars } from "@/lib/actions"
+import { useRouter } from "@/lib/navigation"
 import { CarOverview } from "./car-overview"
 import { CarFormDialog } from "./car-form-dialog"
 
 export function GarageManager({ initialCars }: { initialCars: Car[] }) {
   const [cars, setCars] = useState(initialCars)
   const [createDialogOpen, setCreateDialogOpen] = useState(false)
+  const router = useRouter()
   const t = useTranslations("Garage")
+
+  const handleRefresh = async () => {
+    try {
+      const refreshed = await getCars()
+      setCars(refreshed)
+      router.refresh()
+    } catch (e) {
+      console.error("Failed to refresh cars:", e)
+      router.refresh()
+    }
+  }
 
   if (cars.length === 0) {
     return (
@@ -28,10 +42,7 @@ export function GarageManager({ initialCars }: { initialCars: Car[] }) {
                 {t("addCar")}
               </Button>
             }
-            onSuccess={() => {
-              // Refresh cars list - in a real app this would refetch from server
-              window.location.reload()
-            }}
+            onSuccess={handleRefresh}
           />
         </div>
       </div>
@@ -52,9 +63,7 @@ export function GarageManager({ initialCars }: { initialCars: Car[] }) {
               {t("addCar")}
             </Button>
           }
-          onSuccess={() => {
-            window.location.reload()
-          }}
+          onSuccess={handleRefresh}
         />
       </div>
 

@@ -6,6 +6,21 @@ async function main() {
   console.log("🌱 Seeding database...")
 
   // Clean existing data
+  await prisma.vetRecord.deleteMany()
+  await prisma.vaccination.deleteMany()
+  await prisma.pet.deleteMany()
+
+  await prisma.carDocument.deleteMany()
+  await prisma.tollEntry.deleteMany()
+  await prisma.fuelEntry.deleteMany()
+  await prisma.carMaintenance.deleteMany()
+  await prisma.car.deleteMany()
+
+  await prisma.insurance.deleteMany()
+  await prisma.illness.deleteMany()
+  await prisma.identityDocument.deleteMany()
+  await prisma.person.deleteMany()
+
   await prisma.serviceHistory.deleteMany()
   await prisma.invoice.deleteMany()
   await prisma.serviceProvider.deleteMany()
@@ -18,8 +33,6 @@ async function main() {
   await prisma.wastePickup.deleteMany()
   await prisma.wasteType.deleteMany()
   await prisma.contract.deleteMany()
-  await prisma.identityDocument.deleteMany()
-  await prisma.person.deleteMany()
 
   // ─── Appliances ─────────────────────────────────────────────────────────
   await prisma.appliance.createMany({
@@ -472,6 +485,152 @@ async function main() {
 
   console.log("  ✅ Persons & identity documents seeded")
   console.log("  ✅ Illness tracker data seeded")
+
+  // ─── Cars ────────────────────────────────────────────────────────────────
+  await prisma.car.create({
+    data: {
+      id: "car-1",
+      name: "Family Wagon",
+      brand: "Volkswagen",
+      model: "Golf 7 Variant",
+      licensePlate: "WOB-AD 2024",
+      purchaseDate: new Date("2021-04-15"),
+      purchasePrice: 18500,
+      nextInspection: new Date("2025-04-15"),
+      currentTireType: "summer",
+      tireStorageLocation: "Garage, Back Wall",
+      firstAidKitExpiry: new Date("2026-08-01"),
+      maintenanceLogs: {
+        create: [
+          {
+            id: "cm-1",
+            date: new Date("2024-05-10"),
+            description: "Oil change & inspection",
+            cost: 280,
+            mileage: 65000,
+            category: "oil_change",
+          },
+          {
+            id: "cm-2",
+            date: new Date("2024-10-18"),
+            description: "New front brake pads",
+            cost: 320,
+            mileage: 72000,
+            category: "repair",
+          },
+        ],
+      },
+      fuelEntries: {
+        create: [
+          {
+            id: "fe-1",
+            date: new Date("2025-01-12"),
+            liters: 45.5,
+            pricePerLiter: 1.72,
+            totalCost: 78.26,
+            mileage: 74200,
+            fuelType: "diesel",
+          },
+          {
+            id: "fe-2",
+            date: new Date("2025-02-05"),
+            liters: 48.0,
+            pricePerLiter: 1.69,
+            totalCost: 81.12,
+            mileage: 74950,
+            fuelType: "diesel",
+          },
+        ],
+      },
+      tollEntries: {
+        create: [
+          {
+            id: "te-1",
+            date: new Date("2024-07-20"),
+            cost: 11.5,
+            route: "Tauernautobahn (A10)",
+            country: "Austria",
+          },
+        ],
+      },
+    },
+  })
+  console.log("  ✅ Cars seeded")
+
+  // ─── Pets ────────────────────────────────────────────────────────────────
+  await prisma.pet.create({
+    data: {
+      id: "pet-1",
+      name: "Luna",
+      species: "Cat",
+      breed: "British Shorthair",
+      dateOfBirth: new Date("2022-05-10"),
+      microchipNumber: "276098108123456",
+      color: "Blue-Grey",
+      dietaryNeeds: "Grain-free wet food only",
+      notes: "Loves sleeping on the warm radiator.",
+      vetRecords: {
+        create: [
+          {
+            id: "vr-1",
+            date: new Date("2024-06-12"),
+            vetName: "Dr. Kleintier",
+            description: "Annual health check & dental check",
+            cost: 85,
+            notes: "Healthy teeth and ideal weight.",
+          },
+        ],
+      },
+      vaccinations: {
+        create: [
+          {
+            id: "vac-1",
+            name: "Feline Calicivirus & Herpesvirus",
+            date: new Date("2024-06-12"),
+            nextDueDate: new Date("2025-06-12"),
+            vetName: "Dr. Kleintier",
+            batchNumber: "VAC-2024-098",
+          },
+        ],
+      },
+    },
+  })
+  console.log("  ✅ Pets seeded")
+
+  // ─── Insurance ──────────────────────────────────────────────────────────
+  await prisma.insurance.createMany({
+    data: [
+      {
+        id: "ins-1",
+        providerName: "HUK-Coburg",
+        policyType: "Private Liability",
+        policyNumber: "PHV-99887766",
+        premiumAmount: 68.5,
+        paymentFrequency: "Annually",
+        deductible: 0,
+        startDate: new Date("2020-01-01"),
+        cancellationDeadline: new Date("2025-09-30"),
+        claimsHotline: "+49 800 2153153",
+        agentEmail: "service@huk-coburg.de",
+        notes: "Family coverage included.",
+      },
+      {
+        id: "ins-2",
+        providerName: "Allianz",
+        policyType: "Home Contents",
+        policyNumber: "HR-11223344",
+        premiumAmount: 145.0,
+        paymentFrequency: "Annually",
+        deductible: 150,
+        startDate: new Date("2022-03-01"),
+        cancellationDeadline: new Date("2025-11-30"),
+        claimsHotline: "+49 800 1122334",
+        agentEmail: "hausrat@allianz.de",
+        notes: "Includes bicycle theft protection up to 2000 EUR.",
+      },
+    ],
+  })
+  console.log("  ✅ Insurances seeded")
 
   console.log("🎉 Seeding complete!")
 }

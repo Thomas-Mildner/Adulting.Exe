@@ -23,6 +23,8 @@ import {
 } from "@/components/ui/select"
 import { uploadCarDocument } from "@/lib/actions"
 
+import { toast } from "sonner"
+
 export function DocumentUploadDialog({
     carId,
     trigger,
@@ -54,10 +56,11 @@ export function DocumentUploadDialog({
                 setOpen(false)
                 setTitle("")
                 setCategory("registration")
+                toast.success("Dokument erfolgreich hochgeladen")
                 onSuccess()
-            } catch (error) {
+            } catch (error: any) {
                 console.error("Failed to upload document", error)
-                // TODO: Show error toast
+                toast.error(error?.message || "Fehler beim Hochladen")
             }
         })
     }

@@ -36,6 +36,8 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { getDaysRemaining, formatCurrency, type Contract } from "@/lib/data";
 import { createContract, updateContract, deleteContract, generateContractCancellationLetter } from "@/lib/actions";
+import { useRouter } from "@/lib/navigation";
+import { toast } from "sonner";
 import { Plus, Pencil, Trash2, AlertTriangle, FileText, TrendingDown, CreditCard } from "lucide-react";
 
 const CATEGORIES = ["Utilities", "Entertainment", "Fitness", "Software", "Guilty Pleasure", "Other"] as const;
@@ -85,6 +87,7 @@ export function ContractsManager({ contracts: initialContracts }: { contracts: C
   const [selectedContract, setSelectedContract] = useState<Contract | null>(null);
   const [cancellationLetter, setCancellationLetter] = useState("");
   const [categoryFilter, setCategoryFilter] = useState<string>("all");
+  const router = useRouter();
   const t = useTranslations("Contracts");
 
   // Form state
@@ -129,22 +132,29 @@ export function ContractsManager({ contracts: initialContracts }: { contracts: C
     if (!providerName || !monthlyCost || !nextBillingDate) return;
 
     startTransition(async () => {
-      const newContract: Omit<Contract, "id"> = {
-        providerName,
-        accountId: accountId || undefined,
-        monthlyCost: parseFloat(monthlyCost),
-        yearlyCost: yearlyCost ? parseFloat(yearlyCost) : undefined,
-        category,
-        lastUsedDate: lastUsedDate || undefined,
-        isTrial,
-        trialEndDate: trialEndDate || undefined,
-        nextBillingDate,
-        notes: notes || undefined,
-      };
+      try {
+        const newContract: Omit<Contract, "id"> = {
+          providerName,
+          accountId: accountId || undefined,
+          monthlyCost: parseFloat(monthlyCost),
+          yearlyCost: yearlyCost ? parseFloat(yearlyCost) : undefined,
+          category,
+          lastUsedDate: lastUsedDate || undefined,
+          isTrial,
+          trialEndDate: trialEndDate || undefined,
+          nextBillingDate,
+          notes: notes || undefined,
+        };
 
-      await createContract(newContract);
-      // Reload contracts from server to get the actual ID
-      window.location.reload();
+        const created = await createContract(newContract);
+        setContracts((prev) => [...prev, created]);
+        resetForm();
+        setOpen(false);
+        toast.success("Vertrag erfolgreich angelegt");
+        router.refresh();
+      } catch (err: any) {
+        toast.error(err?.message || "Fehler beim Anlegen des Vertrags");
+      }
     });
   };
 
@@ -152,24 +162,30 @@ export function ContractsManager({ contracts: initialContracts }: { contracts: C
     if (!selectedContract || !providerName || !monthlyCost || !nextBillingDate) return;
 
     startTransition(async () => {
-      const updated: Partial<Omit<Contract, "id">> = {
-        providerName,
-        accountId: accountId || undefined,
-        monthlyCost: parseFloat(monthlyCost),
-        yearlyCost: yearlyCost ? parseFloat(yearlyCost) : undefined,
-        category,
-        lastUsedDate: lastUsedDate || undefined,
-        isTrial,
-        trialEndDate: trialEndDate || undefined,
-        nextBillingDate,
-        notes: notes || undefined,
-      };
+      try {
+        const updated: Partial<Omit<Contract, "id">> = {
+          providerName,
+          accountId: accountId || undefined,
+          monthlyCost: parseFloat(monthlyCost),
+          yearlyCost: yearlyCost ? parseFloat(yearlyCost) : undefined,
+          category,
+          lastUsedDate: lastUsedDate || undefined,
+          isTrial,
+          trialEndDate: trialEndDate || undefined,
+          nextBillingDate,
+          notes: notes || undefined,
+        };
 
-      await updateContract(selectedContract.id, updated);
-      setContracts(contracts.map((c) => (c.id === selectedContract.id ? { ...c, ...updated } : c)));
-      resetForm();
-      setSelectedContract(null);
-      setEditOpen(false);
+        await updateContract(selectedContract.id, updated);
+        setContracts(contracts.map((c) => (c.id === selectedContract.id ? { ...c, ...updated } : c)));
+        resetForm();
+        setSelectedContract(null);
+        setEditOpen(false);
+        toast.success("Vertrag aktualisiert");
+        router.refresh();
+      } catch (err: any) {
+        toast.error(err?.message || "Fehler beim Aktualisieren");
+      }
     });
   };
 
@@ -177,10 +193,16 @@ export function ContractsManager({ contracts: initialContracts }: { contracts: C
     if (!selectedContract) return;
 
     startTransition(async () => {
-      await deleteContract(selectedContract.id);
-      setContracts(contracts.filter((c) => c.id !== selectedContract.id));
-      setSelectedContract(null);
-      setDeleteOpen(false);
+      try {
+        await deleteContract(selectedContract.id);
+        setContracts(contracts.filter((c) => c.id !== selectedContract.id));
+        setSelectedContract(null);
+        setDeleteOpen(false);
+        toast.success("Vertrag gelöscht");
+        router.refresh();
+      } catch (err: any) {
+        toast.error(err?.message || "Fehler beim Löschen");
+      }
     });
   };
 

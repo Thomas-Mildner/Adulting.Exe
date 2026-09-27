@@ -8,6 +8,7 @@ import { AlertCircle, AlertTriangle, CheckCircle2, Snowflake, Sun, Pencil } from
 import type { Car } from "@/lib/data"
 import { getDaysRemaining } from "@/lib/data"
 import { Button } from "@/components/ui/button"
+import { useRouter } from "@/lib/navigation"
 import { CarEditDialog } from "./car-edit-dialog"
 import { MaintenanceList } from "./maintenance-list"
 import { FuelList } from "./fuel-list"
@@ -16,6 +17,7 @@ import { CostAnalytics } from "./cost-analytics"
 
 export function CarOverview({ car }: { car: Car }) {
   const t = useTranslations("Garage")
+  const router = useRouter()
 
   // Calculate TÜV status
   const getTuvStatus = () => {
@@ -165,7 +167,7 @@ export function CarOverview({ car }: { car: Car }) {
                 <Pencil className="h-4 w-4" />
               </Button>
             }
-            onSuccess={() => window.location.reload()}
+            onSuccess={() => router.refresh()}
           />
         </CardHeader>
         <CardContent>

@@ -183,9 +183,41 @@ This repository uses **Semantic Release** to automate versioning and changelog g
 
 ## 6. General Guidelines for AI Agents
 
-1. **Check Types & Build:** Always ensure that your modifications pass TypeScript type checks and Next.js builds without errors (`pnpm build`).
+1. **Check Types & Build:** Always ensure that your modifications pass TypeScript type checks and Next.js builds without errors (`pnpm type-check` / `pnpm build`).
 2. **Preserve Code Integrity:** Retain existing comments, docstrings, and established naming conventions.
 3. **No Phantom Routes:** All pages belong inside `app/[locale]/...`.
 4. **Localization Completeness:** Never leave string literals directly in JSX if they are visible to users; always add keys to both `messages/de.json` and `messages/en.json`.
 5. **Database Discipline:** Never commit raw schema changes without a corresponding migration in `prisma/migrations/`.
+
+---
+
+## 7. AI Agent Guidelines: Token Efficiency & Context Management
+
+To maximize efficiency, reduce latency, and prevent context window exhaustion, all AI agents (**Antigravity**, **Cursor**, **Claude Code**, **Copilot**, etc.) must adhere to these rules:
+
+### 7.1 Token-Saving Techniques
+1. **Targeted Inspections (No Blind Dumps):**
+   - Never dump entire massive files (e.g. `lib/actions.ts` [~2000 lines] or `components/utilities/utility-tracker.tsx` [~1900 lines]).
+   - Always specify line ranges (`StartLine`/`EndLine`) or use `grep -n` to locate the exact target function before reading.
+   - Exclude generated and dependency directories from searches: always filter out `.next/`, `node_modules/`, and `.git/`.
+2. **Surgical Edits over Full File Rewrites:**
+   - Use patch / block replacement tools (`replace_file_content`) for localized edits. Never rewrite a 1,000-line file when modifying a 10-line function.
+3. **Limit Shell Output:**
+   - Cap command outputs (e.g. `git log -n 5`, `head -n 30`, `tail -n 30`).
+   - Avoid running unfiltered `find` or `grep -r` across the entire workspace.
+4. **Concise Agent Communication:**
+   - Provide direct, dense summaries. Do not repeat large code blocks or entire file contents in prose when the user can inspect the file or diff directly.
+
+### 7.2 Core Architecture & Clean Code Rules for Agents
+1. **TypeScript & Type Checking:**
+   - Always run `pnpm type-check` (`tsc --noEmit`) to verify changes. `ignoreBuildErrors: true` in `next.config.mjs` is strictly forbidden.
+2. **No Full Page Reloads:**
+   - Never use `window.location.reload()`. Use `router.refresh()` from `@/lib/navigation` or optimistic/local state updates.
+3. **Dynamic Upload Serving:**
+   - Runtime uploads are stored in `public/uploads` and served dynamically through `app/uploads/[...path]/route.ts`. Do not assume Next.js static asset serving handles runtime files in standalone/production mode.
+4. **Strict i18n Discipline:**
+   - Never put hardcoded UI strings in JSX. Every new string must be added to both `messages/de.json` and `messages/en.json`.
+5. **Prisma Migrations:**
+   - Always create a versioned SQL migration in `prisma/migrations/` when updating `prisma/schema.prisma`. Update `prisma/seed.ts` when adding or modifying models.
+
 
