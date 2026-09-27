@@ -1,6 +1,6 @@
 "use server"
 
-import { writeFile } from "fs/promises"
+import { writeFile, mkdir } from "fs/promises"
 import { join } from "path"
 
 import { prisma } from "@/lib/prisma"
@@ -1082,7 +1082,9 @@ export async function uploadCarDocument(formData: FormData) {
   const buffer = Buffer.from(bytes)
 
   const fileName = `${Date.now()}-${file.name}`
-  const path = join(process.cwd(), "public/uploads", fileName)
+  const uploadsDir = join(process.cwd(), "public/uploads")
+  await mkdir(uploadsDir, { recursive: true })
+  const path = join(uploadsDir, fileName)
 
   await writeFile(path, buffer)
 

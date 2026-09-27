@@ -319,7 +319,7 @@
     "create": {
       "button": "New Entry",
       "title": "Record New Appliance",
-      "description": "Receipt out, data in &mdash; your vault grows stronger.",
+      "description": "Receipt out, data in — your vault grows stronger.",
       "save": "Save",
       "saving": "Saving...",
       "cancel": "Cancel"
@@ -353,6 +353,7 @@
       "receiptCamera": "Take Photo",
       "receiptFile": "Upload File",
       "receiptPreview": "Receipt preview",
+      "receiptDownload": "Download receipt",
       "receiptRemove": "Remove",
       "receiptUploading": "Uploading...",
       "receiptError": "Upload failed. Please try again."

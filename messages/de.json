@@ -298,7 +298,7 @@
       "good": "Gut",
       "expandable": "Ausbaufähig",
       "critical": "Kritisch",
-      "catastrophe": "Catastrophe"
+      "catastrophe": "Katastrophe"
     },
     "averageOf": "Bundesdurchschnitt: ~{amount} €/{unit}"
   },
@@ -319,7 +319,7 @@
     "create": {
       "button": "Neuer Eintrag",
       "title": "Neues Gerät erfassen",
-      "description": "Quittung raus, Daten rein &mdash; dein Tresor wird stärker.",
+      "description": "Quittung raus, Daten rein — dein Tresor wird stärker.",
       "save": "Speichern",
       "saving": "Speichert...",
       "cancel": "Abbrechen"
@@ -353,6 +353,7 @@
       "receiptCamera": "Foto aufnehmen",
       "receiptFile": "Datei hochladen",
       "receiptPreview": "Quittungsvorschau",
+      "receiptDownload": "Quittung herunterladen",
       "receiptRemove": "Entfernen",
       "receiptUploading": "Wird hochgeladen...",
       "receiptError": "Upload fehlgeschlagen. Bitte erneut versuchen."
