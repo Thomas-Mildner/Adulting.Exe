@@ -4,7 +4,7 @@ import { notFound } from "next/navigation"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { ArrowLeft, Printer } from "lucide-react"
+import { ArrowLeft, Printer, FileText, Download } from "lucide-react"
 import Link from "next/link"
 import QRCode from "react-qr-code"
 import { PrintButton } from "@/components/vault/print-button"
@@ -70,6 +70,32 @@ export default async function ApplianceDetailPage({ params }: { params: Promise<
                                 <p className="font-medium">{appliance.boxLocation}</p>
                             </div>
                         </div>
+
+                        {appliance.receiptPath && (
+                            <div className="pt-4 border-t space-y-3">
+                                <p className="text-sm font-medium">Quittung / Beleg</p>
+                                <div className="flex items-center gap-3">
+                                    <a
+                                        href={appliance.receiptPath}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        <Button variant="outline" size="sm" className="gap-2">
+                                            <FileText className="h-4 w-4" />
+                                            Vorschau anzeigen
+                                        </Button>
+                                    </a>
+                                    <a
+                                        href={`/api/vault/download?id=${appliance.id}`}
+                                    >
+                                        <Button variant="outline" size="sm" className="gap-2">
+                                            <Download className="h-4 w-4" />
+                                            Herunterladen
+                                        </Button>
+                                    </a>
+                                </div>
+                            </div>
+                        )}
 
                         <div className="pt-6 border-t flex flex-col items-center gap-4">
                             <p className="text-sm text-muted-foreground">Scanne diesen Code, um direkt hierher zu gelangen.</p>
