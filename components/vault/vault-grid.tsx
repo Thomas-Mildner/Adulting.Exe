@@ -25,7 +25,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { Search, MapPin, Plus, Pencil, Trash2, Upload, Camera, X, FileText, Image as ImageIcon } from "lucide-react"
+import { Search, MapPin, Plus, Pencil, Trash2, Upload, Camera, X, FileText, Download, Image as ImageIcon } from "lucide-react"
 import {
   getDaysRemaining,
   getWarrantyPercent,
@@ -143,6 +143,24 @@ function ReceiptUpload({
               <span className="truncate">{safeSrc.split("/").pop()}</span>
             </div>
           )}
+          <div className="flex items-center justify-between pt-2 px-1 border-t mt-2 text-xs">
+            <a
+              href={safeSrc}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 text-primary hover:underline"
+            >
+              <FileText className="h-3.5 w-3.5" />
+              <span>{t("fields.receiptPreview")}</span>
+            </a>
+            <a
+              href={`/api/vault/download?path=${encodeURIComponent(safeSrc)}`}
+              className="inline-flex items-center gap-1.5 text-muted-foreground hover:text-foreground hover:underline"
+            >
+              <Download className="h-3.5 w-3.5" />
+              <span>{t("fields.receiptDownload")}</span>
+            </a>
+          </div>
           <Button
             type="button"
             variant="ghost"
@@ -602,15 +620,24 @@ export function VaultGrid({ appliances }: { appliances: Appliance[] }) {
                     </div>
                     <div className="flex items-center gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity">
                       {item.receiptPath && isSafeReceiptPath(item.receiptPath) && (
-                        <a
-                          href={item.receiptPath}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center justify-center h-6 w-6 rounded-sm text-muted-foreground hover:text-foreground transition-colors"
-                          title={t("fields.receiptPreview")}
-                        >
-                          <FileText className="h-3 w-3" />
-                        </a>
+                        <>
+                          <a
+                            href={item.receiptPath}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center justify-center h-6 w-6 rounded-sm text-muted-foreground hover:text-foreground transition-colors"
+                            title={t("fields.receiptPreview")}
+                          >
+                            <FileText className="h-3 w-3" />
+                          </a>
+                          <a
+                            href={`/api/vault/download?id=${item.id}`}
+                            className="inline-flex items-center justify-center h-6 w-6 rounded-sm text-muted-foreground hover:text-foreground transition-colors"
+                            title={t("fields.receiptDownload")}
+                          >
+                            <Download className="h-3 w-3" />
+                          </a>
+                        </>
                       )}
                       <QRCodeDialog id={item.id} name={item.name} />
                       <Button
