@@ -46,6 +46,8 @@ model ServiceHistory {
   invoiceId   String?
   createdAt   DateTime        @default(now())
   provider    ServiceProvider @relation(fields: [providerId], references: [id], onDelete: Cascade)
+
+  @@index([providerId])
 }
 
 model Invoice {
@@ -59,6 +61,8 @@ model Invoice {
   providerId   String
   createdAt    DateTime        @default(now())
   provider     ServiceProvider @relation(fields: [providerId], references: [id], onDelete: Cascade)
+
+  @@index([providerId])
 }
 
 model Document {
@@ -137,6 +141,7 @@ model WastePickup {
   wasteType   WasteType @relation(fields: [wasteTypeId], references: [id], onDelete: Cascade)
 
   @@unique([date, wasteTypeId])
+  @@index([wasteTypeId])
 }
 
 model AppConfig {
@@ -180,6 +185,8 @@ model CarMaintenance {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   car         Car      @relation(fields: [carId], references: [id], onDelete: Cascade)
+
+  @@index([carId])
 }
 
 model FuelEntry {
@@ -193,6 +200,8 @@ model FuelEntry {
   carId         String
   createdAt     DateTime @default(now())
   car           Car      @relation(fields: [carId], references: [id], onDelete: Cascade)
+
+  @@index([carId])
 }
 
 model TollEntry {
@@ -204,6 +213,8 @@ model TollEntry {
   carId     String
   createdAt DateTime @default(now())
   car       Car      @relation(fields: [carId], references: [id], onDelete: Cascade)
+
+  @@index([carId])
 }
 
 model CarDocument {
@@ -216,6 +227,8 @@ model CarDocument {
 
   createdAt  DateTime @default(now())
   car        Car      @relation(fields: [carId], references: [id], onDelete: Cascade)
+
+  @@index([carId])
 }
 
 // ─── Insurance ──────────────────────────────────────────────────────────
@@ -304,6 +317,8 @@ model VetRecord {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@index([petId])
 }
 
 model Vaccination {
@@ -320,6 +335,8 @@ model Vaccination {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@index([petId])
 }
 
 // ─── Identity Guard / Document Tracker ─────────────────────────────────
@@ -355,6 +372,8 @@ model IdentityDocument {
   
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@index([personId])
 }
 
 model Illness {
@@ -369,4 +388,6 @@ model Illness {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@index([personId])
 }

@@ -4,6 +4,7 @@ import * as React from "react";
 import { useState, useRef } from "react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
+import { useRouter } from "@/lib/navigation";
 
 import {
   Card,
@@ -95,6 +96,7 @@ export function NotificationSettings() {
 
 export function DataSettings() {
   const t = useTranslations("Settings.data");
+  const router = useRouter();
   const [isAlertOpen, setIsAlertOpen] = useState(false);
   const [isImporting, setIsImporting] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -120,13 +122,14 @@ export function DataSettings() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "x-confirm-action": "adulting-import",
         },
         body: JSON.stringify(jsonData),
       });
 
       if (response.ok) {
         toast.success(t("importSuccess"));
-        setTimeout(() => window.location.reload(), 1500);
+        router.refresh();
       } else {
         toast.error(t("importError"));
       }

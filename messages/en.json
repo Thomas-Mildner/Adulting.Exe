@@ -18,6 +18,13 @@
     "illnesses": "Illness Tracker",
     "meals": "Meal Planning"
   },
+  "ErrorBoundary": {
+    "title": "Oops! An error occurred",
+    "description": "Something went unexpectedly wrong. Don't worry, your data is safe.",
+    "retry": "Try again",
+    "home": "Back to Dashboard",
+    "loading": "Loading..."
+  },
   "Dashboard": {
     "welcome": "Welcome back",
     "nextWaste": "Next Pickup",

@@ -20,6 +20,17 @@ import {
 import { type MeterReading, formatCurrency } from "@/lib/data";
 import { createMeterReading } from "@/lib/actions";
 import {
+  getPainLevel,
+  getDeltaIcon,
+  getEfficiencyGrade,
+  CHART_COLORS,
+  tooltipStyle,
+  parseGermanMonth,
+  formatMonthDE,
+  linearRegression,
+} from "./utility-helpers";
+import { AddMeterReadingDialog } from "./add-meter-reading-dialog";
+import {
   Dialog,
   DialogContent,
   DialogDescription,
@@ -63,96 +74,6 @@ import {
   ReferenceLine,
 } from "recharts";
 
-// ─── Helpers ────────────────────────────────────────────────────────────
-
-function getPainLevel(current: number, previous: number) {
-  const delta = ((current - previous) / previous) * 100;
-  if (delta > 10)
-    return { level: "painLevels.existential", color: "text-destructive", delta };
-  if (delta > 5)
-    return { level: "painLevels.panic", color: "text-chart-3", delta };
-  if (delta > 0)
-    return { level: "painLevels.worry", color: "text-chart-3", delta };
-  if (delta === 0) return { level: "painLevels.zen", color: "text-success", delta };
-  return { level: "painLevels.good", color: "text-success", delta };
-}
-
-function getDeltaIcon(delta: number) {
-  if (delta > 0) return <ArrowUpRight className="h-3 w-3" />;
-  if (delta < 0) return <ArrowDownRight className="h-3 w-3" />;
-  return <Minus className="h-3 w-3" />;
-}
-
-function getEfficiencyGrade(avgDelta: number): {
-  grade: string;
-  label: string;
-  color: string;
-} {
-  if (avgDelta <= -10)
-    return { grade: "A+", label: "efficiencyGrades.exemplary", color: "text-success" };
-  if (avgDelta <= -5)
-    return { grade: "A", label: "efficiencyGrades.veryGood", color: "text-success" };
-  if (avgDelta <= 0) return { grade: "B", label: "efficiencyGrades.good", color: "text-primary" };
-  if (avgDelta <= 5)
-    return { grade: "C", label: "efficiencyGrades.expandable", color: "text-chart-3" };
-  if (avgDelta <= 10)
-    return { grade: "D", label: "efficiencyGrades.critical", color: "text-destructive" };
-  return { grade: "F", label: "efficiencyGrades.catastrophe", color: "text-destructive" };
-}
-
-const CHART_COLORS = {
-  power: "hsl(220, 72%, 50%)",
-  water: "hsl(197, 71%, 52%)",
-  heating: "hsl(350, 65%, 55%)",
-};
-
-const tooltipStyle = {
-  fontSize: 12,
-  borderRadius: 8,
-  border: "1px solid hsl(220, 13%, 91%)",
-  boxShadow: "0 4px 6px -1px rgba(0,0,0,.05)",
-};
-
-// ─── Projection Helpers ─────────────────────────────────────────────────
-
-const MONTHS_DE_SHORT = [
-  "Jan", "Feb", "Mär", "Apr", "Mai", "Jun",
-  "Jul", "Aug", "Sep", "Okt", "Nov", "Dez",
-];
-
-function parseGermanMonth(str: string): Date | null {
-  const cleaned = str.replace(/\./g, "").trim();
-  for (let i = 0; i < MONTHS_DE_SHORT.length; i++) {
-    if (cleaned.startsWith(MONTHS_DE_SHORT[i])) {
-      const yearMatch = cleaned.match(/\d{4}/);
-      if (yearMatch) {
-        return new Date(parseInt(yearMatch[0]), i, 1);
-      }
-    }
-  }
-  return null;
-}
-
-function formatMonthDE(date: Date): string {
-  return date.toLocaleDateString("de-DE", { month: "short", year: "numeric" });
-}
-
-function linearRegression(values: number[]): { slope: number; intercept: number } {
-  const n = values.length;
-  if (n < 2) return { slope: 0, intercept: values[0] || 0 };
-  const xMean = (n - 1) / 2;
-  const yMean = values.reduce((s, v) => s + v, 0) / n;
-  let num = 0;
-  let den = 0;
-  for (let i = 0; i < n; i++) {
-    num += (i - xMean) * (values[i] - yMean);
-    den += (i - xMean) * (i - xMean);
-  }
-  const slope = den !== 0 ? num / den : 0;
-  const intercept = yMean - slope * xMean;
-  return { slope, intercept };
-}
-
 // ─── Component ──────────────────────────────────────────────────────────
 
 export function UtilityTracker({
@@ -171,162 +92,6 @@ export function UtilityTracker({
   const [waterCostInput, setWaterCostInput] = useState("");
   const [heatingCostInput, setHeatingCostInput] = useState("");
   const [saving, setSaving] = useState(false);
-  const [addDialogOpen, setAddDialogOpen] = useState(false);
-  const [dlgPower, setDlgPower] = useState("");
-  const [dlgWater, setDlgWater] = useState("");
-  const [dlgHeating, setDlgHeating] = useState("");
-  const [dlgPowerCost, setDlgPowerCost] = useState("");
-  const [dlgWaterCost, setDlgWaterCost] = useState("");
-  const [dlgHeatingCost, setDlgHeatingCost] = useState("");
-  const [dlgMonth, setDlgMonth] = useState(
-    new Date().toLocaleDateString("de-DE", { month: "short", year: "numeric" }),
-  );
-
-  const handleDialogSave = async () => {
-    if (!dlgPower && !dlgWater && !dlgHeating) return;
-    setSaving(true);
-    await createMeterReading({
-      month: dlgMonth,
-      power: dlgPower ? parseFloat(dlgPower) : 0,
-      water: dlgWater ? parseFloat(dlgWater) : 0,
-      heating: dlgHeating ? parseFloat(dlgHeating) : 0,
-      powerCost: dlgPowerCost ? parseFloat(dlgPowerCost) : 0,
-      waterCost: dlgWaterCost ? parseFloat(dlgWaterCost) : 0,
-      heatingCost: dlgHeatingCost ? parseFloat(dlgHeatingCost) : 0,
-    });
-    setDlgPower("");
-    setDlgWater("");
-    setDlgHeating("");
-    setDlgPowerCost("");
-    setDlgWaterCost("");
-    setDlgHeatingCost("");
-    setSaving(false);
-    setAddDialogOpen(false);
-  };
-
-  const addMeterDialog = (
-    <Dialog
-      open={addDialogOpen}
-      onOpenChange={(v) => {
-        setAddDialogOpen(v);
-      }}
-    >
-      <DialogTrigger asChild>
-        <Button size="sm" className="gap-1.5 shrink-0">
-          <Plus className="h-4 w-4" />
-          {t("addReading")}
-        </Button>
-      </DialogTrigger>
-      <DialogContent className="sm:max-w-[480px]">
-        <DialogHeader>
-          <DialogTitle>{t("addDialogTitle")}</DialogTitle>
-          <DialogDescription>
-            {t("addDialogDesc")}
-          </DialogDescription>
-        </DialogHeader>
-        <div className="grid gap-4 py-4">
-          <div className="grid gap-2">
-            <Label htmlFor="dlg-month">{t("month")}</Label>
-            <Input
-              id="dlg-month"
-              placeholder={t("placeholders.month")}
-              value={dlgMonth}
-              onChange={(e) => setDlgMonth(e.target.value)}
-              required
-            />
-          </div>
-          <div className="grid grid-cols-2 gap-4">
-            <div className="grid gap-2">
-              <div className="flex items-center gap-1.5">
-                <Zap className="h-3.5 w-3.5 text-chart-1" />
-                <Label className="text-xs font-medium">{t("power")} (kWh)</Label>
-              </div>
-              <Input
-                type="number"
-                placeholder={t("placeholders.consumption", { unit: "kWh" })}
-                value={dlgPower}
-                onChange={(e) => setDlgPower(e.target.value)}
-                className="h-9 text-sm"
-              />
-            </div>
-            <div className="grid gap-2">
-              <Label className="text-xs font-medium">{t("cost")} {t("power")} (€)</Label>
-              <Input
-                type="number"
-                placeholder={t("placeholders.cost")}
-                value={dlgPowerCost}
-                onChange={(e) => setDlgPowerCost(e.target.value)}
-                className="h-9 text-sm"
-              />
-            </div>
-          </div>
-          <div className="grid grid-cols-2 gap-4">
-            <div className="grid gap-2">
-              <div className="flex items-center gap-1.5">
-                <Droplets className="h-3.5 w-3.5 text-primary" />
-                <Label className="text-xs font-medium">{t("water")} (m³)</Label>
-              </div>
-              <Input
-                type="number"
-                placeholder={t("placeholders.consumption", { unit: "m³" })}
-                value={dlgWater}
-                onChange={(e) => setDlgWater(e.target.value)}
-                className="h-9 text-sm"
-              />
-            </div>
-            <div className="grid gap-2">
-              <Label className="text-xs font-medium">{t("cost")} {t("water")} (€)</Label>
-              <Input
-                type="number"
-                placeholder={t("placeholders.cost")}
-                value={dlgWaterCost}
-                onChange={(e) => setDlgWaterCost(e.target.value)}
-                className="h-9 text-sm"
-              />
-            </div>
-          </div>
-          <div className="grid grid-cols-2 gap-4">
-            <div className="grid gap-2">
-              <div className="flex items-center gap-1.5">
-                <Flame className="h-3.5 w-3.5 text-chart-4" />
-                <Label className="text-xs font-medium">Heizung ({heatingUnit})</Label>
-              </div>
-              <Input
-                type="number"
-                placeholder={`Verbrauch ${heatingUnit}`}
-                value={dlgHeating}
-                onChange={(e) => setDlgHeating(e.target.value)}
-                className="h-9 text-sm"
-              />
-            </div>
-            <div className="grid gap-2">
-              <Label className="text-xs font-medium">{t("cost")} {t("heating")} (€)</Label>
-              <Input
-                type="number"
-                placeholder={t("placeholders.cost")}
-                value={dlgHeatingCost}
-                onChange={(e) => setDlgHeatingCost(e.target.value)}
-                className="h-9 text-sm"
-              />
-            </div>
-          </div>
-        </div>
-        <DialogFooter>
-          <Button
-            type="button"
-            variant="outline"
-            onClick={() => setAddDialogOpen(false)}
-          >
-            {t("cancel")}
-          </Button>
-          <Button onClick={handleDialogSave} disabled={saving}>
-            {saving ? t("saving") : t("save")}
-          </Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
-  );
-
   const latest =
     meterHistory.length > 0 ? meterHistory[meterHistory.length - 1] : null;
   const prev =
@@ -341,7 +106,9 @@ export function UtilityTracker({
             {t("noData")}
           </p>
         </CardHeader>
-        <CardContent>{addMeterDialog}</CardContent>
+        <CardContent>
+          <AddMeterReadingDialog heatingUnit={heatingUnit} />
+        </CardContent>
       </Card>
     );
   }
@@ -690,7 +457,9 @@ export function UtilityTracker({
   return (
     <div className="space-y-6">
       {/* ── Add Button ── */}
-      <div className="flex justify-end">{addMeterDialog}</div>
+      <div className="flex justify-end">
+        <AddMeterReadingDialog heatingUnit={heatingUnit} />
+      </div>
 
       {/* ── KPI Row ── */}
       <div className="grid gap-4 grid-cols-2 lg:grid-cols-4">

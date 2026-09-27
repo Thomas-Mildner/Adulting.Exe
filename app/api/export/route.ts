@@ -1,7 +1,24 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { validateAdminRequest, checkRateLimit } from "@/lib/security";
 
-export async function GET() {
+export async function GET(request: NextRequest) {
+  // 1. Rate limiting (max 10 exports per minute)
+  const clientIp = request.headers.get("x-forwarded-for") || "export-api";
+  const rateLimit = checkRateLimit(`export-${clientIp}`, 10, 60_000);
+  if (!rateLimit.allowed) {
+    return NextResponse.json(
+      { error: "Too many export requests. Please wait a minute before trying again." },
+      { status: 429 }
+    );
+  }
+
+  // 2. Admin authorization (if ADMIN_API_KEY is configured in env)
+  const auth = validateAdminRequest(request);
+  if (!auth.authorized && auth.errorResponse) {
+    return auth.errorResponse;
+  }
+
   try {
     const data = {
       appliances: await prisma.appliance.findMany(),

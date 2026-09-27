@@ -26,9 +26,9 @@ import { getCarMaintenance, deleteCarMaintenance } from "@/lib/actions"
 import type { CarMaintenance } from "@/lib/data"
 import { MaintenanceFormDialog } from "./maintenance-form-dialog"
 
-export function MaintenanceList({ carId }: { carId: string }) {
-    const [entries, setEntries] = useState<CarMaintenance[]>([])
-    const [loading, setLoading] = useState(true)
+export function MaintenanceList({ carId, initialEntries }: { carId: string; initialEntries?: CarMaintenance[] }) {
+    const [entries, setEntries] = useState<CarMaintenance[]>(initialEntries || [])
+    const [loading, setLoading] = useState(!initialEntries)
     const [isPending, startTransition] = useTransition()
     const t = useTranslations("Garage")
     const locale = useLocale()

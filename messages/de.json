@@ -18,6 +18,13 @@
     "illnesses": "Krankheitentracker",
     "meals": "Essensplanung"
   },
+  "ErrorBoundary": {
+    "title": "Hoppla! Ein Fehler ist aufgetreten",
+    "description": "Etwas ist unerwartet schiefgelaufen. Keine Sorge, deine Daten sind sicher.",
+    "retry": "Erneut versuchen",
+    "home": "Zurück zum Dashboard",
+    "loading": "Wird geladen..."
+  },
   "Dashboard": {
     "welcome": "Willkommen zurück",
     "nextWaste": "Nächste Abholung",
