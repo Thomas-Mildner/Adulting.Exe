@@ -319,7 +319,7 @@
     "create": {
       "button": "Neuer Eintrag",
       "title": "Neues Gerät erfassen",
-      "description": "Quittung raus, Daten rein &mdash; dein Tresor wird stärker.",
+      "description": "Quittung raus, Daten rein - dein Tresor wird stärker.",
       "save": "Speichern",
       "saving": "Speichert...",
       "cancel": "Abbrechen"
