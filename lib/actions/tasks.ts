@@ -1,3 +1,5 @@
+"use server";
+
 
 
 import { z } from "zod";
@@ -7,7 +9,7 @@ import type { MaintenanceTask } from "@/lib/data";
 import type { MaintenanceTask as PrismaMaintenanceTask } from "@prisma/client";
 import { dateToStr } from "./common";
 
-export const maintenanceTaskInputSchema = z.object({
+const maintenanceTaskInputSchema = z.object({
   title: z.string().min(1, "Title is required"),
   dueDate: z.string(),
   recurring: z.string().default("none"),

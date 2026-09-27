@@ -1,3 +1,5 @@
+"use server";
+
 
 
 import { z } from "zod";
@@ -7,7 +9,7 @@ import type { Contract } from "@/lib/data";
 import type { Contract as PrismaContract } from "@prisma/client";
 import { dateToStr } from "./common";
 
-export const contractInputSchema = z.object({
+const contractInputSchema = z.object({
   providerName: z.string().min(1, "Provider name is required"),
   accountId: z.string().optional(),
   monthlyCost: z.number().nonnegative(),

@@ -1,3 +1,5 @@
+"use server";
+
 
 
 import { z } from "zod";
@@ -10,13 +12,13 @@ import type {
 } from "@prisma/client";
 import { dateToStr } from "./common";
 
-export const wasteTypeInputSchema = z.object({
+const wasteTypeInputSchema = z.object({
   name: z.string().min(1, "Name is required"),
   color: z.string().min(1),
   icon: z.string().optional(),
 });
 
-export const wastePickupInputSchema = z.object({
+const wastePickupInputSchema = z.object({
   date: z.string(),
   wasteTypeId: z.string().min(1),
   recurring: z

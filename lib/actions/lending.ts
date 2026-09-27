@@ -1,3 +1,5 @@
+"use server";
+
 
 
 import { z } from "zod";
@@ -7,7 +9,7 @@ import type { LentItem } from "@/lib/data";
 import type { LentItem as PrismaLentItem } from "@prisma/client";
 import { dateToStr } from "./common";
 
-export const lentItemInputSchema = z.object({
+const lentItemInputSchema = z.object({
   item: z.string().min(1, "Item name is required"),
   borrower: z.string().min(1, "Borrower is required"),
   lentDate: z.string(),

@@ -1,3 +1,5 @@
+"use server";
+
 
 
 import { z } from "zod";
@@ -6,7 +8,7 @@ import { revalidatePath } from "next/cache";
 import type { MeterReading } from "@/lib/data";
 import type { MeterReading as PrismaMeterReading } from "@prisma/client";
 
-export const meterReadingInputSchema = z.object({
+const meterReadingInputSchema = z.object({
   month: z.string().min(1),
   power: z.number().nonnegative(),
   water: z.number().nonnegative(),

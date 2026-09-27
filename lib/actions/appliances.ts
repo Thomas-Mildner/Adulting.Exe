@@ -1,3 +1,5 @@
+"use server";
+
 
 
 import { z } from "zod";
@@ -7,7 +9,7 @@ import type { Appliance } from "@/lib/data";
 import type { Appliance as PrismaAppliance } from "@prisma/client";
 import { dateToStr } from "./common";
 
-export const applianceInputSchema = z.object({
+const applianceInputSchema = z.object({
   name: z.string().min(1, "Name is required"),
   category: z.string().min(1, "Category is required"),
   purchaseDate: z.string(),

@@ -1,3 +1,5 @@
+"use server";
+
 
 
 import { z } from "zod";
@@ -6,7 +8,7 @@ import { revalidatePath } from "next/cache";
 import type { WishlistProject } from "@/lib/data";
 import type { WishlistProject as PrismaWishlistProject } from "@prisma/client";
 
-export const wishlistProjectInputSchema = z.object({
+const wishlistProjectInputSchema = z.object({
   title: z.string().min(1, "Title is required"),
   description: z.string().default(""),
   estimatedCost: z.number().nonnegative(),

@@ -1,3 +1,5 @@
+"use server";
+
 
 
 import { z } from "zod";
@@ -13,7 +15,7 @@ import { dateToStr } from "./common";
 
 type PrismaServiceProvider = PrismaSP & { history: PrismaServiceHistory[] };
 
-export const serviceProviderInputSchema = z.object({
+const serviceProviderInputSchema = z.object({
   name: z.string().min(1, "Name is required"),
   specialty: z.string().min(1, "Specialty is required"),
   phone: z.string().default(""),
@@ -22,7 +24,7 @@ export const serviceProviderInputSchema = z.object({
   rating: z.number().int().min(1).max(5).default(5),
 });
 
-export const invoiceInputSchema = z.object({
+const invoiceInputSchema = z.object({
   providerId: z.string().min(1),
   providerName: z.string().min(1),
   date: z.string(),

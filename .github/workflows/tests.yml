@@ -1,22 +1,18 @@
-name: Dev Pipeline
+name: Tests
 
 on:
   push:
-    branches:
-      - dev
   pull_request:
-    branches:
-      - dev
   workflow_dispatch:
 
 permissions:
   contents: read
 
 jobs:
-  validate:
-    name: Validate (Build)
+  test:
+    name: Type Check, Unit Tests & Build
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v7
@@ -53,6 +49,7 @@ jobs:
 
       - name: Run unit tests
         run: pnpm test
-        
-      - name: Build
+
+      - name: Build application
         run: pnpm build
+

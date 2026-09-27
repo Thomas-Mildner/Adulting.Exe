@@ -1,3 +1,5 @@
+"use server";
+
 
 
 import { z } from "zod";
@@ -7,7 +9,7 @@ import type { Document } from "@/lib/data";
 import type { Document as PrismaDocument } from "@prisma/client";
 import { dateToStr } from "./common";
 
-export const documentInputSchema = z.object({
+const documentInputSchema = z.object({
   title: z.string().min(1, "Title is required"),
   category: z.string().min(1),
   type: z.string().min(1),

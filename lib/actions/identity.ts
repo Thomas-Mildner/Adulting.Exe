@@ -1,3 +1,5 @@
+"use server";
+
 
 
 import { z } from "zod";
@@ -6,12 +8,12 @@ import { revalidatePath } from "next/cache";
 import type { Person, IdentityDocument } from "@/lib/data";
 import { dateToStr } from "./common";
 
-export const personInputSchema = z.object({
+const personInputSchema = z.object({
   name: z.string().min(1, "Name is required"),
   relation: z.string().min(1, "Relation is required"),
 });
 
-export const identityDocumentInputSchema = z.object({
+const identityDocumentInputSchema = z.object({
   personId: z.string().min(1),
   documentType: z.string().min(1),
   customDocumentType: z.string().optional(),

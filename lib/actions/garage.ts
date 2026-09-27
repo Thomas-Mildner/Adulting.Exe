@@ -1,3 +1,5 @@
+"use server";
+
 
 
 import { writeFile, mkdir } from "fs/promises";
@@ -16,7 +18,7 @@ import type {
 } from "@prisma/client";
 import { dateToStr } from "./common";
 
-export const carInputSchema = z.object({
+const carInputSchema = z.object({
   name: z.string().min(1, "Name is required"),
   brand: z.string().min(1, "Brand is required"),
   model: z.string().min(1, "Model is required"),

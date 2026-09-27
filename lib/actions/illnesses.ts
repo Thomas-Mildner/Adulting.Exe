@@ -1,3 +1,5 @@
+"use server";
+
 
 
 import { z } from "zod";
@@ -7,7 +9,7 @@ import type { Illness } from "@/lib/data";
 import type { Illness as PrismaIllness, Person as PrismaPerson } from "@prisma/client";
 import { dateToStr } from "./common";
 
-export const illnessInputSchema = z.object({
+const illnessInputSchema = z.object({
   personId: z.string().min(1),
   name: z.string().min(1, "Illness name is required"),
   startDate: z.string(),

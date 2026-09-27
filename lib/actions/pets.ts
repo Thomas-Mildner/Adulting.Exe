@@ -1,3 +1,5 @@
+"use server";
+
 
 
 import { z } from "zod";
@@ -11,7 +13,7 @@ import type {
 } from "@prisma/client";
 import { dateToStr } from "./common";
 
-export const petInputSchema = z.object({
+const petInputSchema = z.object({
   name: z.string().min(1, "Name is required"),
   species: z.string().min(1, "Species is required"),
   breed: z.string().optional().nullable(),
