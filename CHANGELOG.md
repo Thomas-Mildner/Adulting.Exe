@@ -1,3 +1,16 @@
+# [1.10.0-rc.4](https://github.com/Thomas-Mildner/Adulting.Exe/compare/v1.10.0-rc.3...v1.10.0-rc.4) (2026-09-27)
+
+
+### Bug Fixes
+
+* update description for creating a vault entry in German localization ([e16d4fc](https://github.com/Thomas-Mildner/Adulting.Exe/commit/e16d4fc952b589d7b2dba59d250f897fa860c620))
+
+
+### Features
+
+* add download functionality for vault attachments and update UI components ([92a4ad3](https://github.com/Thomas-Mildner/Adulting.Exe/commit/92a4ad3e253b07d633dbb8d79c087ab9fceae6d1))
+* implement file upload and download functionality with persistent storage ([2729371](https://github.com/Thomas-Mildner/Adulting.Exe/commit/272937130ca29739c9d70bea8a3cafe3ae1d7df6))
+
 # [1.10.0-rc.3](https://github.com/Thomas-Mildner/Adulting.Exe/compare/v1.10.0-rc.2...v1.10.0-rc.3) (2026-09-26)
 
 
