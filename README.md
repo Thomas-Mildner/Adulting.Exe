@@ -308,15 +308,22 @@ services:
       DATABASE_URL: postgresql://adulting:<your-secure-password>@postgres:5432/adulting_exe
     ports:
       - "3000:3000"
+    volumes:
+      - uploads_data:/app/public/uploads
     depends_on:
       postgres:
         condition: service_healthy
 
 volumes:
   pgdata:
+  uploads_data:
 ```
 
-> **Note:** Replace `<your-secure-password>` with a strong password. Make sure the password matches in both `POSTGRES_PASSWORD` and `DATABASE_URL`.
+> **Note:**
+> - Replace `<your-secure-password>` with a strong password. Make sure the password matches in both `POSTGRES_PASSWORD` and `DATABASE_URL`.
+> - **Persistent Volumes:**
+>   - `pgdata`: Stores the PostgreSQL database.
+>   - `uploads_data`: Stores all user-uploaded files, receipts, warranties, and vehicle documents (`/app/public/uploads`). Without this volume, uploaded files are lost when the container is recreated.
 
 ### Available Image Tags
 
