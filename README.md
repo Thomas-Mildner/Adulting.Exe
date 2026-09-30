@@ -1,282 +1,85 @@
 # 🏠 Adulting.exe
 
-**Because your house didn't come with a manual.**
+<p align="center">
+  <strong>Because your house didn't come with a manual.</strong><br />
+  An open-source, self-hosted home management dashboard that brings order to the chaos of household administration.
+</p>
+
+<p align="center">
+  <a href="https://github.com/Thomas-Mildner/Adulting.Exe/releases"><img src="https://img.shields.io/github/v/release/Thomas-Mildner/Adulting.Exe?style=flat-square&color=22c55e" alt="Release"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square" alt="MIT License"></a>
+  <a href="https://hub.docker.com/r/mildnerthomas/adulting-exe"><img src="https://img.shields.io/badge/docker-ready-2496ed.svg?style=flat-square&logo=docker&logoColor=white" alt="Docker Ready"></a>
+  <img src="https://img.shields.io/badge/i18n-DE%20%7C%20EN-green.svg?style=flat-square" alt="Bilingual DE and EN">
+  <img src="https://img.shields.io/badge/stack-Next.js%2016%20%7C%20Postgres%20%7C%20Prisma-000?style=flat-square" alt="Tech Stack">
+</p>
+
+<p align="center">
+  <a href="https://thomas-mildner.github.io/Adulting.Exe/"><strong>🌐 Live Landing Page & Showcase</strong></a> •
+  <a href="#-features"><strong>Features</strong></a> •
+  <a href="#-quick-start-docker"><strong>Quick Start (Docker)</strong></a> •
+  <a href="#-local-development"><strong>Local Development</strong></a> •
+  <a href="#-screenshots"><strong>Screenshots</strong></a> •
+  <a href="#-contributing"><strong>Contributing</strong></a>
+</p>
 
 ---
 
 ## 📖 Overview
 
-`Adulting.exe` is a comprehensive home management dashboard designed to bring order to the chaos of household administration. Keep track of warranties, appliances, service providers, utility consumption, maintenance tasks, and more – all in one place.
+**Adulting.exe** centralizes everything about your home in one private, beautiful dashboard: warranties, appliances, contractor invoices, utility consumption, recurring maintenance tasks, waste collection schedules, lent tools, identity documents, vehicle logs, emergency contingency plans, and more.
 
-Built for people who want to know exactly where the blender's original box is located *before* the motor starts smoking, and who never want to search through old receipts again when tax season arrives.
+Built for people who want to know exactly where the blender's original packaging is stored *before* the motor starts smoking, and who never want to search through old shoe boxes for receipts when tax season arrives.
 
-**Tech Stack:** Next.js • React • TypeScript • Tailwind CSS • Shadcn/UI • PostgreSQL • Prisma • Docker
+* **100% Self-Hosted & Private:** Your household data stays completely on your own machine or home server.
+* **Bilingual Out of the Box:** Full German (`de`) and English (`en`) support with instant language switching.
+* **Modern Tech Stack:** Next.js (App Router, Turbopack), React 19, TypeScript, Tailwind CSS, shadcn/ui, PostgreSQL, Prisma, Docker.
 
 ---
 
 ## ✨ Features
 
-### 📦 Vault (Appliance & Warranty Management)
-* **Appliance Inventory:** Catalog all household appliances with purchase dates, prices, brands, and categories
-* **Warranty Tracker:** Monitor warranty expiration dates with visual status indicators
-  - 🛡️ **Protected:** Under warranty
-  - 🔧 **Solo:** Basic protection expired
-  - 🧟 **Zombie Mode:** Living dangerously without any warranty
-* **Box Locator:** Document where original packaging is stored (e.g., "Attic, Sector 7, behind the Christmas lights")
-* **Quick Stats:** Dashboard overview of total appliances and warranty status
+The platform is organized into 4 cohesive household pillars covering **14+ dedicated modules**:
 
-### 🛠️ Services & Invoicing
-* **Service Provider Directory:** Maintain a searchable database of contractors (plumbers, electricians, handymen, etc.)
-* **Contact Management:** Store specialty areas, phone numbers, emails, and ratings for each provider
-* **Service History:** Track all service calls with dates, providers, and costs
-* **Invoice Storage:** Attach and organize invoice files for every service
-* **Tax-Deductible Tracking:** Mark expenses as tax-relevant for easy year-end reporting
-* **Provider Ratings:** Rate service quality to remember the good (and avoid the bad)
+### 📦 1. Home & Inventory
+* **Vault (Warranty Tracker):** Catalog household appliances with purchase dates, prices, serial numbers, and warranty badges:
+  - 🛡️ **Protected:** Under active warranty
+  - 🔧 **Solo:** Warranty expired
+  - 🧟 **Zombie Mode:** Living dangerously without coverage
+  - 📦 **Box Locator:** Document exact box storage locations (*e.g., "Attic, Sector 7, behind Christmas lights"*).
+* **Maintenance Management:** Recurring household tasks (filter changes, HVAC inspections, chimney sweeping) with priority levels, due dates, and completion histories.
+* **Knowledge Base (Library):** Centralized archive for manuals, user guides, PDFs, and Markdown how-tos categorized by Heating, Plumbing, Smart Home, Structural, or General.
+* **Wishlist & Projects:** Plan renovations with target budgets, urgency levels, and savings progress tracking.
 
-### 🔧 Maintenance Management
-* **Task Tracking:** Create and manage maintenance tasks with due dates
-* **Priority Levels:** Categorize tasks as high, medium, or low priority
-* **Recurring Tasks:** Set up repeating maintenance reminders (filter changes, inspections, etc.)
-* **Completion Tracking:** Mark tasks as done and maintain a service history
-* **Dashboard Integration:** See pending tasks at a glance on your home screen
+### ⚡ 2. Operations & Household Services
+* **Utility Tracker:** Log monthly meter readings for electricity, water, and heating (Gas, Oil, District Heating, Heat Pump, Pellets) with interactive trend charts and cost tracking.
+* **Waste Calendar:** Color-coded collection schedules (Restmüll, Bio, Papier, Gelber Sack) with dashboard countdown widget for your next pickup.
+* **Services & Invoicing:** Directory of contractors and craftsmen with contact details, ratings, service history, invoice attachments, and tax-deductible expense tracking (§ 35a EStG).
+* **Lend-O-Meter:** Track tools and items lent to neighbors and friends, complete with expected return dates, borrower contact notes, and reliability ratings.
 
-### 📉 Utility Tracker
-* **Meter Readings:** Log monthly readings for electricity, water, and heating
-* **Cost Tracking:** Record costs for each utility per month
-* **Multiple Heating Types:** Support for Gas, Oil, Fernwärme (district heating), Heat Pump, and Pellets
-* **Visual Analytics:** Interactive charts showing consumption trends over time
-* **Cost Visualization:** Track utility expenses and identify usage patterns
+### 👨‍👩‍👧 3. Family, Health & Emergency
+* **Identity Guard:** Monitor IDs, passports, and driver's licenses per family member with expiry countdowns, physical storage locations, emergency lost-card guides, and status badges (🟢 *Model Citizen*, 🟡 *Bureaucratic Anxiety*, 🔴 *International Fugitive*).
+* **Illness Tracker:** Per-person illness logs with start/end dates, symptoms, and a GitHub-style yearly sick-day heatmap.
+* **Emergency Hub (Digitaler Notfallordner):**
+  - Official hotlines & emergency ICE contacts with 1-click dialing.
+  - Advance directives (living wills, healthcare proxies, custody orders) with physical storage locations and registry numbers.
+  - Medical dossier (blood types, allergies, routine medications, doctors).
+  - Main shut-off locations (water main valve, electrical breaker box, gas meter) with operating notes.
+  - One-click printable DIN A4 emergency sheet for the fridge or emergency responders.
+* **Pet Management Hub:** Profiles for all household pets with microchip numbers, vaccination deadlines, vet treatment history, and pet-sitter care instructions.
 
-### 🗑️ Waste Calendar
-* **Pickup Schedule:** Manage waste collection dates for multiple waste types
-* **Customizable Categories:** Restmüll, Bio, Papier, Gelber Sack, and more
-* **Color-Coded Display:** Visual waste type identification with custom icons
-* **Next Pickup Widget:** Dashboard card showing upcoming waste collection days
-* **Custom Waste Types:** Add and configure waste types in settings
-
-### 💸 Lending Tracker (Lend-O-Meter)
-* **Item Lending Log:** Track tools and items you've lent to others
-* **Borrower Management:** Record who borrowed what and when
-* **Return Dates:** Set expected return dates and monitor overdue items
-* **Trust Rating:** Rate borrowers' reliability for future reference
-* **Dashboard Visualization:** See all currently lent items at a glance
-
-### 🐾 Pet Management Hub
-* **Pet Profiles:** Track all your pets with name, species, breed, color, and date of birth
-* **Microchip Numbers:** Store chip IDs for quick identification in emergencies
-* **Pet-Sitter Instructions:** Document dietary needs and current medications for easy handoffs
-* **Vet Record Tracking:** Log every veterinary visit with date, treatment, cost, and next appointment
-* **Vaccination Schedule:** Track all vaccinations with due dates — overdues flagged automatically
-* **Batch Number Logging:** Record vaccine batch numbers for full traceability
-
-### 🪪 Identity Guard (Document Tracker)
-* **Multi-Person Tracking:** Monitor identity documents for yourself, spouse, children, and other household members
-* **Document Management:** Track IDs, Passports, Driver's Licenses, Visas, and custom documents
-* **Expiry Monitoring:** Visual status badges showing document validity
-  - 🟢 **Model Citizen:** Valid (>6 months until expiry)
-  - 🟡 **Bureaucratic Anxiety:** Expiring soon (<6 months)
-  - 🔴 **International Fugitive:** Expired documents
-* **Smart Reminders:** Automated notifications at 6, 3, and 1 month before expiry
-* **Physical Location Tracker:** Document where each physical document is stored
-* **Emergency Guide:** One-click access to lost/stolen document procedures and emergency contacts
-* **Countdown Timers:** Real-time expiry countdown for each document
-* **Dashboard Integration:** Critical document status at a glance
-* **Date Validation:** Prevents future issue dates and ensures logical date ranges
-
-### 🤒 Illness Tracker
-* **Per-Person Illness History:** Track every illness separately for each family member using the shared household person list
-* **Start & End Dates:** Capture when an illness began, when it ended, and keep optional notes
-* **Yearly Sick-Day Summary:** Count how many unique days each family member was sick in a given year
-* **GitHub-Style Activity View:** Visualize sick days in a yearly heatmap grouped by person
-
-### 🛟 Emergency Hub (Digitaler Notfallordner)
-* **Official Hotlines & ICE Contacts:** Pre-populated official emergency numbers (112, 110, 116 117, poison control, card blocking) with one-click dialing and primary ICE contacts
-* **Advance Directives & Vault:** Checklist and tracking for living wills, healthcare proxies, custody orders, and testaments with mandatory physical location of the original, ZVR registry numbers, notary contacts, and optional digital scans
-* **Medical Emergency Dossier:** Blood types, highlighted allergy warnings, regular medication schedules, pre-existing conditions, implants/aids, insurance & tax IDs, and doctor contacts for every family member
-* **Crisis Care & Key Holders:** Organized contingency plans for childcare, pet feeding, and key holders in emergencies
-* **Safe Financials & Digital Estate:** Security-first financial summary (last 4 IBAN digits only), powers of attorney, and secure access instructions for master passwords and PINs
-* **Personal Wishes:** Burial preferences, pre-need funeral contracts, and personal bereavement notification lists
-* **Home Emergency Shut-offs:** Exact locations and operating instructions for main water shut-off valve, electrical breaker box, and gas meter
-* **DIN A4 Printable Fridge Sheet:** One-click print-optimized summary for emergency responders, hospital stays, or physical emergency binders
-* **Annual Review Protocol:** Visual status badges and 1-click review logging ensuring vital emergency documents never go outdated
-
-### 🎯 Wishlist & Project Planning
-* **Future Projects:** Plan home improvement projects with descriptions and goals
-* **Budget Tracking:** Set estimated costs and track current savings progress
-* **Urgency Levels:** Prioritize projects from "nice-to-have" to "falling-apart"
-* **Project Categories:** Organize renovation, repair, and improvement plans
-* **Progress Visualization:** See how close you are to funding each project
-
-### 📚 Knowledge Base
-* **Documentation Library:** Centralized storage for manuals, guides, and home documentation
-* **Category Organization:** Organize by Heating, Plumbing, Smart Home, Structural, or General
-* **Multiple Formats:** Support for PDFs and Markdown documents
-* **Searchable Content:** Quickly find the information you need
-* **Custom Entries:** Write and save your own how-to guides and notes
-
-### 🚗 Garage (The Money Pit)
-* **Vehicle Management:** Track cars, motorcycles, and other vehicles
-* **Maintenance & Repair Log:** Keep a detailed record of all mechanical repairs and part replacements
-* **Tire Changes:** Track seasonal tire swaps and tread depths
-* **Fuel & Cost Analytics:** Detailed cost analysis of fuel, insurance, and running costs
-
-### 📄 Contracts & Subscriptions
-* **Recurring Cost Tracker:** Monitor all subscriptions, memberships, and recurring contracts
-* **Billing Intervals:** Support for monthly, quarterly, and yearly payment cycles
-* **Trial Periods:** Mark trials to receive reminders before they auto-renew
-* **Burn Rate Analytics:** See exactly how much your subscriptions cost you each month
-
-### 🍽️ Meal Planning
-* **7-Meals Integration:** Seamlessly connect with the 7-meals app
-* **Weekly Planner:** Organize and structure your household's meals for the week
-* **Household Sharing:** Share meal plans with family members
-
-### ⚙️ Settings & Customization
-* **Multi-Language Support:** Switch between multiple languages
-* **Theme Toggle:** Dark and light mode support
-* **Household Configuration:** Set heating type, manage waste categories
-* **Data Management:** Control your household data and preferences
-
-### 🏡 Dashboard Overview
-* **House Health Status:** Visual indicators for overall household status
-* **Quick Stats Cards:** At-a-glance metrics for appliances, maintenance, and expenses
-* **Quick Access Tiles:** Jump directly to waste calendar, maintenance, warranties, energy, and lending
-* **Responsive Design:** Optimized for desktop and mobile devices
-* **Global Search:** Find anything across all modules quickly
+### 🚗 4. Mobility & Everyday Life
+* **Garage (Car Pit):** Complete vehicle management: TÜV inspection reminders, seasonal tire swap tracking, maintenance logs, fuel/toll expenses, and digital document storage.
+* **Contracts & Subscriptions:** Track running subscriptions and contracts with billing cycles (monthly/yearly), renewal alerts, automated cancellation letters, and a "Regret Meter" for unused services.
+* **Meal Planning & Recipes:** Weekly meal planner with recipe collection, ingredient lists, and integration options for kitchen management.
+* **Settings & System:** Person management, waste type configurations, module enable/disable switches, theme toggles (dark/light), and tax data export.
 
 ---
 
-## 📸 Screenshots
+## 🚀 Quick Start (Docker)
 
-All screenshots were taken using the seeded demo data (`pnpm db:seed`).
+The fastest way to run Adulting.exe is using **Docker Compose**.
 
-### 🏡 Dashboard
-![Dashboard](docs/images/01-dashboard.png)
-
-### 📦 Vault (Appliance & Warranty Management)
-![Vault](docs/images/02-vault.png)
-
-### 🛠️ Service Team
-![Service Team](docs/images/03-services.png)
-
-### 🪪 Identity Guard
-![Identity Guard](docs/images/04-identity-guard.png)
-
-### 🤒 Illness Tracker
-![Illness Tracker](docs/images/11-illness-tracker.png)
-
-### 🔧 Maintenance
-![Maintenance](docs/images/05-maintenance.png)
-
-### 📉 Utilities
-![Utilities](docs/images/06-utilities.png)
-
-### 🎯 Wishlist
-![Wishlist](docs/images/07-wishlist.png)
-
-### 💸 Lending (Lend-O-Meter)
-![Lending](docs/images/08-lending.png)
-
-### 📚 Library
-![Library](docs/images/09-library.png)
-
-### ⚙️ Settings
-![Settings](docs/images/10-settings.png)
-
----
-
-## 🚀 Development
-
-### Prerequisites
-
-- [Node.js](https://nodejs.org/) >= 18
-- [pnpm](https://pnpm.io/) (recommended) or npm
-- [Docker](https://www.docker.com/) & Docker Compose
-
-### 1. Clone the repository
-
-```bash
-git clone https://github.com/Thomas-Mildner/adulting-exe.git
-cd adulting-exe
-```
-
-### 2. Install dependencies
-
-```bash
-pnpm install
-```
-
-### 3. Start the PostgreSQL database
-
-```bash
-docker compose up -d
-```
-
-This starts a PostgreSQL 16 instance on port **5432** with:
-- **User:** `adulting`
-- **Password:** `adulting_secret`
-- **Database:** `adulting_exe`
-
-### 4. Configure environment
-
-Copy the example env file (or use the one already created):
-
-```bash
-cp .env.example .env
-```
-
-The default `DATABASE_URL` is:
-```
-postgresql://adulting:adulting_secret@localhost:5432/adulting_exe?schema=public
-```
-
-
-### 5. Push database schema & seed data
-
-```bash
-pnpm db:push     # Create tables from Prisma schema
-pnpm db:seed     # Populate with sample data
-```
-
-### 6. Run the development server
-
-```bash
-pnpm dev
-```
-
-### 7. Open the dashboard
-
-Navigate to [http://localhost:3000](http://localhost:3000) to see your home management in action.
-
-### Database Commands
-
-| Command                  | Description                           |
-| ------------------------ | ------------------------------------- |
-| `pnpm db:push`           | Push schema changes to the database   |
-| `pnpm db:seed`           | Seed the database with sample data    |
-| `pnpm db:studio`         | Open Prisma Studio (visual DB editor) |
-| `pnpm db:generate`       | Regenerate Prisma Client              |
-| `pnpm db:reset`          | Reset database and re-seed            |
-| `docker compose up -d`   | Start PostgreSQL                      |
-| `docker compose down`    | Stop PostgreSQL                       |
-| `docker compose down -v` | Stop & delete database volume         |
-
-### Available Scripts
-
-| Script       | Description                         |
-| ------------ | ----------------------------------- |
-| `pnpm dev`   | Start development server with Turbo |
-| `pnpm build` | Build for production                |
-| `pnpm start` | Start production server             |
-
-
----
-
-## 🚢 Deployment
-
-### Docker Compose (Recommended)
-
-The easiest way to deploy Adulting.exe is with Docker Compose. Create a `docker-compose.yml` on your server:
+### 1. Create `docker-compose.yml`
 
 ```yaml
 version: "3.9"
@@ -301,7 +104,7 @@ services:
       retries: 10
 
   app:
-    image: thomasmildner/adulting-exe:latest
+    image: mildnerthomas/adulting-exe:latest
     container_name: adulting-exe-app
     restart: unless-stopped
     environment:
@@ -319,190 +122,159 @@ volumes:
   uploads_data:
 ```
 
-> **Note:**
-> - Replace `<your-secure-password>` with a strong password. Make sure the password matches in both `POSTGRES_PASSWORD` and `DATABASE_URL`.
-> - **Persistent Volumes:**
->   - `pgdata`: Stores the PostgreSQL database.
->   - `uploads_data`: Stores all user-uploaded files, receipts, warranties, and vehicle documents (`/app/public/uploads`). Without this volume, uploaded files are lost when the container is recreated.
+> [!IMPORTANT]
+> * Replace `<your-secure-password>` with a strong password (make sure it matches in both `POSTGRES_PASSWORD` and `DATABASE_URL`).
+> * The `uploads_data` volume is essential to persist your uploaded receipts, manuals, and documents across container updates.
 
-### Available Image Tags
-
-| Tag | Description |
-| --- | --- |
-| `latest` | Latest stable production release |
-| `main-latest` | Latest build from the main branch |
-| `1.2.3` | Specific semantic version |
-| `beta-latest` | Latest staging/beta build |
-| `1.8.0-rc.1` | Release candidate version |
-
-### Start the Stack
+### 2. Start the Stack
 
 ```bash
 docker compose up -d
 ```
 
-The app will be available at [http://localhost:3000](http://localhost:3000). On first startup, the database schema is applied automatically via Prisma migrations.
+Open [http://localhost:3000](http://localhost:3000) in your browser. Database migrations are applied automatically on startup.
 
-### Updating
-
-Pull the latest image and restart:
+### 3. Updating
 
 ```bash
 docker compose pull app
 docker compose up -d
 ```
 
+#### Available Image Tags
+
+| Tag | Description |
+| :--- | :--- |
+| `latest` | Latest stable production release |
+| `main-latest` | Latest automated build from the main branch |
+| `1.x.x` | Specific semantic version |
+| `beta-latest` | Latest staging / pre-release build |
+
+---
+
+## 💻 Local Development
+
+If you want to contribute or run the project directly from source:
+
+### Prerequisites
+* [Node.js](https://nodejs.org/) >= 18
+* [pnpm](https://pnpm.io/) (recommended)
+* [Docker](https://www.docker.com/) (for the local PostgreSQL instance)
+
+### Setup Steps
+
+```bash
+# 1. Clone the repository
+git clone https://github.com/Thomas-Mildner/Adulting.Exe.git
+cd Adulting.Exe
+
+# 2. Install dependencies
+pnpm install
+
+# 3. Start local PostgreSQL database container
+docker compose up -d postgres
+
+# 4. Configure environment
+cp .env.example .env
+
+# 5. Apply schema and seed demo data
+pnpm db:push
+pnpm db:seed
+
+# 6. Start Turbopack development server
+pnpm dev
+```
+
+Visit [http://localhost:3000](http://localhost:3000) to view the development server.
+
+### Useful CLI Commands
+
+| Command | Purpose |
+| :--- | :--- |
+| `pnpm dev` | Start development server with Turbopack |
+| `pnpm build` | Run production build & TypeScript type checks |
+| `pnpm start` | Start production server |
+| `pnpm db:seed` | Seed database with sample household data |
+| `pnpm db:studio` | Open Prisma Studio UI to inspect and edit database records |
+| `pnpm db:generate` | Regenerate `@prisma/client` types after schema edits |
+| `pnpm db:reset` | Reset local database and re-seed |
+
+---
+
+## 📸 Screenshots
+
+All screenshots reflect the included sample seed data.
+
+### 🏡 Main Dashboard
+![Dashboard](docs/images/01-dashboard.png)
+
+<details>
+<summary><strong>🔍 Click to expand all module screenshots (10 images)</strong></summary>
+<br />
+
+| 📦 Vault (Appliance & Warranty Tracker) | 🛠️ Services & Invoices |
+| :---: | :---: |
+| ![Vault](docs/images/02-vault.png) | ![Services](docs/images/03-services.png) |
+
+| 🪪 Identity Guard (Documents) | 🤒 Illness Tracker & Heatmap |
+| :---: | :---: |
+| ![Identity Guard](docs/images/04-identity-guard.png) | ![Illness Tracker](docs/images/11-illness-tracker.png) |
+
+| 🔧 Maintenance Tasks | 📉 Utility Consumption |
+| :---: | :---: |
+| ![Maintenance](docs/images/05-maintenance.png) | ![Utilities](docs/images/06-utilities.png) |
+
+| 🎯 Projects & Wishlist | 🤝 Lend-O-Meter |
+| :---: | :---: |
+| ![Wishlist](docs/images/07-wishlist.png) | ![Lending](docs/images/08-lending.png) |
+
+| 📚 Knowledge Base & Manuals | ⚙️ Settings & System |
+| :---: | :---: |
+| ![Library](docs/images/09-library.png) | ![Settings](docs/images/10-settings.png) |
+
+</details>
+
+---
+
+## 🗺️ Roadmap
+
+### 🚀 Upcoming Modules
+
+* **💊 Smart Medicine Cabinet (Smarte Hausapotheke):** Expiration date tracking for household medications, symptom/indication lookup, dosage leaflets, and DIN 13164 car first-aid kit inspector.
+* **🛋️ Home Inventory & Value (§ Versicherungswert):** Room-by-room inventory of high-value items, automatic replacement value aggregation to prevent dangerous underinsurance, and 1-click insurance claim export with photos and receipts.
+* **🧾 Tax Helper (§ 35a EStG Handwerkerbonus):** Automated extraction and aggregation of labor/travel costs from contractor invoices for German income tax deductions, utility bill splitting (*Nebenkostenabrechnung*), and 1-click export for tax software (Taxfix, WISO, Elster).
+* **🔄 Subscription Radar & Notice Watchdog:** Micro-subscription audit, burn-rate insights, contract renewal countdowns, and automated cancellation letter generation.
+
+### 🛠️ Platform Enhancements
+- [ ] Smart Meter API integrations (automated electricity/water data ingestion)
+- [ ] Push / Email notifications for maintenance tasks and expiring documents
+
 
 ---
 
 ## 🤝 Contributing
 
-We welcome contributions to Adulting.Exe! Whether you're fixing bugs, adding features, or improving documentation, your help is appreciated.
+Contributions are warmly welcomed!
 
-### Getting Started
-
-1. **Fork the repository** on GitHub
-2. **Clone your fork** locally:
+1. **Fork** the repository and create your feature branch:
    ```bash
-   git clone https://github.com/your-username/Adulting.Exe.git
-   cd Adulting.Exe
+   git checkout -b feat/your-feature-name
    ```
-3. **Create a feature branch:**
+2. **Make your changes**, ensuring clean TypeScript code and adherence to existing conventions.
+3. **Verify** your build passes:
    ```bash
-   git checkout -b feature/your-feature-name
+   pnpm build
    ```
-
-### Development Workflow
-
-1. **Make your changes** following the project's coding style
-2. **Test your changes** thoroughly:
-   ```bash
-   pnpm dev        # Test in development mode
-   pnpm build      # Verify production build works
-   ```
-3. **Commit your changes** using [Conventional Commits](https://www.conventionalcommits.org/):
-   ```bash
-   git commit -m "feat: add new feature description"
-   git commit -m "fix: resolve specific bug"
-   git commit -m "docs: update documentation"
-   ```
-4. **Push to your fork:**
-   ```bash
-   git push origin feature/your-feature-name
-   ```
-5. **Open a Pull Request** on GitHub with a clear description of your changes
-
-### Commit Message Guidelines
-
-This project uses [semantic-release](https://semantic-release.gitbook.io/) for automated versioning. Please follow the [Conventional Commits](https://www.conventionalcommits.org/) specification:
-
-- `feat:` - New features (triggers a minor release)
-- `fix:` - Bug fixes (triggers a patch release)
-- `perf:` - Performance improvements (triggers a patch release)
-- `refactor:` - Code refactoring (triggers a patch release)
-- `docs:` - Documentation changes (no release)
-- `chore:` - Maintenance tasks (no release)
-- `style:` - Code style changes (no release)
-- `test:` - Test updates (no release)
-- `BREAKING CHANGE:` - Breaking changes (triggers a major release)
-
-**Examples:**
-```bash
-feat: add QR code generation for inventory items
-fix: resolve warranty expiration date calculation
-docs: update installation instructions
-feat!: redesign dashboard layout
-
-BREAKING CHANGE: Dashboard layout has been completely redesigned
-```
-
-### Code Style
-
-- Follow the existing code style and conventions
-- Use TypeScript for type safety
-- Write clear, descriptive variable and function names
-- Add comments for complex logic
-- Keep components small and focused
-
-### What to Contribute
-
-- 🐛 **Bug fixes** - Help squash bugs and improve stability
-- ✨ **New features** - Add functionality from the roadmap or propose your own
-- 📚 **Documentation** - Improve guides, add examples, fix typos
-- 🎨 **UI/UX improvements** - Enhance the user interface and experience
-- 🧪 **Tests** - Add test coverage for existing or new features
-- 🌍 **Translations** - Add or improve language translations
-
-### Code Review Process
-
-- All submissions require review before merging
-- Maintainers will provide feedback and may request changes
-- Once approved, your contribution will be merged and included in the next release
-- Contributors will be credited in release notes
-
-### Questions or Issues?
-
-- **Bug reports:** Open an issue with detailed steps to reproduce
-- **Feature requests:** Open an issue describing the feature and use case
-- **Questions:** Start a discussion in GitHub Discussions
-
-### Versioning & Releases
-
-When code is merged to the `main` branch:
-- Semantic-release analyzes commits since the last release
-- Automatically determines the next version number
-- Updates `package.json` and `pnpm-lock.yaml`
-- Generates a changelog in `CHANGELOG.md`
-- Creates a GitHub release with release notes
-- Tags Docker images with the semantic version
-
-The current version is displayed in the app sidebar.
+4. **Commit** using [Conventional Commits](https://www.conventionalcommits.org/):
+   - `feat:` A new feature *(triggers MINOR release)*
+   - `fix:` A bug fix *(triggers PATCH release)*
+   - `docs:` Documentation changes only
+   - `refactor:` Code refactoring
+   - `chore:` Maintenance or dependency updates
+5. **Open a Pull Request** with a concise description of your changes.
 
 ---
 
-## 📝 Roadmap
-
-### 🚀 Upcoming Planned Modules
-
-#### 💊 1. Smart Medicine Cabinet & First Aid (Smarte Hausapotheke)
-* **Expiry Date Tracker:** Automated warnings before pain relievers, fever syrups, eye drops, or ointments expire.
-* **Symptom & Indication Directory:** Quickly locate medications by ailment (*"What do we have against stomach cramps, insect bites, or fever?"*).
-* **DIN 13164 Car First-Aid Kit Inspector:** Tracks vehicle first-aid kit expiration dates to ensure TÜV and traffic inspection compliance.
-* **Leaflet & Dosage Archive:** Store digital packaging leaflets (PDF) and quick dosage guidelines for children and adults.
-
-#### 🛋️ 2. Home Inventory & Insurance Value (Hausrat-Inventar & Versicherungswert)
-* **Room-by-Room Inventory:** Catalog high-value furniture, electronics, jewelry, bikes, musical instruments, and collections with photos, purchase receipts, and serial numbers.
-* **Replacement Value Calculator:** Automatically aggregates total household inventory value to identify and prevent dangerous underinsurance (*Unterversicherung*).
-* **1-Click Insurance Claim Export:** Export a complete, formatted claim dossier with photos and proof of purchase in the event of burglary, fire, storm, or water damage.
-
-#### 🧾 3. Tax Helper & Household Services Deductions (§ 35a EStG)
-* **Contractor & Services Tax Deduction:** Automatically extracts and aggregates eligible labor and travel costs from the `Services` module for direct income tax reduction (20% under § 35a German Income Tax Act / *Handwerkerbonus*).
-* **Utility Bill Splitting (Nebenkostenabrechnung):** Capture and allocate tax-deductible items (caretaker, building cleaning, winter services, garden maintenance).
-* **Year-End Tax Report:** 1-click pre-formatted summary and proof list ready for tax software (WISO Steuer, Taxfix, Smartsteuer) or Elster.
-
-#### 🔄 4. Subscription Radar & Renewal Watchdog (Abo- & Kündigungswächter)
-* **Digital Micro-Subscription Audit:** Specialized tracking for streaming services, cloud storage, software licenses, gym memberships, BahnCards, and news subscriptions.
-* **Burn Rate & Cost Insights:** Instant visibility into monthly and annual recurring digital costs (*"I'm spending 94 €/month on recurring digital services?!"*).
-* **Countdown & Notice Period Radar:** Automated countdown and proactive reminders before contract renewal locks you into another cycle.
-* **1-Click Cancellation Templates:** Generate legally compliant cancellation notices adhering to modern consumer protection and button-solution laws.
-
----
-
-### 🛠️ General Platform Improvements
-
-- [ ] QR Code Generator for moving boxes and quick inventory access
-- [ ] Smart Meter API integrations for automated utility tracking
-- [ ] Notification system for upcoming maintenance, warranty, and document expirations
-- [ ] Mobile app (iOS/Android companion)
-- [ ] Import/Export functionality for full data portability
-- [ ] Multi-household support for property managers or multiple homes
-
----
-
-## 🛡️ License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-
-**Current Status:** *The house is still standing (as of today).*
+<p align="center">
+  <sub>🏠 Adulting.exe — The house is still standing.</sub>
+</p>
