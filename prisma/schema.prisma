@@ -137,6 +137,30 @@ model WastePickup {
   wasteType   WasteType @relation(fields: [wasteTypeId], references: [id], onDelete: Cascade)
 }
 
+// ─── Insurance Management ──────────────────────────────────────────────
+
+model Insurance {
+  id                    String   @id @default(cuid())
+  providerName          String
+  policyType            String   // "Home Contents" | "Residential Building" | "Private Liability" | "Legal Protection" | "Life Insurance" | "Disability" | "Pet Insurance" | "Car Insurance" | "Custom"
+  customPolicyType      String?  // Used when policyType is "Custom"
+  policyNumber          String
+  premiumAmount         Float
+  paymentFrequency      String   // "Monthly" | "Quarterly" | "Annually"
+  deductible            Float    @default(0)
+  startDate             DateTime
+  endDate               DateTime?
+  cancellationDeadline  DateTime
+  documentPath          String?  // Path to uploaded policy document (PDF)
+  claimsHotline         String
+  agentEmail            String
+  beneficiary           String?  // "Who gets the payout?" for Life/Disability insurance
+  notes                 String?  // Additional notes
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
 model AppConfig {
   id                       String   @id @default("default") // Only one row
   heatingType              String   @default("Gas") // "Gas", "Oil", "Fernwärme", "Wärmepumpe", "Pellets"
@@ -216,29 +240,7 @@ model CarDocument {
   car        Car      @relation(fields: [carId], references: [id], onDelete: Cascade)
 }
 
-// ─── Insurance ──────────────────────────────────────────────────────────
 
-model Insurance {
-  id                   String   @id @default(cuid())
-  providerName         String
-  policyType           String
-  customPolicyType     String?
-  policyNumber         String
-  premiumAmount        Float
-  paymentFrequency     String
-  deductible           Float
-  startDate            DateTime
-  endDate              DateTime?
-  cancellationDeadline DateTime
-  documentPath         String?
-  claimsHotline        String
-  agentEmail           String
-  beneficiary          String?
-  notes                String?
-
-  createdAt            DateTime @default(now())
-  updatedAt            DateTime @updatedAt
-}
 
 // ─── Recurring Contracts / Subscriptions ──────────────────────────────
 
