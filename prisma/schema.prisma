@@ -144,6 +144,18 @@ model AppConfig {
   disabledModules          String[] @default([]) // Module keys that are hidden from the sidebar
   tutorialCompletedModules String[] @default([]) // Module keys whose tutorial has been seen
 
+  // Notification Settings & Thresholds
+  notifyWarranty           Boolean  @default(true)
+  warrantyAlertDays        Int      @default(30)
+  notifyMaintenance        Boolean  @default(true)
+  maintenanceAlertDays     Int      @default(7)
+  notifyDocuments          Boolean  @default(true)
+  documentAlertDays        Int      @default(90)
+  notifyInspection         Boolean  @default(true)
+  inspectionAlertDays      Int      @default(30)
+  notifyLending            Boolean  @default(true)
+  notifyWaste              Boolean  @default(true)
+
   updatedAt DateTime @updatedAt
 }
 
