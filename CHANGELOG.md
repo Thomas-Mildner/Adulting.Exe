@@ -1,3 +1,15 @@
+# [1.10.0-rc.7](https://github.com/Thomas-Mildner/Adulting.Exe/compare/v1.10.0-rc.6...v1.10.0-rc.7) (2026-10-19)
+
+
+### Bug Fixes
+
+* redesign waste calendar view with responsive layout and enhanced filtering options ([de58aa0](https://github.com/Thomas-Mildner/Adulting.Exe/commit/de58aa0232210016d84081b1fecc0c2904881d25))
+
+
+### Features
+
+* **settings:** add household members management ([24d1dd7](https://github.com/Thomas-Mildner/Adulting.Exe/commit/24d1dd74f8e9a0d9dc28ecc149519a0c08856995))
+
 # [1.10.0-rc.6](https://github.com/Thomas-Mildner/Adulting.Exe/compare/v1.10.0-rc.5...v1.10.0-rc.6) (2026-10-19)
 
 
