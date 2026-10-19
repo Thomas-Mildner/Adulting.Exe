@@ -4,38 +4,52 @@ import { notFound } from "next/navigation"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { ArrowLeft, Printer, FileText, Download } from "lucide-react"
-import Link from "next/link"
+import { ArrowLeft, FileText, Download } from "lucide-react"
+import { Link } from "@/lib/navigation"
 import QRCode from "react-qr-code"
 import { PrintButton } from "@/components/vault/print-button"
+import { getTranslations } from "next-intl/server"
 
-const statusConfig = {
-    protected: { label: "Unter Schutz", style: "bg-success/10 text-success border-success/20" },
-    solo: { label: "Auf sich allein gestellt", style: "bg-chart-3/10 text-chart-3 border-chart-3/20" },
-    zombie: { label: "Zombie-Modus", style: "bg-destructive/10 text-destructive border-destructive/20" },
+const statusStyles: Record<string, string> = {
+    protected: "bg-success/10 text-success border-success/20",
+    solo: "bg-chart-3/10 text-chart-3 border-chart-3/20",
+    zombie: "bg-destructive/10 text-destructive border-destructive/20",
 }
 
-export default async function ApplianceDetailPage({ params }: { params: Promise<{ id: string }> }) {
-    const { id } = await params
-    const appliance = await getAppliance(id)
+export default async function ApplianceDetailPage({
+    params,
+}: {
+    params: Promise<{ locale: string; id: string }>
+}) {
+    const { locale, id } = await params
+    const [appliance, t] = await Promise.all([
+        getAppliance(id),
+        getTranslations("Vault"),
+    ])
 
     if (!appliance) {
         notFound()
     }
 
-    const { label, style } = statusConfig[appliance.status] || { label: "Unbekannt", style: "" }
+    const statusKey = appliance.status as "protected" | "solo" | "zombie"
+    const label = ["protected", "solo", "zombie"].includes(appliance.status)
+        ? t(`status.${statusKey}`)
+        : t("detail.unknown")
+    const style = statusStyles[appliance.status] || ""
+
+    const dateLocale = locale === "de" ? "de-DE" : "en-US"
 
     return (
         <DashboardLayout
             title={appliance.name}
-            subtitle={`Details zu deinem ${appliance.brand}-Gerät.`}
+            subtitle={t("detail.subtitle", { brand: appliance.brand })}
         >
             <div className="space-y-6 max-w-2xl mx-auto">
                 <div className="flex items-center justify-between">
                     <Link href="/vault">
                         <Button variant="ghost" size="sm">
                             <ArrowLeft className="mr-2 h-4 w-4" />
-                            Zurück zum Tresor
+                            {t("detail.back")}
                         </Button>
                     </Link>
                     <PrintButton />
@@ -54,26 +68,26 @@ export default async function ApplianceDetailPage({ params }: { params: Promise<
                     <CardContent className="space-y-6">
                         <div className="grid grid-cols-2 gap-4 text-sm">
                             <div>
-                                <p className="text-muted-foreground">Kaufdatum</p>
-                                <p className="font-medium">{new Date(appliance.purchaseDate).toLocaleDateString("de-DE")}</p>
+                                <p className="text-muted-foreground">{t("fields.purchaseDate")}</p>
+                                <p className="font-medium">{new Date(appliance.purchaseDate).toLocaleDateString(dateLocale)}</p>
                             </div>
                             <div>
-                                <p className="text-muted-foreground">Garantie bis</p>
-                                <p className="font-medium">{new Date(appliance.warrantyEnd).toLocaleDateString("de-DE")}</p>
+                                <p className="text-muted-foreground">{t("fields.warrantyEnd")}</p>
+                                <p className="font-medium">{new Date(appliance.warrantyEnd).toLocaleDateString(dateLocale)}</p>
                             </div>
                             <div>
-                                <p className="text-muted-foreground">Preis</p>
-                                <p className="font-medium">{new Intl.NumberFormat("de-DE", { style: "currency", currency: "EUR" }).format(appliance.price)}</p>
+                                <p className="text-muted-foreground">{t("fields.price")}</p>
+                                <p className="font-medium">{new Intl.NumberFormat(dateLocale, { style: "currency", currency: "EUR" }).format(appliance.price)}</p>
                             </div>
                             <div>
-                                <p className="text-muted-foreground">Lagerort</p>
+                                <p className="text-muted-foreground">{t("fields.boxLocation")}</p>
                                 <p className="font-medium">{appliance.boxLocation}</p>
                             </div>
                         </div>
 
                         {appliance.receiptPath && (
                             <div className="pt-4 border-t space-y-3">
-                                <p className="text-sm font-medium">Quittung / Beleg</p>
+                                <p className="text-sm font-medium">{t("detail.receipt")}</p>
                                 <div className="flex items-center gap-3">
                                     <a
                                         href={appliance.receiptPath}
@@ -82,7 +96,7 @@ export default async function ApplianceDetailPage({ params }: { params: Promise<
                                     >
                                         <Button variant="outline" size="sm" className="gap-2">
                                             <FileText className="h-4 w-4" />
-                                            Vorschau anzeigen
+                                            {t("detail.preview")}
                                         </Button>
                                     </a>
                                     <a
@@ -90,7 +104,7 @@ export default async function ApplianceDetailPage({ params }: { params: Promise<
                                     >
                                         <Button variant="outline" size="sm" className="gap-2">
                                             <Download className="h-4 w-4" />
-                                            Herunterladen
+                                            {t("detail.download")}
                                         </Button>
                                     </a>
                                 </div>
@@ -98,7 +112,7 @@ export default async function ApplianceDetailPage({ params }: { params: Promise<
                         )}
 
                         <div className="pt-6 border-t flex flex-col items-center gap-4">
-                            <p className="text-sm text-muted-foreground">Scanne diesen Code, um direkt hierher zu gelangen.</p>
+                            <p className="text-sm text-muted-foreground">{t("detail.scanHint")}</p>
                             <div className="p-4 bg-white rounded-lg shadow-sm border">
                                 <QRCode value={`${process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"}/vault/${appliance.id}`} size={200} />
                             </div>
@@ -110,3 +124,4 @@ export default async function ApplianceDetailPage({ params }: { params: Promise<
         </DashboardLayout>
     )
 }
+
