@@ -1,3 +1,16 @@
+# [1.10.0-rc.5](https://github.com/Thomas-Mildner/Adulting.Exe/compare/v1.10.0-rc.4...v1.10.0-rc.5) (2026-10-19)
+
+
+### Bug Fixes
+
+* update dependencies including lucide-react, types/node, and postcss ([8312ecf](https://github.com/Thomas-Mildner/Adulting.Exe/commit/8312ecfd60615b658cb3b028c4109ee3470b55f3))
+
+
+### Features
+
+* add uploads_data volume to documentation ([8c324d1](https://github.com/Thomas-Mildner/Adulting.Exe/commit/8c324d1ae41873d6bab9efb7c6e2c8bfe94d2d37))
+* add vault item detail translations, update proxy matcher, and localize print button ([e7da4f0](https://github.com/Thomas-Mildner/Adulting.Exe/commit/e7da4f0415a999f623cc4a5e5afb1f6db8927f1f))
+
 # [1.10.0-rc.4](https://github.com/Thomas-Mildner/Adulting.Exe/compare/v1.10.0-rc.3...v1.10.0-rc.4) (2026-09-27)
 
 

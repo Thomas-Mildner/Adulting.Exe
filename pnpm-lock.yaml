@@ -4883,7 +4883,7 @@ snapshots:
   '@semantic-release/git@11.0.1(semantic-release@25.0.9(typescript@5.7.3))':
     dependencies:
       '@semantic-release/error': 4.0.0
-      aggregate-error: 5.0.0
+      aggregate-error: 5.1.0
       debug: 4.4.3
       dir-glob: 3.0.1
       execa: 10.0.1
