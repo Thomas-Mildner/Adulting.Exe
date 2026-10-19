@@ -7,6 +7,7 @@ import {
 import { HeatingSettings } from "@/components/settings/heating-settings"
 import { LanguageSwitcher } from "@/components/settings/language-switcher"
 import { WasteTypeSettings } from "@/components/settings/waste-type-settings"
+import { UtilityTariffsSettings } from "@/components/settings/utility-tariffs-settings"
 import { ModuleSettings } from "@/components/settings/module-settings"
 import { getAppConfig, getWasteTypes } from "@/lib/actions"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
@@ -56,6 +57,9 @@ export default async function SettingsPage() {
 
         <TabsContent value="household" className="space-y-6 animate-in fade-in-50 duration-500">
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            <div className="md:col-span-1">
+              <UtilityTariffsSettings initialConfig={appConfig} />
+            </div>
             <div className="md:col-span-1">
               <HeatingSettings currentType={appConfig.heatingType} />
             </div>
