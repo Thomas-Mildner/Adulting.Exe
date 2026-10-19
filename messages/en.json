@@ -720,7 +720,10 @@
       "manual": "Manual",
       "empty": "No pickups found. Time to fill the calendar!",
       "today": "Today",
-      "delete": "Delete"
+      "delete": "Delete",
+      "all": "All",
+      "upcoming": "Upcoming",
+      "past": "Past"
     },
     "add": {
       "title": "Plan New Pickup",
