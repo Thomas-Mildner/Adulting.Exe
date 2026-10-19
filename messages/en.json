@@ -104,6 +104,27 @@
         "black": "Black"
       }
     },
+    "householdMembers": {
+      "title": "Household Members",
+      "description": "Manage people in your home for documents and illness tracking.",
+      "add": "Add Member",
+      "edit": "Edit Member",
+      "name": "Name",
+      "namePlaceholder": "e.g. Alex",
+      "relation": "Role / Relation",
+      "save": "Save",
+      "cancel": "Cancel",
+      "delete": "Delete",
+      "deleteConfirm": "Are you sure you want to delete this member? Associated documents and records will also be removed.",
+      "empty": "No household members added yet.",
+      "documentCount": "{count, plural, =0 {No documents} =1 {1 document} other {# documents}}",
+      "relations": {
+        "Self": "Self",
+        "Spouse": "Spouse / Partner",
+        "Child": "Child",
+        "Other": "Other"
+      }
+    },
     "modulesTab": "Modules",
     "modules": {
       "title": "Module Selection",

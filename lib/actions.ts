@@ -1512,6 +1512,7 @@ export async function createPerson(data: Omit<Person, "id">) {
   })
   revalidatePath("/documents")
   revalidatePath("/illnesses")
+  revalidatePath("/settings")
   revalidatePath("/")
 }
 
@@ -1525,6 +1526,7 @@ export async function updatePerson(id: string, data: Partial<Omit<Person, "id">>
   })
   revalidatePath("/documents")
   revalidatePath("/illnesses")
+  revalidatePath("/settings")
   revalidatePath("/")
 }
 
@@ -1532,6 +1534,7 @@ export async function deletePerson(id: string) {
   await prisma.person.delete({ where: { id } })
   revalidatePath("/documents")
   revalidatePath("/illnesses")
+  revalidatePath("/settings")
   revalidatePath("/")
 }
 
