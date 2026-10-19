@@ -363,7 +363,17 @@
       "daysRemaining": "{days} days left",
       "expired": "Expired"
     },
-    "emptyState": "Nothing found. Either you searched wrong or you own nothing. Both concerning."
+    "emptyState": "Nothing found. Either you searched wrong or you own nothing. Both concerning.",
+    "detail": {
+      "subtitle": "Details about your {brand} device.",
+      "back": "Back to vault",
+      "print": "Print",
+      "receipt": "Receipt / Invoice",
+      "preview": "Show preview",
+      "download": "Download",
+      "scanHint": "Scan this code to jump directly here.",
+      "unknown": "Unknown"
+    }
   },
   "GlobalSearch": {
     "placeholder": "Search everything...",

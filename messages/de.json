@@ -363,7 +363,17 @@
       "daysRemaining": "{days} Tage übrig",
       "expired": "Abgelaufen"
     },
-    "emptyState": "Nichts gefunden. Entweder falsch gesucht oder du besitzt nichts. Beides besorgniserregend."
+    "emptyState": "Nichts gefunden. Entweder falsch gesucht oder du besitzt nichts. Beides besorgniserregend.",
+    "detail": {
+      "subtitle": "Details zu deinem {brand}-Gerät.",
+      "back": "Zurück zum Tresor",
+      "print": "Drucken",
+      "receipt": "Quittung / Beleg",
+      "preview": "Vorschau anzeigen",
+      "download": "Herunterladen",
+      "scanHint": "Scanne diesen Code, um direkt hierher zu gelangen.",
+      "unknown": "Unbekannt"
+    }
   },
   "GlobalSearch": {
     "placeholder": "Alles durchsuchen...",
