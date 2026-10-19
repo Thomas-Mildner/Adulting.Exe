@@ -720,7 +720,10 @@
       "manual": "Manuell",
       "empty": "Keine Termine gefunden. Zeit, den Kalender zu füllen!",
       "today": "Heute",
-      "delete": "Löschen"
+      "delete": "Löschen",
+      "all": "Alle",
+      "upcoming": "Anstehend",
+      "past": "Vergangen"
     },
     "add": {
       "title": "Neuen Termin planen",
