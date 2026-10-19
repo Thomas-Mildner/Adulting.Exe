@@ -1,3 +1,10 @@
+# [1.10.0-rc.6](https://github.com/Thomas-Mildner/Adulting.Exe/compare/v1.10.0-rc.5...v1.10.0-rc.6) (2026-10-19)
+
+
+### Bug Fixes
+
+* **ui:** update calendar for react-day-picker v10 ([2da8155](https://github.com/Thomas-Mildner/Adulting.Exe/commit/2da815548e677bd5673a58fdc601fb839bb98b64))
+
 # [1.10.0-rc.5](https://github.com/Thomas-Mildner/Adulting.Exe/compare/v1.10.0-rc.4...v1.10.0-rc.5) (2026-10-19)
 
 
