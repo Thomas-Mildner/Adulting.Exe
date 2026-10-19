@@ -6,6 +6,7 @@ import {
 } from "@/components/settings/settings-panel"
 import { HeatingSettings } from "@/components/settings/heating-settings"
 import { LanguageSwitcher } from "@/components/settings/language-switcher"
+import { ThemeSettings } from "@/components/settings/theme-settings"
 import { WasteTypeSettings } from "@/components/settings/waste-type-settings"
 import { ModuleSettings } from "@/components/settings/module-settings"
 import { getAppConfig, getWasteTypes } from "@/lib/actions"
@@ -48,9 +49,8 @@ export default async function SettingsPage() {
         </TabsList>
 
         <TabsContent value="general" className="space-y-6 max-w-2xl animate-in fade-in-50 duration-500">
-          <div className="flex items-center justify-between">
-            <LanguageSwitcher />
-          </div>
+          <ThemeSettings />
+          <LanguageSwitcher />
           <NotificationSettings />
         </TabsContent>
 
