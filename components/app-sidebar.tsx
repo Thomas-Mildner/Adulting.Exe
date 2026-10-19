@@ -37,6 +37,7 @@ import {
   SidebarSeparator,
 } from "@/components/ui/sidebar";
 import { useVersionCheck } from "@/hooks/use-version-check";
+import { ReleaseNotesDialog } from "@/components/version/release-notes-dialog";
 
 interface AppSidebarProps {
   disabledModules?: string[];
@@ -45,7 +46,16 @@ interface AppSidebarProps {
 export function AppSidebar({ disabledModules = [] }: AppSidebarProps) {
   const pathname = usePathname();
   const t = useTranslations("Navigation");
-  const { isUpdateAvailable, latestVersion, currentVersion: builtVersion } = useVersionCheck();
+  const {
+    isUpdateAvailable,
+    latestVersion,
+    currentVersion: builtVersion,
+    releaseNotes,
+    releaseName,
+    releaseUrl,
+    publishedAt,
+  } = useVersionCheck();
+  const [showReleaseNotes, setShowReleaseNotes] = React.useState(false);
 
   const allMainNav = [
     { key: "dashboard", title: t("dashboard"), href: "/", icon: LayoutDashboard },
@@ -125,11 +135,43 @@ export function AppSidebar({ disabledModules = [] }: AppSidebarProps) {
             <span className="text-sm font-semibold tracking-tight text-sidebar-accent-foreground">
               Adulting.exe
             </span>
-            <span className="text-[10px] text-sidebar-foreground/50 font-mono">
+            <span
+              role="button"
+              tabIndex={0}
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setShowReleaseNotes(true);
+              }}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  setShowReleaseNotes(true);
+                }
+              }}
+              className="text-[10px] text-sidebar-foreground/50 font-mono hover:text-foreground hover:underline cursor-pointer transition-colors"
+            >
               v{builtVersion} &mdash; immer noch Beta
             </span>
             {isUpdateAvailable && latestVersion && (
-              <span className="text-[10px] text-green-500 font-mono mt-0.5 animate-pulse">
+              <span
+                role="button"
+                tabIndex={0}
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  setShowReleaseNotes(true);
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    setShowReleaseNotes(true);
+                  }
+                }}
+                className="text-[10px] text-emerald-500 font-mono mt-0.5 animate-pulse cursor-pointer hover:underline"
+              >
                 Update verfügbar: v{latestVersion}
               </span>
             )}
@@ -149,6 +191,17 @@ export function AppSidebar({ disabledModules = [] }: AppSidebarProps) {
           </p>
         </div>
       </SidebarFooter>
+      <ReleaseNotesDialog
+        open={showReleaseNotes}
+        onOpenChange={setShowReleaseNotes}
+        currentVersion={builtVersion}
+        latestVersion={latestVersion}
+        isUpdateAvailable={isUpdateAvailable}
+        releaseNotes={releaseNotes}
+        releaseName={releaseName}
+        releaseUrl={releaseUrl}
+        publishedAt={publishedAt}
+      />
     </Sidebar>
   );
 }

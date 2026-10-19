@@ -1602,5 +1602,24 @@
     "description": "Discover 7-meals: The app that lets you create, manage, and share your meal plans with your household. Log in to get started.",
     "openApp": "Open 7-meals",
     "openAppSubtitle": "Opens in a new tab"
+  },
+  "ReleaseNotes": {
+    "title": "Release Notes",
+    "subtitle": "News and changes in Adulting.exe",
+    "button": "Release Notes",
+    "whatsNew": "What's new?",
+    "current": "Installed",
+    "latest": "Latest",
+    "updateAvailable": "Update available",
+    "upToDate": "Up to date",
+    "viewOnGithub": "View on GitHub",
+    "close": "Close",
+    "noNotes": "No release notes available.",
+    "loading": "Loading release notes...",
+    "features": "New Features",
+    "fixes": "Bug Fixes",
+    "breaking": "Breaking Changes",
+    "other": "Other Changes",
+    "updatedNotification": "Adulting.exe has been updated to v{version}!"
   }
 }

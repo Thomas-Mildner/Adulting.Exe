@@ -1602,5 +1602,24 @@
     "description": "Entdecke 7-meals: Die App, mit der du deine Essenspläne erstellen, verwalten und mit deinem Haushalt teilen kannst. Melde dich an, um loszulegen.",
     "openApp": "7-meals öffnen",
     "openAppSubtitle": "Öffnet in einem neuen Tab"
+  },
+  "ReleaseNotes": {
+    "title": "Release Notes",
+    "subtitle": "Neuigkeiten und Änderungen in Adulting.exe",
+    "button": "Release Notes",
+    "whatsNew": "Was ist neu?",
+    "current": "Installiert",
+    "latest": "Neueste",
+    "updateAvailable": "Update verfügbar",
+    "upToDate": "Aktuell",
+    "viewOnGithub": "Auf GitHub ansehen",
+    "close": "Schließen",
+    "noNotes": "Keine Versionshinweise verfügbar.",
+    "loading": "Lade Versionshinweise...",
+    "features": "Neue Funktionen",
+    "fixes": "Fehlerbehebungen",
+    "breaking": "Wichtige Änderungen",
+    "other": "Weitere Änderungen",
+    "updatedNotification": "Adulting.exe wurde auf v{version} aktualisiert!"
   }
 }

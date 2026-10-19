@@ -1,14 +1,18 @@
 import * as React from "react";
 import { isVersionLessThan, FALLBACK_VERSION, GITHUB_REPO } from "@/lib/utils/version";
 
-interface VersionCheckResult {
+export interface VersionCheckResult {
     latestVersion: string | null;
     currentVersion: string;
     isUpdateAvailable: boolean;
     releaseUrl: string;
+    releaseNotes: string | null;
+    releaseName: string | null;
+    publishedAt: string | null;
     lastChecked: Date | null;
     isLoading: boolean;
     error: Error | null;
+    checkVersion: (signal?: AbortSignal) => Promise<void>;
 }
 
 const DEFAULT_POLLING_INTERVAL = 5 * 60 * 1000; // 5 minutes
@@ -17,6 +21,9 @@ export function useVersionCheck(pollingIntervalMs: number = DEFAULT_POLLING_INTE
     const currentVersion = process.env.NEXT_PUBLIC_APP_VERSION || FALLBACK_VERSION;
     const [latestVersion, setLatestVersion] = React.useState<string | null>(null);
     const [releaseUrl, setReleaseUrl] = React.useState<string>(`https://github.com/${GITHUB_REPO}/releases`);
+    const [releaseNotes, setReleaseNotes] = React.useState<string | null>(null);
+    const [releaseName, setReleaseName] = React.useState<string | null>(null);
+    const [publishedAt, setPublishedAt] = React.useState<string | null>(null);
     const [isUpdateAvailable, setIsUpdateAvailable] = React.useState<boolean>(false);
     const [lastChecked, setLastChecked] = React.useState<Date | null>(null);
     const [isLoading, setIsLoading] = React.useState<boolean>(false);
@@ -42,6 +49,16 @@ export function useVersionCheck(pollingIntervalMs: number = DEFAULT_POLLING_INTE
                     setReleaseUrl(data.releaseUrl);
                 } else {
                     setReleaseUrl(`https://github.com/${GITHUB_REPO}/releases/tag/v${data.version}`);
+                }
+
+                if (typeof data.releaseNotes === "string") {
+                    setReleaseNotes(data.releaseNotes);
+                }
+                if (data.name) {
+                    setReleaseName(data.name);
+                }
+                if (data.publishedAt) {
+                    setPublishedAt(data.publishedAt);
                 }
 
                 // Check if update is available using semantic version comparison
@@ -89,8 +106,13 @@ export function useVersionCheck(pollingIntervalMs: number = DEFAULT_POLLING_INTE
         currentVersion,
         isUpdateAvailable,
         releaseUrl,
+        releaseNotes,
+        releaseName,
+        publishedAt,
         lastChecked,
         isLoading,
-        error
+        error,
+        checkVersion,
     };
 }
+
