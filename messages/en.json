@@ -32,9 +32,14 @@
     "system": "System",
     "language": "Language",
     "theme": {
+      "title": "Appearance",
+      "description": "Select your preferred color theme for the interface.",
       "light": "Light",
+      "lightDesc": "Clean and bright appearance",
       "dark": "Dark",
-      "system": "System"
+      "darkDesc": "Easy on the eyes in low light",
+      "system": "System",
+      "systemDesc": "Syncs with your device preferences"
     },
     "notifications": {
       "title": "Notifications",

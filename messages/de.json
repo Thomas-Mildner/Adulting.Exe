@@ -32,9 +32,14 @@
     "system": "System",
     "language": "Sprache",
     "theme": {
+      "title": "Erscheinungsbild",
+      "description": "Wähle dein bevorzugtes Farbschema für die Benutzeroberfläche.",
       "light": "Hell",
+      "lightDesc": "Helle, klare Ansicht für den Tag",
       "dark": "Dunkel",
-      "system": "System"
+      "darkDesc": "Angenehm für die Augen bei wenig Licht",
+      "system": "System",
+      "systemDesc": "Passt sich deinen Geräteeinstellungen an"
     },
     "notifications": {
       "title": "Benachrichtigungen",
