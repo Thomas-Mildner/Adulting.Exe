@@ -5,6 +5,7 @@ import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import { Toaster } from "@/components/ui/sonner"
 import { ThemeProvider } from "@/components/theme-provider"
+import { WhatsNewNotifier } from "@/components/version/whats-new-notifier"
 
 import "../globals.css"
 
@@ -45,6 +46,7 @@ export default async function RootLayout({
           <NextIntlClientProvider messages={messages}>
             {children}
             <Toaster />
+            <WhatsNewNotifier />
           </NextIntlClientProvider>
         </ThemeProvider>
       </body>

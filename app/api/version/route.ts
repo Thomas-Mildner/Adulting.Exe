@@ -1,33 +1,43 @@
 import { NextResponse } from 'next/server';
 import pkg from '@/package.json';
 import { GITHUB_REPO } from '@/lib/utils/version';
+import fs from 'fs';
+import path from 'path';
 
 interface GitHubRelease {
   tag_name: string;
   name: string;
   published_at: string;
   html_url: string;
+  body?: string;
 }
 
-/**
- * Module-level cache for the latest version.
- * 
- * Note: This is a simple in-memory cache that works well for traditional deployments
- * but has limitations in serverless environments:
- * - Cache is lost between cold starts
- * - Each serverless instance maintains its own cache
- * - Cache doesn't persist across deployments
- * 
- * For production serverless deployments, consider using a distributed cache
- * like Redis or Vercel KV. However, for this use case (displaying version info),
- * the 5-minute cache window is acceptable and helps reduce GitHub API calls.
- * 
- * Authentication:
- * - For public repositories: No authentication required
- * - For private repositories: Set GITHUB_TOKEN or GH_TOKEN environment variable
- *   with a GitHub Personal Access Token that has 'repo' scope
- */
-let cachedVersion: { version: string; timestamp: number } | null = null;
+interface CachedVersionInfo {
+  version: string;
+  timestamp: number;
+  releaseUrl: string;
+  publishedAt: string;
+  releaseNotes?: string;
+  name?: string;
+}
+
+function getFallbackChangelog(): { releaseNotes?: string } {
+  try {
+    const changelogPath = path.join(process.cwd(), 'CHANGELOG.md');
+    if (fs.existsSync(changelogPath)) {
+      const content = fs.readFileSync(changelogPath, 'utf-8');
+      const parts = content.split(/^#\s+/m);
+      if (parts.length > 1) {
+        return { releaseNotes: `# ${parts[1].trim()}` };
+      }
+    }
+  } catch {
+    // Ignore read errors
+  }
+  return {};
+}
+
+let cachedVersion: CachedVersionInfo | null = null;
 const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes in milliseconds
 
 export async function GET() {
@@ -36,7 +46,11 @@ export async function GET() {
     if (cachedVersion && Date.now() - cachedVersion.timestamp < CACHE_DURATION) {
       return NextResponse.json({ 
         version: cachedVersion.version,
-        cached: true 
+        cached: true,
+        releaseUrl: cachedVersion.releaseUrl,
+        publishedAt: cachedVersion.publishedAt,
+        releaseNotes: cachedVersion.releaseNotes,
+        name: cachedVersion.name,
       });
     }
 
@@ -63,10 +77,14 @@ export async function GET() {
     );
 
     if (!response.ok) {
-      // If we can't fetch from GitHub, fall back to package.json version
+      // If we can't fetch from GitHub, fall back to package.json version and local CHANGELOG.md
+      const fallbackNotes = getFallbackChangelog();
       return NextResponse.json({ 
         version: pkg.version,
         fallback: true,
+        releaseUrl: `https://github.com/${GITHUB_REPO}/releases`,
+        releaseNotes: fallbackNotes.releaseNotes || '',
+        name: `v${pkg.version}`,
         error: `GitHub API returned ${response.status}`
       });
     }
@@ -81,6 +99,10 @@ export async function GET() {
     cachedVersion = {
       version,
       timestamp: Date.now(),
+      releaseUrl: release.html_url,
+      publishedAt: release.published_at,
+      releaseNotes: release.body || '',
+      name: release.name || `v${version}`,
     };
 
     return NextResponse.json({ 
@@ -88,15 +110,22 @@ export async function GET() {
       cached: false,
       releaseUrl: release.html_url,
       publishedAt: release.published_at,
+      releaseNotes: release.body || '',
+      name: release.name || `v${version}`,
     });
   } catch (error) {
     console.error('Error fetching version from GitHub:', error);
     
-    // Fall back to package.json version
+    // Fall back to package.json version and local changelog
+    const fallbackNotes = getFallbackChangelog();
     return NextResponse.json({ 
       version: pkg.version,
       fallback: true,
+      releaseUrl: `https://github.com/${GITHUB_REPO}/releases`,
+      releaseNotes: fallbackNotes.releaseNotes || '',
+      name: `v${pkg.version}`,
       error: error instanceof Error ? error.message : 'Unknown error'
     });
   }
 }
+

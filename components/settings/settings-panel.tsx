@@ -15,9 +15,10 @@ import {
 import { Switch } from "@/components/ui/switch";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { Bell, Shield, Terminal } from "lucide-react";
+import { Bell, Shield, Terminal, Sparkles } from "lucide-react";
 import { GITHUB_REPO } from "@/lib/utils/version";
 import { useVersionCheck } from "@/hooks/use-version-check";
+import { ReleaseNotesDialog } from "@/components/version/release-notes-dialog";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -245,43 +246,88 @@ export function DataSettings() {
 
 export function AboutSettings() {
   const t = useTranslations("Settings.about");
-  const { latestVersion, currentVersion: builtVersion, releaseUrl, isUpdateAvailable } = useVersionCheck();
+  const tNotes = useTranslations("ReleaseNotes");
+  const [showReleaseNotes, setShowReleaseNotes] = useState(false);
+  const {
+    latestVersion,
+    currentVersion: builtVersion,
+    releaseUrl,
+    isUpdateAvailable,
+    releaseNotes,
+    releaseName,
+    publishedAt,
+  } = useVersionCheck();
+
   const version = latestVersion || builtVersion;
 
   return (
-    <Card className="border-dashed">
-      <CardContent className="p-5">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary/10">
-              <Terminal className="h-4 w-4 text-primary" />
-            </div>
-            <div>
-              <a
-                href={releaseUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-sm font-medium text-foreground hover:underline"
-              >
-                Adulting.exe v{version}
-              </a>
-              <p className="text-[11px] text-muted-foreground">
-                {t("funny")}
-              </p>
-            </div>
-          </div>
-          {isUpdateAvailable && (
-            <div className="flex items-center gap-2">
-              <div className="px-2 py-1 rounded-md bg-primary/10 border border-primary/20">
-                <p className="text-[10px] font-medium text-primary">
-                  Update available
+    <>
+      <Card className="border-dashed">
+        <CardContent className="p-5">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary/10 shrink-0">
+                <Terminal className="h-4 w-4 text-primary" />
+              </div>
+              <div>
+                <div className="flex items-center gap-2">
+                  <a
+                    href={releaseUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sm font-medium text-foreground hover:underline"
+                  >
+                    Adulting.exe v{version}
+                  </a>
+                  {isUpdateAvailable && (
+                    <button
+                      type="button"
+                      onClick={() => setShowReleaseNotes(true)}
+                      className="cursor-pointer"
+                    >
+                      <span className="px-2 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-[10px] font-medium text-emerald-600 dark:text-emerald-400 flex items-center gap-1 hover:bg-emerald-500/20 transition-colors">
+                        <span className="relative flex h-1.5 w-1.5">
+                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                          <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500"></span>
+                        </span>
+                        {tNotes("updateAvailable")}
+                      </span>
+                    </button>
+                  )}
+                </div>
+                <p className="text-[11px] text-muted-foreground mt-0.5">
+                  {t("funny")}
                 </p>
               </div>
             </div>
-          )}
-        </div>
-      </CardContent>
-    </Card>
+
+            <div className="flex items-center gap-2 self-end sm:self-auto">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setShowReleaseNotes(true)}
+                className="gap-1.5 text-xs h-8"
+              >
+                <Sparkles className="h-3.5 w-3.5 text-primary" />
+                {tNotes("whatsNew")}
+              </Button>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      <ReleaseNotesDialog
+        open={showReleaseNotes}
+        onOpenChange={setShowReleaseNotes}
+        currentVersion={builtVersion}
+        latestVersion={latestVersion}
+        isUpdateAvailable={isUpdateAvailable}
+        releaseNotes={releaseNotes}
+        releaseName={releaseName}
+        releaseUrl={releaseUrl}
+        publishedAt={publishedAt}
+      />
+    </>
   );
 }
 
