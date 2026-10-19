@@ -716,6 +716,28 @@ export async function updateHeatingType(type: string) {
   revalidatePath("/utilities")
 }
 
+export type LocalizationPreferencesInput = {
+  currency?: string
+  unitSystem?: string
+  firstDayOfWeek?: number
+}
+
+export async function updateLocalizationPreferences(data: LocalizationPreferencesInput) {
+  await prisma.appConfig.upsert({
+    where: { id: "default" },
+    create: {
+      id: "default",
+      heatingType: "Gas",
+      ...data,
+    },
+    update: {
+      ...data,
+    },
+  })
+  revalidatePath("/settings")
+  revalidatePath("/")
+}
+
 export async function completeOnboarding() {
   await prisma.appConfig.upsert({
     where: { id: "default" },

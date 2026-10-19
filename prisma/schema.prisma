@@ -140,6 +140,9 @@ model WastePickup {
 model AppConfig {
   id                       String   @id @default("default") // Only one row
   heatingType              String   @default("Gas") // "Gas", "Oil", "Fernwärme", "Wärmepumpe", "Pellets"
+  currency                 String   @default("EUR") // "EUR", "USD", "GBP", "CHF"
+  unitSystem               String   @default("metric") // "metric", "imperial"
+  firstDayOfWeek           Int      @default(1) // 1 = Monday, 0 = Sunday
   onboardingCompleted      Boolean  @default(false)
   disabledModules          String[] @default([]) // Module keys that are hidden from the sidebar
   tutorialCompletedModules String[] @default([]) // Module keys whose tutorial has been seen

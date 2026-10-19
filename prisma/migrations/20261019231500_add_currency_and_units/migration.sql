@@ -1,0 +1,4 @@
+-- AlterTable
+ALTER TABLE "AppConfig" ADD COLUMN "currency" TEXT NOT NULL DEFAULT 'EUR',
+ADD COLUMN "unitSystem" TEXT NOT NULL DEFAULT 'metric',
+ADD COLUMN "firstDayOfWeek" INTEGER NOT NULL DEFAULT 1;
