@@ -6,6 +6,7 @@ import {
 } from "@/components/settings/settings-panel"
 import { HeatingSettings } from "@/components/settings/heating-settings"
 import { LanguageSwitcher } from "@/components/settings/language-switcher"
+import { LocalizationSettings } from "@/components/settings/localization-settings"
 import { WasteTypeSettings } from "@/components/settings/waste-type-settings"
 import { ModuleSettings } from "@/components/settings/module-settings"
 import { getAppConfig, getWasteTypes } from "@/lib/actions"
@@ -51,6 +52,7 @@ export default async function SettingsPage() {
           <div className="flex items-center justify-between">
             <LanguageSwitcher />
           </div>
+          <LocalizationSettings initialConfig={appConfig} />
           <NotificationSettings />
         </TabsContent>
 

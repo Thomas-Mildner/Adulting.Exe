@@ -36,6 +36,30 @@
       "dark": "Dunkel",
       "system": "System"
     },
+    "localization": {
+      "title": "Währung & Maßeinheiten",
+      "description": "Passe Währungsformate, Einheitensysteme und Wochenanfang an.",
+      "currency": "Währung",
+      "currencyPlaceholder": "Wähle eine Währung",
+      "unitSystem": "Einheitensystem",
+      "firstDayOfWeek": "Erster Tag der Woche",
+      "currencies": {
+        "EUR": "Euro (€)",
+        "USD": "US-Dollar ($)",
+        "GBP": "Britisches Pfund (£)",
+        "CHF": "Schweizer Franken (CHF)"
+      },
+      "units": {
+        "metric": "Metrisch (km, m², Liter, kg)",
+        "imperial": "Imperial (Meilen, sq ft, Gallonen, lbs)"
+      },
+      "days": {
+        "1": "Montag",
+        "0": "Sonntag"
+      },
+      "saved": "Einstellungen gespeichert",
+      "error": "Fehler beim Speichern"
+    },
     "notifications": {
       "title": "Benachrichtigungen",
       "description": "Wähle, welche Erinnerungen du ignorieren möchtest.",
