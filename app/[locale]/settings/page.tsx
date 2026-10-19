@@ -51,7 +51,7 @@ export default async function SettingsPage() {
           <div className="flex items-center justify-between">
             <LanguageSwitcher />
           </div>
-          <NotificationSettings />
+          <NotificationSettings initialConfig={appConfig} />
         </TabsContent>
 
         <TabsContent value="household" className="space-y-6 animate-in fade-in-50 duration-500">

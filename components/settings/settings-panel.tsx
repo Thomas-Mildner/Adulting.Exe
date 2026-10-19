@@ -29,69 +29,8 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 
-export function NotificationSettings() {
-  const t = useTranslations("Settings.notifications");
-
-  return (
-    <Card>
-      <CardHeader className="pb-3">
-        <div className="flex items-center gap-2">
-          <Bell className="h-4 w-4 text-primary" />
-          <CardTitle className="text-sm font-medium">
-            {t("title")}
-          </CardTitle>
-        </div>
-        <CardDescription className="text-xs">
-          {t("description")}
-        </CardDescription>
-      </CardHeader>
-      <CardContent className="space-y-4">
-        {[
-          {
-            title: t("warranty"),
-            desc: t("warrantyDesc"),
-            defaultOn: true,
-          },
-          {
-            title: t("maintenance"),
-            desc: t("maintenanceDesc"),
-            defaultOn: true,
-          },
-          {
-            title: t("lending"),
-            desc: t("lendingDesc"),
-            defaultOn: true,
-          },
-          {
-            title: t("meter"),
-            desc: t("meterDesc"),
-            defaultOn: false,
-          },
-          {
-            title: t("wishlist"),
-            desc: t("wishlistDesc"),
-            defaultOn: false,
-          },
-        ].map((item, idx) => (
-          <div key={idx}>
-            <div className="flex items-center justify-between">
-              <div className="space-y-0.5">
-                <p className="text-sm font-medium text-foreground">
-                  {item.title}
-                </p>
-                <p className="text-[11px] text-muted-foreground leading-relaxed">
-                  {item.desc}
-                </p>
-              </div>
-              <Switch defaultChecked={item.defaultOn} />
-            </div>
-            {idx < 4 && <Separator className="mt-4" />}
-          </div>
-        ))}
-      </CardContent>
-    </Card>
-  );
-}
+import { NotificationSettings } from "./notification-settings";
+export { NotificationSettings };
 
 export function DataSettings() {
   const t = useTranslations("Settings.data");
