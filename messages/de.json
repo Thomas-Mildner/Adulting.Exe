@@ -104,6 +104,27 @@
         "black": "Schwarz"
       }
     },
+    "householdMembers": {
+      "title": "Haushaltsmitglieder",
+      "description": "Verwalte Personen in deinem Haushalt für Dokumente und Krankheiten.",
+      "add": "Mitglied hinzufügen",
+      "edit": "Mitglied bearbeiten",
+      "name": "Name",
+      "namePlaceholder": "z.B. Alex",
+      "relation": "Rolle / Beziehung",
+      "save": "Speichern",
+      "cancel": "Abbrechen",
+      "delete": "Löschen",
+      "deleteConfirm": "Möchtest du dieses Mitglied wirklich löschen? Zugehörige Dokumente und Einträge werden ebenfalls entfernt.",
+      "empty": "Noch keine Mitglieder angelegt.",
+      "documentCount": "{count, plural, =0 {Keine Dokumente} =1 {1 Dokument} other {# Dokumente}}",
+      "relations": {
+        "Self": "Ich",
+        "Spouse": "Partner/in",
+        "Child": "Kind",
+        "Other": "Sonstige"
+      }
+    },
     "modulesTab": "Module",
     "modules": {
       "title": "Modulauswahl",
@@ -720,7 +741,10 @@
       "manual": "Manuell",
       "empty": "Keine Termine gefunden. Zeit, den Kalender zu füllen!",
       "today": "Heute",
-      "delete": "Löschen"
+      "delete": "Löschen",
+      "all": "Alle",
+      "upcoming": "Anstehend",
+      "past": "Vergangen"
     },
     "add": {
       "title": "Neuen Termin planen",
