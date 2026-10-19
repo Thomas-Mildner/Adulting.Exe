@@ -716,6 +716,31 @@ export async function updateHeatingType(type: string) {
   revalidatePath("/utilities")
 }
 
+export type UtilityTariffsInput = {
+  electricityRate?: number
+  electricityBaseFee?: number
+  waterRate?: number
+  waterBaseFee?: number
+  heatingRate?: number
+  heatingBaseFee?: number
+}
+
+export async function updateUtilityTariffs(data: UtilityTariffsInput) {
+  await prisma.appConfig.upsert({
+    where: { id: "default" },
+    create: {
+      id: "default",
+      heatingType: "Gas",
+      ...data,
+    },
+    update: {
+      ...data,
+    },
+  })
+  revalidatePath("/settings")
+  revalidatePath("/utilities")
+}
+
 export async function completeOnboarding() {
   await prisma.appConfig.upsert({
     where: { id: "default" },

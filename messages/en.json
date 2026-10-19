@@ -79,6 +79,23 @@
       "success": "Heating type updated",
       "error": "Error saving"
     },
+    "tariffs": {
+      "title": "Utility Rates & Tariffs",
+      "description": "Store your energy prices for automatic cost projections.",
+      "electricity": "Electricity",
+      "electricityRate": "Unit Rate (€/kWh)",
+      "electricityBase": "Base Fee (€/month)",
+      "water": "Water",
+      "waterRate": "Unit Rate (€/m³)",
+      "waterBase": "Base Fee (€/month)",
+      "heating": "Heating",
+      "heatingRate": "Unit Rate (€/unit)",
+      "heatingBase": "Base Fee (€/month)",
+      "save": "Save Tariffs",
+      "saving": "Saving...",
+      "saved": "Tariffs saved successfully!",
+      "error": "Error saving tariffs."
+    },
     "waste": {
       "title": "Waste Types",
       "description": "Manage the types of waste for your calendar.",

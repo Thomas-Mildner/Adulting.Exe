@@ -140,6 +140,12 @@ model WastePickup {
 model AppConfig {
   id                       String   @id @default("default") // Only one row
   heatingType              String   @default("Gas") // "Gas", "Oil", "Fernwärme", "Wärmepumpe", "Pellets"
+  electricityRate          Float    @default(0.35)
+  electricityBaseFee       Float    @default(10.0)
+  waterRate                Float    @default(2.50)
+  waterBaseFee             Float    @default(5.0)
+  heatingRate              Float    @default(0.12)
+  heatingBaseFee           Float    @default(15.0)
   onboardingCompleted      Boolean  @default(false)
   disabledModules          String[] @default([]) // Module keys that are hidden from the sidebar
   tutorialCompletedModules String[] @default([]) // Module keys whose tutorial has been seen

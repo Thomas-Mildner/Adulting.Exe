@@ -79,6 +79,23 @@
       "success": "Heizungstyp aktualisiert",
       "error": "Fehler beim Speichern"
     },
+    "tariffs": {
+      "title": "Verbrauchstarife & Preise",
+      "description": "Hinterlege deine Energiepreise für automatische Kostenprognosen.",
+      "electricity": "Strom",
+      "electricityRate": "Arbeitspreis (€/kWh)",
+      "electricityBase": "Grundpreis (€/Monat)",
+      "water": "Wasser",
+      "waterRate": "Arbeitspreis (€/m³)",
+      "waterBase": "Grundpreis (€/Monat)",
+      "heating": "Heizung",
+      "heatingRate": "Arbeitspreis (€/Einheit)",
+      "heatingBase": "Grundpreis (€/Monat)",
+      "save": "Tarife speichern",
+      "saving": "Speichert...",
+      "saved": "Tarife erfolgreich gespeichert!",
+      "error": "Fehler beim Speichern der Tarife."
+    },
     "waste": {
       "title": "Müllarten",
       "description": "Verwalte die Müllarten für deinen Kalender.",
