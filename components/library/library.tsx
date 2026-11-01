@@ -21,6 +21,17 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import {
   Select,
   SelectContent,
   SelectItem,
@@ -39,10 +50,12 @@ import {
   ExternalLink,
   Plus,
   Upload,
+  Pencil,
+  Trash2,
 } from "lucide-react";
 import { type Document } from "@/lib/data";
 import { Button } from "@/components/ui/button";
-import { createDocument, updateDocument } from "@/lib/actions";
+import { createDocument, deleteDocument, updateDocument } from "@/lib/actions";
 import { toast } from "sonner";
 
 async function uploadPdf(file: File): Promise<string> {
@@ -93,6 +106,14 @@ export function Library({ documents }: { documents: Document[] }) {
 
   // Create document dialog
   const [createOpen, setCreateOpen] = useState(false);
+  const [previewDocumentId, setPreviewDocumentId] = useState<string | null>(null);
+  const [editingDocumentId, setEditingDocumentId] = useState<string | null>(null);
+  const [editTitle, setEditTitle] = useState("");
+  const [editCategory, setEditCategory] = useState<Document["category"]>("General");
+  const [editDescription, setEditDescription] = useState("");
+  const [editContent, setEditContent] = useState("");
+  const [editPdfFile, setEditPdfFile] = useState<File | null>(null);
+  const editPdfInputRef = useRef<HTMLInputElement>(null);
   const [docTitle, setDocTitle] = useState("");
   const [docCategory, setDocCategory] =
     useState<Document["category"]>("General");
@@ -165,6 +186,60 @@ export function Library({ documents }: { documents: Document[] }) {
       toast.error(t("preview.uploadError"));
     } finally {
       setUploadingDocumentId(null);
+    }
+  }
+
+  function handleUpdate(e: React.FormEvent, doc: Document) {
+    e.preventDefault();
+    const content = doc.type === "markdown"
+      ? editContent
+      : editPdfFile
+        ? undefined
+        : doc.content;
+    if (
+      !editTitle.trim() ||
+      (doc.type === "markdown" && !editContent.trim()) ||
+      (doc.type === "pdf" && !doc.content && !editPdfFile)
+    ) return;
+
+    startTransition(async () => {
+      try {
+        const updatedContent = doc.type === "pdf" && editPdfFile
+          ? await uploadPdf(editPdfFile)
+          : content;
+        await updateDocument(doc.id, {
+          title: editTitle,
+          category: editCategory,
+          description: editDescription,
+          content: updatedContent,
+        });
+        const updatedAt = new Date().toISOString().split("T")[0];
+        setItems((prev) => prev.map((item) => item.id === doc.id
+          ? {
+              ...item,
+              title: editTitle,
+              category: editCategory,
+              description: editDescription,
+              content: updatedContent,
+              updatedAt,
+            }
+          : item));
+        setEditingDocumentId(null);
+        toast.success(t("edit.success"));
+      } catch {
+        toast.error(t("edit.error"));
+      }
+    });
+  }
+
+  async function handleDelete(doc: Document) {
+    try {
+      await deleteDocument(doc.id);
+      setItems((prev) => prev.filter((item) => item.id !== doc.id));
+      setPreviewDocumentId(null);
+      toast.success(t("delete.success"));
+    } catch {
+      toast.error(t("delete.error"));
     }
   }
 
@@ -366,7 +441,14 @@ export function Library({ documents }: { documents: Document[] }) {
           {filtered.map((doc) => {
             const Icon = categoryIcons[doc.category];
             return (
-              <Dialog key={doc.id}>
+              <Dialog
+                key={doc.id}
+                open={previewDocumentId === doc.id}
+                onOpenChange={(open) => {
+                  setPreviewDocumentId(open ? doc.id : null);
+                  if (!open) setEditingDocumentId(null);
+                }}
+              >
                 <DialogTrigger asChild>
                   <Card className="group cursor-pointer transition-all hover:shadow-md hover:border-primary/20">
                     <CardContent className="p-4">
@@ -494,6 +576,149 @@ export function Library({ documents }: { documents: Document[] }) {
                         <p className="text-xs text-muted-foreground">{t("card.noPdf")}</p>
                       </div>
                     )}
+                  </div>
+                  <div className="flex shrink-0 items-center justify-between gap-2 border-t px-6 py-3">
+                    <AlertDialog>
+                      <AlertDialogTrigger asChild>
+                        <Button type="button" size="sm" variant="destructive" className="gap-2">
+                          <Trash2 className="h-4 w-4" />
+                          {t("delete.button")}
+                        </Button>
+                      </AlertDialogTrigger>
+                      <AlertDialogContent>
+                        <AlertDialogHeader>
+                          <AlertDialogTitle>{t("delete.title")}</AlertDialogTitle>
+                          <AlertDialogDescription>
+                            {t("delete.description", { title: doc.title })}
+                          </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                          <AlertDialogCancel>{t("delete.cancel")}</AlertDialogCancel>
+                          <AlertDialogAction
+                            className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                            onClick={() => void handleDelete(doc)}
+                          >
+                            {t("delete.confirm")}
+                          </AlertDialogAction>
+                        </AlertDialogFooter>
+                      </AlertDialogContent>
+                    </AlertDialog>
+
+                    <Dialog
+                      open={editingDocumentId === doc.id}
+                      onOpenChange={(open) => {
+                        if (open) {
+                          setEditTitle(doc.title);
+                          setEditCategory(doc.category);
+                          setEditDescription(doc.description);
+                          setEditContent(doc.type === "markdown" ? doc.content ?? "" : "");
+                          setEditPdfFile(null);
+                          setEditingDocumentId(doc.id);
+                        } else {
+                          setEditingDocumentId(null);
+                        }
+                      }}
+                    >
+                      <DialogTrigger asChild>
+                        <Button type="button" size="sm" variant="outline" className="gap-2">
+                          <Pencil className="h-4 w-4" />
+                          {t("edit.button")}
+                        </Button>
+                      </DialogTrigger>
+                      <DialogContent className="sm:max-w-[560px]">
+                        <form onSubmit={(e) => handleUpdate(e, doc)}>
+                          <DialogHeader>
+                            <DialogTitle>{t("edit.title")}</DialogTitle>
+                            <DialogDescription>{t("edit.description")}</DialogDescription>
+                          </DialogHeader>
+                          <div className="grid gap-4 py-4">
+                            <div className="grid gap-2">
+                              <Label htmlFor={`edit-title-${doc.id}`}>{t("form.title")}</Label>
+                              <Input
+                                id={`edit-title-${doc.id}`}
+                                value={editTitle}
+                                onChange={(e) => setEditTitle(e.target.value)}
+                                required
+                              />
+                            </div>
+                            <div className="grid gap-2">
+                              <Label htmlFor={`edit-category-${doc.id}`}>{t("form.category")}</Label>
+                              <Select
+                                value={editCategory}
+                                onValueChange={(value) => setEditCategory(value as Document["category"])}
+                              >
+                                <SelectTrigger id={`edit-category-${doc.id}`}>
+                                  <SelectValue />
+                                </SelectTrigger>
+                                <SelectContent>
+                                  {categories.map((category) => (
+                                    <SelectItem key={category} value={category}>
+                                      {t(`categories.${category}`)}
+                                    </SelectItem>
+                                  ))}
+                                </SelectContent>
+                              </Select>
+                            </div>
+                            <div className="grid gap-2">
+                              <Label htmlFor={`edit-description-${doc.id}`}>{t("form.description")}</Label>
+                              <Input
+                                id={`edit-description-${doc.id}`}
+                                value={editDescription}
+                                onChange={(e) => setEditDescription(e.target.value)}
+                              />
+                            </div>
+                            {doc.type === "markdown" ? (
+                              <div className="grid gap-2">
+                                <Label htmlFor={`edit-content-${doc.id}`}>{t("form.content")}</Label>
+                                <Textarea
+                                  id={`edit-content-${doc.id}`}
+                                  value={editContent}
+                                  onChange={(e) => setEditContent(e.target.value)}
+                                  rows={10}
+                                  className="font-mono text-xs"
+                                  required
+                                />
+                              </div>
+                            ) : (
+                              <div className="grid gap-2">
+                                <Label htmlFor={`edit-pdf-${doc.id}`}>{t("edit.pdfFile")}</Label>
+                                <div className="flex min-w-0 items-center gap-3">
+                                  <input
+                                    ref={editPdfInputRef}
+                                    id={`edit-pdf-${doc.id}`}
+                                    type="file"
+                                    accept="application/pdf,.pdf"
+                                    className="hidden"
+                                    onChange={(e) => {
+                                      setEditPdfFile(e.currentTarget.files?.[0] ?? null);
+                                      e.currentTarget.value = "";
+                                    }}
+                                  />
+                                  <Button type="button" variant="outline" className="shrink-0 gap-2" onClick={() => editPdfInputRef.current?.click()}>
+                                    <Upload className="h-4 w-4" />
+                                    {t("form.choosePdf")}
+                                  </Button>
+                                  <span className="truncate text-xs text-muted-foreground" aria-live="polite">
+                                    {editPdfFile?.name ?? (doc.content ? t("edit.pdfRetained") : t("form.noFileChosen"))}
+                                  </span>
+                                </div>
+                              </div>
+                            )}
+                          </div>
+                          <DialogFooter>
+                            <Button type="button" variant="outline" onClick={() => setEditingDocumentId(null)}>
+                              {t("create.cancel")}
+                            </Button>
+                            <Button
+                              type="submit"
+                              disabled={isPending || !editTitle.trim() || (doc.type === "markdown" ? !editContent.trim() : !doc.content && !editPdfFile)}
+                            >
+                              {isPending ? t("edit.saving") : t("edit.save")}
+                            </Button>
+                          </DialogFooter>
+                        </form>
+                      </DialogContent>
+                    </Dialog>
                   </div>
                 </DialogContent>
               </Dialog>

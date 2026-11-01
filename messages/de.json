@@ -549,6 +549,26 @@
       "uploadSuccess": "PDF gespeichert.",
       "uploadError": "PDF konnte nicht hochgeladen werden. Maximal 10 MB."
     },
+    "edit": {
+      "button": "Bearbeiten",
+      "title": "Dokument bearbeiten",
+      "description": "Passe die Angaben und den Inhalt des Dokuments an.",
+      "pdfFile": "PDF-Datei ersetzen",
+      "pdfRetained": "Die vorhandene PDF-Datei bleibt erhalten.",
+      "save": "Änderungen speichern",
+      "saving": "Speichert...",
+      "success": "Dokument gespeichert.",
+      "error": "Dokument konnte nicht gespeichert werden."
+    },
+    "delete": {
+      "button": "Löschen",
+      "title": "Dokument löschen?",
+      "description": "„{title}“ wird dauerhaft gelöscht. Diese Aktion kann nicht rückgängig gemacht werden.",
+      "cancel": "Abbrechen",
+      "confirm": "Dokument löschen",
+      "success": "Dokument gelöscht.",
+      "error": "Dokument konnte nicht gelöscht werden."
+    },
     "empty": "Keine Dokumente gefunden. Die Wissensgötter haben dich verlassen."
   },
   "Maintenance": {
