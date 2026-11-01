@@ -1,3 +1,10 @@
+# [1.10.0-rc.8](https://github.com/Thomas-Mildner/Adulting.Exe/compare/v1.10.0-rc.7...v1.10.0-rc.8) (2026-11-01)
+
+
+### Features
+
+* add utility CSV import functionality and integrate into settings and utility tracker ([27c388b](https://github.com/Thomas-Mildner/Adulting.Exe/commit/27c388b7560a0d8c575a75309e397062fa2a0fc5))
+
 # [1.10.0-rc.7](https://github.com/Thomas-Mildner/Adulting.Exe/compare/v1.10.0-rc.6...v1.10.0-rc.7) (2026-10-19)
 
 
