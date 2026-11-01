@@ -102,6 +102,9 @@ export function Library({ documents }: { documents: Document[] }) {
   const [docPdfFile, setDocPdfFile] = useState<File | null>(null);
   const docPdfInputRef = useRef<HTMLInputElement>(null);
   const [uploadingDocumentId, setUploadingDocumentId] = useState<string | null>(null);
+  const hasRequiredDocumentContent = docType === "markdown"
+    ? Boolean(docContent.trim())
+    : docPdfFile !== null;
 
   function resetForm() {
     setDocTitle("");
@@ -114,7 +117,7 @@ export function Library({ documents }: { documents: Document[] }) {
 
   function handleCreate(e: React.FormEvent) {
     e.preventDefault();
-    if (!docTitle.trim() || (docType === "pdf" && !docPdfFile)) return;
+    if (!docTitle.trim() || !hasRequiredDocumentContent) return;
 
     startTransition(async () => {
       try {
@@ -138,6 +141,9 @@ export function Library({ documents }: { documents: Document[] }) {
           content,
           updatedAt: new Date().toISOString().split("T")[0],
         }, ...prev]);
+        setSearch("");
+        setActiveCategory("all");
+        toast.success(t("create.success"));
         resetForm();
         setCreateOpen(false);
       } catch {
@@ -175,7 +181,7 @@ export function Library({ documents }: { documents: Document[] }) {
         (a, b) =>
           new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime(),
       );
-  }, [search, activeCategory]);
+  }, [items, search, activeCategory]);
 
   return (
     <div className="space-y-4">
@@ -297,6 +303,7 @@ export function Library({ documents }: { documents: Document[] }) {
                       onChange={(e) => setDocContent(e.target.value)}
                       rows={10}
                       className="font-mono text-xs"
+                      required
                     />
                   </div>
                 ) : (
@@ -336,7 +343,7 @@ export function Library({ documents }: { documents: Document[] }) {
                 >
                   {t("create.cancel")}
                 </Button>
-                <Button type="submit" disabled={isPending || (docType === "pdf" && !docPdfFile)}>
+                <Button type="submit" disabled={isPending || !docTitle.trim() || !hasRequiredDocumentContent}>
                   {isPending ? t("create.saving") : t("create.save")}
                 </Button>
               </DialogFooter>

@@ -512,6 +512,7 @@
     "create": {
       "title": "New Document",
       "description": "Create a Markdown guide or upload a PDF.",
+      "success": "Guide created.",
       "save": "Save",
       "saving": "Saving...",
       "cancel": "Cancel"

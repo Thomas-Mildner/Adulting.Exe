@@ -520,6 +520,7 @@
     "create": {
       "title": "Neues Dokument",
       "description": "Erstelle eine Markdown-Anleitung oder lade ein PDF hoch.",
+      "success": "Anleitung wurde angelegt.",
       "save": "Speichern",
       "saving": "Speichert...",
       "cancel": "Abbrechen"
