@@ -3,6 +3,8 @@
 import React from "react";
 import { useState, useMemo, useTransition } from "react";
 import { useTranslations } from "next-intl";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
@@ -321,26 +323,54 @@ export function Library({ documents }: { documents: Document[] }) {
                     </CardContent>
                   </Card>
                 </DialogTrigger>
-                <DialogContent className="max-w-lg">
-                  <DialogHeader>
-                    <DialogTitle className="text-base">{doc.title}</DialogTitle>
+                <DialogContent className="flex max-h-[90dvh] w-[calc(100%-1rem)] max-w-4xl flex-col gap-0 overflow-hidden p-0 sm:w-[calc(100%-2rem)]">
+                  <DialogHeader className="shrink-0 border-b px-6 pb-4 pt-6 pr-12">
+                    <DialogTitle className="text-xl">{doc.title}</DialogTitle>
+                    <DialogDescription>{doc.description}</DialogDescription>
                   </DialogHeader>
-                  <div className="space-y-4">
-                    <div className="flex items-center gap-2">
+                  <div className="min-h-0 flex-1 overflow-y-auto px-6 py-5">
+                    <div className="mb-5 flex flex-wrap items-center gap-2">
                       <Badge variant="secondary" className="text-xs">
                         {t(`categories.${doc.category}`)}
                       </Badge>
                       <Badge variant="outline" className="text-xs">
                         {doc.type.toUpperCase()}
                       </Badge>
+                      <span className="text-xs text-muted-foreground">
+                        {t("card.updated")} {new Date(doc.updatedAt).toLocaleDateString()}
+                      </span>
                     </div>
-                    <p className="text-sm text-muted-foreground leading-relaxed">
-                      {doc.description}
-                    </p>
                     {doc.content && (
-                      <div className="rounded-lg bg-muted/50 p-4 font-mono text-xs text-foreground whitespace-pre-wrap leading-relaxed border">
-                        {doc.content}
-                      </div>
+                      doc.type === "markdown" ? (
+                        <article className="break-words text-sm leading-7 [&>*:first-child]:mt-0 [&>*:last-child]:mb-0">
+                          <ReactMarkdown
+                            remarkPlugins={[remarkGfm]}
+                            components={{
+                              h1: ({ children }) => <h1 className="mb-5 mt-9 text-3xl font-semibold leading-tight">{children}</h1>,
+                              h2: ({ children }) => <h2 className="mb-4 mt-8 border-b pb-2 text-2xl font-semibold leading-tight">{children}</h2>,
+                              h3: ({ children }) => <h3 className="mb-3 mt-7 text-xl font-semibold leading-snug">{children}</h3>,
+                              h4: ({ children }) => <h4 className="mb-2 mt-6 text-lg font-semibold">{children}</h4>,
+                              p: ({ children }) => <p className="my-4">{children}</p>,
+                              a: ({ href, children }) => <a href={href} target="_blank" rel="noreferrer" className="font-medium text-primary underline underline-offset-4">{children}</a>,
+                              ul: ({ children }) => <ul className="my-4 ml-6 list-disc space-y-2">{children}</ul>,
+                              ol: ({ children }) => <ol className="my-4 ml-6 list-decimal space-y-2">{children}</ol>,
+                              blockquote: ({ children }) => <blockquote className="my-5 border-l-2 border-primary/40 pl-4 text-muted-foreground">{children}</blockquote>,
+                              hr: () => <hr className="my-8 border-border" />,
+                              pre: ({ children }) => <pre className="my-5 overflow-x-auto rounded-md border bg-muted/60 p-4 font-mono text-xs leading-6">{children}</pre>,
+                              code: ({ children, className }) => className
+                                ? <code className={className}>{children}</code>
+                                : <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-[0.9em]">{children}</code>,
+                              table: ({ children }) => <div className="my-5 overflow-x-auto"><table className="w-full border-collapse text-left text-sm">{children}</table></div>,
+                              th: ({ children }) => <th className="border px-3 py-2 font-semibold">{children}</th>,
+                              td: ({ children }) => <td className="border px-3 py-2 align-top">{children}</td>,
+                            }}
+                          >
+                            {doc.content}
+                          </ReactMarkdown>
+                        </article>
+                      ) : (
+                        <p className="whitespace-pre-wrap text-sm leading-7">{doc.content}</p>
+                      )
                     )}
                     {!doc.content && (
                       <div className="rounded-lg border border-dashed p-8 text-center">
@@ -350,11 +380,6 @@ export function Library({ documents }: { documents: Document[] }) {
                         </p>
                       </div>
                     )}
-                    <div className="flex justify-end">
-                      <Button size="sm" variant="outline">
-                        {t("card.download")}
-                      </Button>
-                    </div>
                   </div>
                 </DialogContent>
               </Dialog>
