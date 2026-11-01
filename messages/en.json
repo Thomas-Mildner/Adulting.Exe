@@ -510,8 +510,8 @@
       "General": "General"
     },
     "create": {
-      "title": "New Markdown Document",
-      "description": "Knowledge is power — and well documented is half repaired.",
+      "title": "New Document",
+      "description": "Create a Markdown guide or upload a PDF.",
       "save": "Save",
       "saving": "Saving...",
       "cancel": "Cancel"
@@ -521,6 +521,7 @@
       "titlePlaceholder": "e.g. How to bleed radiators...",
       "category": "Category",
       "type": "Type",
+      "pdfFile": "PDF file",
       "description": "Description",
       "descriptionPlaceholder": "Short description of the document...",
       "content": "Content (Markdown)",
@@ -529,7 +530,13 @@
     "card": {
       "updated": "Updated",
       "download": "Download",
-      "noPdf": "PDF preview not available. But at least you know it exists."
+      "noPdf": "No file has been uploaded for this PDF entry yet."
+    },
+    "preview": {
+      "uploadPdf": "Upload PDF",
+      "uploading": "Uploading...",
+      "uploadSuccess": "PDF saved.",
+      "uploadError": "Could not upload PDF. Maximum file size is 10 MB."
     },
     "empty": "No documents found. The knowledge gods have abandoned you."
   },

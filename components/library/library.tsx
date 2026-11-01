@@ -38,10 +38,27 @@ import {
   FileCode,
   ExternalLink,
   Plus,
+  Upload,
 } from "lucide-react";
 import { type Document } from "@/lib/data";
 import { Button } from "@/components/ui/button";
-import { createDocument } from "@/lib/actions";
+import { createDocument, updateDocument } from "@/lib/actions";
+import { toast } from "sonner";
+
+async function uploadPdf(file: File): Promise<string> {
+  const formData = new FormData();
+  formData.append("file", file);
+  const response = await fetch("/api/upload", { method: "POST", body: formData });
+  const result = await response.json();
+  if (!response.ok || typeof result.path !== "string") {
+    throw new Error(result.error ?? "PDF upload failed");
+  }
+  return result.path;
+}
+
+function isSafePdfPath(value: string): boolean {
+  return value.startsWith("/uploads/vault/") && value.toLowerCase().endsWith(".pdf") && !value.includes("..");
+}
 
 const categoryIcons: Record<Document["category"], React.ElementType> = {
   Heating: Flame,
@@ -79,44 +96,69 @@ export function Library({ documents }: { documents: Document[] }) {
   const [docTitle, setDocTitle] = useState("");
   const [docCategory, setDocCategory] =
     useState<Document["category"]>("General");
+  const [docType, setDocType] = useState<Document["type"]>("markdown");
   const [docDescription, setDocDescription] = useState("");
   const [docContent, setDocContent] = useState("");
+  const [docPdfFile, setDocPdfFile] = useState<File | null>(null);
+  const [uploadingDocumentId, setUploadingDocumentId] = useState<string | null>(null);
 
   function resetForm() {
     setDocTitle("");
     setDocCategory("General");
+    setDocType("markdown");
     setDocDescription("");
     setDocContent("");
+    setDocPdfFile(null);
   }
 
   function handleCreate(e: React.FormEvent) {
     e.preventDefault();
-    if (!docTitle) return;
+    if (!docTitle.trim() || (docType === "pdf" && !docPdfFile)) return;
 
     startTransition(async () => {
-      await createDocument({
-        title: docTitle,
-        category: docCategory,
-        type: "markdown",
-        description: docDescription,
-        content: docContent || undefined,
-        updatedAt: new Date().toISOString().split("T")[0],
-      });
-      setItems((prev) => [
-        {
+      try {
+        const content = docType === "pdf" && docPdfFile
+          ? await uploadPdf(docPdfFile)
+          : docContent || undefined;
+        await createDocument({
+          title: docTitle,
+          category: docCategory,
+          type: docType,
+          description: docDescription,
+          content,
+          updatedAt: new Date().toISOString().split("T")[0],
+        });
+        setItems((prev) => [{
           id: `temp-${Date.now()}`,
           title: docTitle,
           category: docCategory,
-          type: "markdown",
+          type: docType,
           description: docDescription,
-          content: docContent || undefined,
+          content,
           updatedAt: new Date().toISOString().split("T")[0],
-        },
-        ...prev,
-      ]);
-      resetForm();
-      setCreateOpen(false);
+        }, ...prev]);
+        resetForm();
+        setCreateOpen(false);
+      } catch {
+        toast.error(t("preview.uploadError"));
+      }
     });
+  }
+
+  async function handlePdfAttach(doc: Document, file: File) {
+    setUploadingDocumentId(doc.id);
+    try {
+      const content = await uploadPdf(file);
+      await updateDocument(doc.id, { content });
+      setItems((prev) => prev.map((item) => item.id === doc.id
+        ? { ...item, content, updatedAt: new Date().toISOString().split("T")[0] }
+        : item));
+      toast.success(t("preview.uploadSuccess"));
+    } catch {
+      toast.error(t("preview.uploadError"));
+    } finally {
+      setUploadingDocumentId(null);
+    }
   }
 
   const filtered = useMemo(() => {
@@ -217,7 +259,22 @@ export function Library({ documents }: { documents: Document[] }) {
                   </div>
                   <div className="grid gap-2">
                     <Label>{t("form.type")}</Label>
-                    <Input value="Markdown" disabled className="h-9 text-sm" />
+                    <Select
+                      value={docType}
+                      onValueChange={(value) => {
+                        const nextType = value as Document["type"];
+                        setDocType(nextType);
+                        if (nextType === "markdown") setDocPdfFile(null);
+                      }}
+                    >
+                      <SelectTrigger>
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="markdown">Markdown</SelectItem>
+                        <SelectItem value="pdf">PDF</SelectItem>
+                      </SelectContent>
+                    </Select>
                   </div>
                 </div>
                 <div className="grid gap-2">
@@ -229,17 +286,31 @@ export function Library({ documents }: { documents: Document[] }) {
                     onChange={(e) => setDocDescription(e.target.value)}
                   />
                 </div>
-                <div className="grid gap-2">
-                  <Label htmlFor="doc-content">{t("form.content")}</Label>
-                  <Textarea
-                    id="doc-content"
-                    placeholder={t("form.contentPlaceholder")}
-                    value={docContent}
-                    onChange={(e) => setDocContent(e.target.value)}
-                    rows={10}
-                    className="font-mono text-xs"
-                  />
-                </div>
+                {docType === "markdown" ? (
+                  <div className="grid gap-2">
+                    <Label htmlFor="doc-content">{t("form.content")}</Label>
+                    <Textarea
+                      id="doc-content"
+                      placeholder={t("form.contentPlaceholder")}
+                      value={docContent}
+                      onChange={(e) => setDocContent(e.target.value)}
+                      rows={10}
+                      className="font-mono text-xs"
+                    />
+                  </div>
+                ) : (
+                  <div className="grid gap-2">
+                    <Label htmlFor="doc-pdf">{t("form.pdfFile")}</Label>
+                    <Input
+                      id="doc-pdf"
+                      type="file"
+                      accept="application/pdf,.pdf"
+                      onChange={(e) => setDocPdfFile(e.target.files?.[0] ?? null)}
+                      required
+                    />
+                    {docPdfFile && <p className="text-xs text-muted-foreground">{docPdfFile.name}</p>}
+                  </div>
+                )}
               </div>
               <DialogFooter>
                 <Button
@@ -252,7 +323,7 @@ export function Library({ documents }: { documents: Document[] }) {
                 >
                   {t("create.cancel")}
                 </Button>
-                <Button type="submit" disabled={isPending}>
+                <Button type="submit" disabled={isPending || (docType === "pdf" && !docPdfFile)}>
                   {isPending ? t("create.saving") : t("create.save")}
                 </Button>
               </DialogFooter>
@@ -328,8 +399,8 @@ export function Library({ documents }: { documents: Document[] }) {
                     <DialogTitle className="text-xl">{doc.title}</DialogTitle>
                     <DialogDescription>{doc.description}</DialogDescription>
                   </DialogHeader>
-                  <div className="min-h-0 flex-1 overflow-y-auto px-6 py-5">
-                    <div className="mb-5 flex flex-wrap items-center gap-2">
+                  <div className={`min-h-0 flex-1 ${doc.type === "pdf" && doc.content && isSafePdfPath(doc.content) ? "flex flex-col overflow-hidden" : "overflow-y-auto px-6 py-5"}`}>
+                    <div className={`flex shrink-0 flex-wrap items-center gap-2 ${doc.type === "pdf" && doc.content && isSafePdfPath(doc.content) ? "border-b px-6 py-4" : "mb-5"}`}>
                       <Badge variant="secondary" className="text-xs">
                         {t(`categories.${doc.category}`)}
                       </Badge>
@@ -340,9 +411,14 @@ export function Library({ documents }: { documents: Document[] }) {
                         {t("card.updated")} {new Date(doc.updatedAt).toLocaleDateString()}
                       </span>
                     </div>
-                    {doc.content && (
-                      doc.type === "markdown" ? (
-                        <article className="break-words text-sm leading-7 [&>*:first-child]:mt-0 [&>*:last-child]:mb-0">
+                    {doc.type === "pdf" && doc.content && isSafePdfPath(doc.content) ? (
+                      <iframe
+                        src={doc.content}
+                        title={doc.title}
+                        className="h-[60dvh] w-full bg-muted"
+                      />
+                    ) : doc.type === "markdown" && doc.content ? (
+                      <article className="break-words text-sm leading-7 [&>*:first-child]:mt-0 [&>*:last-child]:mb-0">
                           <ReactMarkdown
                             remarkPlugins={[remarkGfm]}
                             components={{
@@ -367,17 +443,35 @@ export function Library({ documents }: { documents: Document[] }) {
                           >
                             {doc.content}
                           </ReactMarkdown>
-                        </article>
-                      ) : (
-                        <p className="whitespace-pre-wrap text-sm leading-7">{doc.content}</p>
-                      )
-                    )}
-                    {!doc.content && (
+                      </article>
+                    ) : doc.type === "pdf" ? (
+                      <div className="flex min-h-64 flex-col items-center justify-center gap-3 rounded-lg border border-dashed p-8 text-center">
+                        <FileText className="h-8 w-8 text-muted-foreground/40" />
+                        <p className="text-sm text-muted-foreground">{t("card.noPdf")}</p>
+                        <label className="cursor-pointer">
+                          <input
+                            type="file"
+                            accept="application/pdf,.pdf"
+                            className="sr-only"
+                            disabled={uploadingDocumentId === doc.id}
+                            onChange={(e) => {
+                              const file = e.target.files?.[0];
+                              if (file) void handlePdfAttach(doc, file);
+                              e.target.value = "";
+                            }}
+                          />
+                          <span className="inline-flex h-9 items-center justify-center gap-2 rounded-md bg-primary px-4 text-sm font-medium text-primary-foreground hover:bg-primary/90">
+                            <Upload className="h-4 w-4" />
+                            {uploadingDocumentId === doc.id ? t("preview.uploading") : t("preview.uploadPdf")}
+                          </span>
+                        </label>
+                      </div>
+                    ) : doc.content ? (
+                      <p className="whitespace-pre-wrap text-sm leading-7">{doc.content}</p>
+                    ) : (
                       <div className="rounded-lg border border-dashed p-8 text-center">
-                        <FileText className="h-8 w-8 text-muted-foreground/30 mx-auto mb-2" />
-                        <p className="text-xs text-muted-foreground">
-                          {t("card.noPdf")}
-                        </p>
+                        <FileText className="mx-auto mb-2 h-8 w-8 text-muted-foreground/30" />
+                        <p className="text-xs text-muted-foreground">{t("card.noPdf")}</p>
                       </div>
                     )}
                   </div>
