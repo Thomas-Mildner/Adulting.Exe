@@ -518,8 +518,9 @@
       "General": "Allgemein"
     },
     "create": {
-      "title": "Neues Markdown-Dokument",
-      "description": "Wissen ist Macht — und gut dokumentiert ist halb repariert.",
+      "title": "Neues Dokument",
+      "description": "Erstelle eine Markdown-Anleitung oder lade ein PDF hoch.",
+      "success": "Anleitung wurde angelegt.",
       "save": "Speichern",
       "saving": "Speichert...",
       "cancel": "Abbrechen"
@@ -529,6 +530,9 @@
       "titlePlaceholder": "z.B. Heizung entlüften Anleitung...",
       "category": "Kategorie",
       "type": "Typ",
+      "pdfFile": "PDF-Datei",
+      "choosePdf": "PDF auswählen",
+      "noFileChosen": "Keine Datei ausgewählt",
       "description": "Beschreibung",
       "descriptionPlaceholder": "Kurze Beschreibung des Dokuments...",
       "content": "Inhalt (Markdown)",
@@ -537,7 +541,33 @@
     "card": {
       "updated": "Aktualisiert",
       "download": "Herunterladen",
-      "noPdf": "PDF-Vorschau nicht verfügbar. Aber immerhin weißt du, dass es existiert."
+      "noPdf": "Für diesen PDF-Eintrag wurde noch keine Datei hochgeladen."
+    },
+    "preview": {
+      "uploadPdf": "PDF hochladen",
+      "uploading": "Lädt hoch...",
+      "uploadSuccess": "PDF gespeichert.",
+      "uploadError": "PDF konnte nicht hochgeladen werden. Maximal 10 MB."
+    },
+    "edit": {
+      "button": "Bearbeiten",
+      "title": "Dokument bearbeiten",
+      "description": "Passe die Angaben und den Inhalt des Dokuments an.",
+      "pdfFile": "PDF-Datei ersetzen",
+      "pdfRetained": "Die vorhandene PDF-Datei bleibt erhalten.",
+      "save": "Änderungen speichern",
+      "saving": "Speichert...",
+      "success": "Dokument gespeichert.",
+      "error": "Dokument konnte nicht gespeichert werden."
+    },
+    "delete": {
+      "button": "Löschen",
+      "title": "Dokument löschen?",
+      "description": "„{title}“ wird dauerhaft gelöscht. Diese Aktion kann nicht rückgängig gemacht werden.",
+      "cancel": "Abbrechen",
+      "confirm": "Dokument löschen",
+      "success": "Dokument gelöscht.",
+      "error": "Dokument konnte nicht gelöscht werden."
     },
     "empty": "Keine Dokumente gefunden. Die Wissensgötter haben dich verlassen."
   },
