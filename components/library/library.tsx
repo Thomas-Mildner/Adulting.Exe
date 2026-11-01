@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { useState, useMemo, useTransition } from "react";
+import { useState, useMemo, useTransition, useRef } from "react";
 import { useTranslations } from "next-intl";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
@@ -100,6 +100,7 @@ export function Library({ documents }: { documents: Document[] }) {
   const [docDescription, setDocDescription] = useState("");
   const [docContent, setDocContent] = useState("");
   const [docPdfFile, setDocPdfFile] = useState<File | null>(null);
+  const docPdfInputRef = useRef<HTMLInputElement>(null);
   const [uploadingDocumentId, setUploadingDocumentId] = useState<string | null>(null);
 
   function resetForm() {
@@ -301,14 +302,26 @@ export function Library({ documents }: { documents: Document[] }) {
                 ) : (
                   <div className="grid gap-2">
                     <Label htmlFor="doc-pdf">{t("form.pdfFile")}</Label>
-                    <Input
+                    <div className="flex min-w-0 items-center gap-3">
+                      <input
+                        ref={docPdfInputRef}
                       id="doc-pdf"
                       type="file"
                       accept="application/pdf,.pdf"
-                      onChange={(e) => setDocPdfFile(e.target.files?.[0] ?? null)}
-                      required
-                    />
-                    {docPdfFile && <p className="text-xs text-muted-foreground">{docPdfFile.name}</p>}
+                        className="hidden"
+                        onChange={(e) => {
+                          setDocPdfFile(e.currentTarget.files?.[0] ?? null);
+                          e.currentTarget.value = "";
+                        }}
+                      />
+                      <Button type="button" variant="outline" className="shrink-0 gap-2" onClick={() => docPdfInputRef.current?.click()}>
+                        <Upload className="h-4 w-4" />
+                        {t("form.choosePdf")}
+                      </Button>
+                      <span className="truncate text-xs text-muted-foreground" aria-live="polite">
+                        {docPdfFile?.name ?? t("form.noFileChosen")}
+                      </span>
+                    </div>
                   </div>
                 )}
               </div>

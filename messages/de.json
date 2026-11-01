@@ -530,6 +530,8 @@
       "category": "Kategorie",
       "type": "Typ",
       "pdfFile": "PDF-Datei",
+      "choosePdf": "PDF auswählen",
+      "noFileChosen": "Keine Datei ausgewählt",
       "description": "Beschreibung",
       "descriptionPlaceholder": "Kurze Beschreibung des Dokuments...",
       "content": "Inhalt (Markdown)",

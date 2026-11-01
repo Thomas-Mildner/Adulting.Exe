@@ -522,6 +522,8 @@
       "category": "Category",
       "type": "Type",
       "pdfFile": "PDF file",
+      "choosePdf": "Choose PDF",
+      "noFileChosen": "No file selected",
       "description": "Description",
       "descriptionPlaceholder": "Short description of the document...",
       "content": "Content (Markdown)",
