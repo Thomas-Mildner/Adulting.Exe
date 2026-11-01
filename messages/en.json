@@ -56,6 +56,15 @@
       "exportTitle": "Export Data",
       "exportDesc": "Download everything as JSON. Perfect for your next spreadsheet obsession.",
       "exportBtn": "Export",
+      "importTitle": "Import Data",
+      "importDesc": "Restore from a JSON backup. Warning: Overwrites all existing data!",
+      "importBtn": "Import",
+      "importWarningTitle": "Are you sure?",
+      "importWarningDesc": "Importing this file will completely overwrite all your current data in the database. This action cannot be undone.",
+      "importConfirmBtn": "Yes, overwrite",
+      "importCancelBtn": "Cancel",
+      "importSuccess": "Data imported successfully!",
+      "importError": "Failed to import data.",
       "deleteTitle": "Delete All Data",
       "deleteDesc": "The nuclear option. No undo. No regrets (hopefully).",
       "deleteBtn": "Delete"
@@ -93,6 +102,27 @@
         "red": "Red (Hazardous)",
         "brown": "Brown (Bio)",
         "black": "Black"
+      }
+    },
+    "householdMembers": {
+      "title": "Household Members",
+      "description": "Manage people in your home for documents and illness tracking.",
+      "add": "Add Member",
+      "edit": "Edit Member",
+      "name": "Name",
+      "namePlaceholder": "e.g. Alex",
+      "relation": "Role / Relation",
+      "save": "Save",
+      "cancel": "Cancel",
+      "delete": "Delete",
+      "deleteConfirm": "Are you sure you want to delete this member? Associated documents and records will also be removed.",
+      "empty": "No household members added yet.",
+      "documentCount": "{count, plural, =0 {No documents} =1 {1 document} other {# documents}}",
+      "relations": {
+        "Self": "Self",
+        "Spouse": "Spouse / Partner",
+        "Child": "Child",
+        "Other": "Other"
       }
     },
     "modulesTab": "Modules",
@@ -310,7 +340,7 @@
     "create": {
       "button": "New Entry",
       "title": "Record New Appliance",
-      "description": "Receipt out, data in &mdash; your vault grows stronger.",
+      "description": "Receipt out, data in — your vault grows stronger.",
       "save": "Save",
       "saving": "Saving...",
       "cancel": "Cancel"
@@ -344,6 +374,7 @@
       "receiptCamera": "Take Photo",
       "receiptFile": "Upload File",
       "receiptPreview": "Receipt preview",
+      "receiptDownload": "Download receipt",
       "receiptRemove": "Remove",
       "receiptUploading": "Uploading...",
       "receiptError": "Upload failed. Please try again."
@@ -353,7 +384,17 @@
       "daysRemaining": "{days} days left",
       "expired": "Expired"
     },
-    "emptyState": "Nothing found. Either you searched wrong or you own nothing. Both concerning."
+    "emptyState": "Nothing found. Either you searched wrong or you own nothing. Both concerning.",
+    "detail": {
+      "subtitle": "Details about your {brand} device.",
+      "back": "Back to vault",
+      "print": "Print",
+      "receipt": "Receipt / Invoice",
+      "preview": "Show preview",
+      "download": "Download",
+      "scanHint": "Scan this code to jump directly here.",
+      "unknown": "Unknown"
+    }
   },
   "GlobalSearch": {
     "placeholder": "Search everything...",
@@ -700,7 +741,10 @@
       "manual": "Manual",
       "empty": "No pickups found. Time to fill the calendar!",
       "today": "Today",
-      "delete": "Delete"
+      "delete": "Delete",
+      "all": "All",
+      "upcoming": "Upcoming",
+      "past": "Past"
     },
     "add": {
       "title": "Plan New Pickup",

@@ -1,6 +1,6 @@
 "use server"
 
-import { writeFile } from "fs/promises"
+import { writeFile, mkdir } from "fs/promises"
 import { join } from "path"
 
 import { prisma } from "@/lib/prisma"
@@ -429,6 +429,53 @@ export async function createMeterReading(data: MeterReading) {
   })
   revalidatePath("/utilities")
   revalidatePath("/")
+}
+
+export async function importMeterReadings(
+  readings: Array<Partial<MeterReading> & Pick<MeterReading, "month">>,
+) {
+  if (
+    readings.length === 0 ||
+    readings.length > 5000 ||
+    readings.some((reading) =>
+      !reading.month ||
+      reading.month.length > 100 ||
+      ![reading.power, reading.water, reading.heating, reading.powerCost, reading.waterCost, reading.heatingCost]
+        .some((value) => value !== undefined) ||
+      [reading.power, reading.water, reading.heating, reading.powerCost, reading.waterCost, reading.heatingCost]
+        .some((value) => value !== undefined && (!Number.isFinite(value) || value < 0))
+    )
+  ) {
+    throw new Error("Invalid meter readings")
+  }
+
+  await prisma.$transaction(
+    readings.map((reading) =>
+      prisma.meterReading.upsert({
+        where: { month: reading.month },
+        update: {
+          ...(reading.power !== undefined && { power: reading.power }),
+          ...(reading.water !== undefined && { water: reading.water }),
+          ...(reading.heating !== undefined && { heating: reading.heating }),
+          ...(reading.powerCost !== undefined && { powerCost: reading.powerCost }),
+          ...(reading.waterCost !== undefined && { waterCost: reading.waterCost }),
+          ...(reading.heatingCost !== undefined && { heatingCost: reading.heatingCost }),
+        },
+        create: {
+          month: reading.month,
+          power: reading.power ?? 0,
+          water: reading.water ?? 0,
+          heating: reading.heating ?? 0,
+          powerCost: reading.powerCost ?? 0,
+          waterCost: reading.waterCost ?? 0,
+          heatingCost: reading.heatingCost ?? 0,
+        },
+      }),
+    ),
+  )
+  revalidatePath("/utilities")
+  revalidatePath("/")
+  return { imported: readings.length }
 }
 
 // ─── Wishlist Projects ──────────────────────────────────────────────────
@@ -1082,7 +1129,9 @@ export async function uploadCarDocument(formData: FormData) {
   const buffer = Buffer.from(bytes)
 
   const fileName = `${Date.now()}-${file.name}`
-  const path = join(process.cwd(), "public/uploads", fileName)
+  const uploadsDir = join(process.cwd(), "public/uploads")
+  await mkdir(uploadsDir, { recursive: true })
+  const path = join(uploadsDir, fileName)
 
   await writeFile(path, buffer)
 
@@ -1510,6 +1559,7 @@ export async function createPerson(data: Omit<Person, "id">) {
   })
   revalidatePath("/documents")
   revalidatePath("/illnesses")
+  revalidatePath("/settings")
   revalidatePath("/")
 }
 
@@ -1523,6 +1573,7 @@ export async function updatePerson(id: string, data: Partial<Omit<Person, "id">>
   })
   revalidatePath("/documents")
   revalidatePath("/illnesses")
+  revalidatePath("/settings")
   revalidatePath("/")
 }
 
@@ -1530,6 +1581,7 @@ export async function deletePerson(id: string) {
   await prisma.person.delete({ where: { id } })
   revalidatePath("/documents")
   revalidatePath("/illnesses")
+  revalidatePath("/settings")
   revalidatePath("/")
 }
 

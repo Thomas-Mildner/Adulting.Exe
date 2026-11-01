@@ -29,6 +29,7 @@
     "subtitle": "Konfiguriere deine digitale Festung",
     "general": "Allgemein",
     "household": "Haushalt",
+    "importTab": "Import",
     "system": "System",
     "language": "Sprache",
     "theme": {
@@ -56,6 +57,15 @@
       "exportTitle": "Daten exportieren",
       "exportDesc": "Alles als JSON herunterladen. Perfekt für deine nächste Tabellen-Obsession.",
       "exportBtn": "Exportieren",
+      "importTitle": "Daten importieren",
+      "importDesc": "Stelle ein JSON-Backup wieder her. Achtung: Überschreibt alle bestehenden Daten!",
+      "importBtn": "Importieren",
+      "importWarningTitle": "Bist du dir sicher?",
+      "importWarningDesc": "Das Importieren dieser Datei wird alle deine aktuellen Daten in der Datenbank unwiderruflich überschreiben. Dieser Vorgang kann nicht rückgängig gemacht werden.",
+      "importConfirmBtn": "Ja, überschreiben",
+      "importCancelBtn": "Abbrechen",
+      "importSuccess": "Daten erfolgreich importiert!",
+      "importError": "Fehler beim Importieren der Daten.",
       "deleteTitle": "Alle Daten löschen",
       "deleteDesc": "Die nukleare Option. Kein Rückgängig. Keine Reue (hoffentlich).",
       "deleteBtn": "Löschen"
@@ -93,6 +103,27 @@
         "red": "Rot (Gefahrgut)",
         "brown": "Braun (Bio)",
         "black": "Schwarz"
+      }
+    },
+    "householdMembers": {
+      "title": "Haushaltsmitglieder",
+      "description": "Verwalte Personen in deinem Haushalt für Dokumente und Krankheiten.",
+      "add": "Mitglied hinzufügen",
+      "edit": "Mitglied bearbeiten",
+      "name": "Name",
+      "namePlaceholder": "z.B. Alex",
+      "relation": "Rolle / Beziehung",
+      "save": "Speichern",
+      "cancel": "Abbrechen",
+      "delete": "Löschen",
+      "deleteConfirm": "Möchtest du dieses Mitglied wirklich löschen? Zugehörige Dokumente und Einträge werden ebenfalls entfernt.",
+      "empty": "Noch keine Mitglieder angelegt.",
+      "documentCount": "{count, plural, =0 {Keine Dokumente} =1 {1 Dokument} other {# Dokumente}}",
+      "relations": {
+        "Self": "Ich",
+        "Spouse": "Partner/in",
+        "Child": "Kind",
+        "Other": "Sonstige"
       }
     },
     "modulesTab": "Module",
@@ -226,6 +257,13 @@
     "addReading": "Neuer Zählerstand",
     "addDialogTitle": "Neuen Zählerstand erfassen",
     "addDialogDesc": "Zeit für deinen monatlichen Termin mit den Zählerständen.",
+    "importCsv": "CSV importieren",
+    "importCsvTitle": "Ressourcen importieren",
+    "importDescription": "Importiere Monatswerte für Strom, Wasser und Heizung. Monat und mindestens eine Messwert- oder Kostenspalte sind erforderlich; leere Felder lassen vorhandene Werte unverändert.",
+    "downloadTemplate": "Vorlage laden",
+    "importing": "Importiert...",
+    "importSuccess": "{count} Monatswerte importiert.",
+    "importError": "CSV konnte nicht importiert werden. Prüfe Spalten, Monatsangaben und Zahlenwerte.",
     "saving": "Speichert...",
     "save": "Speichern",
     "cancel": "Abbrechen",
@@ -289,7 +327,7 @@
       "good": "Gut",
       "expandable": "Ausbaufähig",
       "critical": "Kritisch",
-      "catastrophe": "Catastrophe"
+      "catastrophe": "Katastrophe"
     },
     "averageOf": "Bundesdurchschnitt: ~{amount} €/{unit}"
   },
@@ -310,7 +348,7 @@
     "create": {
       "button": "Neuer Eintrag",
       "title": "Neues Gerät erfassen",
-      "description": "Quittung raus, Daten rein &mdash; dein Tresor wird stärker.",
+      "description": "Quittung raus, Daten rein — dein Tresor wird stärker.",
       "save": "Speichern",
       "saving": "Speichert...",
       "cancel": "Abbrechen"
@@ -344,6 +382,7 @@
       "receiptCamera": "Foto aufnehmen",
       "receiptFile": "Datei hochladen",
       "receiptPreview": "Quittungsvorschau",
+      "receiptDownload": "Quittung herunterladen",
       "receiptRemove": "Entfernen",
       "receiptUploading": "Wird hochgeladen...",
       "receiptError": "Upload fehlgeschlagen. Bitte erneut versuchen."
@@ -353,7 +392,17 @@
       "daysRemaining": "{days} Tage übrig",
       "expired": "Abgelaufen"
     },
-    "emptyState": "Nichts gefunden. Entweder falsch gesucht oder du besitzt nichts. Beides besorgniserregend."
+    "emptyState": "Nichts gefunden. Entweder falsch gesucht oder du besitzt nichts. Beides besorgniserregend.",
+    "detail": {
+      "subtitle": "Details zu deinem {brand}-Gerät.",
+      "back": "Zurück zum Tresor",
+      "print": "Drucken",
+      "receipt": "Quittung / Beleg",
+      "preview": "Vorschau anzeigen",
+      "download": "Herunterladen",
+      "scanHint": "Scanne diesen Code, um direkt hierher zu gelangen.",
+      "unknown": "Unbekannt"
+    }
   },
   "GlobalSearch": {
     "placeholder": "Alles durchsuchen...",
@@ -700,7 +749,10 @@
       "manual": "Manuell",
       "empty": "Keine Termine gefunden. Zeit, den Kalender zu füllen!",
       "today": "Heute",
-      "delete": "Löschen"
+      "delete": "Löschen",
+      "all": "Alle",
+      "upcoming": "Anstehend",
+      "past": "Vergangen"
     },
     "add": {
       "title": "Neuen Termin planen",

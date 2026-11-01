@@ -24,12 +24,12 @@ export default async function WastePage() {
                 moduleKey="waste"
                 isFirstVisit={!appConfig.tutorialCompletedModules.includes("waste")}
             />
-            <div className="grid gap-6 lg:grid-cols-3">
-                <div className="lg:col-span-2">
-                    <WasteManagement pickups={pickups} wasteTypes={wasteTypes} />
-                </div>
-                <div>
+            <div className="grid gap-6 lg:grid-cols-12 items-start">
+                <div className="lg:col-span-5">
                     <WasteCalendarView pickups={pickups} />
+                </div>
+                <div className="lg:col-span-7">
+                    <WasteManagement pickups={pickups} wasteTypes={wasteTypes} />
                 </div>
             </div>
         </DashboardLayout>

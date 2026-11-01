@@ -7,18 +7,21 @@ import {
 import { HeatingSettings } from "@/components/settings/heating-settings"
 import { LanguageSwitcher } from "@/components/settings/language-switcher"
 import { WasteTypeSettings } from "@/components/settings/waste-type-settings"
+import { HouseholdMembersSettings } from "@/components/settings/household-members-settings"
 import { ModuleSettings } from "@/components/settings/module-settings"
-import { getAppConfig, getWasteTypes } from "@/lib/actions"
+import { UtilityCsvImport } from "@/components/settings/utility-csv-import"
+import { getAppConfig, getWasteTypes, getPersons } from "@/lib/actions"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Bell, Home, Layers, Shield } from "lucide-react"
+import { Bell, FileUp, Home, Layers, Shield } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 
 export const dynamic = "force-dynamic"
 
 export default async function SettingsPage() {
-  const [appConfig, wasteTypes, t] = await Promise.all([
+  const [appConfig, wasteTypes, persons, t] = await Promise.all([
     getAppConfig(),
     getWasteTypes(),
+    getPersons(),
     getTranslations("Settings")
   ])
 
@@ -41,6 +44,10 @@ export default async function SettingsPage() {
             <Layers className="h-4 w-4" />
             {t("modulesTab")}
           </TabsTrigger>
+          <TabsTrigger value="import" className="gap-2">
+            <FileUp className="h-4 w-4" />
+            {t("importTab")}
+          </TabsTrigger>
           <TabsTrigger value="system" className="gap-2">
             <Shield className="h-4 w-4" />
             {t("system")}
@@ -57,6 +64,9 @@ export default async function SettingsPage() {
         <TabsContent value="household" className="space-y-6 animate-in fade-in-50 duration-500">
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             <div className="md:col-span-1">
+              <HouseholdMembersSettings initialPersons={persons} />
+            </div>
+            <div className="md:col-span-1">
               <HeatingSettings currentType={appConfig.heatingType} />
             </div>
             <div className="md:col-span-1">
@@ -67,6 +77,10 @@ export default async function SettingsPage() {
 
         <TabsContent value="modules" className="space-y-6 max-w-2xl animate-in fade-in-50 duration-500">
           <ModuleSettings disabledModules={appConfig.disabledModules} />
+        </TabsContent>
+
+        <TabsContent value="import" className="space-y-6 animate-in fade-in-50 duration-500">
+          <UtilityCsvImport />
         </TabsContent>
 
         <TabsContent value="system" className="space-y-6 max-w-2xl animate-in fade-in-50 duration-500">

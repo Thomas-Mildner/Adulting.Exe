@@ -49,7 +49,8 @@ RUN addgroup --system --gid 1001 nodejs && \
     adduser --system --uid 1001 nextjs
 
 # Public assets (cacheable, no sensitive data)
-COPY --from=builder /app/public ./public
+COPY --from=builder --chown=nextjs:nodejs /app/public ./public
+RUN mkdir -p /app/public/uploads/vault && chown -R nextjs:nodejs /app/public
 
 # Standalone server + static files
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
@@ -59,8 +60,8 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 COPY --from=builder --chown=nextjs:nodejs /app/prisma ./prisma
 COPY --from=prisma-cli --chown=nextjs:nodejs /prisma-cli/node_modules /prisma-cli/node_modules
 
-# Entrypoint: run migrations then start
-RUN printf '#!/bin/sh\nset -e\necho "Deploying database migrations..."\nnode /prisma-cli/node_modules/prisma/build/index.js migrate deploy\necho "Starting application..."\nexec node server.js\n' > /app/entrypoint.sh \
+# Entrypoint: ensure uploads directory exists, run migrations then start
+RUN printf '#!/bin/sh\nset -e\nmkdir -p /app/public/uploads/vault\necho "Deploying database migrations..."\nnode /prisma-cli/node_modules/prisma/build/index.js migrate deploy\necho "Starting application..."\nexec node server.js\n' > /app/entrypoint.sh \
     && chmod +x /app/entrypoint.sh
 
 # Drop privileges

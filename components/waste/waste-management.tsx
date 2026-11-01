@@ -1,7 +1,7 @@
 "use client"
 
-import { useState } from "react"
-import { useTranslations } from "next-intl"
+import { useState, useMemo } from "react"
+import { useLocale, useTranslations } from "next-intl"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -11,6 +11,7 @@ import { type WastePickup, type WasteType } from "@/lib/data"
 import { createWastePickup, deleteWastePickup, importIcsWastePickups } from "@/lib/actions"
 import { Badge } from "@/components/ui/badge"
 import { toast } from "sonner"
+import { cn } from "@/lib/utils"
 import {
     Dialog,
     DialogContent,
@@ -51,7 +52,43 @@ export function WasteManagement({
     const [typeId, setTypeId] = useState("")
     const [recurring, setRecurring] = useState<"none" | "weekly" | "bi-weekly" | "monthly" | "4-weekly">("none")
     const [isUploading, setIsUploading] = useState(false)
+    const [filter, setFilter] = useState<"upcoming" | "all" | "past">("upcoming")
     const t = useTranslations("Waste")
+    const locale = useLocale()
+
+    const { upcomingCount, pastCount } = useMemo(() => {
+        const today = new Date()
+        today.setHours(0, 0, 0, 0)
+        let up = 0
+        let past = 0
+        for (const p of pickups) {
+            const d = new Date(p.date)
+            if (d.getTime() >= today.getTime() || new Date().toDateString() === d.toDateString()) {
+                up++
+            } else {
+                past++
+            }
+        }
+        return { upcomingCount: up, pastCount: past }
+    }, [pickups])
+
+    const displayedPickups = useMemo(() => {
+        const today = new Date()
+        today.setHours(0, 0, 0, 0)
+        return pickups
+            .filter((p) => {
+                const d = new Date(p.date)
+                const isToday = new Date().toDateString() === d.toDateString()
+                if (filter === "upcoming") return d.getTime() >= today.getTime() || isToday
+                if (filter === "past") return d.getTime() < today.getTime() && !isToday
+                return true
+            })
+            .sort((a, b) => {
+                const da = new Date(a.date).getTime()
+                const db = new Date(b.date).getTime()
+                return filter === "past" ? db - da : da - db
+            })
+    }, [pickups, filter])
 
     const handleAdd = async (e: React.FormEvent) => {
         e.preventDefault()
@@ -193,28 +230,65 @@ export function WasteManagement({
                 </Card>
             )}
 
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-2">
-                {pickups.length === 0 ? (
+            {/* Filter Tabs */}
+            <div className="flex items-center justify-between gap-2 pb-1">
+                <div className="flex items-center gap-1 p-1 bg-muted/60 rounded-lg border text-xs">
+                    <button
+                        type="button"
+                        onClick={() => setFilter("upcoming")}
+                        className={cn(
+                            "px-2.5 py-1 rounded-md font-medium transition-all text-xs",
+                            filter === "upcoming"
+                                ? "bg-background text-foreground shadow-xs font-semibold"
+                                : "text-muted-foreground hover:text-foreground"
+                        )}
+                    >
+                        {t("management.upcoming")} <span className="opacity-70 text-[11px]">({upcomingCount})</span>
+                    </button>
+                    <button
+                        type="button"
+                        onClick={() => setFilter("all")}
+                        className={cn(
+                            "px-2.5 py-1 rounded-md font-medium transition-all text-xs",
+                            filter === "all"
+                                ? "bg-background text-foreground shadow-xs font-semibold"
+                                : "text-muted-foreground hover:text-foreground"
+                        )}
+                    >
+                        {t("management.all")} <span className="opacity-70 text-[11px]">({pickups.length})</span>
+                    </button>
+                    <button
+                        type="button"
+                        onClick={() => setFilter("past")}
+                        className={cn(
+                            "px-2.5 py-1 rounded-md font-medium transition-all text-xs",
+                            filter === "past"
+                                ? "bg-background text-foreground shadow-xs font-semibold"
+                                : "text-muted-foreground hover:text-foreground"
+                        )}
+                    >
+                        {t("management.past")} <span className="opacity-70 text-[11px]">({pastCount})</span>
+                    </button>
+                </div>
+            </div>
+
+            {/* Compact Events Grid */}
+            <div className="grid gap-2 sm:grid-cols-2 max-h-[580px] overflow-y-auto pr-1">
+                {displayedPickups.length === 0 ? (
                     <p className="text-sm text-muted-foreground col-span-full py-12 text-center border rounded-lg border-dashed">
                         {t("management.empty")}
                     </p>
                 ) : (
-                    pickups.map((pickup) => {
+                    displayedPickups.map((pickup) => {
                         const Icon = iconMap[pickup.wasteType?.icon || "Trash2"] || Trash2
                         const d = new Date(pickup.date)
                         const isToday = new Date().toDateString() === d.toDateString()
                         const isPast = d < new Date() && !isToday
 
                         const colorKey = pickup.wasteType?.color || "gray-500"
-                        // Try to resolve to a hex if it's a known color name
                         const resolvedColor = colorToHex[colorKey] || colorKey
 
-                        // We will always use inline styles for reliability
-                        // Background: 10% opacity, Text: 100% opacity
                         const bgStyle = { backgroundColor: resolvedColor + (resolvedColor.startsWith("#") && resolvedColor.length === 7 ? "1A" : "") }
-                        // If it's not a hex with length 7, we can't easily add alpha hex. 
-                        // But mostly we deal with our hex map or direct hex. 
-                        // Fallback: if it's a named color not in our map (e.g. 'black'), simple text color works.
                         if (colorKey === "black") {
                             bgStyle.backgroundColor = "rgba(0,0,0,0.1)"
                         }
@@ -222,42 +296,50 @@ export function WasteManagement({
                         const textStyle = { color: resolvedColor }
 
                         return (
-                            <Card key={pickup.id} className={isPast ? "opacity-50" : ""}>
-                                <CardContent className="p-4 flex items-center justify-between">
-                                    <div className="flex items-center gap-3">
-                                        <div
-                                            className="p-2 rounded-full"
-                                            style={bgStyle}
-                                        >
-                                            <Icon
-                                                className="h-4 w-4"
-                                                style={textStyle}
-                                            />
-                                        </div>
-                                        <div>
-                                            <p className="font-semibold text-sm">{pickup.wasteType?.name}</p>
-                                            <p className="text-xs text-muted-foreground">
-                                                {d.toLocaleDateString("de-DE", {
-                                                    weekday: "short",
-                                                    day: "numeric",
-                                                    month: "long",
-                                                })}
-                                            </p>
-                                        </div>
+                            <div
+                                key={pickup.id}
+                                className={cn(
+                                    "group flex items-center justify-between p-2 px-3 rounded-lg border bg-card hover:bg-accent/40 transition-all shadow-2xs",
+                                    isPast && "opacity-55 hover:opacity-90 bg-muted/20"
+                                )}
+                            >
+                                <div className="flex items-center gap-2.5 min-w-0">
+                                    <div
+                                        className="w-7 h-7 rounded-md flex items-center justify-center shrink-0 shadow-2xs"
+                                        style={bgStyle}
+                                    >
+                                        <Icon
+                                            className="h-3.5 w-3.5"
+                                            style={textStyle}
+                                        />
                                     </div>
-                                    <div className="flex items-center gap-2">
-                                        {isToday && <Badge className="bg-destructive hover:bg-destructive">{t("management.today")}</Badge>}
-                                        <Button
-                                            variant="ghost"
-                                            size="icon"
-                                            className="text-muted-foreground hover:text-destructive"
-                                            onClick={() => deleteWastePickup(pickup.id)}
-                                        >
-                                            <Trash2 className="h-4 w-4" />
-                                        </Button>
+                                    <div className="min-w-0">
+                                        <p className="font-medium text-xs truncate leading-snug">{pickup.wasteType?.name}</p>
+                                        <p className="text-[11px] text-muted-foreground leading-tight">
+                                            {d.toLocaleDateString(locale === "de" ? "de-DE" : "en-US", {
+                                                weekday: "short",
+                                                day: "numeric",
+                                                month: "short",
+                                            })}
+                                        </p>
                                     </div>
-                                </CardContent>
-                            </Card>
+                                </div>
+                                <div className="flex items-center gap-1.5 shrink-0 pl-2">
+                                    {isToday && (
+                                        <Badge variant="destructive" className="text-[10px] py-0 px-1.5 h-4">
+                                            {t("management.today")}
+                                        </Badge>
+                                    )}
+                                    <Button
+                                        variant="ghost"
+                                        size="icon"
+                                        className="h-6 w-6 text-muted-foreground/60 hover:text-destructive opacity-70 group-hover:opacity-100 transition-opacity"
+                                        onClick={() => deleteWastePickup(pickup.id)}
+                                    >
+                                        <Trash2 className="h-3 w-3" />
+                                    </Button>
+                                </div>
+                            </div>
                         )
                     })
                 )}

@@ -27,6 +27,8 @@ services:
       DATABASE_URL: postgresql://adulting:adulting_secret@postgres:5432/adulting_exe
     ports:
       - "3000:3000"
+    volumes:
+      - uploads_data:/app/public/uploads
     depends_on:
       postgres:
         condition: service_healthy
@@ -57,3 +59,4 @@ services:
 
 volumes:
   pgdata:
+  uploads_data:
