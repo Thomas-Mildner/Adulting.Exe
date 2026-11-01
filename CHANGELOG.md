@@ -1,3 +1,27 @@
+# [1.11.0](https://github.com/Thomas-Mildner/Adulting.Exe/compare/v1.10.0...v1.11.0) (2026-11-01)
+
+
+### Bug Fixes
+
+* **ci:** update packages ([910efe2](https://github.com/Thomas-Mildner/Adulting.Exe/commit/910efe283c51b314495e3452d3585a681d7144bf))
+* **ci:** update packages ([7f5dc96](https://github.com/Thomas-Mildner/Adulting.Exe/commit/7f5dc96d3621f4f8b13297115ada9b7397b3718f))
+* redesign waste calendar view with responsive layout and enhanced filtering options ([de58aa0](https://github.com/Thomas-Mildner/Adulting.Exe/commit/de58aa0232210016d84081b1fecc0c2904881d25))
+* **ui:** update calendar for react-day-picker v10 ([2da8155](https://github.com/Thomas-Mildner/Adulting.Exe/commit/2da815548e677bd5673a58fdc601fb839bb98b64))
+* update dependencies including lucide-react, types/node, and postcss ([8312ecf](https://github.com/Thomas-Mildner/Adulting.Exe/commit/8312ecfd60615b658cb3b028c4109ee3470b55f3))
+* update description for creating a vault entry in German localization ([e16d4fc](https://github.com/Thomas-Mildner/Adulting.Exe/commit/e16d4fc952b589d7b2dba59d250f897fa860c620))
+* **workflow:** update condition to check for job failure in nightly build ([cd155a8](https://github.com/Thomas-Mildner/Adulting.Exe/commit/cd155a8048d2a1f7508941e4918ee5dd074a4177))
+
+
+### Features
+
+* add data import and export API endpoints and UI support ([59d338c](https://github.com/Thomas-Mildner/Adulting.Exe/commit/59d338c5a48b713e2733e625e465f697f69f36a8))
+* add download functionality for vault attachments and update UI components ([92a4ad3](https://github.com/Thomas-Mildner/Adulting.Exe/commit/92a4ad3e253b07d633dbb8d79c087ab9fceae6d1))
+* add uploads_data volume to documentation ([8c324d1](https://github.com/Thomas-Mildner/Adulting.Exe/commit/8c324d1ae41873d6bab9efb7c6e2c8bfe94d2d37))
+* add utility CSV import functionality and integrate into settings and utility tracker ([27c388b](https://github.com/Thomas-Mildner/Adulting.Exe/commit/27c388b7560a0d8c575a75309e397062fa2a0fc5))
+* add vault item detail translations, update proxy matcher, and localize print button ([e7da4f0](https://github.com/Thomas-Mildner/Adulting.Exe/commit/e7da4f0415a999f623cc4a5e5afb1f6db8927f1f))
+* implement file upload and download functionality with persistent storage ([2729371](https://github.com/Thomas-Mildner/Adulting.Exe/commit/272937130ca29739c9d70bea8a3cafe3ae1d7df6))
+* **settings:** add household members management ([24d1dd7](https://github.com/Thomas-Mildner/Adulting.Exe/commit/24d1dd74f8e9a0d9dc28ecc149519a0c08856995))
+
 # [1.10.0](https://github.com/Thomas-Mildner/Adulting.Exe/compare/v1.9.0...v1.10.0) (2026-09-04)
 
 
