@@ -19,6 +19,7 @@ import {
 } from "@/components/ui/table";
 import { type MeterReading, formatCurrency } from "@/lib/data";
 import { createMeterReading } from "@/lib/actions";
+import { UtilityCsvImport } from "@/components/settings/utility-csv-import";
 import {
   Dialog,
   DialogContent,
@@ -341,7 +342,12 @@ export function UtilityTracker({
             {t("noData")}
           </p>
         </CardHeader>
-        <CardContent>{addMeterDialog}</CardContent>
+        <CardContent>
+          <div className="flex flex-wrap justify-end gap-2">
+            <UtilityCsvImport compact />
+            {addMeterDialog}
+          </div>
+        </CardContent>
       </Card>
     );
   }
@@ -690,7 +696,10 @@ export function UtilityTracker({
   return (
     <div className="space-y-6">
       {/* ── Add Button ── */}
-      <div className="flex justify-end">{addMeterDialog}</div>
+      <div className="flex flex-wrap justify-end gap-2">
+        <UtilityCsvImport compact />
+        {addMeterDialog}
+      </div>
 
       {/* ── KPI Row ── */}
       <div className="grid gap-4 grid-cols-2 lg:grid-cols-4">
