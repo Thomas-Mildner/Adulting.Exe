@@ -1,3 +1,18 @@
+# [1.12.0-rc.1](https://github.com/Thomas-Mildner/Adulting.Exe/compare/v1.11.0...v1.12.0-rc.1) (2026-11-04)
+
+
+### Bug Fixes
+
+* **ci:** update dependencies ([2e864c1](https://github.com/Thomas-Mildner/Adulting.Exe/commit/2e864c1845833c92a1c606cb7510a478169de20d))
+
+
+### Features
+
+* add document editing and deletion functionality with UI updates ([6833c08](https://github.com/Thomas-Mildner/Adulting.Exe/commit/6833c08576e1bfc1ef6db9e047e719ee7964efe5))
+* add PDF upload functionality and improve localization for file selection ([dc38ee5](https://github.com/Thomas-Mildner/Adulting.Exe/commit/dc38ee5789fea94119944cbbb6fabc88f28800dc))
+* enhance document creation process with improved validation and success messages ([5e2f29f](https://github.com/Thomas-Mildner/Adulting.Exe/commit/5e2f29fc0971540b659f2824acc4f63aceabf330))
+* enhance document creation with PDF upload functionality and update UI texts ([ff7e1c7](https://github.com/Thomas-Mildner/Adulting.Exe/commit/ff7e1c7ea3694a5f5b1b6804f331f22d27f2d0d7))
+
 # [1.10.0-rc.9](https://github.com/Thomas-Mildner/Adulting.Exe/compare/v1.10.0-rc.8...v1.10.0-rc.9) (2026-11-03)
 # [1.11.0](https://github.com/Thomas-Mildner/Adulting.Exe/compare/v1.10.0...v1.11.0) (2026-11-01)
 
