@@ -36,6 +36,30 @@
       "dark": "Dark",
       "system": "System"
     },
+    "localization": {
+      "title": "Currency & Measurement Units",
+      "description": "Customize currency display, measurement systems, and calendar week start.",
+      "currency": "Currency",
+      "currencyPlaceholder": "Select a currency",
+      "unitSystem": "Measurement System",
+      "firstDayOfWeek": "First Day of the Week",
+      "currencies": {
+        "EUR": "Euro (€)",
+        "USD": "US Dollar ($)",
+        "GBP": "British Pound (£)",
+        "CHF": "Swiss Franc (CHF)"
+      },
+      "units": {
+        "metric": "Metric (km, m², liters, kg)",
+        "imperial": "Imperial (miles, sq ft, gallons, lbs)"
+      },
+      "days": {
+        "1": "Monday",
+        "0": "Sunday"
+      },
+      "saved": "Preferences saved",
+      "error": "Error saving preferences"
+    },
     "notifications": {
       "title": "Notifications",
       "description": "Choose which reminders you want to ignore.",
